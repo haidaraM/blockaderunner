@@ -1,3 +1,8 @@
+/**
+* @file Jeu.c
+* @brief Fichier d'implémentation du module Jeu
+* @author
+*/
 #include "Jeu.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>

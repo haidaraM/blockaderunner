@@ -1,4 +1,8 @@
-
+/**
+* @file Jeu.h
+* @brief fichier d'en-tête
+* @author Corital Yann
+*/
 #ifndef _JEU_H
 #define _JEU_H
 
@@ -9,7 +13,10 @@
 
 
 
-
+/**
+* @struct Jeu
+* @brief Structure utilisée pour la gestion d'une partie
+*/
 typedef struct {
 
 	/** Initialise et dispose la fenetre principale */
@@ -23,8 +30,20 @@ typedef struct {
 	
 } Jeu;
 
+/**
+* @fn void jeuInit(Jeu *)
+* @brief
+*/ 
 void jeuInit(Jeu *);
+/**
+* @fn void jeuBoucle(Jeu *)
+* @brief
+*/ 
 void jeuBoucle(Jeu *);
+/**
+* @fn void jeuLibere(Jeu *)
+* @brief
+*/
 void jeuLibere(Jeu *);
 
 #endif
