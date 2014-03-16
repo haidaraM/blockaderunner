@@ -1,3 +1,7 @@
+/**
+* @file fichier d'implementation du module Ecran
+* @brief
+*/
 #include "Ecran.h"
 #include <assert.h>
 #include <stdio.h>
@@ -55,12 +59,12 @@ void ecranInit(Ecran *ecran, int largeur, int hauteur, char *titre, int mode)
 	ecran->couleurFond	= SDL_MapRGB( ecran->surface->format, 0x00, 0x00, 0x00 );
 	ecranEfface(ecran);
 	ecran->largeur		= largeur;
-	ecran->hauteur 		= hauteur;	
+	ecran->hauteur 		= hauteur;
 	if (titre != NULL)
 	{
 		SDL_WM_SetCaption( titre, NULL );
-		ecran->titre 	= titre;	
-	} else 
+		ecran->titre 	= titre;
+	} else
 		SDL_WM_SetCaption( ecran->titre, NULL);
 
 	/* Initialisation de SDL_image */

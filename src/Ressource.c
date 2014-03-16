@@ -1,3 +1,7 @@
+/**
+* @file Ressource.c
+* @brief
+*/
 #include "Ressource.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -57,9 +61,9 @@ void ressourceInit(Ressource *res)
 	}
 	assert( res->images != NULL);
 	for (i=0; i< RESS_NUM_IMAGES; i++)
-		res->images[i] 		= 0;	
+		res->images[i] 		= 0;
 
-	
+
 	chargeImages(res);
 	chargeSons(res);
 	chargePolices(res);

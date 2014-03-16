@@ -1,3 +1,7 @@
+/**
+* @file Ressource.h
+* @brief module permettant de gerer les resources : images, sons ...
+*/
 #ifndef _RESSOURCE_H
 #define _RESSOURCE_H
 
@@ -18,17 +22,33 @@
 #define RESS_FICHIER_VAISSEAU_JOUEUR			"playership.png"
 
 
-
+/**
+* @struct Ressource
+* @brief
+*/
 typedef struct
 {
-	
+
 	SDL_Surface **images;
 
 } Ressource;
 
+/**
+* @fn void ressourceInit(Ressource *res)
+* @brief
+*/
 void ressourceInit(Ressource *res);
+
+/**
+* @fn void ressourceLibere(Ressource *res)
+* @brief
+*/
 void ressourceLibere(Ressource *res);
 
+/**
+* @fn SDL_Surface* ressourceGetImage(Ressource *res, int nomRessource)
+* @brief
+*/
 SDL_Surface* ressourceGetImage(Ressource *res, int nomRessource);
 
 

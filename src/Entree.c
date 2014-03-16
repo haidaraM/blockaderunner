@@ -1,3 +1,7 @@
+/**
+* @file fichier d'implementation du module Entree
+* @brief
+*/
 #include "Entree.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -20,7 +24,7 @@ void entreeInit(Entree *entree)
 	entree->sourisY 			= 0;
 	entree->boutonSourisGauche	= 0;
 	entree->boutonSourisDroit	= 0;
- 
+
 	/* On recupère le nombre de touches du clavier géré par SDL */
 	SDL_GetKeyState(&entree->nombreTouches);
 	entree->clavier 			= (unsigned char*)malloc( entree->nombreTouches * sizeof(unsigned char) );
@@ -48,7 +52,7 @@ void entreeLibere(Entree *entree)
 void entreeSonde(Entree *entree)
 {
 	SDL_Event event;
-	
+
 	/* tant qu'il y a des evenements à traiter : cette boucle n'est pas bloquante */
 	while ( SDL_PollEvent( &event ) )
 	{
@@ -59,7 +63,7 @@ void entreeSonde(Entree *entree)
 		/* Si l'utilisateur a appuyé sur une touche */
 		if ( event.type == SDL_KEYDOWN )
 			entree->clavier[event.key.keysym.sym] 			= 1;
-		
+
 		/* Si l'utilisateur a relâché une touche */
 		if ( event.type == SDL_KEYUP )
 			entree->clavier[event.key.keysym.sym] 			= 0;
@@ -88,7 +92,7 @@ void entreeSonde(Entree *entree)
 			entree->sourisX 								= (int)event.motion.x;
 			entree->sourisY 								= (int)event.motion.y;
 		}
-	}	
+	}
 }
 
 

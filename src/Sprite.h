@@ -1,3 +1,7 @@
+/**
+* @file Sprite.h
+* @brief
+*/
 #ifndef _SPRITE_H
 #define _SPRITE_H
 
@@ -12,7 +16,7 @@
 
 
 
-typedef struct 
+typedef struct
 {
 	int visible;
 	int type;

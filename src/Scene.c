@@ -1,3 +1,7 @@
+/**
+* @file Scene.c
+* @brief
+*/
 #include "Scene.h"
 #include <stdlib.h>
 #include <assert.h>
@@ -23,7 +27,7 @@ void sceneInit(Scene *scene, Ecran *ecran, Ressource *res)
 	for (i=0; i< scene->numSprites; i++)
 		scene->sprites[i] = 0;
 
-	
+
 	/* TEST : initialisation sprite du vaisseau joueur */
 	sprite 				= (Sprite*)malloc(sizeof(Sprite));
 	assert( sprite != NULL);
@@ -46,7 +50,7 @@ void sceneLibere(Scene *scene)
 			free(scene->sprites[i]);
 		}
 	}
-	
+
 	free(scene->sprites);
 	scene->numSprites = 0;
 }
@@ -59,7 +63,7 @@ void sceneAffiche(Scene *scene)
 	for (i=0; i< scene->numSprites; i++)
 	{
 		if (scene->sprites[i] != NULL && spriteVisible(scene->sprites[i]) == 1)
-		{	
+		{
 			/*printf("OK. ");*/
 			ecranAfficheImage( scene->ecran, spriteGetSDLSurface(scene->sprites[i]), spriteGetX(scene->sprites[i]), spriteGetY(scene->sprites[i]) );
 		}
@@ -87,7 +91,7 @@ void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 
 	spriteSetPosition( vaiss, spriteGetX( vaiss ), y + dy );
 }
- 
+
 void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 {
 	Sprite *vaiss				= scene->sprites[0];
@@ -101,7 +105,7 @@ void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 
 	spriteSetPosition( vaiss, spriteGetX( vaiss ), y + dy );
 }
-		 
+
 
 
 

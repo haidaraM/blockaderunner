@@ -1,3 +1,8 @@
+/**
+* @file Ecran.h
+* @brief fichier d'en-tête du module Ecran
+* @author
+*/
 #ifndef _ECRAN_H
 #define _ECRAN_H
 

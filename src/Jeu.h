@@ -1,6 +1,6 @@
 /**
 * @file Jeu.h
-* @brief fichier d'en-tête
+* @brief fichier d'en-tête du module jeu
 * @author Corital Yann
 */
 #ifndef _JEU_H
@@ -27,18 +27,18 @@ typedef struct {
 	Ressource ressource;
 	/** Initialise et gère la scène (ce qui est visible à l'écran) */
 	Scene scene;
-	
+
 } Jeu;
 
 /**
 * @fn void jeuInit(Jeu *)
 * @brief
-*/ 
+*/
 void jeuInit(Jeu *);
 /**
 * @fn void jeuBoucle(Jeu *)
 * @brief
-*/ 
+*/
 void jeuBoucle(Jeu *);
 /**
 * @fn void jeuLibere(Jeu *)

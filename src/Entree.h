@@ -1,3 +1,7 @@
+/**
+* @file Entree.h
+* @brief
+*/
 #ifndef _ENTREE_H
 #define _ENTREE_H
 
@@ -6,7 +10,7 @@
 
 /* Note :
 	http://www.libsdl.org/release/SDL-1.2.15/docs/html/sdlkey.html
-	gives SDL keys 
+	gives SDL keys
 */
 
 
@@ -33,5 +37,5 @@ unsigned char entreeBoutonSourisDroit(Entree *entree);
 int entreeGetSourisX(Entree *entree);
 int entreeGetSourisY(Entree *entree);
 
-#endif 
+#endif
 
