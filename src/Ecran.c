@@ -26,18 +26,18 @@ void ecranInit(Ecran *ecran, int largeur, int hauteur, char *titre, int mode)
 	#ifdef JEU_VERBOSE
 	/* Evaluation des modes video disponibles */
 	modes = SDL_ListModes(NULL, SDL_FULLSCREEN | SDL_HWSURFACE);
-	/* Check is there are any modes available */
+	/* verifie s'il ya plusieurs modes disponibles */
 	if(modes == (SDL_Rect **)0){
 		printf("    No VIDEO modes available!\n");
   		exit(-1);
 	}
 
-	/* Check if our resolution is restricted */
+	/* Verifie si la resolution est limitee */
 	if(modes == (SDL_Rect **)-1){
 		printf("    VIDEO : All resolutions available.\n");
 	}
 	else{
-	  	/* Print valid modes */
+	  	/* Affiche les modes valides */
 	  	printf("    Available Modes\n");
 	  	for(i=0;modes[i];++i)
 	    	printf("      %d x %d\n", modes[i]->w, modes[i]->h);
@@ -111,7 +111,7 @@ void ecranAfficheImage(Ecran *ecran, SDL_Surface* image, int x, int y )
 	offset.x = x;
 	offset.y = y;
 
-	/* Blit the surface */
+	/* Blit la surface */
 	SDL_BlitSurface( image, NULL, ecran->surface, &offset );
 }
 
