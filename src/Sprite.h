@@ -5,9 +5,6 @@
 #ifndef _SPRITE_H
 #define _SPRITE_H
 
-#include <SDL/SDL.h>
-#include "Ressource.h"
-#include "Ecran.h"
 
 
 
@@ -21,14 +18,14 @@ typedef struct
 	int visible;
 	int type;
 	int x, y, largeur, hauteur;
-	SDL_Surface *surface;
+	int indexImage;
 	int largeurEcran;
 	int hauteurEcran;
 } Sprite;
 
 
 
-void spriteInit(Sprite *sprite, SDL_Surface *surface, Ecran *ecran);
+void spriteInit(Sprite *sprite, int type, int indexImage, int largeur, int hauteur, int largeurEcran, int hauteurEcran);
 void spriteLibere(Sprite *sprite);
 
 int spriteVisible(Sprite *sprite);
@@ -36,7 +33,7 @@ int spriteGetX(Sprite *sprite);
 int spriteGetY(Sprite *sprite);
 void spriteSetPosition(Sprite *sprite, int x, int y);
 
-SDL_Surface* spriteGetSDLSurface(Sprite *sprite);
+int spriteGetIndexImage(Sprite *sprite);
 
 
 #endif

@@ -50,7 +50,8 @@ void ressourceLibere(Ressource *res);
 * @brief
 */
 SDL_Surface* ressourceGetImage(Ressource *res, int nomRessource);
-
+int ressourceGetLargeurImage(Ressource *res, int nomRessource);
+int ressourceGetHauteurImage(Ressource *res, int nomRessource);
 
 #endif
 

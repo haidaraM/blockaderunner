@@ -91,5 +91,17 @@ SDL_Surface* ressourceGetImage(Ressource *res, int nomRessource)
 	return res->images[nomRessource];
 }
 
+int ressourceGetLargeurImage(Ressource *res, int nomRessource)
+{
+	assert( nomRessource < RESS_NUM_IMAGES );
+	return res->images[nomRessource]->w;
+}
+
+int ressourceGetHauteurImage(Ressource *res, int nomRessource)
+{
+	assert( nomRessource < RESS_NUM_IMAGES );
+	return res->images[nomRessource]->h;
+}
+
 
 

@@ -10,25 +10,20 @@
 
 
 
-void spriteInit(Sprite *sprite, SDL_Surface *surface, Ecran *ecran)
+void spriteInit(Sprite *sprite, int type, int indexImage, int largeur, int hauteur, int largeurEcran, int hauteurEcran)
 {
-	assert( sprite != NULL && ecran != NULL );
+	assert( sprite != NULL );
 
-	sprite->type			= -1;
+	sprite->type			= type;
 	sprite->x 				= 0;
 	sprite->y				= 0;
-	sprite->largeur 		= 0;
-	sprite->hauteur 		= 0;
-	sprite->largeurEcran	= ecran->largeur;
-	sprite->hauteurEcran	= ecran->hauteur;
+	sprite->largeur 		= largeur;
+	sprite->hauteur 		= hauteur;
+	sprite->largeurEcran	= largeurEcran;
+	sprite->hauteurEcran	= hauteurEcran;
 	sprite->visible 		= 0;
-	sprite->surface 		= surface;
+	sprite->indexImage 		= indexImage;
 
-	if (surface != NULL)
-	{
-		sprite->largeur 	= sprite->surface->w;
-		sprite->hauteur 	= sprite->surface->h;
-	}
 }
 
 void spriteLibere(Sprite *sprite)
@@ -61,9 +56,9 @@ void spriteSetPosition(Sprite *sprite, int x, int y)
 	else	sprite->visible = 1;
 }
 
-SDL_Surface* spriteGetSDLSurface(Sprite *sprite)
+int spriteGetIndexImage(Sprite *sprite)
 {
-	return sprite->surface;
+	return sprite->indexImage;
 }
 
 

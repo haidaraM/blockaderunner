@@ -31,7 +31,7 @@ void sceneInit(Scene *scene, Ecran *ecran, Ressource *res)
 	/* TEST : initialisation sprite du vaisseau joueur */
 	sprite 				= (Sprite*)malloc(sizeof(Sprite));
 	assert( sprite != NULL);
-	spriteInit(sprite, ressourceGetImage(res, RESS_VAISSEAU_JOUEUR), ecran);
+	spriteInit(sprite, 0, RESS_VAISSEAU_JOUEUR, ressourceGetLargeurImage(res, RESS_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_VAISSEAU_JOUEUR), ecran->largeur, ecran->hauteur);
 	sprite->type 		= SPRITE_TYPE_VAISSEAU_JOUEUR;
 	spriteSetPosition(sprite, 32, (ecran->hauteur - sprite->hauteur)/2);
 	scene->sprites[0]	= sprite;
@@ -65,7 +65,7 @@ void sceneAffiche(Scene *scene)
 		if (scene->sprites[i] != NULL && spriteVisible(scene->sprites[i]) == 1)
 		{
 			/*printf("OK. ");*/
-			ecranAfficheImage( scene->ecran, spriteGetSDLSurface(scene->sprites[i]), spriteGetX(scene->sprites[i]), spriteGetY(scene->sprites[i]) );
+			ecranAfficheImage( scene->ecran, ressourceGetImage(scene->ressource, spriteGetIndexImage(scene->sprites[i])), spriteGetX(scene->sprites[i]), spriteGetY(scene->sprites[i]) );
 		}
 	}
 }

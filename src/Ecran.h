@@ -14,7 +14,12 @@
 #define ECRAN_TITRE_DEFAUT			"Blockade"
 
 
-
+/**
+* @struct Ecran
+* @brief Structure de gestion de l'affichage.
+*
+* 
+*/
 typedef struct
 {
 	int largeur, hauteur;
