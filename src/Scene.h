@@ -29,6 +29,8 @@ Sprite* sceneCreerSprite(Scene *scene, int type);
 
 void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes);
 void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes);
+void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes);
+void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 
 #endif
 
