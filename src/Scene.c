@@ -126,10 +126,10 @@ void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
 	int dx						= -(int)(tempsSecondes * vitesseDeplacement);
 	int x                       = spriteGetX(vaiss);
 
+    /* Attention à ne pas sortir le vaisseau joueur de l'ecran : */
 	if ( (x + dx) < 0)
 		dx						= -x;
 
-    /* Attention à ne pas sortir le vaisseau joueur de l'ecran : */
     spriteSetPosition(vaiss, x+dx, spriteGetY(vaiss));
 }
 
