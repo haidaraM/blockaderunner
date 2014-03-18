@@ -107,6 +107,32 @@ void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 	spriteSetPosition( vaiss, spriteGetX( vaiss ), y + dy );
 }
 
+void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
+{
+    Sprite *vaiss				= scene->sprites[0];
+	float vitesseDeplacement 	= 768.0f/0.88f;
+	int dx						= (int)(tempsSecondes * vitesseDeplacement);
+	int x                       = spriteGetX(vaiss);
+
+    /* Attention à ne pas sortir le vaisseau joueur de l'ecran : */
+    if ((x+dx) >(vaiss->largeurEcran - vaiss ->largeur))
+        dx                      =(vaiss->largeurEcran - vaiss ->largeur) -x;
+    spriteSetPosition(vaiss, x+dx, spriteGetY(vaiss));
+}
+
+void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
+{
+    Sprite *vaiss				= scene->sprites[0];
+	float vitesseDeplacement 	= 768.0f/0.88f;
+	int dx						= -(int)(tempsSecondes * vitesseDeplacement);
+	int x                       = spriteGetX(vaiss);
+
+    /* Attention à ne pas sortir le vaisseau joueur de l'ecran : */
+	if ( (x + dx) < 0)
+		dx						= -x;
+
+    spriteSetPosition(vaiss, x+dx, spriteGetY(vaiss));
+}
 
 
 

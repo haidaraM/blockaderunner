@@ -24,7 +24,7 @@ void jeuInit(Jeu *jeu)
 	#ifdef JEU_VERBOSE
 		printf("BLOCKADE > Initialisation des modules :\n\n");
 	#endif
- 
+
 	assert( jeu != NULL );
 	assert( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) != -1 );
 
@@ -73,18 +73,22 @@ void jeuBoucle(Jeu *jeu)
 		entreeSonde( entree );
 		if (entreeFermetureJeu(entree)==1 || entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
 			continueJeu	 		= 0;
-		
+
 		if (entreeToucheEnfoncee(entree, SDLK_UP) == 1)
 			sceneDeplaceVaisseauJoueurHaut( &jeu->scene, dureeBoucle );
 		if (entreeToucheEnfoncee(entree, SDLK_DOWN) == 1)
 			sceneDeplaceVaisseauJoueurBas( &jeu->scene, dureeBoucle );
-			
+        if (entreeToucheEnfoncee(entree, SDLK_RIGHT)==1)
+            sceneDeplaceVaisseauJoueurDroite(&jeu->scene, dureeBoucle);
+            if (entreeToucheEnfoncee(entree, SDLK_LEFT)==1)
+            sceneDeplaceVaisseauJoueurGauche(&jeu->scene, dureeBoucle);
+
         /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge */
         if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
         {
         	ecranEfface( ecran );
-        
-			sceneAffiche( &jeu->scene );    
+
+			sceneAffiche( &jeu->scene );
 
             /* on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans a boucle) */
             ecranRaffraichit( ecran );

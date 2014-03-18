@@ -61,6 +61,8 @@ void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes);
 * @param tempsSecondes : temps écoulé depuis le dernier appel. Utilisé pour calculer le déplacement à vitesse constante.
 */
 void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes);
+void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes);
+void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 
 #endif
 
