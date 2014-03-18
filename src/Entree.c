@@ -96,27 +96,27 @@ void entreeSonde(Entree *entree)
 }
 
 
-unsigned char entreeFermetureJeu(Entree *entree)
+unsigned char entreeFermetureJeu(const Entree *entree)
 {
 	return entree->fermetureJeu;
 }
-unsigned char entreeToucheEnfoncee(Entree *entree, SDLKey touche)
+unsigned char entreeToucheEnfoncee(const Entree *entree, SDLKey touche)
 {
 	return entree->clavier[touche];
 }
-unsigned char entreeBoutonSourisGauche(Entree *entree)
+unsigned char entreeBoutonSourisGauche(const Entree *entree)
 {
 	return entree->boutonSourisGauche;
 }
-unsigned char entreeBoutonSourisDroit(Entree *entree)
+unsigned char entreeBoutonSourisDroit(const Entree *entree)
 {
 	return entree->boutonSourisDroit;
 }
-int entreeGetSourisX(Entree *entree)
+int entreeGetSourisX(const Entree *entree)
 {
 	return entree->sourisX;
 }
-int entreeGetSourisY(Entree *entree)
+int entreeGetSourisY(const Entree *entree)
 {
 	return entree->sourisY;
 }

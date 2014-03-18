@@ -119,3 +119,9 @@ void ecranAfficheImage(Ecran *ecran, SDL_Surface* image, int x, int y )
 	SDL_BlitSurface( image, NULL, ecran->surface, &offset );
 }
 
+void ecranSetCouleurFond(Ecran *ecran, unsigned char rouge, unsigned char vert, unsigned char bleu)
+{
+	ecran->couleurFond	= SDL_MapRGB( ecran->surface->format, rouge, vert, bleu );
+}
+
+

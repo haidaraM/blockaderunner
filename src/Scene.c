@@ -9,13 +9,14 @@
 
 
 
-void sceneInit(Scene *scene, Ecran *ecran, Ressource *res)
+void sceneInit(Scene *scene, Niveau *niv, Ecran *ecran, Ressource *res)
 {
 	int i;
 	Sprite *sprite		= NULL;
 
-	assert( scene != NULL && ecran != NULL && res != NULL );
+	assert( scene != NULL && niv != NULL && ecran != NULL && res != NULL );
 
+	scene->niveau 		= niv;
 	scene->ecran		= ecran;
 	scene->ressource 	= res;
 	scene->numSprites 	= 1;
@@ -57,7 +58,7 @@ void sceneLibere(Scene *scene)
 
 
 
-void sceneAffiche(Scene *scene)
+void sceneAffiche(const Scene *scene)
 {
 	int i;
 	for (i=0; i< scene->numSprites; i++)

@@ -85,19 +85,19 @@ void ressourceLibere(Ressource *res)
 
 
 
-SDL_Surface* ressourceGetImage(Ressource *res, int nomRessource)
+SDL_Surface* ressourceGetImage(const Ressource *res, int nomRessource)
 {
 	assert( nomRessource < RESS_NUM_IMAGES );
 	return res->images[nomRessource];
 }
 
-int ressourceGetLargeurImage(Ressource *res, int nomRessource)
+int ressourceGetLargeurImage(const Ressource *res, int nomRessource)
 {
 	assert( nomRessource < RESS_NUM_IMAGES );
 	return res->images[nomRessource]->w;
 }
 
-int ressourceGetHauteurImage(Ressource *res, int nomRessource)
+int ressourceGetHauteurImage(const Ressource *res, int nomRessource)
 {
 	assert( nomRessource < RESS_NUM_IMAGES );
 	return res->images[nomRessource]->h;

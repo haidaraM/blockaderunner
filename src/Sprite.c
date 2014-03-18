@@ -31,17 +31,17 @@ void spriteLibere(Sprite *sprite)
 
 
 
-int spriteVisible(Sprite *sprite)
+int spriteVisible(const Sprite *sprite)
 {
 	return sprite->visible;
 }
 
-int spriteGetX(Sprite *sprite)
+int spriteGetX(const Sprite *sprite)
 {
 	return sprite->x;
 }
 
-int spriteGetY(Sprite *sprite)
+int spriteGetY(const Sprite *sprite)
 {
 	return sprite->y;
 }
@@ -56,7 +56,7 @@ void spriteSetPosition(Sprite *sprite, int x, int y)
 	else	sprite->visible = 1;
 }
 
-int spriteGetIndexImage(Sprite *sprite)
+int spriteGetIndexImage(const Sprite *sprite)
 {
 	return sprite->indexImage;
 }
