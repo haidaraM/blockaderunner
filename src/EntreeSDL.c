@@ -1,14 +1,14 @@
 /**
-* @file fichier d'implementation du module Entree
+* @file fichier d'implementation du module EntreeSDL
 * @brief
 */
-#include "Entree.h"
+#include "EntreeSDL.h"
 #include <assert.h>
 #include <stdlib.h>
 
 
 
-void entreeInit(Entree *entree)
+void entreeInit(EntreeSDL *entree)
 {
 	int i;
 	assert( entree != NULL );
@@ -42,14 +42,14 @@ void entreeInit(Entree *entree)
 	#endif
 }
 
-void entreeLibere(Entree *entree)
+void entreeLibere(EntreeSDL *entree)
 {
 	free(entree->clavier);
 }
 
 
 
-void entreeSonde(Entree *entree)
+void entreeSonde(EntreeSDL *entree)
 {
 	SDL_Event event;
 
@@ -96,27 +96,27 @@ void entreeSonde(Entree *entree)
 }
 
 
-unsigned char entreeFermetureJeu(const Entree *entree)
+unsigned char entreeFermetureJeu(const EntreeSDL *entree)
 {
 	return entree->fermetureJeu;
 }
-unsigned char entreeToucheEnfoncee(const Entree *entree, SDLKey touche)
+unsigned char entreeToucheEnfoncee(const EntreeSDL *entree, SDLKey touche)
 {
 	return entree->clavier[touche];
 }
-unsigned char entreeBoutonSourisGauche(const Entree *entree)
+unsigned char entreeBoutonSourisGauche(const EntreeSDL *entree)
 {
 	return entree->boutonSourisGauche;
 }
-unsigned char entreeBoutonSourisDroit(const Entree *entree)
+unsigned char entreeBoutonSourisDroit(const EntreeSDL *entree)
 {
 	return entree->boutonSourisDroit;
 }
-int entreeGetSourisX(const Entree *entree)
+int entreeGetSourisX(const EntreeSDL *entree)
 {
 	return entree->sourisX;
 }
-int entreeGetSourisY(const Entree *entree)
+int entreeGetSourisY(const EntreeSDL *entree)
 {
 	return entree->sourisY;
 }

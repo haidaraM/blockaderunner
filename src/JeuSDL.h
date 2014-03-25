@@ -1,16 +1,17 @@
 /**
-* @file Jeu.h
-* @brief fichier d'en-tête du module Jeu
+* @file JeuSDL.h
+* @brief fichier d'en-tête du module JeuSDL
 * @author Cortial Yann
 *
 * Module principal du programme.
 * Regroupe l'accès aux sous-systèmes essentiels (video, audio), les modules de gestion de haut-niveau (entrées, ressources), et la vue/état global du jeu (Scene).
 */
-#ifndef _JEU_H
-#define _JEU_H
+#ifndef _JEU_SDL_H
+#define _JEU_SDL_H
 
-#include "Ecran.h"
-#include "Entree.h"
+#include "GraphiqueSDL.h"
+/*#include "AudioSDL.h"*/
+#include "EntreeSDL.h"
 #include "Ressource.h"
 #include "Menu.h"
 /*#include "Niveau.h"*/
@@ -21,17 +22,16 @@
 #define JEU_ETAT_NIVEAU				1
 
 /**
-* @struct Jeu
+* @struct JeuSDL
 * @brief 
 */
 typedef struct {
 
 	/** Initialise et dispose la fenetre principale. */
-	Ecran ecran;
+	GraphiqueSDL graphique;
+	/* AudioSDL audio; */
 	/** Initialise et gère les évènements (clavier, souris ..). */
-	Entree entree;
-	/** Initialise et gère les ressources du jeu (images, sons, polices). */
-	Ressource ressource;
+	EntreeSDL entree;
 
 	/** Menu principal */
 	Menu menu;
@@ -39,30 +39,32 @@ typedef struct {
 	Scene scene;
 	/** Joueur courant (sélectionné par le Menu). */
 	Joueur joueur;
+	/** Répertorie les ressources du jeu (images, sons, polices). */
+	Ressource ressource;
 
 	/** Phase courante = JEU_ETAT_MENU ou JEU_ETAT_NIVEAU. */
 	int etatCourantJeu;
 	
-} Jeu;
+} JeuSDL;
 
 /**
-* @fn void jeuInit(Jeu *)
+* @fn void jeuInit(JeuSDL *)
 * @brief Initialise notamment les sous-systèmes (Video, Audio), et les modules de gestion (Entree, Ressource).
 * @param jeu[in, out] : doit être non NULL.
 */ 
-void jeuInit(Jeu *jeu);
+void jeuInit(JeuSDL *jeu);
 /**
-* @fn void jeuBoucle(Jeu *)
+* @fn void jeuBoucle(JeuSDL *)
 * @brief Boucle principale du programme.
 *
 * Gestion du temps écoulé, lecture des entrées, mise à jour de l'état du jeu et affichage final.
 */ 
-void jeuBoucle(Jeu *jeu);
+void jeuBoucle(JeuSDL *jeu);
 /**
-* @fn void jeuLibere(Jeu *)
+* @fn void jeuLibere(JeuSDL *)
 * @brief Libère toutes les ressources mobilisées par le programme.
 */
-void jeuLibere(Jeu *jeu);
+void jeuLibere(JeuSDL *jeu);
 
 #endif
 

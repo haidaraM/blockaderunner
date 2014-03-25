@@ -1,11 +1,10 @@
 /**
-* @file Jeu.c
-* @brief Fichier d'implémentation du module Jeu
+* @file JeuSDL.c
+* @brief Fichier d'implémentation du module JeuSDL
 * @author
 */
-#include "Jeu.h"
+#include "JeuSDL.h"
 #include <SDL/SDL.h>
-/*#include <SDL/SDL_image.h>*/
 #include <assert.h>
 #include <stdio.h>
 #include <time.h>
@@ -19,7 +18,7 @@ float getTempsSecondes()
 
 
 
-void jeuInit(Jeu *jeu)
+void jeuInit(JeuSDL *jeu)
 {
 	#ifdef JEU_VERBOSE
 		printf("BLOCKADE > Initialisation des modules :\n\n");
@@ -28,17 +27,17 @@ void jeuInit(Jeu *jeu)
 	assert( jeu != NULL );
 	assert( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) != -1 );
 
+	/* Initialisation du dictionnaire des ressources du jeu */
+	ressourceInit(&jeu->ressource);
+
 	/* Initialisation fenêtre principale */
-	ecranInit(&jeu->ecran, 1366, 768, "Jeu : tool test : SDL 1.2 : test 00", ECRAN_MODE_FENETRE);
+	graphiqueInit(&jeu->graphique, &(jeu->ressource), 1366, 720, "Blockade Runner", GFX_MODE_FENETRE);
 
 	/* Initialisation des entrées souris + clavier */
 	entreeInit(&jeu->entree);
 
-	/* Initialisation des ressources du jeu */
-	ressourceInit(&jeu->ressource);
-
 	/* Initialisation de la scène */
-	sceneInit(&jeu->scene, &jeu->ecran, &jeu->ressource);
+	sceneInit(&jeu->scene, &jeu->ressource, jeu->graphique.largeur, jeu->graphique.hauteur);
 
 	#ifdef JEU_VERBOSE
 		printf("\nBLOCKADE > initialisation OK.\n\n");
@@ -47,17 +46,17 @@ void jeuInit(Jeu *jeu)
 
 
 
-void jeuBoucle(Jeu *jeu)
+void jeuBoucle(JeuSDL *jeu)
 {
-	int continueJeu			= 1;
-	Ecran *ecran	 		= &jeu->ecran;
-	Entree *entree			= &jeu->entree;
+	int continueJeu					= 1;
+	GraphiqueSDL *graphique	 		= &jeu->graphique;
+	EntreeSDL *entree				= &jeu->entree;
 
     float tempsDernierAffichage, dureeBoucle, debutBoucle;
     /* Période de temps (secondes) entre deux raffraichissements écran */
     float periodeAffichage = 1.0f/60.0f;
 
-	ecranRaffraichit(ecran);
+	graphiqueRaffraichit(graphique);
 
     tempsDernierAffichage	= getTempsSecondes();
 	dureeBoucle	 			= 0.0f;
@@ -86,12 +85,12 @@ void jeuBoucle(Jeu *jeu)
         /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge */
         if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
         {
-        	ecranEfface( ecran );
+        	graphiqueEfface( graphique );
 
-			sceneAffiche( &jeu->scene );
+			graphiqueAfficheScene( graphique, &jeu->scene );
 
             /* on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans a boucle) */
-            ecranRaffraichit( ecran );
+            graphiqueRaffraichit( graphique );
 
         	tempsDernierAffichage 	= getTempsSecondes();
         }
@@ -101,12 +100,12 @@ void jeuBoucle(Jeu *jeu)
 }
 
 
-void jeuLibere( Jeu *jeu )
+void jeuLibere( JeuSDL *jeu )
 {
-	sceneLibere( &jeu->scene);
 	ressourceLibere( &jeu->ressource);
+	sceneLibere( &jeu->scene);
 	entreeLibere( &jeu->entree );
-	ecranLibere( &jeu->ecran );
+	graphiqueLibere( &jeu->graphique );
 
 	SDL_Quit();
 }

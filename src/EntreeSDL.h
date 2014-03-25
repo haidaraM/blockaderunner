@@ -1,10 +1,10 @@
 /**
-* @file Entree.h
-* @brief Module de gestion des entrées : clavier, souris et évènements divers.
+* @file EntreeSDL.h
+* @brief Module de gestion des entrées (couplé avec SDL) : clavier, souris et évènements divers.
 * @author Yann Cortial
 */
-#ifndef _ENTREE_H
-#define _ENTREE_H
+#ifndef _ENTREE_SDL_H
+#define _ENTREE_SDL_H
 
 #include "SDL/SDL.h"
 
@@ -24,66 +24,66 @@ typedef struct
 	unsigned char boutonSourisGauche;
 	/** booléen : vaut 1 si le bouton droit de la souris est enfoncé, 0 sinon. */
 	unsigned char boutonSourisDroit;
-} Entree;
+} EntreeSDL;
 
 
 /**
 * @brief Initialise le module.
 * @param entree[in, out] : doit être non NULL.
 */
-void entreeInit(Entree *entree);
+void entreeInit(EntreeSDL *entree);
 /**
 * @brief Libère les ressources du module.
 */
-void entreeLibere(Entree *entree);
+void entreeLibere(EntreeSDL *entree);
 /**
 * @brief Récupère tous les nouveaux évènements survenus depuis le dernier appel. 
 *
 * Doit être appelée avant de tester l'état des touches et de la souris (typiquement régulièrement, dans la boucle principale du programme).
 */
-void entreeSonde(Entree *entree);
+void entreeSonde(EntreeSDL *entree);
 /**
 * @brief Teste si la fermeture du programme a été demandée par l'utilisateur.
 *
 * La fermeture du programme est un évènement dispatché par l'OS, typiquement par exemple lorsque l'utilsateur a tenté de fermer en cliquant la fenêtre principale du programme.
 */
-unsigned char entreeFermetureJeu(const Entree *entree);
+unsigned char entreeFermetureJeu(const EntreeSDL *entree);
 /** 
 * @brief Detecte si une touche est enfoncée. 
-* @param entree[in, out] : instance d'Entree.
+* @param entree[in, out] : instance d'EntreeSDL.
 * @param touche : un nom de touche SDL : voir cette page pour une liste complète des touches prises en charge http://www.libsdl.org/release/SDL-1.2.15/docs/html/sdlkey.html
 * @return 1 si la touche est enfoncée, 0 sinon.
 */
-unsigned char entreeToucheEnfoncee(const Entree *entree, SDLKey touche);
+unsigned char entreeToucheEnfoncee(const EntreeSDL *entree, SDLKey touche);
 /**
 * @brief Teste si le bouton souris gauche est enfoncé.
 *	
-* @param entree[in, out] : instance d'Entree.
+* @param entree[in, out] : instance d'EntreeSDL.
 * @return 1 si le bouton est enfoncé, 0 sinon.
 */
-unsigned char entreeBoutonSourisGauche(const Entree *entree);
+unsigned char entreeBoutonSourisGauche(const EntreeSDL *entree);
 /**
 * @brief Teste si le bouton souris droit est enfoncé.
 *	
-* @param entree[in, out] : instance d'Entree.
+* @param entree[in, out] : instance d'EntreeSDL.
 * @return 1 si le bouton est enfoncé, 0 sinon.
 */
 
-unsigned char entreeBoutonSourisDroit(const Entree *entree);
+unsigned char entreeBoutonSourisDroit(const EntreeSDL *entree);
 /**
 * @brief Renvoie la position courante en X de la souris.
 *	
-* @param entree[in, out] : instance d'Entree.
+* @param entree[in, out] : instance d'EntreeSDL.
 * @return un entier décrivant la position en X de la souris.
 */
-int entreeGetSourisX(const Entree *entree);
+int entreeGetSourisX(const EntreeSDL *entree);
 /**
 * @brief Renvoie la position courante en Y de la souris.
 *	
-* @param entree[in, out] : instance d'Entree.
+* @param entree[in, out] : instance d'EntreeSDL.
 * @return un entier décrivant la position en Y de la souris.
 */
-int entreeGetSourisY(const Entree *entree);
+int entreeGetSourisY(const EntreeSDL *entree);
 
 #endif
 
