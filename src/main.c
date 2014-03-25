@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Jeu.h"
+#include "JeuSDL.h"
 
 /** @file main.c
 *
@@ -20,7 +20,7 @@
 */
 int main ()
 {
-	Jeu jeu;
+	JeuSDL jeu;
 
 	jeuInit( &jeu );
 	jeuBoucle( &jeu );

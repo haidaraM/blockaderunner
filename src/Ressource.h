@@ -1,15 +1,15 @@
 /**
 * @file Ressource.h
-* @brief Module de gestion des ressources : images, sons, polices.
+* @brief Module dictionnaire de ressources : images, sons, polices.
 * @author Yann Cortial
 *
-* Le module interface avec SDL.
 */
 #ifndef _RESSOURCE_H
 #define _RESSOURCE_H
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+
+
+#include "Rectangle.h"
 
 
 
@@ -20,12 +20,14 @@
 #define RESS_DIR_IMAGES							"data/images/"
 #define RESS_DIR_SONS							"data/sounds/"
 #define RESS_DIR_POLICES						"data/fonts/"
-#define RESS_DIR_SAVE							"data/save/"
+#define RESS_DIR_SAUVEGARDE						"data/save/"
 
 #define RESS_TITRE_JEU 							"Blockade Runner"
 
 #define RESS_VAISSEAU_JOUEUR 					0
 #define RESS_FICHIER_VAISSEAU_JOUEUR			"playership.png"
+#define RESS_LARGEUR_VAISSEAU_JOUEUR			128
+#define RESS_HAUTEUR_VAISSEAU_JOUEUR 			52
 
 
 /**
@@ -34,9 +36,13 @@
 */
 typedef struct
 {
-
-	/** Tableau de pointeurs sur SDL_Surface (images chargées à l'aide de SDL_image).*/
-	SDL_Surface **images;
+	/** Tableau de chaines de caractères (noms des fichiers images) */	
+	char **images;
+	/** Tableau de Rectangles stockant les dimensions de chaque image */
+	Rectangle *dimensionImages;
+	
+	char **sons;
+	char **polices;
 
 } Ressource;
 
@@ -53,14 +59,6 @@ void ressourceInit(Ressource *res);
 */
 void ressourceLibere(Ressource *res);
 
-/**
-* @fn SDL_Surface* ressourceGetImage(Ressource *res, int nomRessource)
-* @brief Renvoie un pointeur sur une image cataloguée par le module.
-* @param res[in, out] : instance de Ressource.
-* @param nomRessource : un entier définissant la ressource demandée. Par exemple RESS_VAISSEAU_JOUEUR.
-* @return un pointeur sur un objet de type SDL_Surface.
-*/
-SDL_Surface* ressourceGetImage(const Ressource *res, int nomRessource);
 /**
 * @brief Renvoie la largeur d'une image cataloguée.
 * @param res[in, out] : instance de Ressource.

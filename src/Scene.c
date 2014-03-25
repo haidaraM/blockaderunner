@@ -9,33 +9,31 @@
 
 
 
-void sceneInit(Scene *scene, Niveau *niv, Ecran *ecran, Ressource *res)
+void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGraphique)
 {
 	int i;
-	Sprite *sprite		= NULL;
+	ElementScene *element	= NULL;
 
-	assert( scene != NULL && niv != NULL && ecran != NULL && res != NULL );
+	assert( scene != NULL && res != NULL );
 
-	scene->niveau 		= niv;
-	scene->ecran		= ecran;
+	scene->largeurAffichage = largeurGraphique;
+	scene->hauteurAffichage = hauteurGraphique;
+	scene->niveau 		= 0;
 	scene->ressource 	= res;
-	scene->numSprites 	= 1;
-	scene->sprites 		= 0;
-
-	scene->sprites		= (Sprite**)malloc(scene->numSprites * sizeof(Sprite*));
-	assert( scene->sprites != NULL);
-
-	for (i=0; i< scene->numSprites; i++)
-		scene->sprites[i] = 0;
+	scene->numElements 	= 1;
+	scene->elements		= (ElementScene**)malloc(scene->numElements * sizeof(ElementScene*));
+	assert( scene->elements != NULL);
+	for (i=0; i< scene->numElements; i++)
+		scene->elements[i] = 0;
 
 
-	/* TEST : initialisation sprite du vaisseau joueur */
-	sprite 				= (Sprite*)malloc(sizeof(Sprite));
-	assert( sprite != NULL);
-	spriteInit(sprite, 0, RESS_VAISSEAU_JOUEUR, ressourceGetLargeurImage(res, RESS_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_VAISSEAU_JOUEUR), ecran->largeur, ecran->hauteur);
-	sprite->type 		= SPRITE_TYPE_VAISSEAU_JOUEUR;
-	spriteSetPosition(sprite, 32, (ecran->hauteur - sprite->hauteur)/2);
-	scene->sprites[0]	= sprite;
+	/* TEST : initialisation element du vaisseau joueur */
+	element 				= (ElementScene*)malloc(sizeof(ElementScene));
+	assert( element != NULL);
+	elementInit(element, 0, RESS_VAISSEAU_JOUEUR, ressourceGetLargeurImage(res, RESS_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_VAISSEAU_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
+	element->type 		= SPRITE_TYPE_VAISSEAU_JOUEUR;
+	elementSetPosition(element, 32, (hauteurGraphique - element->hauteur)/2);
+	scene->elements[0]	= element;
 }
 
 void sceneLibere(Scene *scene)
@@ -43,95 +41,78 @@ void sceneLibere(Scene *scene)
 	int i;
 	assert( scene != NULL);
 
-	for (i=0; i<scene->numSprites; i++)
+	for (i=0; i<scene->numElements; i++)
 	{
-		if (scene->sprites[i] != NULL)
+		if (scene->elements[i] != NULL)
 		{
-			spriteLibere(scene->sprites[i]);
-			free(scene->sprites[i]);
+			elementLibere(scene->elements[i]);
+			free(scene->elements[i]);
 		}
 	}
 
-	free(scene->sprites);
-	scene->numSprites = 0;
+	free(scene->elements);
+	scene->numElements = 0;
 }
 
-
-
-void sceneAffiche(const Scene *scene)
-{
-	int i;
-	for (i=0; i< scene->numSprites; i++)
-	{
-		if (scene->sprites[i] != NULL && spriteVisible(scene->sprites[i]) == 1)
-		{
-			/*printf("OK. ");*/
-			ecranAfficheImage( scene->ecran, ressourceGetImage(scene->ressource, spriteGetIndexImage(scene->sprites[i])), spriteGetX(scene->sprites[i]), spriteGetY(scene->sprites[i]) );
-		}
-	}
-}
-
-Sprite* sceneCreerSprite(Scene *scene, int type)
+ElementScene* sceneCreerElementScene(Scene *scene, int type)
 {
 	/* To Do */
 	return NULL;
 }
 
-
-
 void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 {
-	Sprite *vaiss				= scene->sprites[0];
+	ElementScene *vaiss			= scene->elements[0];
 	float vitesseDeplacement 	= 768.0f/0.88f;
 	int dy						= -(int)(tempsSecondes * vitesseDeplacement);
-	int y 						= spriteGetY( vaiss );
+	int y 						= elementGetY( vaiss );
 
 	/* Attention à ne pas sortir le vaisseau joueur de l'ecran : */
 	if ( (y + dy) < 0)
 		dy 						= -y;
 
-	spriteSetPosition( vaiss, spriteGetX( vaiss ), y + dy );
+	elementSetPosition( vaiss, elementGetX( vaiss ), y + dy );
 }
 
 void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 {
-	Sprite *vaiss				= scene->sprites[0];
+	ElementScene *vaiss			= scene->elements[0];
 	float vitesseDeplacement 	= 768.0f/0.88f;
 	int dy						= (int)(tempsSecondes * vitesseDeplacement);
-	int y 						= spriteGetY( vaiss );
+	int y 						= elementGetY( vaiss );
 
 	/* Attention à ne pas sortir le vaisseau joueur de l'ecran : */
-	if ( (y + dy) > (vaiss->hauteurEcran - vaiss->hauteur))
-		dy 						= (vaiss->hauteurEcran - vaiss->hauteur) - y;
+	if ( (y + dy) > (vaiss->hauteurSceneVisible - vaiss->hauteur))
+		dy 						= (vaiss->hauteurSceneVisible - vaiss->hauteur) - y;
 
-	spriteSetPosition( vaiss, spriteGetX( vaiss ), y + dy );
+	elementSetPosition( vaiss, elementGetX( vaiss ), y + dy );
 }
 
 void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 {
-    Sprite *vaiss				= scene->sprites[0];
+    ElementScene *vaiss			= scene->elements[0];
 	float vitesseDeplacement 	= 768.0f/0.88f;
 	int dx						= (int)(tempsSecondes * vitesseDeplacement);
-	int x                       = spriteGetX(vaiss);
+	int x                       = elementGetX(vaiss);
 
     /* Attention à ne pas sortir le vaisseau joueur de l'ecran : */
-    if ((x+dx) >(vaiss->largeurEcran - vaiss ->largeur))
-        dx                      =(vaiss->largeurEcran - vaiss ->largeur) -x;
-    spriteSetPosition(vaiss, x+dx, spriteGetY(vaiss));
+    if ((x+dx) >(vaiss->largeurSceneVisible - vaiss ->largeur))
+        dx                      =(vaiss->largeurSceneVisible - vaiss ->largeur) -x;
+    elementSetPosition(vaiss, x+dx, elementGetY(vaiss));
 }
 
 void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
 {
-    Sprite *vaiss				= scene->sprites[0];
+    ElementScene *vaiss			= scene->elements[0];
 	float vitesseDeplacement 	= 768.0f/0.88f;
 	int dx						= -(int)(tempsSecondes * vitesseDeplacement);
-	int x                       = spriteGetX(vaiss);
+	int x                       = elementGetX(vaiss);
 
     /* Attention à ne pas sortir le vaisseau joueur de l'ecran : */
 	if ( (x + dx) < 0)
 		dx						= -x;
 
-    spriteSetPosition(vaiss, x+dx, spriteGetY(vaiss));
+    elementSetPosition(vaiss, x+dx, elementGetY(vaiss));
 }
 
 

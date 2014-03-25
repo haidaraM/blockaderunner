@@ -33,7 +33,7 @@ CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi # -ggdb   #-O2   # pour optimiser
 default: $(BIN)/$(EXEC)
 
 
-$(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/Jeu.o $(OBJ)/Ecran.o $(OBJ)/Entree.o $(OBJ)/Ressource.o $(OBJ)/Scene.o $(OBJ)/Sprite.o
+$(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Ressource.o $(OBJ)/GraphiqueSDL.o $(OBJ)/EntreeSDL.o $(OBJ)/Scene.o $(OBJ)/ElementScene.o
 	$(LD)  $^ $(LDFLAGS) $(LIBS) -o $@
 
 $(OBJ)/%.o: $(SRC)/%.c

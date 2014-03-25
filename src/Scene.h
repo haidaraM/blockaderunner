@@ -6,8 +6,7 @@
 #ifndef _SCENE_H
 #define _SCENE_H
 
-#include "Sprite.h"
-#include "Ecran.h"
+#include "ElementScene.h"
 #include "Ressource.h"
 #include "Niveau.h"
 
@@ -15,15 +14,15 @@
 
 typedef struct
 {
-	/** nombre de sprites. */
-	int numSprites;
-	/** tableau de pointeur sur Sprite.*/
-	Sprite **sprites;
-	/** pointeur vers l'instance du module Ecran : utile pour l'affichage de la scène. */
-	Ecran *ecran;
+	/** Portion visible de la scène. */
+	int largeurAffichage, hauteurAffichage;
+	/** nombre de elements. */
+	int numElements;
+	/** tableau de pointeur sur ElementScene.*/
+	ElementScene **elements;
 	/** pointeur vers l'instance en cours du module Niveau : décrit le niveau du jeu en cours.*/
 	Niveau *niveau;
-	/** pointeur vers l'instance du module Ressource : utile pour créer des sprites. */
+	/** pointeur vers l'instance du module Ressource : utile pour créer des elements. */
 	Ressource *ressource;
 } Scene;
 
@@ -31,24 +30,16 @@ typedef struct
 /**
 * @brief Initialise la scène.
 *
-* Un lien vers le niveau en cours est nécessaire, la scène se construira d'après le contenu du niveau. 
-* Un lien vers le module Ecran est nécessaire pour l'affichage de la scène (collection de sprites).
-* Un lien vers le module Ressource est nécessaire pour instancier les divers sprites (Ressource permet d'associer des ressources (images, sons)).
+* Un lien vers le module Ressource est nécessaire pour instancier les divers elements (Ressource permet d'associer des ressources (images, sons)).
 *
 */
-void sceneInit(Scene *scene, Niveau *niv, Ecran *ecran, Ressource *res);
+void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGraphique);
 /**
 * @brief Libère les ressources du module.
 */
 void sceneLibere(Scene *scene);
-/**
-* @brief Affiche la portion visible de la scène.
-*/
-void sceneAffiche(const Scene *scene);
-/**
-* @brief TODO : à implementer.
-*/
-Sprite* sceneCreerSprite(Scene *scene, int type);
+
+ElementScene* sceneCreerElementScene(Scene *scene, int type);
 /**
 * @brief Deplace le vaisseau du joueur vers le haut.
 * @param scene[in, out] : instance de la Scene.
