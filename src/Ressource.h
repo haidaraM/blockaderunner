@@ -13,21 +13,51 @@
 
 
 
-#define RESS_NUM_IMAGES							1
-#define RESS_NUM_SONS							0
-#define RESS_NUM_POLICES						0
+#define RESS_NUM_IMAGES											32
+#define RESS_NUM_SONS											0
+#define RESS_NUM_POLICES										1
 
-#define RESS_DIR_IMAGES							"data/images/"
-#define RESS_DIR_SONS							"data/sounds/"
-#define RESS_DIR_POLICES						"data/fonts/"
-#define RESS_DIR_SAUVEGARDE						"data/save/"
 
-#define RESS_TITRE_JEU 							"Blockade Runner"
+/* REPERTOIRES */
 
-#define RESS_VAISSEAU_JOUEUR 					0
-#define RESS_FICHIER_VAISSEAU_JOUEUR			"playership.png"
-#define RESS_LARGEUR_VAISSEAU_JOUEUR			128
-#define RESS_HAUTEUR_VAISSEAU_JOUEUR 			52
+#define RESS_DIR_IMAGES											"data/images/"
+#define RESS_DIR_SONS											"data/sons/"
+#define RESS_DIR_POLICES										"data/polices/"
+#define RESS_DIR_SAUVEGARDES									"data/sauvegardes/"
+
+
+/* TEXTES */
+
+#define RESS_TXT_TITRE_JEU 	 									"Blockade Runner"
+
+
+/* POLICES */
+
+#define RESS_POL_FICHIER_MENU									"ethnocen.ttf"
+#define RESS_POL_TAILLE_MENU									18
+
+
+/* IMAGES */
+ 
+#define RESS_IMG_VAISSEAU_JOUEUR			 					0
+#define RESS_IMG_FICHIER_VAISSEAU_JOUEUR						"playership.png"
+#define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
+#define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						52
+
+#define RESS_IMG_SPLASH						 					10
+#define RESS_IMG_FICHIER_SPLASH									"splash0.jpg"
+#define RESS_IMG_LARGEUR_SPLASH									1366
+#define RESS_IMG_HAUTEUR_SPLASH			 						720
+
+#define RESS_IMG_FOND_MENU					 					11
+#define RESS_IMG_FICHIER_FOND_MENU								"menu.jpg"
+#define RESS_IMG_LARGEUR_FOND_MENU								1366
+#define RESS_IMG_HAUTEUR_FOND_MENU		 						720
+
+#define RESS_IMG_FOND_NIVEAU_0				 					20
+#define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"
+#define RESS_IMG_LARGEUR_FOND_NIVEAU_0							4096
+#define RESS_IMG_HAUTEUR_FOND_NIVEAU_0	 						720
 
 
 /**

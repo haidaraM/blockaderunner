@@ -16,8 +16,11 @@
 
 SDL_Surface* chargeImage(char* nomFichier)
 {
-	SDL_Surface *image;
+	SDL_Surface *image = NULL;
 	char file[64], dir[64];
+
+	if (nomFichier == NULL)
+		return NULL;
 
 	strcpy(file, nomFichier);
 	strcpy(dir, RESS_DIR_IMAGES);
@@ -32,18 +35,33 @@ SDL_Surface* chargeImage(char* nomFichier)
 	return image;
 }
 
+void chargePolices(GraphiqueSDL *graphique)
+{
+	char file[64], dir[64];
+	assert( graphique != NULL);
+	
+	strcpy(file, RESS_POL_FICHIER_MENU);
+	strcpy(dir, RESS_DIR_POLICES);
+	
+	graphique->policeMenu 	= TTF_OpenFont(strcat(dir, file), RESS_POL_TAILLE_MENU);
+	if(!graphique->policeMenu) {
+    	printf("TTF_OpenFont: %s\n", TTF_GetError());
+	    exit(2);
+	}
+}
 
 
 /* Interface */
 
-void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, int largeur, int hauteur, char *titre, int mode)
+void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode)
 {
 	SDL_Rect **modes;
 	char **fichiersImages;
 	int i;
-
 	int imgFlags, imgRes;
-	assert( graphique != NULL && largeur > 0 && hauteur > 0 );
+	SDL_Color couleurTexteMenu = { 249, 255, 253 };
+
+	assert( graphique != NULL && ressource != NULL && menu != NULL && largeur > 0 && hauteur > 0 );
 
 	#ifdef JEU_VERBOSE
 		printf("GraphiqueSDL :\n    initialisation ...\n");
@@ -57,7 +75,8 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, int largeur, i
 
 
 	#ifdef JEU_VERBOSE
-	/* Evaluation des modes video disponibles */
+	/*---------------------------------------------------------------------
+		 Evaluation des modes video disponibles */
 
 	modes = SDL_ListModes(NULL, SDL_FULLSCREEN | SDL_HWSURFACE);
 	/* verifie s'il ya plusieurs modes disponibles */
@@ -80,7 +99,8 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, int largeur, i
 	#endif
 
 
-	/* Initialisation fenetre principale (SDL) */
+	/*---------------------------------------------------------------------
+		 Initialisation fenetre principale (SDL) */
 
 	graphique->surface 		= SDL_SetVideoMode( largeur, hauteur, 32, SDL_HWSURFACE | SDL_DOUBLEBUF );
 	assert( graphique->surface != NULL );
@@ -100,7 +120,8 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, int largeur, i
 		SDL_WM_SetCaption( graphique->titre, NULL);
 
 
-	/* Initialisation de SDL_image */
+	/*---------------------------------------------------------------------
+		 Initialisation de SDL_image */
 
 	imgFlags			= IMG_INIT_JPG | IMG_INIT_PNG;
 	imgRes				= IMG_Init(imgFlags);
@@ -111,7 +132,8 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, int largeur, i
 	}
 
 
-	/* Chargement de toutes les images du Jeu : */
+	/*---------------------------------------------------------------------
+	 	Chargement de toutes les images du Jeu : */
 
 	#ifdef JEU_VERBOSE
 		printf("    chargement des images.\n");
@@ -120,27 +142,78 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, int largeur, i
 	if (graphique->images == NULL)
 	{
 		printf("ERREUR : Ressources (GraphiqueSDL) : impossible d'allouer la memoire pour les images.\n");
+		assert( graphique->images != NULL);
 	}
-	assert( graphique->images != NULL);
+	fichiersImages = ressource->images;	
 	for (i=0; i< RESS_NUM_IMAGES; i++)
+	{
 		graphique->images[i]	= 0;
-
-	fichiersImages = ressource->images;
-	for (i=0; i< RESS_NUM_IMAGES; i++)
 		graphique->images[i] 	= chargeImage(fichiersImages[i]);
+	}
+	#ifdef JEU_VERBOSE
+		printf("    chargement des images OK.\n");
+	#endif
+	
+	/*---------------------------------------------------------------------
+		 Initialisation de SDL_ttf : */
+
+	#ifdef JEU_VERBOSE
+		printf("    initialisation SDL_ttf.\n");
+	#endif
+	if ( TTF_Init() == -1 ) {
+    	printf("TTF_Init: %s\n", TTF_GetError());
+    	exit(2);
+	}
+
+	#ifdef JEU_VERBOSE
+		printf("    chargement des polices.\n");
+	#endif
+	chargePolices(graphique);
+
+	/* Creation des Elements Menu */
+	graphique->textesMenu 	= (SDL_Surface**)malloc(MENU_NUM_ELEMENTS*sizeof(SDL_Surface*));
+	if (graphique->textesMenu == NULL)
+	{
+		printf("ERREUR : (GraphiqueSDL) : impossible d'allouer la memoire pour les rendus de texte (Menu).\n");
+		assert( graphique->textesMenu != NULL);
+	}	
+	#ifdef JEU_VERBOSE
+		printf("    rendu du texte (Menu).\n");
+	#endif
+	for (i=0; i< MENU_NUM_ELEMENTS; i++)
+	{
+		graphique->textesMenu[i]	= 0;
+		graphique->textesMenu[i]	= TTF_RenderText_Blended(graphique->policeMenu, menu->elements[i].texte, couleurTexteMenu);
+		assert( graphique->textesMenu[i] != NULL );
+	}
+
+	/*---------------------------------------------------------------------
+		FIN */
 	
 	#ifdef JEU_VERBOSE
 		printf("    initialisation OK.\n");
 	#endif
+
 }
 
 void graphiqueLibere(GraphiqueSDL *graphique)
 {
 	int i;
+
 	for (i=0; i< RESS_NUM_IMAGES; i++)
 		if (graphique->images[i] != NULL)
 			SDL_FreeSurface(graphique->images[i]);
 	free(graphique->images);
+
+	for (i=0; i< MENU_NUM_ELEMENTS; i++)
+		if (graphique->textesMenu[i] != NULL)
+			SDL_FreeSurface(graphique->textesMenu[i]);
+	free(graphique->textesMenu);
+
+	TTF_CloseFont(graphique->policeMenu);	
+
+	/* SDL_ttf */
+	TTF_Quit();
 
 	/* SDL_image */
 	IMG_Quit();
@@ -165,6 +238,45 @@ void graphiqueEfface(GraphiqueSDL *graphique)
 	SDL_FillRect( graphique->surface, &graphique->surface->clip_rect, graphique->couleurFond );
 }
 
+void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsigned char vert, unsigned char bleu)
+{
+	graphique->couleurFond	= SDL_MapRGB( graphique->surface->format, rouge, vert, bleu );
+}
+
+void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
+{
+	int i;
+	SDL_Rect offset;
+
+	switch(menu->etat)
+	{
+	case MENU_ETAT_INTRO:
+		offset.x = 0;
+		offset.y = 0;
+		SDL_BlitSurface( graphique->images[RESS_IMG_SPLASH], NULL, graphique->surface, &offset);
+		break;
+	case MENU_ETAT_CHOIX_JOUEUR:
+		offset.x = 0;
+		offset.y = 0;
+		SDL_BlitSurface( graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
+		for (i=0; i< MENU_NUM_ELEMENTS; i++)
+		{
+			if (menu->elements[i].visible == 1)
+			{
+				offset.x = menu->elements[i].rect.x;
+				offset.y = menu->elements[i].rect.y;			
+				SDL_BlitSurface( graphique->textesMenu[i], NULL, graphique->surface, &offset);
+			}	
+		}
+		break; 
+	default:
+		offset.x = 0;
+		offset.y = 0;
+		SDL_BlitSurface( graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
+		break;
+	}
+}
+
 void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 {
 	int i;
@@ -182,10 +294,5 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	}
 }
 
-
-void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsigned char vert, unsigned char bleu)
-{
-	graphique->couleurFond	= SDL_MapRGB( graphique->surface->format, rouge, vert, bleu );
-}
 
 

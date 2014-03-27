@@ -30,7 +30,8 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 	/* TEST : initialisation element du vaisseau joueur */
 	element 				= (ElementScene*)malloc(sizeof(ElementScene));
 	assert( element != NULL);
-	elementInit(element, 0, RESS_VAISSEAU_JOUEUR, ressourceGetLargeurImage(res, RESS_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_VAISSEAU_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
+	elementInit(element, 0, RESS_IMG_VAISSEAU_JOUEUR,
+				ressourceGetLargeurImage(res, RESS_IMG_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_IMG_VAISSEAU_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
 	element->type 		= SPRITE_TYPE_VAISSEAU_JOUEUR;
 	elementSetPosition(element, 32, (hauteurGraphique - element->hauteur)/2);
 	scene->elements[0]	= element;

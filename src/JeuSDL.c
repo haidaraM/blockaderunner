@@ -30,14 +30,19 @@ void jeuInit(JeuSDL *jeu)
 	/* Initialisation du dictionnaire des ressources du jeu */
 	ressourceInit(&jeu->ressource);
 
+	/* Initialisation du Menu */
+	menuInit(&jeu->menu);
+
 	/* Initialisation fenêtre principale */
-	graphiqueInit(&jeu->graphique, &(jeu->ressource), 1366, 720, "Blockade Runner", GFX_MODE_FENETRE);
+	graphiqueInit(&jeu->graphique, &jeu->ressource, &jeu->menu, 1366, 720, "Blockade Runner", GFX_MODE_FENETRE);
 
 	/* Initialisation des entrées souris + clavier */
 	entreeInit(&jeu->entree);
 
 	/* Initialisation de la scène */
 	sceneInit(&jeu->scene, &jeu->ressource, jeu->graphique.largeur, jeu->graphique.hauteur);
+
+	jeu->etatCourantJeu = JEU_ETAT_MENU;
 
 	#ifdef JEU_VERBOSE
 		printf("\nBLOCKADE > initialisation OK.\n\n");
@@ -51,49 +56,85 @@ void jeuBoucle(JeuSDL *jeu)
 	int continueJeu					= 1;
 	GraphiqueSDL *graphique	 		= &jeu->graphique;
 	EntreeSDL *entree				= &jeu->entree;
+	Menu *menu						= &jeu->menu;
 
     float tempsDernierAffichage, dureeBoucle, debutBoucle;
     /* Période de temps (secondes) entre deux raffraichissements écran */
-    float periodeAffichage = 1.0f/60.0f;
+    float periodeAffichage = 1.0f/32.0f;
 
 	graphiqueRaffraichit(graphique);
 
     tempsDernierAffichage	= getTempsSecondes();
 	dureeBoucle	 			= 0.0f;
 
-	/************************************/
-	/* Tant que ce n'est pas la fin ... */
-	/************************************/
+	/***************************************/
+	/* Tant que ce n'est pas la fin du Jeu */
+	/***************************************/
 	while ( continueJeu == 1 )
 	{
        	debutBoucle 		= getTempsSecondes();
 
 		/* Sonde les entrées (souris + clavier) pour des évènements */
 		entreeSonde( entree );
-		if (entreeFermetureJeu(entree)==1 || entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
-			continueJeu	 		= 0;
 
-		if (entreeToucheEnfoncee(entree, SDLK_UP) == 1)
-			sceneDeplaceVaisseauJoueurHaut( &jeu->scene, dureeBoucle );
-		if (entreeToucheEnfoncee(entree, SDLK_DOWN) == 1)
-			sceneDeplaceVaisseauJoueurBas( &jeu->scene, dureeBoucle );
-        if (entreeToucheEnfoncee(entree, SDLK_RIGHT)==1)
-            sceneDeplaceVaisseauJoueurDroite(&jeu->scene, dureeBoucle);
+		/* Traitement des Evenements */
+		if (entreeFermetureJeu(entree)==1)
+			continueJeu 		= 0;
+
+		
+		if ( jeu->etatCourantJeu == JEU_ETAT_NIVEAU )
+		{	/* Le jeu est enclenché (Niveau) ... */
+
+			if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
+				continueJeu	 		= 0;
+
+			if (entreeToucheEnfoncee(entree, SDLK_UP) == 1)
+				sceneDeplaceVaisseauJoueurHaut( &jeu->scene, dureeBoucle );
+			if (entreeToucheEnfoncee(entree, SDLK_DOWN) == 1)
+				sceneDeplaceVaisseauJoueurBas( &jeu->scene, dureeBoucle );
+        	if (entreeToucheEnfoncee(entree, SDLK_RIGHT)==1)
+        	    sceneDeplaceVaisseauJoueurDroite(&jeu->scene, dureeBoucle);
             if (entreeToucheEnfoncee(entree, SDLK_LEFT)==1)
-            sceneDeplaceVaisseauJoueurGauche(&jeu->scene, dureeBoucle);
+        	    sceneDeplaceVaisseauJoueurGauche(&jeu->scene, dureeBoucle);
+	
+        	/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge */
+        	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
+        	{
+        		graphiqueEfface( graphique );
+				/*
+				*/
+				graphiqueAfficheScene( graphique, &jeu->scene );
+				/*
+				*/
+            	graphiqueRaffraichit( graphique );
 
-        /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge */
-        if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
-        {
-        	graphiqueEfface( graphique );
+        		tempsDernierAffichage 	= getTempsSecondes();
+        	}
 
-			graphiqueAfficheScene( graphique, &jeu->scene );
+		} else{
+			/* Le Menu est affiché ... */
 
-            /* on permute les deux buffers (cette fonction ne doit se faire qu'une seule fois dans a boucle) */
-            graphiqueRaffraichit( graphique );
+			/* on passe au menu les entrées et la durée de la boucle (en secondes) */		
+			menuMiseAJour(menu, dureeBoucle);
 
-        	tempsDernierAffichage 	= getTempsSecondes();
-        }
+			if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
+				continueJeu	 		= 0;
+
+			/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge */
+        	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
+        	{
+        		graphiqueEfface( graphique );
+				/*
+				*/
+				graphiqueAfficheMenu( graphique, &jeu->menu );
+				/*
+				*/
+            	graphiqueRaffraichit( graphique );
+
+        		tempsDernierAffichage 	= getTempsSecondes();
+        	}
+		}
+		
 
 		dureeBoucle 		= getTempsSecondes() - debutBoucle;
 	}
@@ -102,8 +143,9 @@ void jeuBoucle(JeuSDL *jeu)
 
 void jeuLibere( JeuSDL *jeu )
 {
-	ressourceLibere( &jeu->ressource);
-	sceneLibere( &jeu->scene);
+	ressourceLibere( &jeu->ressource );
+	menuLibere( &jeu->menu );
+	sceneLibere( &jeu->scene );
 	entreeLibere( &jeu->entree );
 	graphiqueLibere( &jeu->graphique );
 

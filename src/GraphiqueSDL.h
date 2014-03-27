@@ -11,13 +11,15 @@
 
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include "SDL/SDL_ttf.h"
 
 #include "Ressource.h"
+#include "Menu.h"
 #include "Scene.h"
 
 #define GFX_MODE_FULLSCREEN 				0
 #define GFX_MODE_FENETRE	 				1
-#define GFX_FENETRE_TITRE_DEFAUT			"Blockade"
+#define GFX_FENETRE_TITRE_DEFAUT			"Blockade Runner"
 
 
 /**
@@ -42,6 +44,10 @@ typedef struct
 	SDL_Surface *surface;
 	/** Tableau de pointeurs sur SDL_Surface (toutes les images chargées du jeu). */
 	SDL_Surface **images;
+	/** Tableau de pointeurs sur SDL_Surface (tous les rendus de texte du Menu). */
+	SDL_Surface **textesMenu;
+
+	TTF_Font *policeMenu;
 
 } GraphiqueSDL;
 
@@ -51,7 +57,7 @@ typedef struct
 * @brief Initialise le sous-système video.
 * @param graphique[in, out] : doit être non NULL.
 */
-void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, int largeur, int hauteur, char *titre, int mode);
+void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode);
 /**
 * @brief Libère les ressources.
 */
@@ -73,6 +79,10 @@ void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsig
 * @brief Remplit la surface d'affichage d'une couleur unie, laquelle est définie par appel à graphiqueSetCouleurFond().
 */
 void graphiqueEfface(GraphiqueSDL *graphique);
+/**
+* @brief Affiche le Menu.
+*/
+void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu );
 /**
 * @brief Affiche la portion visible de la scène sur la surface d'affichage principale (fenêtre).
 */
