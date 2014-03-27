@@ -9,6 +9,9 @@ SRC		 		= src
 BIN		 		= bin
 EXEC 			= test00
 
+#Executables des Tests de regression
+JOUEUR_TEST		= joueurTest
+
 CC 				= gcc
 LD 				= gcc
 
@@ -27,14 +30,14 @@ LDFLAGS  		=
 CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi # -ggdb   #-O2   # pour optimiser
 
 
-
-
-
-default: $(BIN)/$(EXEC)
+all: $(BIN)/$(EXEC) $(BIN)/$(JOUEUR_TEST)
 
 
 $(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Ressource.o $(OBJ)/GraphiqueSDL.o $(OBJ)/EntreeSDL.o $(OBJ)/Scene.o $(OBJ)/ElementScene.o
 	$(LD)  $^ $(LDFLAGS) $(LIBS) -o $@
+
+$(BIN)/$(JOUEUR_TEST): $(OBJ)/JoueurMainTest.o $(OBJ)/Joueur.o
+	$(LD) $(CFLAGS) $^ -o $@ 
 
 $(OBJ)/%.o: $(SRC)/%.c
 	$(CC) -c $(CFLAGS) $(INCLUDE) $< -o $@
