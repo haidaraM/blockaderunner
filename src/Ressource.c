@@ -9,6 +9,10 @@
 #include <string.h>
 
 
+/*------------------------------------------------------------------------------------------------------------------
+	FONCTIONS INTERNES
+*/
+
 
 void creeListeImages(Ressource *res)
 {
@@ -52,24 +56,133 @@ void creeListeSons(Ressource *res)
 void creeListePolices(Ressource *res)
 {}
 
+void chargeJoueurs(Ressource *res)
+{
+	FILE *fic;
+	
+	int i;
+	char nom[64];/* = NULL;*/
+	int numJoueurs=0, score=0, progression=0;
+	int valret;
+	char dir[64], file[64];
+	char *nomFic;
+	strcpy(dir, RESS_DIR_SAUVEGARDES);
+	strcpy(file, RESS_SAU_FICHIER_JOUEURS);
+	nomFic = strcat(dir, file);
+
+	assert( res!=NULL && res->joueurs!=NULL);
+
+	fic 		= fopen(nomFic, "r");
+	if(fic == NULL)
+	{
+		printf("Erreur : (Ressource) : Impossible d'ouvrir le fichier %s.\n", nomFic);
+		exit(EXIT_FAILURE);	
+	}
+	
+	fscanf(fic, "%d", &numJoueurs);
+	if (numJoueurs > RESS_SAU_MAX_JOUEURS)
+		numJoueurs = RESS_SAU_MAX_JOUEURS;
+
+	res->numJoueurs = numJoueurs;
+	
+	for (i=0; i< numJoueurs; i++)
+	{
+		valret = fscanf(fic, "%s", nom);
+		if (valret < 1)
+		{	
+			printf("Erreur de lecture du fichier %s : nom joueur illisible.\n", nomFic);
+			exit(EXIT_FAILURE);
+		}
+		valret = fscanf(fic, "%d %d", &progression, &score);
+		if (valret != 2)
+		{	
+			printf("Erreur de lecture du fichier %s : progression et score illisibles.\n", nomFic);
+			exit(EXIT_FAILURE);
+		}
+		
+		res->joueurs[i] = (Joueur*)malloc(sizeof(Joueur));
+		assert( res->joueurs[i] != NULL);
+		joueurInit(res->joueurs[i], nom, (unsigned int)progression, score);		
+	}
+
+	fclose(fic); 
+}
 
 
-/* INTERFACE */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*------------------------------------------------------------------------------------------------------------------
+	INTERFACE DU MODULE
+*/
 
 void ressourceInit(Ressource *res)
 {
+	int i;
+	assert( res != NULL);
 
+	#ifdef JEU_VERBOSE
+		printf("Ressource :\n    initialisation ...\n");
+	#endif
+
+	/* --- */
+	res->joueurs = (Joueur**)malloc(RESS_SAU_MAX_JOUEURS*sizeof(Joueur*));
+	assert( res->joueurs != NULL);
+
+	for (i=0; i< RESS_SAU_MAX_JOUEURS; i++)
+		res->joueurs[i] = NULL;/* initialisation à NULL */
+
+	#ifdef JEU_VERBOSE
+		printf("	chargement des données joueurs ...\n");
+	#endif
+	chargeJoueurs(res);
+
+	/* --- */
 	creeListeImages(res);
+
+	/* --- */
 	creeListeSons(res);
+
+	/* --- */
 	creeListePolices(res);
+
+	#ifdef JEU_VERBOSE
+		printf("	initialisation OK.\n");
+	#endif
 }
 
 void ressourceLibere(Ressource *res)
 {
+	int i;
+	for (i=0; i< RESS_SAU_MAX_JOUEURS; i++)
+		if (res->joueurs[i] != NULL)
+			free(res->joueurs[i]);
+	free(res->joueurs);
 	free(res->images);
 	free(res->dimensionImages);
 }
 
+int ressourceGetNumJoueurs(Ressource *res)
+{
+	assert( res!=NULL);
+	return res->numJoueurs;
+}
+Joueur** ressourceGetJoueurs(Ressource *res)
+{
+	assert( res != NULL);
+	return res->joueurs;
+}
 
 int ressourceGetLargeurImage(const Ressource *res, int nomRessource)
 {

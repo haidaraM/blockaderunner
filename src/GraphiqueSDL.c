@@ -12,7 +12,7 @@
 
 
 
-/* Fonctions internes */ 
+/* --------------------------------------------------------------------------------------------------			Fonctions internes */ 
 
 SDL_Surface* chargeImage(char* nomFichier)
 {
@@ -38,20 +38,40 @@ SDL_Surface* chargeImage(char* nomFichier)
 void chargePolices(GraphiqueSDL *graphique)
 {
 	char file[64], dir[64];
+	char *nomFic;
 	assert( graphique != NULL);
 	
 	strcpy(file, RESS_POL_FICHIER_MENU);
 	strcpy(dir, RESS_DIR_POLICES);
+	nomFic = strcat(dir, file);
 	
-	graphique->policeMenu 	= TTF_OpenFont(strcat(dir, file), RESS_POL_TAILLE_MENU);
+	graphique->policeMenu 	= TTF_OpenFont(nomFic, RESS_POL_TAILLE_MENU);
 	if(!graphique->policeMenu) {
+    	printf("TTF_OpenFont: %s\n", TTF_GetError());
+	    exit(2);
+	}
+
+	graphique->policeListeJoueurs 	= TTF_OpenFont(nomFic, RESS_POL_TAILLE_LISTE_JOUEURS);
+	if(!graphique->policeListeJoueurs) {
     	printf("TTF_OpenFont: %s\n", TTF_GetError());
 	    exit(2);
 	}
 }
 
 
-/* Interface */
+
+
+
+
+
+
+
+
+
+
+
+
+/* --------------------------------------------------------------------------------------------------			Interface du Module */ 
 
 void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode)
 {
@@ -59,7 +79,9 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	char **fichiersImages;
 	int i;
 	int imgFlags, imgRes;
-	SDL_Color couleurTexteMenu = { 249, 255, 253 };
+	TTF_Font *police;
+	SDL_Color couleurTexteMenu 			= { 249, 255, 253 };
+	SDL_Color couleurTexteMenuSurvol 	= { 249, 255, 53 };
 
 	assert( graphique != NULL && ressource != NULL && menu != NULL && largeur > 0 && hauteur > 0 );
 
@@ -170,8 +192,8 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	#endif
 	chargePolices(graphique);
 
-	/* Creation des Elements Menu */
-	graphique->textesMenu 	= (SDL_Surface**)malloc(MENU_NUM_ELEMENTS*sizeof(SDL_Surface*));
+	/* Creation des Elements Menu : MENU_NUM_ELEMENTS paires de rendus de texte (normal & surligné) */
+	graphique->textesMenu 	= (SDL_Surface**)malloc(2*MENU_NUM_ELEMENTS*sizeof(SDL_Surface*));
 	if (graphique->textesMenu == NULL)
 	{
 		printf("ERREUR : (GraphiqueSDL) : impossible d'allouer la memoire pour les rendus de texte (Menu).\n");
@@ -182,9 +204,18 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	#endif
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
 	{
-		graphique->textesMenu[i]	= 0;
-		graphique->textesMenu[i]	= TTF_RenderText_Blended(graphique->policeMenu, menu->elements[i].texte, couleurTexteMenu);
-		assert( graphique->textesMenu[i] != NULL );
+		if (i < MENU_NUM_BASIC_ELEMENTS)
+				police = graphique->policeMenu;
+		else	police = graphique->policeListeJoueurs;
+
+		/* On rend une fois le texte normal */
+		graphique->textesMenu[2*i]		= TTF_RenderText_Blended(police, menu->elements[i].texte, couleurTexteMenu);
+		assert( graphique->textesMenu[2*i] != NULL );
+		menu->elements[i].rect.largeur 	= graphique->textesMenu[2*i]->w;
+		menu->elements[i].rect.hauteur 	= graphique->textesMenu[2*i]->h;
+		/* On rend une seconde fois avec la couleur correspondant au texte surligné */
+		graphique->textesMenu[2*i+1]	= TTF_RenderText_Blended(police, menu->elements[i].texte, couleurTexteMenuSurvol);
+		assert( graphique->textesMenu[2*i+1] != NULL );
 	}
 
 	/*---------------------------------------------------------------------
@@ -264,8 +295,10 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 			if (menu->elements[i].visible == 1)
 			{
 				offset.x = menu->elements[i].rect.x;
-				offset.y = menu->elements[i].rect.y;			
-				SDL_BlitSurface( graphique->textesMenu[i], NULL, graphique->surface, &offset);
+				offset.y = menu->elements[i].rect.y;	
+				if (menu->elements[i].surligne == 0)		
+						SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
+				else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
 			}	
 		}
 		break; 
@@ -273,7 +306,18 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 		offset.x = 0;
 		offset.y = 0;
 		SDL_BlitSurface( graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
-		break;
+		for (i=0; i< MENU_NUM_ELEMENTS; i++)
+		{
+			if (menu->elements[i].visible == 1)
+			{
+				offset.x = menu->elements[i].rect.x;
+				offset.y = menu->elements[i].rect.y;	
+				if (menu->elements[i].surligne == 0)		
+						SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
+				else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
+			}	
+		}
+		break; 
 	}
 }
 

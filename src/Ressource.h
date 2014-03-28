@@ -9,7 +9,8 @@
 
 
 
-#include "Rectangle.h"
+#include "Outils.h"
+#include "Joueur.h"
 
 
 
@@ -26,6 +27,12 @@
 #define RESS_DIR_SAUVEGARDES									"data/sauvegardes/"
 
 
+/* SAUVEGARDES */
+
+#define RESS_SAU_MAX_JOUEURS									24
+#define RESS_SAU_FICHIER_JOUEURS								"joueurs"
+
+
 /* TEXTES */
 
 #define RESS_TXT_TITRE_JEU 	 									"Blockade Runner"
@@ -35,6 +42,7 @@
 
 #define RESS_POL_FICHIER_MENU									"ethnocen.ttf"
 #define RESS_POL_TAILLE_MENU									18
+#define RESS_POL_TAILLE_LISTE_JOUEURS							10
 
 
 /* IMAGES */
@@ -66,12 +74,16 @@
 */
 typedef struct
 {
+	int numJoueurs;
+	/** Tableau de pointeurs sur Joueur : tous les joueurs sauvegardés. */
+	Joueur **joueurs;
 	/** Tableau de chaines de caractères (noms des fichiers images) */	
 	char **images;
 	/** Tableau de Rectangles stockant les dimensions de chaque image */
 	Rectangle *dimensionImages;
-	
+	/** Tableau de chaines de caractères (noms des fichiers sons) */	
 	char **sons;
+	/** Tableau de chaines de caractères (noms des fichiers ttf) */	
 	char **polices;
 
 } Ressource;
@@ -88,6 +100,15 @@ void ressourceInit(Ressource *res);
 * @brief Libère toutes les ressources gérées par le module (images, sons, polices).
 */
 void ressourceLibere(Ressource *res);
+
+
+/**
+* @brief Renvoie le nombre de joueurs sauvegardés.
+*/
+int ressourceGetNumJoueurs(Ressource *res);/**
+* @brief Renvoie le tableau de pointeurs sur Joueur (ie tous les joueurs connus).
+*/
+Joueur** ressourceGetJoueurs(Ressource *res);
 
 /**
 * @brief Renvoie la largeur d'une image cataloguée.

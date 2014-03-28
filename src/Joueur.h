@@ -13,19 +13,20 @@
 
 typedef struct
 {
-       char * nomJoueur;
+       char * nom;
        unsigned int progression;
        int score;
 } Joueur;
 
 /**
-* @fn void joueurInit(Joueur *joueur, char *nom, unsigned int progression)
+* @fn void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
 * @brief Initialise un joueur
 * @param [in, out] joueur
 * @param [in] nom
 * @param [in] progression
+* @param [in] score
 */
-void joueurInit(Joueur *joueur, char *nom, unsigned int progression);
+void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score);
 
 /**
 * @fn void joueurLibere(Joueur * joueur)
@@ -38,8 +39,9 @@ void joueurLibere(Joueur * joueur);
 * @fn void joueurSetScore(Joueur * joueur);
 * @brief met à jour le score du joeur. A REVOIR!!!!!!
 * @param [in, out] joueur
+* @param [in] score
 */
-void joueurSetScore(Joueur * joueur);
+void joueurSetScore(Joueur * joueur, int score);
 
 /**
 * @fn int joueurGetScore(const Joueur *joueur)
@@ -70,3 +72,4 @@ void joueurSetProgression(Joueur * joueur);
 void joueurTestDeRegression();
 
 #endif
+

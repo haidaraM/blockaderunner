@@ -1,19 +1,21 @@
 /**
 * @file Menu.h
-* @brief Le module Menu gère le menu principal du jeu.
+* @brief Le module Menu gère l'introduction au jeu et le menu principal.
 * @author Yann Cortial
 *
 */
 #ifndef _MENU_H
 #define _MENU_H
 
-#include "Rectangle.h"
+#include "Outils.h"
+#include "Joueur.h"
+#include "Ressource.h"
 
 
 
 #define MENU_DUREE_INTRO					8.0f		/* 8 secondes */
 
-/*#define MENU_ETAT_INIT						-1*/
+
 #define MENU_ETAT_INTRO						0
 #define MENU_ETAT_CHOIX_JOUEUR				1
 #define MENU_ETAT_ENTREE_JOUEUR				2
@@ -24,17 +26,19 @@
 #define MENU_ETAT_CHOIX_NIVEAU				12	
 #define MENU_ETAT_SCORE						13					
 #define MENU_ETAT_CHARGEMENT				64
+#define MENU_ETAT_QUITTER					128
 
 
-#define MENU_PADDING_HORZ					18
-#define MENU_PADDING_VERT					18
+#define MENU_PADDING_HORZ					20
+#define MENU_PADDING_VERT					20
 #define MENU_ZONE_X							364
 #define MENU_ZONE_Y							22
 #define MENU_ZONE_LARGEUR					672
 #define MENU_ZONE_HAUTEUR					678
 
 
-#define MENU_NUM_ELEMENTS					10
+#define MENU_NUM_BASIC_ELEMENTS				10
+#define MENU_NUM_ELEMENTS					(MENU_NUM_BASIC_ELEMENTS + RESS_SAU_MAX_JOUEURS) 
 
 #define MENU_RETOUR						0
 #define MENU_JOUEURS					1
@@ -47,6 +51,7 @@
 #define MENU_SCORE						8
 #define MENU_QUITTER					9
 
+#define MENU_TXT_JOUEUR_VIDE 				"*"
 #define MENU_TXT_JOUEURS					"Joueurs"
 #define MENU_TXT_NOUVEAU_JOUEUR				"Nouveau Joueur"
 #define MENU_TXT_ENTRER_NOM					"Entrez un nom : "
@@ -60,26 +65,42 @@
 
 
 
+/**
+* @brief Element du Menu : un texte avec états (actionable, visible, surlignable) et position & dimension.
+*/
 typedef struct
 {
 	char *texte;
 	/** booléen */
 	int visible;
 	/** booléen */
-	int selectionable;
+	int actionable;
 	/** booléen */
-	int selectione;
+	int surligne;
 	/** position */
 	Rectangle rect;
+	/** procédure à exécuter si l'élément est actionable. */
+	void (*action)(void*);
+
 } ElementMenu;
 
+
+/**
+* @brief Structure principale du module Menu.
+*/
 typedef struct
 {
-	/* Etat courant : intro, choix du joueur, menu principal, chargement, etc. */
+	/** Etat courant du Menu : intro, choix du joueur, menu principal, chargement d'un niveau, etc.... */
 	int etat;
+	/** Temps écoulé depuis le lancement de l'application : sert à l'affichage temporaire de l'intro (splashscreen). */
 	float tempsEcoule;
-	/* tableau */
+	/** Tableau de tous les éléments Menu affichables et statiques. */
 	ElementMenu *elements;
+	/** Joueur courant (index dans le tableau maintenu par le module Ressource) */
+	int joueurCourant;
+	/** Réference au module Ressource. (Permet de sauver l'etat des joueurs). */
+	Ressource *ressource;
+
 } Menu;
 
 
@@ -87,16 +108,61 @@ typedef struct
 /**
 * @brief Initialise le module.
 * @param menu[in, out] : doit être non NULL.
+* @param res[in, out] : doit être non NULL et initialisé.
 */
-void menuInit(Menu *menu);
+void menuInit(Menu *menu, Ressource *res);
 /**
 * @brief Libère les ressources du module.
 */
 void menuLibere(Menu *menu);
 /**
-* @brief Raffraichissement (surtout utile pour l'etat 'Intro' (splashscreen)).
+* @brief On affiche l'image d'intro (splashscreen).
 */
-void menuMiseAJour(Menu *menu, float tempsBoucleEcoule);
+void menuIntro(Menu *menu, float tempsBoucleEcoule);
+/**
+* @brief Appelée lorque l'utilisateur souhaite remonter d'un cran dans les menus.
+*/
+void menuRetour(void *m);
+/**
+* @brief Appelée lorque l'utilisateur souhaite quitter l'application.
+*/
+void menuQuitter(void *m);
+/**
+* @brief Appelée lorque l'utilisateur doit choisir le Joueur.
+*/
+void menuChoixJoueur(void *m);
+/**
+* @brief Appelée lorque l'utilisateur souhaite créer un nouveau Joueur.
+*/
+void menuNouveauJoueur(void *m);
+/**
+* @brief Appelée lorque l'utilisateur doit entrer dans le Menu principal.
+*/
+void menuPrincipal(void *m);
+/**
+* @brief Appelée lorque l'utilisateur souhaite voir les commandes du jeu (clavier).
+*/
+void menuCommandes(void *m);
+/**
+* @brief Appelée lorque l'utilisateur souhaite modifier les options de jeu.
+*/
+void menuOptions(void *m);
+/**
+* @brief Appelée lorque l'utilisateur souhaite avoir des informations sur le jeu (auteurs, ...).
+*/
+void menuInfo(void *m);
+/**
+* @brief Appelée lorque l'utilisateur souhaite voir les meilleurs scores.
+*/
+void menuScores(void *m);
+/**
+* @brief Appelée lorque l'utilisateur souhaite lancer une partie.
+*/
+void menuJouer(void *m);
+/**
+* @brief Appelée lorque l'utilisateur a sélectionné un joueur.
+*/
+void menuSelectionJoueur(void *m);
 
 #endif
 
