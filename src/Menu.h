@@ -102,6 +102,8 @@ typedef struct
 	int joueurCourant;
 	/** Lors de la création d'un nouveau joueur, sert à stocker le nom. */
 	char nomNouveauJoueur[JOUEUR_NOM_MAXCHAR+1];
+	/** Niveau sélectionné. */
+	int niveauChoisi;
 	/** Réference au module Ressource. (Permet de sauver l'etat des joueurs). */
 	Ressource *ressource;
 
@@ -187,6 +189,13 @@ void menuSetFinLectureClavier(Menu *menu);
 * @brief Renvoie le pointeur sur le joueur actif (ou NULL si aucun joueur n'a été selectionné dans le menu).
 */
 Joueur* menuGetJoueurChoisi(Menu *menu);
-
+/**
+* @brief Appelée lorsque l'utilisateur a choisi un niveau de jeu.
+*/
+void menuSelectionneNiveau(Menu *menu, int indexElement);
+/**
+* @brief Renvoie le niveau selectionné ou -1 si aucun niveau n'a été selectionné.
+*/
+int menuGetNiveauChoisi(Menu *menu);
 #endif
 

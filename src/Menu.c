@@ -64,6 +64,7 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->tempsEcoule 	= 0.0f;
 	menu->joueurCourant = -1;/* par défaut */
 	menu->nomNouveauJoueur[0] = '\0';
+	menu->niveauChoisi	= -1;
 	menu->elements 		= NULL;
 	menu->elements 		= (ElementMenu*)malloc(MENU_NUM_ELEMENTS * sizeof(ElementMenu));
 	assert( menu->elements != NULL);
@@ -433,4 +434,18 @@ Joueur* menuGetJoueurChoisi(Menu *menu)
 	return menu->ressource->joueurs[menu->joueurCourant];
 }
 
+void menuSelectionneNiveau(Menu *menu, int indexElement)
+{
+	assert( menu != NULL);
+	if (indexElement == MENU_RETOUR);
+		return;
+
+	menu->niveauChoisi = indexElement - MENU_NIVEAU;
+}
+
+int menuGetNiveauChoisi(Menu *menu)
+{
+	assert( menu != NULL);
+	return menu->niveauChoisi;
+}
 

@@ -98,8 +98,10 @@ void jeuBoucle(JeuSDL *jeu)
 			continueJeu 		= 0;
 
 		
-		if ( jeu->etatCourantJeu == JEU_ETAT_NIVEAU )
-		{	/* Le jeu est enclenché (Niveau) ... */
+		switch( jeu->etatCourantJeu )
+		{	
+
+		case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
 
 			if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
 				continueJeu	 		= 0;
@@ -126,9 +128,10 @@ void jeuBoucle(JeuSDL *jeu)
 
         		tempsDernierAffichage 	= getTempsSecondes();
         	}
+			
+			break;
 
-		} else{
-			/* Le Menu est affiché ... */
+		case JEU_ETAT_MENU:			/*-------------   M E N U   ---------------*/
 
 			/* on passe au menu les entrées souris et la durée de la boucle (en secondes) */		
 			sourisX 	= entreeGetSourisX(entree);
@@ -162,8 +165,11 @@ void jeuBoucle(JeuSDL *jeu)
 
 									if (menu->etat == MENU_ETAT_CHOIX_NIVEAU)
 									{
-										
+										menuSelectionneNiveau(menu, i);
+										jeu->niveauCourant = menuGetNiveauChoisi(menu);
+										jeu->etatCourantJeu = JEU_ETAT_JEU; /*JEU_ETAT_CHARGEMENT_NIVEAU;*/
 									}
+									/* On appelle la callback associé à l'élément menu. */
 									(menu->elements[i].action)((void*)menu);
 									choixMenu = -1;
 								}
@@ -225,8 +231,29 @@ void jeuBoucle(JeuSDL *jeu)
 			/* Si le Menu est en état 'Quitter' : on quitte le jeu. */
 			if (menu->etat == MENU_ETAT_QUITTER)
 				continueJeu = 0;
-		}
 		
+			break;
+		
+		case JEU_ETAT_CHARGEMENT_NIVEAU :	/*--------------	CHARGEMENT D'UN NIVEAU 	-------------------*/
+
+			/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
+        	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
+        	{
+        		graphiqueEfface( graphique );
+				/*
+				*/
+				/*graphiqueAfficheMenu( graphique, &jeu->menu );*/
+				/*
+				*/
+            	graphiqueRaffraichit( graphique );
+
+        		tempsDernierAffichage 	= getTempsSecondes();
+        	}
+
+			break;
+
+		default:break;
+		}
 
 		dureeBoucle 		= getTempsSecondes() - debutBoucle;
 	}

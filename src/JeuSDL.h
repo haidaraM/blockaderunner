@@ -26,7 +26,8 @@
 #include "Outils.h"
 
 #define JEU_ETAT_MENU 				0
-#define JEU_ETAT_NIVEAU				1
+#define JEU_ETAT_CHARGEMENT_NIVEAU	1
+#define JEU_ETAT_JEU				2
 
 /**
 * @struct JeuSDL
@@ -51,6 +52,8 @@ typedef struct {
 
 	/** Phase courante = JEU_ETAT_MENU ou JEU_ETAT_NIVEAU. */
 	int etatCourantJeu;
+	/** Niveau en cours ou à charger */
+	int niveauCourant;
 	
 } JeuSDL;
 
