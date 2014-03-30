@@ -124,8 +124,8 @@ char entreeGetAlphaNum(const EntreeSDL *entree)
 	if (entree->toucheRelachee >= SDLK_a && entree->toucheRelachee <= SDLK_z)
 		return 'a' + (entree->toucheRelachee - SDLK_a);
 
-	if (entree->toucheRelachee >= SDLK_0 && entree->toucheRelachee <= SDLK_9)
-		return '0' + (entree->toucheRelachee - SDLK_0);
+	if (entree->toucheRelachee >= SDLK_KP0 && entree->toucheRelachee <= SDLK_KP9)
+		return '0' + (entree->toucheRelachee - SDLK_KP0);
 
 	return 0;
 }

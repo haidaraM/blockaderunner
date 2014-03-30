@@ -1,9 +1,9 @@
 /**
 * @file ElementScene.h
-* @brief
-*
-*  Une instance d'un type donné (élément du Jeu) : vaisseau, asteroide, etc. Caractérisé par des liens sur des ressources prédéfinies (images, sons). 
+* @brief Une instance d'un type donné (élément du Jeu) : vaisseau, asteroide, etc. Caractérisé par des liens sur des ressources prédéfinies (images, sons). 
 *  Tous les ElementScenes sont gérés par la Scene, qui décident notamment lesquels sont visibles, créés, détruits.
+* @author Yann Cortial
+*  
 */
 #ifndef _ELEMENT_SCENE_H
 #define _ELEMENT_SCENE_H

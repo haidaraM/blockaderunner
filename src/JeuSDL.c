@@ -160,6 +160,10 @@ void jeuBoucle(JeuSDL *jeu)
 										jeu->joueur = menuGetJoueurChoisi(menu);
 									}
 
+									if (menu->etat == MENU_ETAT_CHOIX_NIVEAU)
+									{
+										
+									}
 									(menu->elements[i].action)((void*)menu);
 									choixMenu = -1;
 								}

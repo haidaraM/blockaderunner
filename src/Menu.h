@@ -3,7 +3,6 @@
 * @brief Le module Menu gère l'introduction au jeu et le menu principal.
 * @author Yann Cortial
 *
-* @todo Ajouter une fonction 'backspace' pour effacer une lettre quand on entre un nouveau nom de joueur.
 */
 #ifndef _MENU_H
 #define _MENU_H
@@ -38,19 +37,20 @@
 #define MENU_ZONE_HAUTEUR					678
 
 
-#define MENU_NUM_BASIC_ELEMENTS				10
+#define MENU_NUM_BASIC_ELEMENTS				17
 #define MENU_NUM_ELEMENTS					(MENU_NUM_BASIC_ELEMENTS + RESS_SAU_MAX_JOUEURS) 
 
-#define MENU_RETOUR						0
-#define MENU_JOUEURS					1
-#define MENU_NOUVEAU_JOUEUR				2
-#define MENU_ENTRER_NOM					3
-#define MENU_INFO						4
-#define MENU_OPTION						5
-#define MENU_CMD						6
-#define MENU_JOUER						7
-#define MENU_SCORE						8
-#define MENU_QUITTER					9
+#define MENU_RETOUR							0
+#define MENU_JOUEURS						1
+#define MENU_NOUVEAU_JOUEUR					2
+#define MENU_ENTRER_NOM						3
+#define MENU_INFO							4
+#define MENU_OPTION							5
+#define MENU_CMD							6
+#define MENU_JOUER							7
+#define MENU_SCORE							8
+#define MENU_QUITTER						9
+#define MENU_NIVEAU							10
 
 #define MENU_TXT_JOUEUR_VIDE 				"**"
 #define MENU_TXT_JOUEURS					"Joueurs"
@@ -63,6 +63,7 @@
 #define MENU_TXT_SCORE						"Meilleurs Scores"
 #define MENU_TXT_RETOUR						"<<"
 #define MENU_TXT_QUITTER					"Quitter"
+#define MENU_TXT_NIVEAU						"Niveau "
 
 
 
@@ -162,6 +163,10 @@ void menuScores(void *m);
 * @brief Callback appelée lorque l'utilisateur souhaite lancer une partie.
 */
 void menuJouer(void *m);
+/**
+* @brief Callback (vide - inutilisée, JeuSDL appelle directement le chargement d'un niveau).
+*/
+void menuCommencerNiveau(void* m);
 /**
 * @brief Appelée lorque l'utilisateur a sélectionné un joueur.
 */

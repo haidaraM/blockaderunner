@@ -48,8 +48,9 @@ void creeListeJoueurs(Menu *menu)
 
 void menuInit(Menu *menu, Ressource *res)
 {
-	int index;
-	
+	int index, i;
+	char niv[32], indexNiv[16];
+
 	assert( menu != NULL );
 	assert( res != NULL );
 
@@ -156,7 +157,25 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
 	menu->elements[index].rect.y				= MENU_ZONE_Y + MENU_ZONE_HAUTEUR - 2*MENU_PADDING_VERT;
 	menu->elements[index].action				= menuQuitter;
+	
+	for (i=MENU_NIVEAU; i< MENU_NUM_BASIC_ELEMENTS; i++)
+	{
+		strcpy(niv, MENU_TXT_NIVEAU);
+		sprintf(indexNiv, "%d", i-MENU_NIVEAU);
+		strcat(niv, indexNiv); 
+		index = i;
+		menu->elements[index].texte 			= (char*)malloc(64*sizeof(char));
+		assert(menu->elements[index].texte != NULL);
+		strcpy(menu->elements[index].texte, niv);
+		menu->elements[index].visible 			= 0;
+		menu->elements[index].actionable 		= 1;
+		menu->elements[index].surligne	 		= 0;
+		menu->elements[index].rect.x			= MENU_ZONE_X + MENU_PADDING_HORZ;
+		menu->elements[index].rect.y			= MENU_ZONE_Y + (3 + 2*(i - MENU_NIVEAU))*MENU_PADDING_VERT;
+		menu->elements[index].action			= menuCommencerNiveau;
+	}
 
+	
 	/* Remplissage de la liste des noms de joueurs */
 	creeListeJoueurs(menu);
 		
@@ -326,6 +345,7 @@ void menuScores(void *m)
 void menuJouer(void *m)
 {
 	int i;
+	int progression;
 	Menu *menu = (Menu*)m;
 	assert(menu != NULL);
 
@@ -334,7 +354,16 @@ void menuJouer(void *m)
 
 	menu->etat 	= MENU_ETAT_CHOIX_NIVEAU;
 	menu->elements[MENU_RETOUR].visible = 1;
+
+	assert(menu->joueurCourant > -1);
+	progression = 1 + (int)joueurGetProgression(menu->ressource->joueurs[menu->joueurCourant]);
+	for (i=MENU_NIVEAU; i < (MENU_NIVEAU + progression); i++)
+		menu->elements[i].visible = 1;
 }
+
+void menuCommencerNiveau(void* m)
+{}
+
 
 void menuSelectionneJoueur(Menu *menu, int indexElement)
 {

@@ -1,3 +1,8 @@
+/**
+* @file Outils.h
+* @brief Boîte à outils : math, geométrie, ...
+* @author Yann Cortial
+*/
 #ifndef _OUTILS_H
 #define _OUTILS_H
 

@@ -40,7 +40,7 @@
 
 /* POLICES */
 
-#define RESS_POL_FICHIER_MENU									"ethnocen.ttf"
+#define RESS_POL_FICHIER_MENU									"boombox2.ttf"
 #define RESS_POL_TAILLE_MENU									18
 #define RESS_POL_TAILLE_LISTE_JOUEURS							12
 
