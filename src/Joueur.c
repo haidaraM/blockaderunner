@@ -12,8 +12,8 @@
 
 void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
 {
-    assert(joueur!=NULL);
-
+    assert(joueur!=NULL && nom != NULL);
+	
     strcpy(joueur->nom, nom);
     joueur->score=score;
     joueur->progression=progression;
@@ -51,3 +51,4 @@ void joueurTestDeRegression()
     Joueur j;
     joueurInit(&j, "monJoueur", 0, 0);
 }
+

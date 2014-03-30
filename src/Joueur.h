@@ -6,6 +6,11 @@
 #ifndef _JOUEUR_H
 #define _JOUEUR_H
 
+#define JOUEUR_NOM_MAXCHAR				47
+
+
+
+
 /**
 * @struct Joueur
 * @brief
@@ -13,7 +18,7 @@
 
 typedef struct
 {
-       char * nom;
+       char *nom;
        unsigned int progression;
        int score;
 } Joueur;

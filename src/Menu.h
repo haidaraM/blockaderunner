@@ -3,6 +3,7 @@
 * @brief Le module Menu gère l'introduction au jeu et le menu principal.
 * @author Yann Cortial
 *
+* @todo Ajouter une fonction 'backspace' pour effacer une lettre quand on entre un nouveau nom de joueur.
 */
 #ifndef _MENU_H
 #define _MENU_H
@@ -51,7 +52,7 @@
 #define MENU_SCORE						8
 #define MENU_QUITTER					9
 
-#define MENU_TXT_JOUEUR_VIDE 				"*"
+#define MENU_TXT_JOUEUR_VIDE 				"**"
 #define MENU_TXT_JOUEURS					"Joueurs"
 #define MENU_TXT_NOUVEAU_JOUEUR				"Nouveau Joueur"
 #define MENU_TXT_ENTRER_NOM					"Entrez un nom : "
@@ -60,7 +61,7 @@
 #define MENU_TXT_CMD						"Commandes"
 #define MENU_TXT_JOUER						"Jouer"
 #define MENU_TXT_SCORE						"Meilleurs Scores"
-#define MENU_TXT_RETOUR						"<<<"
+#define MENU_TXT_RETOUR						"<<"
 #define MENU_TXT_QUITTER					"Quitter"
 
 
@@ -98,6 +99,8 @@ typedef struct
 	ElementMenu *elements;
 	/** Joueur courant (index dans le tableau maintenu par le module Ressource) */
 	int joueurCourant;
+	/** Lors de la création d'un nouveau joueur, sert à stocker le nom. */
+	char nomNouveauJoueur[JOUEUR_NOM_MAXCHAR+1];
 	/** Réference au module Ressource. (Permet de sauver l'etat des joueurs). */
 	Ressource *ressource;
 
@@ -124,45 +127,61 @@ void menuIntro(Menu *menu, float tempsBoucleEcoule);
 */
 void menuRetour(void *m);
 /**
-* @brief Appelée lorque l'utilisateur souhaite quitter l'application.
+* @brief Callback appelée lorque l'utilisateur souhaite quitter l'application.
 */
 void menuQuitter(void *m);
 /**
-* @brief Appelée lorque l'utilisateur doit choisir le Joueur.
+* @brief Callback appelée lorque l'utilisateur doit choisir le Joueur.
 */
 void menuChoixJoueur(void *m);
 /**
-* @brief Appelée lorque l'utilisateur souhaite créer un nouveau Joueur.
+* @brief Callback appelée lorque l'utilisateur souhaite créer un nouveau Joueur.
 */
 void menuNouveauJoueur(void *m);
 /**
-* @brief Appelée lorque l'utilisateur doit entrer dans le Menu principal.
+* @brief Callback appelée lorque l'utilisateur doit entrer dans le Menu principal.
 */
 void menuPrincipal(void *m);
 /**
-* @brief Appelée lorque l'utilisateur souhaite voir les commandes du jeu (clavier).
+* @brief Callback appelée lorque l'utilisateur souhaite voir les commandes du jeu (clavier).
 */
 void menuCommandes(void *m);
 /**
-* @brief Appelée lorque l'utilisateur souhaite modifier les options de jeu.
+* @brief Callback appelée lorque l'utilisateur souhaite modifier les options de jeu.
 */
 void menuOptions(void *m);
 /**
-* @brief Appelée lorque l'utilisateur souhaite avoir des informations sur le jeu (auteurs, ...).
+* @brief Callback appelée lorque l'utilisateur souhaite avoir des informations sur le jeu (auteurs, ...).
 */
 void menuInfo(void *m);
 /**
-* @brief Appelée lorque l'utilisateur souhaite voir les meilleurs scores.
+* @brief Callback appelée lorque l'utilisateur souhaite voir les meilleurs scores.
 */
 void menuScores(void *m);
 /**
-* @brief Appelée lorque l'utilisateur souhaite lancer une partie.
+* @brief Callback appelée lorque l'utilisateur souhaite lancer une partie.
 */
 void menuJouer(void *m);
 /**
 * @brief Appelée lorque l'utilisateur a sélectionné un joueur.
 */
-void menuSelectionJoueur(void *m);
+void menuSelectionneJoueur(Menu *menu, int indexElement);
+/**
+* @brief Appelée lorque l'utilisateur tape au clavier : un caractère alphanumérique a été saisi.
+*/
+void menuSetCaractere(Menu *menu, char alphaNum);
+/**
+* @brief Appelée lorque l'utilisateur tape au clavier : la touche Backspace a été pressée.
+*/
+void menuEffaceCaractere(Menu *menu);
+/**
+* @brief Appelée lorque l'utilisateur tape au clavier : la touche ENTER a été pressée, signifiant la fin de la saisie.
+*/
+void menuSetFinLectureClavier(Menu *menu);
+/**
+* @brief Renvoie le pointeur sur le joueur actif (ou NULL si aucun joueur n'a été selectionné dans le menu).
+*/
+Joueur* menuGetJoueurChoisi(Menu *menu);
 
 #endif
 

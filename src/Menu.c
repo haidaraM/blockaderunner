@@ -1,18 +1,54 @@
 #include "Menu.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 
 
 
+/* --------------------------------------------------------------------------	Fonctions Internes */
 
+void creeListeJoueurs(Menu *menu)
+{
+	int i;
+	int index, numJoueurs;
+	Joueur **joueurs;
+	assert( menu != NULL);
+
+	numJoueurs 				= ressourceGetNumJoueurs(menu->ressource);
+	joueurs 				= ressourceGetJoueurs(menu->ressource);
+	assert( joueurs != NULL );
+
+	for (i=0; i< RESS_SAU_MAX_JOUEURS; i++)
+	{
+		index = i + MENU_NUM_BASIC_ELEMENTS;
+		if (i < numJoueurs)
+				menu->elements[index].texte			= joueurs[i]->nom;
+		else 	menu->elements[index].texte			= MENU_TXT_JOUEUR_VIDE;
+		assert(menu->elements[index].texte != NULL);
+		menu->elements[index].visible 				= 1;
+		if (i < numJoueurs)
+				menu->elements[index].actionable 	= 1;
+		else 	menu->elements[index].actionable 	= 0;
+		menu->elements[index].surligne	 			= 0;
+		menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
+		menu->elements[index].rect.y				= MENU_ZONE_Y + (3 + i)*24;
+		if (i < numJoueurs)
+				menu->elements[index].action		= menuPrincipal;			
+	}
+}
+
+
+
+
+
+
+
+/* --------------------------------------------------------------------------	Interface du Module */
 
 void menuInit(Menu *menu, Ressource *res)
 {
-	int i;
 	int index;
-	int numJoueurs;
-	Joueur **joueurs;
 	
 	assert( menu != NULL );
 	assert( res != NULL );
@@ -25,7 +61,8 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->ressource 	= res;
 	menu->etat			= MENU_ETAT_INTRO;
 	menu->tempsEcoule 	= 0.0f;
-	menu->joueurCourant = 0;/* par défaut */
+	menu->joueurCourant = -1;/* par défaut */
+	menu->nomNouveauJoueur[0] = '\0';
 	menu->elements 		= NULL;
 	menu->elements 		= (ElementMenu*)malloc(MENU_NUM_ELEMENTS * sizeof(ElementMenu));
 	assert( menu->elements != NULL);
@@ -121,21 +158,7 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->elements[index].action				= menuQuitter;
 
 	/* Remplissage de la liste des noms de joueurs */
-	numJoueurs 			= ressourceGetNumJoueurs(res);
-	joueurs 			= ressourceGetJoueurs(menu->ressource);
-	for (i=0; i< RESS_SAU_MAX_JOUEURS; i++)
-	{
-		index = i + MENU_NUM_BASIC_ELEMENTS;
-		if (i < numJoueurs)
-				menu->elements[index].texte			= joueurs[i]->nom;
-		else 	menu->elements[index].texte			= MENU_TXT_JOUEUR_VIDE;
-		menu->elements[index].visible 				= 1;
-		menu->elements[index].actionable 			= 1;
-		menu->elements[index].surligne	 			= 0;
-		menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
-		menu->elements[index].rect.y				= MENU_ZONE_Y + (3 + index - MENU_NUM_BASIC_ELEMENTS)*MENU_PADDING_VERT;
-		menu->elements[index].action				= menuPrincipal;	
-	}
+	creeListeJoueurs(menu);
 		
 	#ifdef JEU_VERBOSE
 		printf("	initialisation OK.\n");
@@ -174,10 +197,10 @@ void menuRetour(void *m)
 			menuQuitter((void*)menu);
 			break;
 		case MENU_ETAT_ENTREE_JOUEUR:
-			menuChoixJoueur((void*)menu);
+			/*menuChoixJoueur((void*)menu);*/
 			break;
 		case MENU_ETAT_PRINCIPAL:
-			menuChoixJoueur((void*)menu);
+			/*menuChoixJoueur((void*)menu);*/
 			break;
 		case MENU_ETAT_QUITTER:
 			break;
@@ -206,6 +229,8 @@ void menuChoixJoueur(void *m)
 
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
 		menu->elements[i].visible = 0;
+	
+	menu->joueurCourant = -1;
 
 	menu->etat 	= MENU_ETAT_CHOIX_JOUEUR;
 	menu->elements[MENU_JOUEURS].visible = 1;
@@ -215,9 +240,18 @@ void menuChoixJoueur(void *m)
 }
 void menuNouveauJoueur(void *m)
 {
-	int i;
+	int i, numJoueurs;
 	Menu *menu = (Menu*)m;
+
 	assert(menu != NULL);
+	
+	numJoueurs = ressourceGetNumJoueurs(menu->ressource);
+	/* le joueur courant est le prochain joueur vide dans la liste (ou le premier de la liste si elle est pleine, auquel cas l'ancien premier joueur sera écrasé).*/
+	menu->joueurCourant = numJoueurs;
+	if (menu->joueurCourant >= RESS_SAU_MAX_JOUEURS)
+		menu->joueurCourant = 0;
+
+	menu->nomNouveauJoueur[0] = '\0';
 
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
 		menu->elements[i].visible = 0;
@@ -302,7 +336,72 @@ void menuJouer(void *m)
 	menu->elements[MENU_RETOUR].visible = 1;
 }
 
-void menuSelectionJoueur(void *m)
-{}
+void menuSelectionneJoueur(Menu *menu, int indexElement)
+{
+	int numJoueurs;
+	assert( menu!=NULL );
+
+	numJoueurs = ressourceGetNumJoueurs(menu->ressource);
+	indexElement = indexElement - MENU_NUM_BASIC_ELEMENTS;
+	if (indexElement >= 0 && indexElement < numJoueurs)
+	{
+		menu->joueurCourant = indexElement;
+		menuPrincipal(menu);
+		return;
+
+	} else {
+		menuNouveauJoueur(menu);		
+	}
+}
+
+void menuSetCaractere(Menu *menu, char alphaNum)
+{
+	char s[2];
+	assert(menu != NULL);
+
+	if( strlen(menu->nomNouveauJoueur) >= (JOUEUR_NOM_MAXCHAR))
+		return;
+
+	s[0] = alphaNum;
+	s[1] = '\0';
+	
+	strcat(menu->nomNouveauJoueur, s);
+}
+
+void menuEffaceCaractere(Menu *menu)
+{
+	/*char nom[JOUEUR_NOM_MAXCHAR+1];*/
+	assert(menu != NULL);
+
+	if( strlen(menu->nomNouveauJoueur) == 0)
+		return;
+
+	menu->nomNouveauJoueur[strlen(menu->nomNouveauJoueur)-1] = '\0';
+}
+
+void menuSetFinLectureClavier(Menu *menu)
+{
+	assert(menu != NULL);
+	
+	if (strlen(menu->nomNouveauJoueur) != 0)
+	{
+		ressourceAjouteJoueur(menu->ressource, menu->nomNouveauJoueur, menu->joueurCourant);
+		/*printf("--> joueur ajouté. \n");*/
+		creeListeJoueurs(menu);
+		/*printf("--> menu mis a jour. \n");*/
+	}
+
+	menuPrincipal(menu);
+	/*printf("--> retour choix joueur. \n");*/
+}
+
+Joueur* menuGetJoueurChoisi(Menu *menu)
+{
+	assert( menu != NULL);
+	if (menu->joueurCourant == -1)
+		return NULL;
+
+	return menu->ressource->joueurs[menu->joueurCourant];
+}
 
 

@@ -61,14 +61,14 @@ void chargeJoueurs(Ressource *res)
 	FILE *fic;
 	
 	int i;
-	char nom[64];/* = NULL;*/
+	char nom[64];
 	int numJoueurs=0, score=0, progression=0;
 	int valret;
-	char dir[64], file[64];
-	char *nomFic;
-	strcpy(dir, RESS_DIR_SAUVEGARDES);
+	char nomFic[128], file[64];
+
+	strcpy(nomFic, RESS_DIR_SAUVEGARDES);
 	strcpy(file, RESS_SAU_FICHIER_JOUEURS);
-	nomFic = strcat(dir, file);
+	strcat(nomFic, file);
 
 	assert( res!=NULL && res->joueurs!=NULL);
 
@@ -146,6 +146,7 @@ void ressourceInit(Ressource *res)
 	#ifdef JEU_VERBOSE
 		printf("	chargement des données joueurs ...\n");
 	#endif
+
 	chargeJoueurs(res);
 
 	/* --- */
@@ -178,10 +179,27 @@ int ressourceGetNumJoueurs(Ressource *res)
 	assert( res!=NULL);
 	return res->numJoueurs;
 }
+
 Joueur** ressourceGetJoueurs(Ressource *res)
 {
 	assert( res != NULL);
 	return res->joueurs;
+}
+
+void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur)
+{
+	assert( res != NULL && indexJoueur >= 0);
+
+	if (indexJoueur >= res->numJoueurs)
+	{
+		indexJoueur = res->numJoueurs;
+		res->joueurs[indexJoueur] = (Joueur*)malloc(sizeof(Joueur));
+		assert(res->joueurs[indexJoueur] != NULL);
+		joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0);
+		res->numJoueurs += 1;			
+	} else {
+		joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0);
+	}		
 }
 
 int ressourceGetLargeurImage(const Ressource *res, int nomRessource)

@@ -5,6 +5,12 @@
 *
 * Module principal du programme.
 * Regroupe l'accès aux sous-systèmes essentiels (video, audio), les modules de gestion de haut-niveau (entrées, ressources), et la vue/état global du jeu (Scene).
+*
+* @bug Le rendu de texte dynamique a pas l'air très stable :
+* 		Program received signal SIGSEGV, Segmentation fault.
+* 		__strcpy_sse2_unaligned () at ../sysdeps/x86_64/multiarch/strcpy-sse2-unaligned.S:590
+* 		590	../sysdeps/x86_64/multiarch/strcpy-sse2-unaligned.S: Aucun fichier ou dossier de ce type.
+* 		(gdb) 
 */
 #ifndef _JEU_SDL_H
 #define _JEU_SDL_H
@@ -39,7 +45,7 @@ typedef struct {
 	/** Scène (ce qui est visible à l'écran et au-delà : instancie le contenu du Niveau). */
 	Scene scene;
 	/** Joueur courant (sélectionné par le Menu). */
-	Joueur joueur;
+	Joueur *joueur;
 	/** Répertorie les ressources du jeu (images, sons, polices). */
 	Ressource ressource;
 

@@ -83,6 +83,10 @@ void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsig
 */
 void graphiqueEfface(GraphiqueSDL *graphique);
 /**
+* @brief Recalcule le rendu de la liste des noms de joueurs. (pour usage dans Menu).
+*/
+void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu);
+/**
 * @brief Affiche le Menu.
 */
 void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu );

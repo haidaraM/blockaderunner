@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 
@@ -70,7 +71,6 @@ void chargePolices(GraphiqueSDL *graphique)
 
 
 
-
 /* --------------------------------------------------------------------------------------------------			Interface du Module */ 
 
 void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode)
@@ -79,7 +79,6 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	char **fichiersImages;
 	int i;
 	int imgFlags, imgRes;
-	TTF_Font *police;
 	SDL_Color couleurTexteMenu 			= { 249, 255, 253 };
 	SDL_Color couleurTexteMenuSurvol 	= { 249, 255, 53 };
 
@@ -202,21 +201,25 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	#ifdef JEU_VERBOSE
 		printf("    rendu du texte (Menu).\n");
 	#endif
-	for (i=0; i< MENU_NUM_ELEMENTS; i++)
+	for (i=0; i< 2*MENU_NUM_ELEMENTS; i++)
+	{	
+		graphique->textesMenu[i] = NULL;
+	}
+	for (i=0; i< MENU_NUM_BASIC_ELEMENTS; i++)
 	{
-		if (i < MENU_NUM_BASIC_ELEMENTS)
-				police = graphique->policeMenu;
-		else	police = graphique->policeListeJoueurs;
-
 		/* On rend une fois le texte normal */
-		graphique->textesMenu[2*i]		= TTF_RenderText_Blended(police, menu->elements[i].texte, couleurTexteMenu);
+		graphique->textesMenu[2*i]		= TTF_RenderText_Blended(graphique->policeMenu, menu->elements[i].texte, couleurTexteMenu);
 		assert( graphique->textesMenu[2*i] != NULL );
 		menu->elements[i].rect.largeur 	= graphique->textesMenu[2*i]->w;
 		menu->elements[i].rect.hauteur 	= graphique->textesMenu[2*i]->h;
 		/* On rend une seconde fois avec la couleur correspondant au texte surligné */
-		graphique->textesMenu[2*i+1]	= TTF_RenderText_Blended(police, menu->elements[i].texte, couleurTexteMenuSurvol);
+		graphique->textesMenu[2*i+1]	= TTF_RenderText_Blended(graphique->policeMenu, menu->elements[i].texte, couleurTexteMenuSurvol);
 		assert( graphique->textesMenu[2*i+1] != NULL );
 	}
+	/* cree le rendu de la liste des noms de joueurs */
+	graphiquePrepareRenduListeJoueurs(graphique, menu);
+
+
 
 	/*---------------------------------------------------------------------
 		FIN */
@@ -237,8 +240,12 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 	free(graphique->images);
 
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
-		if (graphique->textesMenu[i] != NULL)
-			SDL_FreeSurface(graphique->textesMenu[i]);
+	{
+		if (graphique->textesMenu[2*i] != NULL)
+			SDL_FreeSurface(graphique->textesMenu[2*i]);
+		if (graphique->textesMenu[2*i+1] != NULL)
+			SDL_FreeSurface(graphique->textesMenu[2*i+1]);
+	}
 	free(graphique->textesMenu);
 
 	TTF_CloseFont(graphique->policeMenu);	
@@ -274,10 +281,46 @@ void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsig
 	graphique->couleurFond	= SDL_MapRGB( graphique->surface->format, rouge, vert, bleu );
 }
 
+void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu)
+{
+	int i;
+	SDL_Color couleurTexteMenu 			= { 249, 255, 253 };
+	SDL_Color couleurTexteMenuSurvol 	= { 249, 255, 53 };
+	assert( graphique != NULL && menu != NULL);
+
+	for (i=MENU_NUM_BASIC_ELEMENTS; i< MENU_NUM_ELEMENTS; i++)
+	{
+		if (graphique->textesMenu[2*i] != NULL)
+		{
+			SDL_FreeSurface(graphique->textesMenu[2*i]);
+			graphique->textesMenu[2*i] = NULL;
+		}
+		if (graphique->textesMenu[2*i+1] != NULL)
+		{
+			SDL_FreeSurface(graphique->textesMenu[2*i+1]);
+			graphique->textesMenu[2*i+1] = NULL;
+		}
+	}
+
+	for (i=MENU_NUM_BASIC_ELEMENTS; i< MENU_NUM_ELEMENTS; i++)
+	{
+		/* On rend une fois le texte normal */
+		while( graphique->textesMenu[2*i] == NULL )
+			graphique->textesMenu[2*i]		= TTF_RenderText_Blended(graphique->policeListeJoueurs, menu->elements[i].texte, couleurTexteMenu);
+		menu->elements[i].rect.largeur 	= graphique->textesMenu[2*i]->w;
+		menu->elements[i].rect.hauteur 	= graphique->textesMenu[2*i]->h;
+		/* On rend une seconde fois avec la couleur correspondant au texte surligné */
+		while( graphique->textesMenu[2*i+1] == NULL )
+			graphique->textesMenu[2*i+1]	= TTF_RenderText_Blended(graphique->policeListeJoueurs, menu->elements[i].texte, couleurTexteMenuSurvol);
+	}
+}
+
 void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 {
 	int i;
 	SDL_Rect offset;
+	SDL_Surface *nomNouveauJoueur;
+	SDL_Color couleurTexteMenuSurvol 	= { 249, 255, 53 };
 
 	switch(menu->etat)
 	{
@@ -302,6 +345,27 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 			}	
 		}
 		break; 
+	case MENU_ETAT_ENTREE_JOUEUR:
+		offset.x = 0;
+		offset.y = 0;
+		SDL_BlitSurface( graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
+		for (i=0; i< MENU_NUM_ELEMENTS; i++)
+		{
+			if (menu->elements[i].visible == 1)
+			{
+				offset.x = menu->elements[i].rect.x;
+				offset.y = menu->elements[i].rect.y;	
+				if (menu->elements[i].surligne == 0)		
+						SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
+				else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
+			}	
+		}
+		nomNouveauJoueur = TTF_RenderText_Blended(graphique->policeMenu, menu->nomNouveauJoueur, couleurTexteMenuSurvol);
+		offset.x  = MENU_ZONE_X + MENU_PADDING_HORZ;
+		offset.y  = MENU_ZONE_Y + 5*MENU_PADDING_VERT;
+		SDL_BlitSurface( nomNouveauJoueur, NULL, graphique->surface, &offset);
+		SDL_FreeSurface(nomNouveauJoueur);
+		break; 
 	default:
 		offset.x = 0;
 		offset.y = 0;
@@ -320,6 +384,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 		break; 
 	}
 }
+
 
 void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 {

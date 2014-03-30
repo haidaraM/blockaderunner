@@ -19,11 +19,6 @@ float getTempsSecondes()
 	return (float)clock()/(float)CLOCKS_PER_SEC;
 }
 
-void actionneMenu(Menu *menu, int sourisX, int sourisY, unsigned char sourisBoutonGauche)
-{
-	
-}
-
 
 
 
@@ -56,6 +51,7 @@ void jeuInit(JeuSDL *jeu)
 	sceneInit(&jeu->scene, &jeu->ressource, jeu->graphique.largeur, jeu->graphique.hauteur);
 
 	jeu->etatCourantJeu = JEU_ETAT_MENU;
+	jeu->joueur 		= NULL;
 
 	#ifdef JEU_VERBOSE
 		printf("\nBLOCKADE > initialisation OK.\n\n");
@@ -72,6 +68,7 @@ void jeuBoucle(JeuSDL *jeu)
 	int continueJeu					= 1;
 	int sourisX, sourisY;
 	unsigned char sourisBoutonGauche;
+	char alphaNum;
 
 	GraphiqueSDL *graphique	 		= &jeu->graphique;
 	EntreeSDL *entree				= &jeu->entree;
@@ -157,6 +154,12 @@ void jeuBoucle(JeuSDL *jeu)
 								choixMenu = i;
 							} else if (choixMenu == i)
 								{
+									if (menu->etat == MENU_ETAT_CHOIX_JOUEUR)
+									{
+										menuSelectionneJoueur(menu, i);
+										jeu->joueur = menuGetJoueurChoisi(menu);
+									}
+
 									(menu->elements[i].action)((void*)menu);
 									choixMenu = -1;
 								}
@@ -165,9 +168,36 @@ void jeuBoucle(JeuSDL *jeu)
 							menu->elements[i].surligne = 1;
 				}	
 
+			/* Cas où on doit lire le clavier pour entrer un nom de joueur */
+			if (menu->etat == MENU_ETAT_ENTREE_JOUEUR)
+			{
+				alphaNum = entreeGetAlphaNum(entree);
+				if (alphaNum != 0)
+				{	
+					menuSetCaractere(menu, alphaNum);
+				}
+				if (entreeToucheEnfoncee(entree, SDLK_BACKSPACE) == 1)
+					toucheDetectee = SDLK_BACKSPACE;
+				if (entreeToucheEnfoncee(entree, SDLK_BACKSPACE) == 0 && toucheDetectee == SDLK_BACKSPACE)
+				{
+					toucheDetectee = -1;
+					menuEffaceCaractere(menu);
+				}
+				if (entreeToucheEnfoncee(entree, SDLK_RETURN) == 1)
+					toucheDetectee = SDLK_RETURN;
+				if (entreeToucheEnfoncee(entree, SDLK_RETURN) == 0 && toucheDetectee == SDLK_RETURN)
+				{
+					toucheDetectee = -1;
+					menuSetFinLectureClavier(menu);
+					/*graphiquePrepareRenduListeJoueurs(graphique, menu);*/
+					jeu->joueur = menuGetJoueurChoisi(menu);
+				}
+			}
+
 			/* L'utilisateur a appuyé sur ESC */
 			if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
 				toucheDetectee = SDLK_ESCAPE;
+			/* L'utilisateur vient de relâcher la touche ESC */
 			if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE)
 			{
 				toucheDetectee = -1;

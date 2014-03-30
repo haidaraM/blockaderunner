@@ -18,6 +18,10 @@ typedef struct
 	int nombreTouches;
 	/** tableau de booléen stockant l'état du clavier. */
 	unsigned char *clavier;
+	/** dernière touche détectée (sert en interne). */
+	int toucheDetectee;
+	/** dernière touche relâchée. */
+	int toucheRelachee;
 	/** Etat de la souris : position en x et y. */
 	int sourisX, sourisY;
 	/** booléen : vaut 1 si le bouton gauche de la souris est enfoncé, 0 sinon. */
@@ -55,6 +59,12 @@ unsigned char entreeFermetureJeu(const EntreeSDL *entree);
 * @return 1 si la touche est enfoncée, 0 sinon.
 */
 unsigned char entreeToucheEnfoncee(const EntreeSDL *entree, SDLKey touche);
+/** 
+* @brief Renvoie le caractère alphanumérique pressé au clavier. 
+* @param entree[in, out] : instance d'EntreeSDL.
+* @return renvoie 0 si aucun caractère alphanumérique n'est pressé.
+*/
+char entreeGetAlphaNum(const EntreeSDL *entree);
 /**
 * @brief Teste si le bouton souris gauche est enfoncé.
 *	

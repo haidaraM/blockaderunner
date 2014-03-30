@@ -20,6 +20,8 @@ void entreeInit(EntreeSDL *entree)
 	entree->fermetureJeu 		= 0;
 	entree->nombreTouches		= 0;
 	entree->clavier				= 0;
+	entree->toucheDetectee		= -1;
+	entree->toucheRelachee 		= -1;
 	entree->sourisX				= 0;
 	entree->sourisY 			= 0;
 	entree->boutonSourisGauche	= 0;
@@ -52,6 +54,7 @@ void entreeLibere(EntreeSDL *entree)
 void entreeSonde(EntreeSDL *entree)
 {
 	SDL_Event event;
+	entree->toucheRelachee 									= -1;
 
 	/* tant qu'il y a des evenements à traiter : cette boucle n'est pas bloquante */
 	while ( SDL_PollEvent( &event ) )
@@ -62,11 +65,23 @@ void entreeSonde(EntreeSDL *entree)
 
 		/* Si l'utilisateur a appuyé sur une touche */
 		if ( event.type == SDL_KEYDOWN )
+		{
 			entree->clavier[event.key.keysym.sym] 			= 1;
-
+			if (entree->toucheDetectee == -1)
+			{
+				entree->toucheDetectee								= event.key.keysym.sym;
+			}
+		}
 		/* Si l'utilisateur a relâché une touche */
 		if ( event.type == SDL_KEYUP )
+		{
 			entree->clavier[event.key.keysym.sym] 			= 0;
+			if (entree->toucheDetectee == event.key.keysym.sym)
+			{
+				entree->toucheRelachee								= entree->toucheDetectee;
+			}
+			entree->toucheDetectee									= -1;
+		}
 
 		/* Si l'utilisateur a clické sur un bouton de souris */
 		if ( event.type == SDL_MOUSEBUTTONDOWN )
@@ -103,6 +118,16 @@ unsigned char entreeFermetureJeu(const EntreeSDL *entree)
 unsigned char entreeToucheEnfoncee(const EntreeSDL *entree, SDLKey touche)
 {
 	return entree->clavier[touche];
+}
+char entreeGetAlphaNum(const EntreeSDL *entree)
+{
+	if (entree->toucheRelachee >= SDLK_a && entree->toucheRelachee <= SDLK_z)
+		return 'a' + (entree->toucheRelachee - SDLK_a);
+
+	if (entree->toucheRelachee >= SDLK_0 && entree->toucheRelachee <= SDLK_9)
+		return '0' + (entree->toucheRelachee - SDLK_0);
+
+	return 0;
 }
 unsigned char entreeBoutonSourisGauche(const EntreeSDL *entree)
 {

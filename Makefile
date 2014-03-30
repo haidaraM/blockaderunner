@@ -7,7 +7,7 @@ DEFINE 			= -D$(OS) -D$(VERBOSE)
 OBJ		 		= obj
 SRC		 		= src
 BIN		 		= bin
-EXEC 			= test00
+EXEC 			= blockade
 
 #Executables des Tests de regression
 JOUEUR_TEST		= joueurTest
@@ -27,7 +27,7 @@ endif
 
 
 LDFLAGS  		=
-CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi # -ggdb   #-O2   # pour optimiser
+CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2   # pour optimiser
 
 
 all: $(BIN)/$(EXEC) $(BIN)/$(JOUEUR_TEST)

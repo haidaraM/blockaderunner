@@ -29,7 +29,7 @@
 
 /* SAUVEGARDES */
 
-#define RESS_SAU_MAX_JOUEURS									24
+#define RESS_SAU_MAX_JOUEURS									20
 #define RESS_SAU_FICHIER_JOUEURS								"joueurs"
 
 
@@ -42,7 +42,7 @@
 
 #define RESS_POL_FICHIER_MENU									"ethnocen.ttf"
 #define RESS_POL_TAILLE_MENU									18
-#define RESS_POL_TAILLE_LISTE_JOUEURS							10
+#define RESS_POL_TAILLE_LISTE_JOUEURS							12
 
 
 /* IMAGES */
@@ -105,10 +105,15 @@ void ressourceLibere(Ressource *res);
 /**
 * @brief Renvoie le nombre de joueurs sauvegardés.
 */
-int ressourceGetNumJoueurs(Ressource *res);/**
+int ressourceGetNumJoueurs(Ressource *res);
+/**
 * @brief Renvoie le tableau de pointeurs sur Joueur (ie tous les joueurs connus).
 */
 Joueur** ressourceGetJoueurs(Ressource *res);
+/**
+* @brief Ajoute un joueur à la liste des joueurs sauvegardés. 
+*/
+void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur);
 
 /**
 * @brief Renvoie la largeur d'une image cataloguée.
