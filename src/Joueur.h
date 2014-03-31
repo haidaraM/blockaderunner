@@ -18,7 +18,7 @@
 
 typedef struct
 {
-       char *nom;
+       char nom[JOUEUR_NOM_MAXCHAR];
        unsigned int progression;
        int score;
 } Joueur;
