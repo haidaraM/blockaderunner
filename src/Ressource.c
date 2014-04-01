@@ -59,7 +59,7 @@ void creeListePolices(Ressource *res)
 void chargeJoueurs(Ressource *res)
 {
 	FILE *fic;
-	
+
 	int i;
 	char nom[64];
 	int numJoueurs=0, score=0, progression=0;
@@ -76,36 +76,36 @@ void chargeJoueurs(Ressource *res)
 	if(fic == NULL)
 	{
 		printf("Erreur : (Ressource) : Impossible d'ouvrir le fichier %s.\n", nomFic);
-		exit(EXIT_FAILURE);	
+		exit(EXIT_FAILURE);
 	}
-	
+
 	fscanf(fic, "%d", &numJoueurs);
 	if (numJoueurs > RESS_SAU_MAX_JOUEURS)
 		numJoueurs = RESS_SAU_MAX_JOUEURS;
 
 	res->numJoueurs = numJoueurs;
-	
+
 	for (i=0; i< numJoueurs; i++)
 	{
 		valret = fscanf(fic, "%s", nom);
 		if (valret < 1)
-		{	
+		{
 			printf("Erreur de lecture du fichier %s : nom joueur illisible.\n", nomFic);
 			exit(EXIT_FAILURE);
 		}
 		valret = fscanf(fic, "%d %d", &progression, &score);
 		if (valret != 2)
-		{	
+		{
 			printf("Erreur de lecture du fichier %s : progression et score illisibles.\n", nomFic);
 			exit(EXIT_FAILURE);
 		}
-		
+
 		res->joueurs[i] = (Joueur*)malloc(sizeof(Joueur));
 		assert( res->joueurs[i] != NULL);
-		joueurInit(res->joueurs[i], nom, (unsigned int)progression, score);		
+		joueurInit(res->joueurs[i], nom, (unsigned int)progression, score, 0,0, 1);
 	}
 
-	fclose(fic); 
+	fclose(fic);
 }
 
 void creeNiveaux(Ressource *res)
@@ -216,11 +216,11 @@ void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1],
 		indexJoueur = res->numJoueurs;
 		res->joueurs[indexJoueur] = (Joueur*)malloc(sizeof(Joueur));
 		assert(res->joueurs[indexJoueur] != NULL);
-		joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0);
-		res->numJoueurs += 1;			
+		joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0,JOUEUR_POINTSTRUCTURE,JOUEUR_POINTECRAN,JOUEUR_NB_ARMES);
+		res->numJoueurs += 1;
 	} else {
-		joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0);
-	}		
+		joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0,JOUEUR_POINTSTRUCTURE,JOUEUR_POINTECRAN,JOUEUR_NB_ARMES);
+	}
 }
 
 Niveau ressourceGetNiveau(Ressource *res, int numeroNiveau)

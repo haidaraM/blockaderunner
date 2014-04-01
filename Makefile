@@ -33,10 +33,11 @@ CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2   # pour optimiser
 all: $(BIN)/$(EXEC) $(BIN)/$(JOUEUR_TEST)
 
 
-$(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Outils.o $(OBJ)/Ressource.o $(OBJ)/Joueur.o $(OBJ)/Niveau.o $(OBJ)/GraphiqueSDL.o $(OBJ)/EntreeSDL.o $(OBJ)/Menu.o $(OBJ)/Scene.o $(OBJ)/ElementScene.o
+
+$(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Outils.o $(OBJ)/Ressource.o $(OBJ)/Joueur.o $(OBJ)/Niveau.o $(OBJ)/GraphiqueSDL.o $(OBJ)/EntreeSDL.o $(OBJ)/Menu.o $(OBJ)/Scene.o $(OBJ)/ElementScene.o $(OBJ)/Vaisseau.o
 	$(LD)  $^ $(LDFLAGS) $(LIBS) -o $@
 
-$(BIN)/$(JOUEUR_TEST): $(OBJ)/JoueurMainTest.o $(OBJ)/Joueur.o
+$(BIN)/$(JOUEUR_TEST): $(OBJ)/JoueurMainTest.o $(OBJ)/Joueur.o $(OBJ)/Vaisseau.o
 	$(LD) $(CFLAGS) $^ -o $@ 
 
 $(OBJ)/%.o: $(SRC)/%.c

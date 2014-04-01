@@ -1,8 +1,10 @@
 #include "Joueur.h"
 #include <stdio.h>
+#include <assert.h>
+#include "Vaisseau.h"
 
 int main(int argc, char const *argv[])
 {
-	printf("Test de regression de Joueur\n");
+	joueurTestDeRegression();
 	return 0;
 }
