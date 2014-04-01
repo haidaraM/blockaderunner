@@ -21,18 +21,18 @@
 #define ENNEMI_POINTSTRUCTURE                           50
 
 /* Armes */
-#define ARME_1                                          1
-#define ARME_1_MUNITIONS                                1000
-#define ARME_1_DEGAT_E                                  50
-#define ARME_1_DEGAT_S                                  50
+#define ARME_0                                          0
+#define ARME_0_MUNITIONS                                1000
+#define ARME_0_DEGAT_E                                  50
+#define ARME_0_DEGAT_S                                  50
 
 /**
 * @struct Arme
-* @brief Represente l'arme d'un vaisseau
+* @brief Represente l'arme du vaisseau
 */
 typedef struct
 {
-    int typeArme; /* 1, 2 ... */
+    int typeArme; /*0, 1, 2 ... */
 
     int degatEcran;
 
@@ -61,32 +61,36 @@ typedef struct
 } Vaisseau;
 
 /**
-* @fn
-* @brief
+* @fn void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes)
+* @brief Initialise le vaisseau du joueur
 */
 void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes);
 
 /**
-* @fn
-* @brief
+* @fn void vaisseauEnnemiInit(Vaisseau *vaisseau, int pointS, int pointE, int nbArmes)
+* @brief Initialise le vaisseau ennemi
 */
 void vaisseauEnnemiInit(Vaisseau *vaisseau, int pointS, int pointE, int nbArmes);
 
 /**
-* @fn
-* @brief
+* @fn void vaisseauLibere(Vaisseau * vaisseau)
+* @brief Libere la memoire alloue pour le vaisseau
+* @param [in, out] vaisseau
 */
 void vaisseauLibere(Vaisseau * vaisseau);
 
 /**
 * @fn void armeInit(Arme * a);
+* @brief Initialise l'arme correspondant à type
+* @param [in, out] arme
+* @param [in] type
 */
 void armeInit(Arme *a, int type);
 
 
 /**
 * @fn void vaisseauTestDeregression()
-* @brief
+* @brief Effectue les tests pour verifier l'integrité du module
 */
 void vaisseauTestDeregression();
 

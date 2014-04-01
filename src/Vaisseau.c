@@ -10,7 +10,6 @@ void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes
     assert(vaisseauJ!=NULL);
     assert(nbArmes!=0);
 
-    /* Initialisation du type*/
 
     vaisseauJ->type=VAISSEAU_JOUEUR_TYPE;
 
@@ -20,15 +19,17 @@ void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes
 
     vaisseauJ->nbArmes=nbArmes;
 
+    /* Initialisation des armes du vaisseau */
     vaisseauJ->armes=(Arme *)malloc(sizeof(Arme)*nbArmes);
     for(i=0; i<nbArmes; i++)
     {
-        armeInit(&vaisseauJ->armes[i], 1);
+        armeInit(&vaisseauJ->armes[i], ARME_0);
     }
 }
 
 void vaisseauEnnemiInit(Vaisseau *vaisseau, int pointS, int pointE, int nbArmes)
 {
+    int i;
     assert(vaisseau!=NULL);
 
     /* Initialisation du type */
@@ -39,11 +40,17 @@ void vaisseauEnnemiInit(Vaisseau *vaisseau, int pointS, int pointE, int nbArmes)
     vaisseau->pointStructure=pointS;
 
     vaisseau->nbArmes=nbArmes;
+
+    /* Initialisation des armes du vaisseau */
+    vaisseau->armes=(Arme *)malloc(sizeof(Arme)*nbArmes);
+    for(i=0; i<nbArmes; i++)
+    {
+        armeInit(&vaisseau->armes[i], ARME_0);
+    }
 }
 
 void vaisseauLibere(Vaisseau *vaisseau)
 {
-    /*int i;*/
     assert(vaisseau!=NULL);
     free(vaisseau->armes);
     vaisseau->armes=NULL;
@@ -53,11 +60,11 @@ void armeInit(Arme * a, int type)
 {
     switch(type)
     {
-        case ARME_1:
-            a->typeArme=ARME_1;
-            a->munitions=ARME_1_MUNITIONS;
-            a->degatEcran=ARME_1_DEGAT_E;
-            a->degatStructure=ARME_1_DEGAT_S;
+        case ARME_0:
+            a->typeArme=ARME_0;
+            a->munitions=ARME_0_MUNITIONS;
+            a->degatEcran=ARME_0_DEGAT_E;
+            a->degatStructure=ARME_0_DEGAT_S;
             break;
         default:
             break;

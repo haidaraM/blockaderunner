@@ -56,13 +56,13 @@ void creeListeSons(Ressource *res)
 void creeListePolices(Ressource *res)
 {}
 
-void chargeJoueurs(Ressource *res)
+void chargeJoueurs(Ressource *res) 
 {
 	FILE *fic;
 
 	int i;
 	char nom[64];
-	int numJoueurs=0, score=0, progression=0;
+	int numJoueurs=0, score=0, progression=0, pointS=JOUEUR_POINTSTRUCTURE, pointE=JOUEUR_POINTECRAN;
 	int valret;
 	char nomFic[128], file[64];
 
@@ -99,10 +99,16 @@ void chargeJoueurs(Ressource *res)
 			printf("Erreur de lecture du fichier %s : progression et score illisibles.\n", nomFic);
 			exit(EXIT_FAILURE);
 		}
+		valret = fscanf (fic, "%d %d", &pointS, &pointE);
+		if (valret !=2)
+		{
+			printf("Erreur de lecture du fichier %s : pointS et pointE illisibles.\n",nomFic );
+			exit(EXIT_FAILURE);
+		}
 
 		res->joueurs[i] = (Joueur*)malloc(sizeof(Joueur));
 		assert( res->joueurs[i] != NULL);
-		joueurInit(res->joueurs[i], nom, (unsigned int)progression, score, 0,0, 1);
+		joueurInit(res->joueurs[i], nom, (unsigned int)progression, score, pointS,pointE, 1);
 	}
 
 	fclose(fic);
