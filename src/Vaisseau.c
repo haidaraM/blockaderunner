@@ -43,7 +43,7 @@ void vaisseauEnnemiInit(Vaisseau *vaisseau, int pointS, int pointE, int nbArmes)
 
 void vaisseauLibere(Vaisseau *vaisseau)
 {
-    int i;
+    /*int i;*/
     assert(vaisseau!=NULL);
     free(vaisseau->armes);
     vaisseau->armes=NULL;

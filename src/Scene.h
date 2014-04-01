@@ -19,6 +19,7 @@
 
 typedef struct
 {
+	float horlogePrecedente;
 	/** Portion visible de la scène. */
 	int largeurAffichage, hauteurAffichage;
 	/** nombre de elements. */
@@ -49,12 +50,21 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 void sceneLibere(Scene *scene);
 
 
-
+/**
+* @brief Charge un Niveau du Jeu.
+*/
 void sceneChargeNiveau(Scene *scene, Niveau *niveau);
-
+/**
+* @brief Initialise l'horloge de la scene.
+*/
+void sceneResetHorloge(Scene *scene, float horloge);
+/**
+* @brief fait defiler le fond d'ecran.
+*/
+void sceneDefileScene(Scene *scene);
 
 /**
-* @brief Permet de refiler le temps écoulé à la scène : utile pour les animations (défilement du fond, ...). 
+* @brief Permet de passer le temps écoulé à la scène : utile pour les animations (). 
 */
 void sceneAnime(Scene *scene, float tempsSecondes);
 

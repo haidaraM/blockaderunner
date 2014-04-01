@@ -75,9 +75,10 @@ void jeuBoucle(JeuSDL *jeu)
 	EntreeSDL *entree				= &jeu->entree;
 	Menu *menu						= &jeu->menu;
 
-    float tempsDernierAffichage, dureeBoucle, debutBoucle;
+    float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
     /* Période de temps (secondes) entre deux raffraichissements écran */
     float periodeAffichage = 1.0f/32.0f;
+	float periodeDefilementScene = 1.0f/2.0f;
 
 	graphiqueRaffraichit(graphique);
 
@@ -116,7 +117,12 @@ void jeuBoucle(JeuSDL *jeu)
             if (entreeToucheEnfoncee(entree, SDLK_LEFT)==1)
         	    sceneDeplaceVaisseauJoueurGauche(&jeu->scene, dureeBoucle);
 	
-			sceneAnime(&jeu->scene, dureeBoucle);
+			if ( (getTempsSecondes() - tempsDernierDefilementScene) >= periodeDefilementScene)
+			{
+				/*sceneAnime(&jeu->scene, getTempsSecondes());*/
+				sceneDefileScene(&jeu->scene);
+				tempsDernierDefilementScene = getTempsSecondes();
+			}
 
         	/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
         	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
@@ -245,9 +251,11 @@ void jeuBoucle(JeuSDL *jeu)
 
 			if (jeu->chargementOK == 0)
 			{
-				niveau = ressourceGetNiveau(&jeu->ressource, jeu->niveauCourant);
+				niveau 					= ressourceGetNiveau(&jeu->ressource, jeu->niveauCourant);
 				sceneChargeNiveau(&jeu->scene, &niveau);
-				jeu->etatCourantJeu = JEU_ETAT_JEU;
+				jeu->etatCourantJeu 	= JEU_ETAT_JEU;
+				sceneResetHorloge(&jeu->scene, getTempsSecondes());
+				tempsDernierDefilementScene = getTempsSecondes();
 			}
 			/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
         	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)

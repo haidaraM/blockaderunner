@@ -16,6 +16,7 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 
 	assert( scene != NULL && res != NULL );
 
+	scene->horlogePrecedente= 0.0f;
 	scene->largeurAffichage = largeurGraphique;
 	scene->hauteurAffichage = hauteurGraphique;
 	scene->niveau 			= NULL;
@@ -69,15 +70,29 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau)
 	scene->rectangleImageFond.hauteur = scene->hauteurAffichage;
 }
 
+void sceneResetHorloge(Scene *scene, float horloge)
+{
+	assert(scene != NULL);
+	scene->horlogePrecedente = horloge;
+}
+
+void sceneDefileScene(Scene *scene)
+{
+	if ((scene->rectangleImageFond.x + 1) < (4098 - 1366))
+		scene->rectangleImageFond.x += 1;
+}
+
 void sceneAnime(Scene *scene, float tempsSecondes)
 {
-	int dx = 0;
-
+	int dx;
+	float dt 	= tempsSecondes - scene->horlogePrecedente;
 	/* Animation du fond (défilement) */
-	dx     = (int)(tempsSecondes * SCENE_VITESSE_DEFILEMENT_FOND);
+	dx     = (int)(dt * SCENE_VITESSE_DEFILEMENT_FOND);
 	if ((scene->rectangleImageFond.x + dx) >= (4098 - 1366 -1))
 			scene->rectangleImageFond.x = 4098 - 1366 -1;
 	else	scene->rectangleImageFond.x += dx;
+
+	scene->horlogePrecedente = tempsSecondes;
 }
 		
 	
