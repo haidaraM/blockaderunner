@@ -3,12 +3,12 @@
 * @brief Fichier d'entete du module joueur
 * Un joueur a un nom, a atteint un certain niveau et a un score
 */
+#include "Vaisseau.h"
+
 #ifndef _JOUEUR_H
 #define _JOUEUR_H
 
 #define JOUEUR_NOM_MAXCHAR				47
-
-
 
 
 /**
@@ -21,6 +21,7 @@ typedef struct
        char nom[JOUEUR_NOM_MAXCHAR];
        unsigned int progression;
        int score;
+       Vaisseau vaisseau;
 } Joueur;
 
 /**
@@ -30,8 +31,9 @@ typedef struct
 * @param [in] nom
 * @param [in] progression
 * @param [in] score
+* @param [in] vaisseau
 */
-void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score);
+void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score, int pointS, int pointE, int nbArmes);
 
 /**
 * @fn void joueurLibere(Joueur * joueur)
