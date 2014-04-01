@@ -11,24 +11,24 @@ typedef struct
 {
 	/** entier : 1, 2, 3... */
 	char numero;
-	/** chaîne de caractères : titre du niveau. */
-	char *titre;
 	/** chaîne de caractères : description courte du niveau. */
 	char *description;
+	/** index dans Ressource de l'image de fond (background) du niveau. */
+	int imageFond;
 } Niveau;
-
 
 
 /**
 * @brief Initialise.
 * @param niveau[in, out] : doit être non NULL.
 */
-void niveauInit(Niveau *niveau);
+void niveauInit(Niveau *niveau, int numero);
 /**
 * @brief Libère.
 */
 void niveauLibere(Niveau *niveau);
 
+void niveauSetImageFond(Niveau *niveau, int indexImage);
 
 #endif
 

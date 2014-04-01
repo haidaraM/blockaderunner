@@ -69,6 +69,7 @@ void jeuBoucle(JeuSDL *jeu)
 	int sourisX, sourisY;
 	unsigned char sourisBoutonGauche;
 	char alphaNum;
+	Niveau niveau;
 
 	GraphiqueSDL *graphique	 		= &jeu->graphique;
 	EntreeSDL *entree				= &jeu->entree;
@@ -115,6 +116,8 @@ void jeuBoucle(JeuSDL *jeu)
             if (entreeToucheEnfoncee(entree, SDLK_LEFT)==1)
         	    sceneDeplaceVaisseauJoueurGauche(&jeu->scene, dureeBoucle);
 	
+			sceneAnime(&jeu->scene, dureeBoucle);
+
         	/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
         	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
         	{
@@ -167,7 +170,11 @@ void jeuBoucle(JeuSDL *jeu)
 									{
 										menuSelectionneNiveau(menu, i);
 										jeu->niveauCourant = menuGetNiveauChoisi(menu);
-										jeu->etatCourantJeu = JEU_ETAT_JEU; /*JEU_ETAT_CHARGEMENT_NIVEAU;*/
+										if (jeu->niveauCourant != -1)
+										{
+											jeu->chargementOK = 0;
+											jeu->etatCourantJeu = JEU_ETAT_CHARGEMENT_NIVEAU;
+										}
 									}
 									/* On appelle la callback associé à l'élément menu. */
 									(menu->elements[i].action)((void*)menu);
@@ -236,6 +243,12 @@ void jeuBoucle(JeuSDL *jeu)
 		
 		case JEU_ETAT_CHARGEMENT_NIVEAU :	/*--------------	CHARGEMENT D'UN NIVEAU 	-------------------*/
 
+			if (jeu->chargementOK == 0)
+			{
+				niveau = ressourceGetNiveau(&jeu->ressource, jeu->niveauCourant);
+				sceneChargeNiveau(&jeu->scene, &niveau);
+				jeu->etatCourantJeu = JEU_ETAT_JEU;
+			}
 			/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
         	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
         	{

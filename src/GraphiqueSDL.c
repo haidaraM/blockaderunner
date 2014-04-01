@@ -389,16 +389,24 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 {
 	int i;
-	SDL_Rect offset;
+	SDL_Rect srcBox, dstBox;
 	ElementScene **elements = scene->elements;
+
+	/* affichage du fond */
+	srcBox.x 		= scene->rectangleImageFond.x;
+	srcBox.y 		= scene->rectangleImageFond.y;
+	srcBox.w		= scene->rectangleImageFond.largeur;
+	srcBox.h		= scene->rectangleImageFond.hauteur;
+	SDL_BlitSurface( graphique->images[scene->indexImageFond], &srcBox, graphique->surface, NULL);
 	
+	/* affichage des sprites */	
 	for (i=0; i< scene->numElements; i++)
 	{
 		if (elements[i] != NULL && elementVisible(elements[i]) == 1)
 		{
-			offset.x = elementGetX(elements[i]);
-			offset.y = elementGetY(elements[i]);
-			SDL_BlitSurface( graphique->images[elementGetImageIndex(elements[i])], NULL, graphique->surface, &offset);
+			dstBox.x = elementGetX(elements[i]);
+			dstBox.y = elementGetY(elements[i]);
+			SDL_BlitSurface( graphique->images[elementGetImageIndex(elements[i])], NULL, graphique->surface, &dstBox);
 		}
 	}
 }

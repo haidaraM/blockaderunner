@@ -14,7 +14,9 @@
 #define SPRITE_TYPE_VAISSEAU_JOUEUR				0
 
 
-
+/**
+* @brief Element de la Scene : element affichable et jouable (audio).
+*/
 typedef struct
 {
 	/** booléen : le element est dans la portion visible de la scène (ecran) ou pas. */
@@ -31,9 +33,9 @@ typedef struct
 	int hauteur;
 	/** handle référençable dans Ressource (associe une image). */
 	int indexImage;
-	/** Largeur portion visible de la scène (ecran). */
+	/** Largeur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
 	int largeurSceneVisible;
-	/** Hauteur portion visible de la scène (ecran). */
+	/** Hauteur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
 	int hauteurSceneVisible;
 } ElementScene;
 

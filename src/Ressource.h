@@ -11,12 +11,18 @@
 
 #include "Outils.h"
 #include "Joueur.h"
+#include "Niveau.h"
 
 
 
+#define RESS_NUM_NIVEAUX										7
 #define RESS_NUM_IMAGES											32
 #define RESS_NUM_SONS											0
 #define RESS_NUM_POLICES										1
+
+
+/* NIVEAUX */
+#define RESS_NIV_0_DESCRIPTION									"Sortir du champ d'astéroïdes !"
 
 
 /* REPERTOIRES */
@@ -46,8 +52,10 @@
 
 
 /* IMAGES */
- 
-#define RESS_IMG_VAISSEAU_JOUEUR			 					0
+
+#define RESS_IMG_NULL						 					0
+
+#define RESS_IMG_VAISSEAU_JOUEUR			 					1
 #define RESS_IMG_FICHIER_VAISSEAU_JOUEUR						"playership.png"
 #define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
 #define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						52
@@ -64,7 +72,7 @@
 
 #define RESS_IMG_FOND_NIVEAU_0				 					20
 #define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"
-#define RESS_IMG_LARGEUR_FOND_NIVEAU_0							4096
+#define RESS_IMG_LARGEUR_FOND_NIVEAU_0							4098
 #define RESS_IMG_HAUTEUR_FOND_NIVEAU_0	 						720
 
 
@@ -85,6 +93,9 @@ typedef struct
 	char **sons;
 	/** Tableau de chaines de caractères (noms des fichiers ttf) */	
 	char **polices;
+
+	/** Tableau de tous les niveaux du jeu. */
+	Niveau *niveaux;
 
 } Ressource;
 
@@ -114,6 +125,9 @@ Joueur** ressourceGetJoueurs(Ressource *res);
 * @brief Ajoute un joueur à la liste des joueurs sauvegardés. 
 */
 void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur);
+
+Niveau ressourceGetNiveau(Ressource *res, int numeroNiveau);
+
 
 /**
 * @brief Renvoie la largeur d'une image cataloguée.

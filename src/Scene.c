@@ -18,13 +18,13 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 
 	scene->largeurAffichage = largeurGraphique;
 	scene->hauteurAffichage = hauteurGraphique;
-	scene->niveau 		= 0;
-	scene->ressource 	= res;
-	scene->numElements 	= 1;
-	scene->elements		= (ElementScene**)malloc(scene->numElements * sizeof(ElementScene*));
+	scene->niveau 			= NULL;
+	scene->ressource 		= res;
+	scene->numElements 		= 1;
+	scene->elements			= (ElementScene**)malloc(scene->numElements * sizeof(ElementScene*));
 	assert( scene->elements != NULL);
 	for (i=0; i< scene->numElements; i++)
-		scene->elements[i] = 0;
+		scene->elements[i] 		= 0;
 
 
 	/* TEST : initialisation element du vaisseau joueur */
@@ -32,9 +32,9 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 	assert( element != NULL);
 	elementInit(element, 0, RESS_IMG_VAISSEAU_JOUEUR,
 				ressourceGetLargeurImage(res, RESS_IMG_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_IMG_VAISSEAU_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
-	element->type 		= SPRITE_TYPE_VAISSEAU_JOUEUR;
+	element->type 			= SPRITE_TYPE_VAISSEAU_JOUEUR;
 	elementSetPosition(element, 32, (hauteurGraphique - element->hauteur)/2);
-	scene->elements[0]	= element;
+	scene->elements[0]		= element;
 }
 
 void sceneLibere(Scene *scene)
@@ -54,6 +54,33 @@ void sceneLibere(Scene *scene)
 	free(scene->elements);
 	scene->numElements = 0;
 }
+
+
+
+void sceneChargeNiveau(Scene *scene, Niveau *niveau)
+{
+	assert(scene != NULL && niveau != NULL);
+	
+	scene->niveau = niveau;
+	scene->indexImageFond = niveau->imageFond;
+	scene->rectangleImageFond.x = 0;
+	scene->rectangleImageFond.y = 0;
+	scene->rectangleImageFond.largeur = scene->largeurAffichage;
+	scene->rectangleImageFond.hauteur = scene->hauteurAffichage;
+}
+
+void sceneAnime(Scene *scene, float tempsSecondes)
+{
+	int dx = 0;
+
+	/* Animation du fond (défilement) */
+	dx     = (int)(tempsSecondes * SCENE_VITESSE_DEFILEMENT_FOND);
+	if ((scene->rectangleImageFond.x + dx) >= (4098 - 1366 -1))
+			scene->rectangleImageFond.x = 4098 - 1366 -1;
+	else	scene->rectangleImageFond.x += dx;
+}
+		
+	
 
 ElementScene* sceneCreerElementScene(Scene *scene, int type)
 {

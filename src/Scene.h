@@ -6,6 +6,11 @@
 #ifndef _SCENE_H
 #define _SCENE_H
 
+#define SCENE_VITESSE_DEFILEMENT_FOND 		((4098.0f - 1366.0f)/(10.0f * 6.0f))
+
+
+
+
 #include "ElementScene.h"
 #include "Ressource.h"
 #include "Niveau.h"
@@ -20,6 +25,10 @@ typedef struct
 	int numElements;
 	/** tableau de pointeur sur ElementScene.*/
 	ElementScene **elements;
+	/** index image fond (background du niveau). */
+	int indexImageFond;
+	/** position courante (et taille) du fond du niveau (background). */
+	Rectangle rectangleImageFond;
 	/** pointeur vers l'instance en cours du module Niveau : décrit le niveau du jeu en cours.*/
 	Niveau *niveau;
 	/** pointeur vers l'instance du module Ressource : utile pour créer des elements. */
@@ -38,6 +47,16 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 * @brief Libère les ressources du module.
 */
 void sceneLibere(Scene *scene);
+
+
+
+void sceneChargeNiveau(Scene *scene, Niveau *niveau);
+
+
+/**
+* @brief Permet de refiler le temps écoulé à la scène : utile pour les animations (défilement du fond, ...). 
+*/
+void sceneAnime(Scene *scene, float tempsSecondes);
 
 ElementScene* sceneCreerElementScene(Scene *scene, int type);
 /**

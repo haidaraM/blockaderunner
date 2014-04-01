@@ -54,6 +54,8 @@ typedef struct {
 	int etatCourantJeu;
 	/** Niveau en cours ou à charger */
 	int niveauCourant;
+	/** (interne) sert au chargement d'un niveau. */
+	int chargementOK;
 	
 } JeuSDL;
 

@@ -108,7 +108,22 @@ void chargeJoueurs(Ressource *res)
 	fclose(fic); 
 }
 
-
+void creeNiveaux(Ressource *res)
+{
+	int i;
+	/*char desc[256];*/
+	assert(res != NULL);
+	
+	res->niveaux = (Niveau*)malloc(RESS_NUM_NIVEAUX * sizeof(Niveau));
+	assert( res->niveaux != NULL);
+	
+	for (i=0; i< RESS_NUM_NIVEAUX; i++)
+	{	
+		/*sprintf(desc, "Niveau %d", i);*/
+		niveauInit(&res->niveaux[i], i);
+		niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0);	/* ONLY A TEST */ 
+	}
+}
 
 
 
@@ -144,7 +159,7 @@ void ressourceInit(Ressource *res)
 		res->joueurs[i] = NULL;/* initialisation à NULL */
 
 	#ifdef JEU_VERBOSE
-		printf("	chargement des données joueurs ...\n");
+		printf("	chargement des données joueurs.\n");
 	#endif
 
 	chargeJoueurs(res);
@@ -157,6 +172,12 @@ void ressourceInit(Ressource *res)
 
 	/* --- */
 	creeListePolices(res);
+
+	#ifdef JEU_VERBOSE
+		printf("	creation des niveaux du jeu.\n");
+	#endif
+	/* --- */
+	creeNiveaux(res);
 
 	#ifdef JEU_VERBOSE
 		printf("	initialisation OK.\n");
@@ -200,6 +221,13 @@ void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1],
 	} else {
 		joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0);
 	}		
+}
+
+Niveau ressourceGetNiveau(Ressource *res, int numeroNiveau)
+{
+	assert(res != NULL && numeroNiveau >=0 && numeroNiveau < RESS_NUM_NIVEAUX);
+
+	return res->niveaux[numeroNiveau];
 }
 
 int ressourceGetLargeurImage(const Ressource *res, int nomRessource)
