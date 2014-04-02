@@ -6,19 +6,21 @@
 #ifndef _SCENE_H
 #define _SCENE_H
 
-#define SCENE_VITESSE_DEFILEMENT_FOND 		((4098.0f - 1366.0f)/(10.0f * 6.0f))
-
+#define SCENE_VITESSE_DEFILEMENT_POINTS 	(1024.0f/3.0f)
+#define SCENE_NUM_POINTS_DEFILEMENT 		72
 
 
 
 #include "ElementScene.h"
 #include "Ressource.h"
 #include "Niveau.h"
+#include "Outils.h"
 
 
 
 typedef struct
 {
+	/** garde trace du temps écoulé (pour animations). */
 	float horlogePrecedente;
 	/** Portion visible de la scène. */
 	int largeurAffichage, hauteurAffichage;
@@ -30,6 +32,8 @@ typedef struct
 	int indexImageFond;
 	/** position courante (et taille) du fond du niveau (background). */
 	Rectangle rectangleImageFond;
+	/** Tableau de points de defilement (FX).*/
+	Point *pointsDefilement;
 	/** pointeur vers l'instance en cours du module Niveau : décrit le niveau du jeu en cours.*/
 	Niveau *niveau;
 	/** pointeur vers l'instance du module Ressource : utile pour créer des elements. */

@@ -6,11 +6,26 @@
 #ifndef _OUTILS_H
 #define _OUTILS_H
 
-
-/*----------------------------------------------------------------------------	RECTANGLE ---------------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------  NOMBRES ALEATOIRES ------------------------------------------------------------------------*/
 
 /**
-* @brief un Rectangle = une position + une dimension
+* @brief Renvoie un entier pseudo-aléatoire uniformément distribué entre borneInf et borneSup tel que :    borneInf <= (retour) < borneSup
+*/
+int randomInt(int borneInf, int borneSup);
+
+/*----------------------------------------------------------------------------	GEOMETRIE ---------------------------------------------------------------------------------*/
+
+/**
+* @brief un Point 2D.
+*/
+typedef struct
+{
+	int x;
+	int y;
+} Point;
+
+/**
+* @brief un Rectangle = une position (coin supérieur gauche) + une dimension (largeur, hauteur).
 */
 typedef struct 
 {

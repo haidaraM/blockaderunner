@@ -59,6 +59,41 @@ void chargePolices(GraphiqueSDL *graphique)
 	}
 }
 
+/**
+* @brief Affecte à un pixel de la Surface une couleur.
+*/
+void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
+{
+    int bpp = surface->format->BytesPerPixel;
+    /* p est l'adresse du pixel ciblé: */
+    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+
+    switch(bpp) {
+    case 1:
+        *p = pixel;
+        break;
+
+    case 2:
+        *(Uint16 *)p = pixel;
+        break;
+
+    case 3:
+        if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
+            p[0] = (pixel >> 16) & 0xff;
+            p[1] = (pixel >> 8) & 0xff;
+            p[2] = pixel & 0xff;
+        } else {
+            p[0] = pixel & 0xff;
+            p[1] = (pixel >> 8) & 0xff;
+            p[2] = (pixel >> 16) & 0xff;
+        }
+        break;
+
+    case 4:
+        *(Uint32 *)p = pixel;
+        break;
+    }
+}
 
 
 
@@ -391,6 +426,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	int i;
 	SDL_Rect srcBox, dstBox;
 	ElementScene **elements = scene->elements;
+	Uint32 couleurPointsDefilement = SDL_MapRGB(graphique->surface->format, 0xd0, 0xff, 0xff);
 
 	/* affichage du fond */
 	srcBox.x 		= scene->rectangleImageFond.x;
@@ -398,6 +434,21 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	srcBox.w		= scene->rectangleImageFond.largeur;
 	srcBox.h		= scene->rectangleImageFond.hauteur;
 	SDL_BlitSurface( graphique->images[scene->indexImageFond], &srcBox, graphique->surface, NULL);
+
+	/* affichage des points de defilement */
+    if ( SDL_MUSTLOCK(graphique->surface) ) {
+        if ( SDL_LockSurface(graphique->surface) < 0 ) {
+            printf("Erreur : impossible de verrouiller l'ecran. %s\n", SDL_GetError());
+            return;
+        }
+    }
+	for (i=0; i< SCENE_NUM_POINTS_DEFILEMENT; i++)
+	{
+		setSDLPixel(graphique->surface, scene->pointsDefilement[i].x, scene->pointsDefilement[i].y, couleurPointsDefilement);
+	}
+	if ( SDL_MUSTLOCK(graphique->surface) ) {
+        SDL_UnlockSurface(graphique->surface);
+    }	
 	
 	/* affichage des sprites */	
 	for (i=0; i< scene->numElements; i++)

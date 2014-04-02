@@ -6,6 +6,7 @@
 #include "JeuSDL.h"
 #include <SDL/SDL.h>
 #include <assert.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -53,6 +54,7 @@ void jeuInit(JeuSDL *jeu)
 	jeu->etatCourantJeu = JEU_ETAT_MENU;
 	jeu->joueur 		= NULL;
 
+	srand(time(NULL));
 	#ifdef JEU_VERBOSE
 		printf("\nBLOCKADE > initialisation OK.\n\n");
 	#endif
@@ -78,7 +80,7 @@ void jeuBoucle(JeuSDL *jeu)
     float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
     /* Période de temps (secondes) entre deux raffraichissements écran */
     float periodeAffichage = 1.0f/32.0f;
-	float periodeDefilementScene = 1.0f/2.0f;
+	float periodeDefilementScene = 1.0f/8.0f;
 
 	graphiqueRaffraichit(graphique);
 
@@ -118,8 +120,7 @@ void jeuBoucle(JeuSDL *jeu)
         	    sceneDeplaceVaisseauJoueurGauche(&jeu->scene, dureeBoucle);
 	
 			if ( (getTempsSecondes() - tempsDernierDefilementScene) >= periodeDefilementScene)
-			{
-				/*sceneAnime(&jeu->scene, getTempsSecondes());*/
+			{				
 				sceneDefileScene(&jeu->scene);
 				tempsDernierDefilementScene = getTempsSecondes();
 			}
@@ -127,6 +128,9 @@ void jeuBoucle(JeuSDL *jeu)
         	/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
         	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
         	{
+				/* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran). */
+				sceneAnime(&jeu->scene, getTempsSecondes());
+
         		graphiqueEfface( graphique );
 				/*
 				*/

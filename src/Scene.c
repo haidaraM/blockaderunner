@@ -28,6 +28,15 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 		scene->elements[i] 		= 0;
 
 
+	/* Initialisation des points de défilement */
+	scene->pointsDefilement	= (Point*)malloc(SCENE_NUM_POINTS_DEFILEMENT*sizeof(Point));
+	assert(scene->pointsDefilement != NULL);
+	for (i=0; i< SCENE_NUM_POINTS_DEFILEMENT; i++)
+	{
+		scene->pointsDefilement[i].x = randomInt(0, scene->largeurAffichage);
+		scene->pointsDefilement[i].y = randomInt(0, scene->hauteurAffichage);
+	}
+
 	/* TEST : initialisation element du vaisseau joueur */
 	element 				= (ElementScene*)malloc(sizeof(ElementScene));
 	assert( element != NULL);
@@ -84,13 +93,20 @@ void sceneDefileScene(Scene *scene)
 
 void sceneAnime(Scene *scene, float tempsSecondes)
 {
-	int dx;
+	int i, dx;
 	float dt 	= tempsSecondes - scene->horlogePrecedente;
-	/* Animation du fond (défilement) */
-	dx     = (int)(dt * SCENE_VITESSE_DEFILEMENT_FOND);
-	if ((scene->rectangleImageFond.x + dx) >= (4098 - 1366 -1))
-			scene->rectangleImageFond.x = 4098 - 1366 -1;
-	else	scene->rectangleImageFond.x += dx;
+
+	/* Points de défilement */
+	dx     = -(int)(dt * SCENE_VITESSE_DEFILEMENT_POINTS);
+	for (i=0; i< SCENE_NUM_POINTS_DEFILEMENT; i++)
+	{
+		scene->pointsDefilement[i].x += dx;
+		if (scene->pointsDefilement[i].x < 0)
+		{
+			scene->pointsDefilement[i].x = scene->largeurAffichage -1;
+			scene->pointsDefilement[i].y = randomInt(0, scene->hauteurAffichage);
+		}
+	}
 
 	scene->horlogePrecedente = tempsSecondes;
 }
