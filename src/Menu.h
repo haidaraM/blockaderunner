@@ -13,7 +13,7 @@
 
 
 
-#define MENU_DUREE_INTRO					8.0f		/* 8 secondes */
+#define MENU_DUREE_INTRO					5.0f		/* 8 secondes */
 
 
 #define MENU_ETAT_INTRO						0

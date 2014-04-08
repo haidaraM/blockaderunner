@@ -51,8 +51,9 @@ void jeuInit(JeuSDL *jeu)
 	/* Initialisation de la scène */
 	sceneInit(&jeu->scene, &jeu->ressource, jeu->graphique.largeur, jeu->graphique.hauteur);
 
-	jeu->etatCourantJeu = JEU_ETAT_MENU;
-	jeu->joueur 		= NULL;
+
+	jeu->etatCourantJeu 	= JEU_ETAT_MENU;
+	jeu->joueur 			= NULL;
 
 	srand(time(NULL));
 	#ifdef JEU_VERBOSE
@@ -94,7 +95,7 @@ void jeuBoucle(JeuSDL *jeu)
 	{
        	debutBoucle 		= getTempsSecondes();
 
-		/* Sonde les entrées (souris + clavier) pour des évènements */
+		/* Sonde les entrées (souris + clavier) : détecte les évènements */
 		entreeSonde( entree );
 
 		/* Traitement des Evenements */

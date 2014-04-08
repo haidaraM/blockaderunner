@@ -150,7 +150,7 @@ void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 {
     ElementScene *vaiss			= scene->elements[0];
-	float vitesseDeplacement 	= 768.0f/0.88f;
+	float vitesseDeplacement 	= 768.0f/3.0f;
 	int dx						= (int)(tempsSecondes * vitesseDeplacement);
 	int x                       = elementGetX(vaiss);
 
@@ -163,7 +163,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
 {
     ElementScene *vaiss			= scene->elements[0];
-	float vitesseDeplacement 	= 768.0f/0.88f;
+	float vitesseDeplacement 	= 768.0f/3.0f;
 	int dx						= -(int)(tempsSecondes * vitesseDeplacement);
 	int x                       = elementGetX(vaiss);
 
