@@ -9,8 +9,8 @@ SRC		 		= src
 BIN		 		= bin
 EXEC 			= blockade
 
-#Executables des Tests de regression
-JOUEUR_TEST		= joueurTest
+#Executable du Test de regression
+MAIN_TEST		= testRegression
 
 CC 				= gcc
 LD 				= gcc
@@ -30,18 +30,18 @@ LDFLAGS  		=
 CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2   # pour optimiser
 
 
-all: $(BIN)/$(EXEC) $(BIN)/$(JOUEUR_TEST)
+all: $(BIN)/$(EXEC) $(BIN)/$(MAIN_TEST)
 
 
 
 $(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Outils.o $(OBJ)/Ressource.o $(OBJ)/Joueur.o $(OBJ)/Niveau.o $(OBJ)/GraphiqueSDL.o $(OBJ)/EntreeSDL.o $(OBJ)/Menu.o $(OBJ)/Scene.o $(OBJ)/ElementScene.o $(OBJ)/Vaisseau.o
 	$(LD)  $^ $(LDFLAGS) $(LIBS) -o $@
 
-$(BIN)/$(JOUEUR_TEST): $(OBJ)/JoueurMainTest.o $(OBJ)/Joueur.o $(OBJ)/Vaisseau.o
+$(BIN)/$(MAIN_TEST): $(OBJ)/MainTest.o $(OBJ)/Joueur.o $(OBJ)/Vaisseau.o
 	$(LD) $(CFLAGS) $^ -o $@ 
 
 $(OBJ)/%.o: $(SRC)/%.c
 	$(CC) -c $(CFLAGS) $(INCLUDE) $< -o $@
 
 clean:
-	rm -f $(OBJ)/*.o $(BIN)/$(EXEC) $(BIN)/$(JOUEUR_TEST)
+	rm -f $(OBJ)/*.o $(BIN)/$(EXEC) $(BIN)/$(MAIN_TEST)
