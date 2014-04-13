@@ -75,12 +75,6 @@ int vaisseauGetPointStructure(const Vaisseau * vaisseau)
     return vaisseau->pointStructure;
 }
 
-int vaisseauGetTypeArme(const Vaisseau * vaisseau, int numArme )
-{
-    assert(vaisseau!=NULL);
-    return vaisseau->a
-}
-
 void armeInit(Arme * a, int type)
 {
     switch(type)
