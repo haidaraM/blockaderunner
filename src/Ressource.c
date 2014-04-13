@@ -37,6 +37,11 @@ void creeListeImages(Ressource *res)
 	res->dimensionImages[RESS_IMG_VAISSEAU_JOUEUR].largeur 			= RESS_IMG_LARGEUR_VAISSEAU_JOUEUR;
 	res->dimensionImages[RESS_IMG_VAISSEAU_JOUEUR].hauteur 			= RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR;
 
+	res->images[RESS_IMG_TIR_JOUEUR]                                =RESS_IMG_FICHIER_TIR_JOUEUR;
+	res->dimensionImages[RESS_IMG_TIR_JOUEUR].largeur               =RESS_IMG_LARGEUR_TIR_JOUEUR;
+	res->dimensionImages[RESS_IMG_TIR_JOUEUR].hauteur               =RESS_IMG_HAUTEUR_TIR_JOUEUR;
+
+
 	res->images[RESS_IMG_SPLASH]		 							= RESS_IMG_FICHIER_SPLASH;
 	res->dimensionImages[RESS_IMG_SPLASH].largeur 					= RESS_IMG_LARGEUR_SPLASH;
 	res->dimensionImages[RESS_IMG_SPLASH].hauteur 					= RESS_IMG_HAUTEUR_SPLASH;
@@ -56,7 +61,7 @@ void creeListeSons(Ressource *res)
 void creeListePolices(Ressource *res)
 {}
 
-void chargeJoueurs(Ressource *res) 
+void chargeJoueurs(Ressource *res)
 {
 	FILE *fic;
 
@@ -119,15 +124,15 @@ void creeNiveaux(Ressource *res)
 	int i;
 	/*char desc[256];*/
 	assert(res != NULL);
-	
+
 	res->niveaux = (Niveau*)malloc(RESS_NUM_NIVEAUX * sizeof(Niveau));
 	assert( res->niveaux != NULL);
-	
+
 	for (i=0; i< RESS_NUM_NIVEAUX; i++)
-	{	
+	{
 		/*sprintf(desc, "Niveau %d", i);*/
 		niveauInit(&res->niveaux[i], i);
-		niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0);	/* ONLY A TEST */ 
+		niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0);	/* ONLY A TEST */
 	}
 }
 

@@ -56,6 +56,31 @@ void vaisseauLibere(Vaisseau *vaisseau)
     vaisseau->armes=NULL;
 }
 
+
+int vaisseauGetNbArmes(const Vaisseau * vaisseau)
+{
+    assert(vaisseau!=NULL);
+    return vaisseau->nbArmes;
+}
+
+int vaisseauGetPointEcran(const Vaisseau * vaisseau)
+{
+    assert(vaisseau!=NULL);
+    return vaisseau->pointEcran;
+}
+
+int vaisseauGetPointStructure(const Vaisseau * vaisseau)
+{
+    assert(vaisseau!=NULL);
+    return vaisseau->pointStructure;
+}
+
+int vaisseauGetTypeArme(const Vaisseau * vaisseau, int numArme )
+{
+    assert(vaisseau!=NULL);
+    return vaisseau->a
+}
+
 void armeInit(Arme * a, int type)
 {
     switch(type)

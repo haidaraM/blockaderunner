@@ -87,6 +87,34 @@ void vaisseauLibere(Vaisseau * vaisseau);
 */
 void armeInit(Arme *a, int type);
 
+/**
+* @fn int vaisseauGetNbArmes(const Vaisseau * vaisseau)
+* @brief Renvoie le nombre d'armes du vaisseau
+* @param  [in] vaisseau
+*/
+int vaisseauGetNbArmes(const Vaisseau * vaisseau);
+
+/**
+* @fn int vaisseauGetPointEcran(const Vaisseau * vaisseau);
+* @brief Renvoie les points ecran du vaisseau du joueur
+* @param [in] vaisseau
+*/
+int vaisseauGetPointEcran(const Vaisseau * vaisseau);
+
+/**
+* @fn int vaisseauGetPointStructure(const Vaisseau * vaisseau);
+* @brief Renvoie les points structure du vaisseau du joueur
+* @param [in] vaisseau
+*/
+int vaisseauGetPointStructure(const Vaisseau * vaisseau);
+
+/** 
+* @fn int vaisseauGetTypeArme(const Vaisseau * vaisseau, int numArme)
+* @brief renvoie le type d'une arme du vaisseau
+* @param [in] vaisseau
+* @param [in] numArme
+*/
+int vaisseauGetTypeArme(const Vaisseau * vaisseau, int numArme);
 
 /**
 * @fn void vaisseauTestDeregression()

@@ -60,6 +60,11 @@
 #define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
 #define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						52
 
+#define RESS_IMG_TIR_JOUEUR                                     2
+#define RESS_IMG_FICHIER_TIR_JOUEUR                             "missile2.png"
+#define RESS_IMG_LARGEUR_TIR_JOUEUR                             95
+#define RESS_IMG_HAUTEUR_TIR_JOUEUR                             24
+
 #define RESS_IMG_SPLASH						 					10
 #define RESS_IMG_FICHIER_SPLASH									"splash0.jpg"
 #define RESS_IMG_LARGEUR_SPLASH									1366
@@ -71,7 +76,7 @@
 #define RESS_IMG_HAUTEUR_FOND_MENU		 						720
 
 #define RESS_IMG_FOND_NIVEAU_0				 					20
-#define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"
+#define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg1.jpg"
 #define RESS_IMG_LARGEUR_FOND_NIVEAU_0							4098
 #define RESS_IMG_HAUTEUR_FOND_NIVEAU_0	 						720
 
@@ -85,13 +90,13 @@ typedef struct
 	int numJoueurs;
 	/** Tableau de pointeurs sur Joueur : tous les joueurs sauvegardés. */
 	Joueur **joueurs;
-	/** Tableau de chaines de caractères (noms des fichiers images) */	
+	/** Tableau de chaines de caractères (noms des fichiers images) */
 	char **images;
 	/** Tableau de Rectangles stockant les dimensions de chaque image */
 	Rectangle *dimensionImages;
-	/** Tableau de chaines de caractères (noms des fichiers sons) */	
+	/** Tableau de chaines de caractères (noms des fichiers sons) */
 	char **sons;
-	/** Tableau de chaines de caractères (noms des fichiers ttf) */	
+	/** Tableau de chaines de caractères (noms des fichiers ttf) */
 	char **polices;
 
 	/** Tableau de tous les niveaux du jeu. */
@@ -122,7 +127,7 @@ int ressourceGetNumJoueurs(Ressource *res);
 */
 Joueur** ressourceGetJoueurs(Ressource *res);
 /**
-* @brief Ajoute un joueur à la liste des joueurs sauvegardés. 
+* @brief Ajoute un joueur à la liste des joueurs sauvegardés.
 */
 void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur);
 

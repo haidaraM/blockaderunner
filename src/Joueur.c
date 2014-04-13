@@ -4,7 +4,6 @@
 */
 
 #include "Joueur.h"
-#include "Vaisseau.h"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -63,9 +62,9 @@ void joueurTestDeRegression()
     joueurInit(&j, nom, 5, 9000, 100, 5, 10);
     printf("nom : %s \nScore : %d \nNiveau : %d \n", j.nom, j.score, j.progression );
     assert(strcmp(j.nom, nom)==0 && j.vaisseau.armes!=NULL);
-    printf("nbArmes : %d \n", j.vaisseau.nbArmes);
-    printf("PointS : %d \n", j.vaisseau.pointStructure);
-    printf("PointE : %d \n", j.vaisseau.pointEcran);
+    printf("nbArmes : %d \n", vaisseauGetNbArmes(&j.vaisseau));
+    printf("PointS : %d \n", vaisseauGetPointStructure(&j.vaisseau));
+    printf("PointE : %d \n", vaisseauGetPointEcran(&j.vaisseau));
     printf("Types Arme :  %d\n", j.vaisseau.armes[0].typeArme );
     printf("Munitions :  %d\n", j.vaisseau.armes[0].munitions );
     printf("degatEcran :  %d\n", j.vaisseau.armes[0].degatEcran );

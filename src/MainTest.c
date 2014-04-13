@@ -1,7 +1,9 @@
-#include "Joueur.h"
 #include <stdio.h>
-#include <assert.h>
+
+
 #include "Vaisseau.h"
+#include "Joueur.h"
+
 
 int main(int argc, char const *argv[])
 {
