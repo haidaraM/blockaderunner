@@ -4,6 +4,7 @@
 */
 #include "GraphiqueSDL.h"
 #include "ElementScene.h"
+#include "Joueur.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -116,6 +117,9 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	int imgFlags, imgRes;
 	SDL_Color couleurTexteMenu 			= { 249, 255, 253 };
 	SDL_Color couleurTexteMenuSurvol 	= { 249, 255, 53 };
+	SDL_Color couleurTexteScore			= { 249, 153, 86 };
+	Uint32 couleurNiveauCoque			= 0x00B0FF;
+	Uint32 couleurNiveauEcran			= 0xFFB000;
 
 	assert( graphique != NULL && ressource != NULL && menu != NULL && largeur > 0 && hauteur > 0 );
 
@@ -175,6 +179,19 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	} else
 		SDL_WM_SetCaption( graphique->titre, NULL);
 
+	/* SDL interprète chaque pixel comme un entier 32 bits non signé :
+		on doit faire attention à l'architecture (BIG ENDIAN vs LITTLE ENDIAN) lors de la création de surfaces. */
+	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	    graphique->rmask = 0xff000000;
+	    graphique->gmask = 0x00ff0000;
+	    graphique->bmask = 0x0000ff00;
+	    graphique->amask = 0x000000ff;
+	#else
+	    graphique->rmask = 0x000000ff;
+	    graphique->gmask = 0x0000ff00;
+	    graphique->bmask = 0x00ff0000;
+	    graphique->amask = 0xff000000;
+	#endif
 
 	/*---------------------------------------------------------------------
 		 Initialisation de SDL_image */
@@ -255,6 +272,30 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	graphiquePrepareRenduListeJoueurs(graphique, menu);
 
 
+	/*------- Elements du HUD ---------------------------------------------*/
+
+	graphique->elementsHUD 		= (SDL_Surface**)malloc( 4 * sizeof(SDL_Surface*) );
+	assert(graphique->elementsHUD != NULL);
+	graphique->elementsHUD[0] 	= SDL_CreateRGBSurface(	SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR, GFX_HUD_ELEMENT_HAUTEUR, 32,
+                                   						graphique->rmask, graphique->gmask, graphique->bmask, 0 );
+    if(graphique->elementsHUD[0] == NULL) {
+        printf("ERREUR : (GraphiqueSDL) : impossible de créer élément du HUD.  %s\n", SDL_GetError());
+        exit(1);
+    }	
+	graphique->elementsHUD[1] 	= SDL_CreateRGBSurface(	SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR, GFX_HUD_ELEMENT_HAUTEUR, 32,
+                                   						graphique->rmask, graphique->gmask, graphique->bmask, 0 );
+    if(graphique->elementsHUD[1] == NULL) {
+        printf("ERREUR : (GraphiqueSDL) : impossible de créer élément du HUD.  %s\n", SDL_GetError());
+        exit(1);
+    }	
+	SDL_FillRect(graphique->elementsHUD[0], NULL, couleurNiveauCoque);
+	SDL_FillRect(graphique->elementsHUD[1], NULL, couleurNiveauEcran);
+
+	/* score */
+	graphique->elementsHUD[2] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "Score : ", couleurTexteScore);
+	assert(graphique->elementsHUD[2] != NULL);
+	graphique->elementsHUD[3]	= TTF_RenderText_Blended( graphique->policeListeJoueurs,  "0000000", couleurTexteScore);
+	assert(graphique->elementsHUD[3] != NULL);
 
 	/*---------------------------------------------------------------------
 		FIN */
@@ -284,6 +325,7 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 	free(graphique->textesMenu);
 
 	TTF_CloseFont(graphique->policeMenu);	
+	TTF_CloseFont(graphique->policeListeJoueurs);	
 
 	/* SDL_ttf */
 	TTF_Quit();
@@ -460,7 +502,53 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 			SDL_BlitSurface( graphique->images[elementGetImageIndex(elements[i])], NULL, graphique->surface, &dstBox);
 		}
 	}
+
+	/* Affichage du HUD */
+	for (i=0; i< 10; i++)
+	{
+		dstBox.x = GFX_HUD_ELEMENT_LARGEUR;
+		dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);
+		SDL_BlitSurface( graphique->elementsHUD[0], NULL, graphique->surface, &dstBox);
+	}
+	for (i=0; i< 10; i++)
+	{
+		dstBox.x = 2* GFX_HUD_ELEMENT_LARGEUR + GFX_HUD_ELEMENT_OFFSET;
+		dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);
+		SDL_BlitSurface( graphique->elementsHUD[1], NULL, graphique->surface, &dstBox);
+	}
+	dstBox.x = graphique->largeur/2 - graphique->elementsHUD[2]->w;
+	dstBox.y = GFX_HUD_ELEMENT_OFFSET;
+	SDL_BlitSurface( graphique->elementsHUD[2], NULL, graphique->surface, &dstBox);
+	dstBox.x = GFX_HUD_ELEMENT_LARGEUR + graphique->largeur/2;
+	SDL_BlitSurface( graphique->elementsHUD[3], NULL, graphique->surface, &dstBox);
+	
 }
 
+void graphiqueSetScore(GraphiqueSDL *graphique, int score)
+{
+	static SDL_Color couleurTexteScore			= { 249, 153, 86 };
 
+	/* conversion : entier -> chaîne de caractères */
+	char scoreChaine[16];
+	int div 	= JOUEUR_MAX_SCORE/10;
+	int s 		= score;
+	if (s >= JOUEUR_MAX_SCORE)
+		s		= JOUEUR_MAX_SCORE - 1;
+	int digit;
+	int i 		= 0;
+	while (div >= 1)
+	{
+		digit 			= s / div;
+		scoreChaine[i] 	= '0' + digit;
+		i++;
+		s 				= s - digit*div;
+		div 			/= 10;
+	}
+	scoreChaine[i] = '\0';		
+
+	/* mise à jour du texte */	 
+	SDL_FreeSurface(graphique->elementsHUD[3]);
+	graphique->elementsHUD[3]	= TTF_RenderText_Blended( graphique->policeListeJoueurs,  scoreChaine, couleurTexteScore);
+	/*assert(graphique->elementsHUD[3] != NULL);*/			
+}
 

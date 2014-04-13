@@ -9,6 +9,7 @@
 #define _JOUEUR_H
 
 #define JOUEUR_NOM_MAXCHAR				47
+#define JOUEUR_MAX_SCORE				10000000
 
 
 /**

@@ -21,6 +21,11 @@
 #define GFX_MODE_FENETRE	 				1
 #define GFX_FENETRE_TITRE_DEFAUT			"Blockade Runner"
 
+#define GFX_HUD_ELEMENT_LARGEUR				8
+#define GFX_HUD_ELEMENT_HAUTEUR				6
+#define GFX_HUD_ELEMENT_OFFSET				2
+
+
 
 /**
 * @struct GraphiqueSDL
@@ -42,15 +47,22 @@ typedef struct
 	char *titre;
 	/** Pointeur sur SDL_Surface (représente la surface d'affichage principale). */
 	SDL_Surface *surface;
+
 	/** Tableau de pointeurs sur SDL_Surface (toutes les images chargées du jeu). */
 	SDL_Surface **images;
 	/** Tableau de pointeurs sur SDL_Surface (tous les rendus (par paires) de texte du Menu (couleur normale et surligné)). */
 	SDL_Surface **textesMenu;
 	/** Tableau de pointeurs sur SDL_Surface (tous les rendus de texte des noms des joueurs). */
 	SDL_Surface **textesNomsJoueurs;
-
+	/* Un tableau des petites surfaces pour l'affichage des niveaux d'Ecran et Coque du vaisseau du joueur. */
+	SDL_Surface **elementsHUD;
+	/* police du Menu */
 	TTF_Font *policeMenu;
+	/* police pour la liste des joueurs */
 	TTF_Font *policeListeJoueurs;
+
+	/* Utilisé en interne par SDL lors de la création de Surfaces. */
+	Uint32 rmask, gmask, bmask, amask;
 
 } GraphiqueSDL;
 
@@ -86,6 +98,10 @@ void graphiqueEfface(GraphiqueSDL *graphique);
 * @brief Recalcule le rendu de la liste des noms de joueurs. (pour usage dans Menu).
 */
 void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu);
+/** 
+* @brief Met à jour l'affichage du score
+*/
+void graphiqueSetScore(GraphiqueSDL *graphique, int score);
 /**
 * @brief Affiche le Menu.
 */

@@ -259,6 +259,9 @@ void jeuBoucle(JeuSDL *jeu)
 				niveau 					= ressourceGetNiveau(&jeu->ressource, jeu->niveauCourant);
 				sceneChargeNiveau(&jeu->scene, &niveau);
 				jeu->etatCourantJeu 	= JEU_ETAT_JEU;
+
+				graphiqueSetScore(&jeu->graphique, 9052);
+
 				sceneResetHorloge(&jeu->scene, getTempsSecondes());
 				tempsDernierDefilementScene = getTempsSecondes();
 			}

@@ -58,7 +58,7 @@
 #define RESS_IMG_VAISSEAU_JOUEUR			 					1
 #define RESS_IMG_FICHIER_VAISSEAU_JOUEUR						"playership.png"
 #define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
-#define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						52
+#define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						45
 
 #define RESS_IMG_TIR_JOUEUR                                     2
 #define RESS_IMG_FICHIER_TIR_JOUEUR                             "missile2.png"
