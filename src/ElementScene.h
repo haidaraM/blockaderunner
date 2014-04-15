@@ -19,10 +19,12 @@
 */
 typedef struct
 {
-	/** booléen : le element est dans la portion visible de la scène (ecran) ou pas. */
-	int visible;
 	/** type d'entité. */
 	int type;
+	/** destructible par un tir */
+	int destructible;
+	/** booléen : le element est dans la portion visible de la scène (ecran) ou pas. */
+	int visible;
 	/** position en X sur la scène. */
 	int x;
 	/** position en Y sur la scène. */
@@ -56,7 +58,15 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 */
 void elementLibere(ElementScene *element);
 /**
-* @brief renvoie 1 si le element est visible (ie. dans la portion visible de la Scene), 0 sinon.
+* @brief Affecte le type d'element.
+*/
+void elementSetType(ElementScene *element, int type);
+/**
+* @brief renvoie 1 si l'element est destructible, 0 sinon.
+*/
+int elementDestructible(const ElementScene *element);
+/**
+* @brief renvoie 1 si l'element est visible (ie. dans la portion visible de la Scene), 0 sinon.
 */
 int elementVisible(const ElementScene *element);
 /**

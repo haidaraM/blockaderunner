@@ -26,7 +26,7 @@ typedef struct
 	int largeurAffichage, hauteurAffichage;
 	/** nombre de elements. */
 	int numElements;
-	/** tableau de pointeur sur ElementScene.*/
+	/** tableau de pointeurs : tous les éléments qui composent la scène (vaisseaux, bonus) en cours.*/
 	ElementScene **elements;
 	/** index image fond (background du niveau). */
 	int indexImageFond;
