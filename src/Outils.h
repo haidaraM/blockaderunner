@@ -41,6 +41,35 @@ typedef struct
 unsigned char rectangleContient(Rectangle *rect, int x, int y);
 
 
+/*----------------------------------------------------------------------------	TABLEAU DYNAMIQUE ---------------------------------------------------------------------------------*/
+
+/**
+* @brief Tableau dynamique
+*/
+typedef struct
+{
+	int taille;
+	int capacite;
+	void **tab;
+} TabDyn;
+
+/** 
+* @brief Initialise un tableau dynamique : t doit être non NULL.
+*/
+void tabDynInit(TabDyn *t);
+/** 
+* @brief Libère un tableau dynamique : les éléments du tableau doivent être éventuellement préalablement libérés par l'utilisateur.
+*/
+void tabDynLibere(TabDyn *t);
+/** 
+* @brief Ajoute un élément générique à un tableau dynamique.
+*/
+void tabDynAjoute(TabDyn *t, void* element);
+/** 
+* @brief Renvoie un des éléments du tableau dynamique.
+*/
+void* tabDynGetElement(TabDyn *t, int index);
+
 /*----------------------------------------------------------------------------	LISTE CHAINEE ---------------------------------------------------------------------------------*/
 
 /**

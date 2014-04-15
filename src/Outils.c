@@ -16,6 +16,55 @@ unsigned char rectangleContient(Rectangle *rect, int x, int y)
 	return 0;
 }
 
+
+
+
+void tabDynInit(TabDyn *t)
+{
+	assert(t != NULL);
+	
+	t->tab = (void**)malloc(1*sizeof(void*));
+	assert(t->tab != NULL);
+	
+	t->capacite = 1;
+	t->taille   = 0;
+}
+
+void tabDynLibere(TabDyn *t)
+{
+	assert(t != NULL);
+		
+	free(t->tab);
+	t->tab = NULL;
+	t->capacite = -1;
+	t->taille = 0;
+}
+
+void tabDynAjoute(TabDyn *t, void* element)
+{
+	int i;
+	void **T;
+	if (t->taille == t->capacite)
+	{
+		T = (void**)malloc(t->capacite * 2 * sizeof(void*));
+		assert(T != NULL);
+		for (i=0; i< t->taille; i++)
+			T[i] = t->tab[i];
+		free(t->tab);
+		t->tab = T;
+		t->capacite *= 2;
+	}
+
+	t->tab[t->taille] = element;
+	t->taille++;
+}
+
+void* tabDynGetElement(TabDyn *t, int index)
+{
+	assert(t != NULL && index < t->taille);
+	return t->tab[index];
+}
+
 /*
 CelluleListe* celluleListeCreer(void *data)
 {

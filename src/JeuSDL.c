@@ -108,8 +108,16 @@ void jeuBoucle(JeuSDL *jeu)
 
 		case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
 
+			/* L'utilisateur a appuyé sur ESC */
 			if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
-				continueJeu	 		= 0;
+				toucheDetectee = SDLK_ESCAPE;
+			/* L'utilisateur vient de relâcher la touche ESC */
+			if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE)
+			{
+				/*continueJeu	 		= 0;*/
+				jeu->etatCourantJeu 	= JEU_ETAT_MENU;
+				menuPrincipal((void*)menu);			
+			}
 
 			if (entreeToucheEnfoncee(entree, SDLK_UP) == 1)
 				sceneDeplaceVaisseauJoueurHaut( &jeu->scene, dureeBoucle );

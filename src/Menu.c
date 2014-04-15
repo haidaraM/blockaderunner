@@ -430,7 +430,7 @@ void menuSetFinLectureClavier(Menu *menu)
 	/*printf("--> retour choix joueur. \n");*/
 }
 
-Joueur* menuGetJoueurChoisi(Menu *menu)
+Joueur* menuGetJoueurChoisi(const Menu *menu)
 {
 	assert( menu != NULL);
 	if (menu->joueurCourant == -1)
@@ -451,7 +451,7 @@ void menuSelectionneNiveau(Menu *menu, int indexElement)
 	menu->niveauChoisi = indexElement - MENU_NIVEAU;
 }
 
-int menuGetNiveauChoisi(Menu *menu)
+int menuGetNiveauChoisi(const Menu *menu)
 {
 	assert( menu != NULL);
 	return menu->niveauChoisi;

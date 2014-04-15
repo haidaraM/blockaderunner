@@ -188,7 +188,7 @@ void menuSetFinLectureClavier(Menu *menu);
 /**
 * @brief Renvoie le pointeur sur le joueur actif (ou NULL si aucun joueur n'a été selectionné dans le menu).
 */
-Joueur* menuGetJoueurChoisi(Menu *menu);
+Joueur* menuGetJoueurChoisi(const Menu *menu);
 /**
 * @brief Appelée lorsque l'utilisateur a choisi un niveau de jeu.
 */
@@ -196,6 +196,6 @@ void menuSelectionneNiveau(Menu *menu, int indexElement);
 /**
 * @brief Renvoie le niveau selectionné ou -1 si aucun niveau n'a été selectionné.
 */
-int menuGetNiveauChoisi(Menu *menu);
+int menuGetNiveauChoisi(const Menu *menu);
 #endif
 
