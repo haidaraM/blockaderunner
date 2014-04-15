@@ -14,7 +14,7 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 {
 	assert( element != NULL );
 
-	element->type			= type;
+	/* element->type			= type; */
 	element->destructible  	= 0;
 	element->x 				= 0;
 	element->y				= 0;
@@ -24,6 +24,7 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 	element->hauteurSceneVisible	= hauteurEcran;
 	element->visible 		= 0;
 	element->indexImage 		= indexImage;
+	elementSetType(element, type);
 
 }
 
@@ -37,7 +38,7 @@ void elementSetType(ElementScene *element, int type)
 	element->type = type;
 	switch (type)
 	{
-		case SPRITE_TYPE_VAISSEAU_JOUEUR:
+		case ELEMENT_TYPE_VAISSEAU_JOUEUR:
 			element->destructible = 1;
 		default:
 			element->destructible = 0;
@@ -62,6 +63,11 @@ int elementGetX(const ElementScene *element)
 int elementGetY(const ElementScene *element)
 {
 	return element->y;
+}
+
+int elementGetType(const ElementScene * element)
+{
+    return element->type;
 }
 
 void elementSetPosition(ElementScene *element, int x, int y)

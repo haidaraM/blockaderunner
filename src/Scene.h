@@ -24,10 +24,8 @@ typedef struct
 	float horlogePrecedente;
 	/** Portion visible de la scène. */
 	int largeurAffichage, hauteurAffichage;
-	/** nombre de elements. */
-	int numElements;
-	/** tableau de pointeurs : tous les éléments qui composent la scène (vaisseaux, bonus) en cours.*/
-	ElementScene **elements;
+	/** tableau dynamique qui regroupent tous les éléments qui composent la scène (vaisseaux, bonus, tirs) en cours.*/
+	TabDyn elements;
 	/** index image fond (background du niveau). */
 	int indexImageFond;
 	/** position courante (et taille) du fond du niveau (background). */
@@ -68,18 +66,28 @@ void sceneResetHorloge(Scene *scene, float horloge);
 void sceneDefileScene(Scene *scene);
 
 /**
-* @brief Permet de passer le temps écoulé à la scène : utile pour les animations (). 
+* @fn int sceneGetNbElements(const Scene * scene)
+* @brief renvoie le nombre d'element de la scene
+*/
+int sceneGetNbElements(const Scene * scene);
+
+/**
+* @brief Permet de passer le temps écoulé à la scène : utile pour les animations ().
 */
 void sceneAnime(Scene *scene, float tempsSecondes);
 
 ElementScene* sceneCreerElementScene(Scene *scene, int type);
+
 /**
+* @fn void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 * @brief Deplace le vaisseau du joueur vers le haut.
 * @param scene[in, out] : instance de la Scene.
 * @param tempsSecondes : temps écoulé depuis le dernier appel. Utilisé pour calculer le déplacement à vitesse constante.
 */
 void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes);
+
 /**
+* @fn void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 * @brief Deplace le vaisseau du joueur vers le bas.
 * @param scene[in, out] : instance de la Scene.
 * @param tempsSecondes : temps écoulé depuis le dernier appel. Utilisé pour calculer le déplacement à vitesse constante.
@@ -87,6 +95,7 @@ void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes);
 void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes);
 
 /**
+* @fn void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes);
 * @brief Deplace le vaisseau du joueur vers la gauche.
 * @param scene[in, out] : instance de la Scene.
 * @param [in] tempsSecondes : temps écoulé depuis le dernier appel. Utilisé pour calculer le déplacement à vitesse constante.
@@ -94,11 +103,21 @@ void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes);
 void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes);
 
 /**
+* @fn void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 * @brief Deplace le vaisseau du joueur vers la droite.
 * @param scene[in, out] : instance de la Scene.
 * @param [in] tempsSecondes : temps écoulé depuis le dernier appel. Utilisé pour calculer le déplacement à vitesse constante.
 */
 void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
+
+/**
+* @fn void sceneJoueurDeclencheTir(Scene * scene)
+* @brief Cree un element qui correspond au tir du joueur
+* @param [in, out] scene (doit etre initialisé )
+* @param [in] res (utile pour creer un cree un element )
+*/
+void sceneJoueurDeclencheTir(Scene * scene, const Ressource *res);
+
 
 
 

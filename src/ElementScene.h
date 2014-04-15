@@ -1,17 +1,19 @@
 /**
 * @file ElementScene.h
-* @brief Une instance d'un type donné (élément du Jeu) : vaisseau, asteroide, etc. Caractérisé par des liens sur des ressources prédéfinies (images, sons). 
+* @brief Une instance d'un type donné (élément du Jeu) : vaisseau, asteroide, etc. Caractérisé par des liens sur des ressources prédéfinies (images, sons).
 *  Tous les ElementScenes sont gérés par la Scene, qui décident notamment lesquels sont visibles, créés, détruits.
 * @author Yann Cortial
-*  
+*
 */
 #ifndef _ELEMENT_SCENE_H
 #define _ELEMENT_SCENE_H
 
 
 
-#define SPRITE_TYPE_NON_DEFINI					-1
-#define SPRITE_TYPE_VAISSEAU_JOUEUR				0
+#define ELEMENT_TYPE_NON_DEFINI					-1
+#define ELEMENT_TYPE_VAISSEAU_JOUEUR			 0
+
+#define ELEMENT_TYPE_LASER                       1
 
 
 /**
@@ -45,7 +47,7 @@ typedef struct
 /**
 * @brief Initialise un element.
 * @param element[in, out] : le element à initialiser, doit être non null.
-* @param type : type d'entité 
+* @param type : type d'entité
 * @param indexImage : image associée au element (fournie par Ressource).
 * @param largeur : largeur du element.
 * @param hauteur : hauteur du element.
@@ -61,6 +63,13 @@ void elementLibere(ElementScene *element);
 * @brief Affecte le type d'element.
 */
 void elementSetType(ElementScene *element, int type);
+
+/**
+* @fn elementGetType(ElementScene * scene)
+* @brief Renvoie le type d'element
+*/
+int elementGetType(const ElementScene * element);
+
 /**
 * @brief renvoie 1 si l'element est destructible, 0 sinon.
 */

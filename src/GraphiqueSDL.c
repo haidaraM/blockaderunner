@@ -14,7 +14,7 @@
 
 
 
-/* --------------------------------------------------------------------------------------------------			Fonctions internes */ 
+/* --------------------------------------------------------------------------------------------------			Fonctions internes */
 
 SDL_Surface* chargeImage(char* nomFichier)
 {
@@ -42,11 +42,11 @@ void chargePolices(GraphiqueSDL *graphique)
 	char file[64], dir[64];
 	char *nomFic;
 	assert( graphique != NULL);
-	
+
 	strcpy(file, RESS_POL_FICHIER_MENU);
 	strcpy(dir, RESS_DIR_POLICES);
 	nomFic = strcat(dir, file);
-	
+
 	graphique->policeMenu 	= TTF_OpenFont(nomFic, RESS_POL_TAILLE_MENU);
 	if(!graphique->policeMenu) {
     	printf("TTF_OpenFont: %s\n", TTF_GetError());
@@ -107,7 +107,7 @@ void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 
 
 
-/* --------------------------------------------------------------------------------------------------			Interface du Module */ 
+/* --------------------------------------------------------------------------------------------------			Interface du Module */
 
 void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode)
 {
@@ -217,7 +217,7 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 		printf("ERREUR : Ressources (GraphiqueSDL) : impossible d'allouer la memoire pour les images.\n");
 		assert( graphique->images != NULL);
 	}
-	fichiersImages = ressource->images;	
+	fichiersImages = ressource->images;
 	for (i=0; i< RESS_NUM_IMAGES; i++)
 	{
 		graphique->images[i]	= 0;
@@ -226,7 +226,7 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	#ifdef JEU_VERBOSE
 		printf("    chargement des images OK.\n");
 	#endif
-	
+
 	/*---------------------------------------------------------------------
 		 Initialisation de SDL_ttf : */
 
@@ -249,12 +249,12 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 	{
 		printf("ERREUR : (GraphiqueSDL) : impossible d'allouer la memoire pour les rendus de texte (Menu).\n");
 		assert( graphique->textesMenu != NULL);
-	}	
+	}
 	#ifdef JEU_VERBOSE
 		printf("    rendu du texte (Menu).\n");
 	#endif
 	for (i=0; i< 2*MENU_NUM_ELEMENTS; i++)
-	{	
+	{
 		graphique->textesMenu[i] = NULL;
 	}
 	for (i=0; i< MENU_NUM_BASIC_ELEMENTS; i++)
@@ -281,13 +281,13 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
     if(graphique->elementsHUD[0] == NULL) {
         printf("ERREUR : (GraphiqueSDL) : impossible de créer élément du HUD.  %s\n", SDL_GetError());
         exit(1);
-    }	
+    }
 	graphique->elementsHUD[1] 	= SDL_CreateRGBSurface(	SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR, GFX_HUD_ELEMENT_HAUTEUR, 32,
                                    						graphique->rmask, graphique->gmask, graphique->bmask, 0 );
     if(graphique->elementsHUD[1] == NULL) {
         printf("ERREUR : (GraphiqueSDL) : impossible de créer élément du HUD.  %s\n", SDL_GetError());
         exit(1);
-    }	
+    }
 	SDL_FillRect(graphique->elementsHUD[0], NULL, couleurNiveauCoque);
 	SDL_FillRect(graphique->elementsHUD[1], NULL, couleurNiveauEcran);
 
@@ -299,7 +299,7 @@ void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, in
 
 	/*---------------------------------------------------------------------
 		FIN */
-	
+
 	#ifdef JEU_VERBOSE
 		printf("    initialisation OK.\n");
 	#endif
@@ -324,8 +324,8 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 	}
 	free(graphique->textesMenu);
 
-	TTF_CloseFont(graphique->policeMenu);	
-	TTF_CloseFont(graphique->policeListeJoueurs);	
+	TTF_CloseFont(graphique->policeMenu);
+	TTF_CloseFont(graphique->policeListeJoueurs);
 
 	/* SDL_ttf */
 	TTF_Quit();
@@ -415,13 +415,13 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 			if (menu->elements[i].visible == 1)
 			{
 				offset.x = menu->elements[i].rect.x;
-				offset.y = menu->elements[i].rect.y;	
-				if (menu->elements[i].surligne == 0)		
+				offset.y = menu->elements[i].rect.y;
+				if (menu->elements[i].surligne == 0)
 						SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
 				else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
-			}	
+			}
 		}
-		break; 
+		break;
 	case MENU_ETAT_ENTREE_JOUEUR:
 		offset.x = 0;
 		offset.y = 0;
@@ -431,18 +431,18 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 			if (menu->elements[i].visible == 1)
 			{
 				offset.x = menu->elements[i].rect.x;
-				offset.y = menu->elements[i].rect.y;	
-				if (menu->elements[i].surligne == 0)		
+				offset.y = menu->elements[i].rect.y;
+				if (menu->elements[i].surligne == 0)
 						SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
 				else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
-			}	
+			}
 		}
 		nomNouveauJoueur = TTF_RenderText_Blended(graphique->policeMenu, menu->nomNouveauJoueur, couleurTexteMenuSurvol);
 		offset.x  = MENU_ZONE_X + MENU_PADDING_HORZ;
 		offset.y  = MENU_ZONE_Y + 5*MENU_PADDING_VERT;
 		SDL_BlitSurface( nomNouveauJoueur, NULL, graphique->surface, &offset);
 		SDL_FreeSurface(nomNouveauJoueur);
-		break; 
+		break;
 	default:
 		offset.x = 0;
 		offset.y = 0;
@@ -452,13 +452,13 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 			if (menu->elements[i].visible == 1)
 			{
 				offset.x = menu->elements[i].rect.x;
-				offset.y = menu->elements[i].rect.y;	
-				if (menu->elements[i].surligne == 0)		
+				offset.y = menu->elements[i].rect.y;
+				if (menu->elements[i].surligne == 0)
 						SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
 				else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
-			}	
+			}
 		}
-		break; 
+		break;
 	}
 }
 
@@ -467,7 +467,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 {
 	int i;
 	SDL_Rect srcBox, dstBox;
-	ElementScene **elements = scene->elements;
+	ElementScene **elements = (ElementScene **)scene->elements.tab;
 	Uint32 couleurPointsDefilement = SDL_MapRGB(graphique->surface->format, 0xd0, 0xff, 0xff);
 
 	/* affichage du fond */
@@ -490,14 +490,14 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	}
 	if ( SDL_MUSTLOCK(graphique->surface) ) {
         SDL_UnlockSurface(graphique->surface);
-    }	
-	
-	/* affichage des sprites */	
-	for (i=0; i< scene->numElements; i++)
+    }
+
+	/* affichage des sprites */
+	for (i=0; i< sceneGetNbElements(scene); i++)
 	{
 		if (elements[i] != NULL && elementVisible(elements[i]) == 1)
 		{
-			dstBox.x = elementGetX(elements[i]);
+            dstBox.x = elementGetX(elements[i]);
 			dstBox.y = elementGetY(elements[i]);
 			SDL_BlitSurface( graphique->images[elementGetImageIndex(elements[i])], NULL, graphique->surface, &dstBox);
 		}
@@ -521,7 +521,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	SDL_BlitSurface( graphique->elementsHUD[2], NULL, graphique->surface, &dstBox);
 	dstBox.x = GFX_HUD_ELEMENT_LARGEUR + graphique->largeur/2;
 	SDL_BlitSurface( graphique->elementsHUD[3], NULL, graphique->surface, &dstBox);
-	
+
 }
 
 void graphiqueSetScore(GraphiqueSDL *graphique, int score)
@@ -544,11 +544,11 @@ void graphiqueSetScore(GraphiqueSDL *graphique, int score)
 		s 				= s - digit*div;
 		div 			/= 10;
 	}
-	scoreChaine[i] = '\0';		
+	scoreChaine[i] = '\0';
 
-	/* mise à jour du texte */	 
+	/* mise à jour du texte */
 	SDL_FreeSurface(graphique->elementsHUD[3]);
 	graphique->elementsHUD[3]	= TTF_RenderText_Blended( graphique->policeListeJoueurs,  scoreChaine, couleurTexteScore);
-	/*assert(graphique->elementsHUD[3] != NULL);*/			
+	/*assert(graphique->elementsHUD[3] != NULL);*/
 }
 

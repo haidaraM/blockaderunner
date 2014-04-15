@@ -56,14 +56,14 @@
 #define RESS_IMG_NULL						 					0
 
 #define RESS_IMG_VAISSEAU_JOUEUR			 					1
-#define RESS_IMG_FICHIER_VAISSEAU_JOUEUR						"playership.png"
+#define RESS_IMG_FICHIER_VAISSEAU_JOUEUR						"playership2.png"
 #define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
 #define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						45
 
-#define RESS_IMG_TIR_JOUEUR                                     2
-#define RESS_IMG_FICHIER_TIR_JOUEUR                             "missile2.png"
-#define RESS_IMG_LARGEUR_TIR_JOUEUR                             95
-#define RESS_IMG_HAUTEUR_TIR_JOUEUR                             24
+#define RESS_IMG_TIR_JOUEUR_LASER                               2
+#define RESS_IMG_FICHIER_TIR_JOUEUR_LASER                      "laser_tir.png"
+#define RESS_IMG_LARGEUR_TIR_JOUEUR_LASER                       32
+#define RESS_IMG_HAUTEUR_TIR_JOUEUR_LASER                       4
 
 #define RESS_IMG_SPLASH						 					10
 #define RESS_IMG_FICHIER_SPLASH									"splash0.jpg"

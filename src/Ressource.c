@@ -37,9 +37,9 @@ void creeListeImages(Ressource *res)
 	res->dimensionImages[RESS_IMG_VAISSEAU_JOUEUR].largeur 			= RESS_IMG_LARGEUR_VAISSEAU_JOUEUR;
 	res->dimensionImages[RESS_IMG_VAISSEAU_JOUEUR].hauteur 			= RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR;
 
-	res->images[RESS_IMG_TIR_JOUEUR]                                =RESS_IMG_FICHIER_TIR_JOUEUR;
-	res->dimensionImages[RESS_IMG_TIR_JOUEUR].largeur               =RESS_IMG_LARGEUR_TIR_JOUEUR;
-	res->dimensionImages[RESS_IMG_TIR_JOUEUR].hauteur               =RESS_IMG_HAUTEUR_TIR_JOUEUR;
+	res->images[RESS_IMG_TIR_JOUEUR_LASER]                                =RESS_IMG_FICHIER_TIR_JOUEUR_LASER;
+	res->dimensionImages[RESS_IMG_TIR_JOUEUR_LASER].largeur               =RESS_IMG_LARGEUR_TIR_JOUEUR_LASER;
+	res->dimensionImages[RESS_IMG_TIR_JOUEUR_LASER].hauteur               =RESS_IMG_HAUTEUR_TIR_JOUEUR_LASER;
 
 
 	res->images[RESS_IMG_SPLASH]		 							= RESS_IMG_FICHIER_SPLASH;

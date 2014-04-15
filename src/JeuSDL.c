@@ -102,9 +102,9 @@ void jeuBoucle(JeuSDL *jeu)
 		if (entreeFermetureJeu(entree)==1)
 			continueJeu 		= 0;
 
-		
+
 		switch( jeu->etatCourantJeu )
-		{	
+		{
 
 		case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
 
@@ -116,9 +116,11 @@ void jeuBoucle(JeuSDL *jeu)
 			{
 				/*continueJeu	 		= 0;*/
 				jeu->etatCourantJeu 	= JEU_ETAT_MENU;
-				menuPrincipal((void*)menu);			
+				menuPrincipal((void*)menu);
+				toucheDetectee=-1;
 			}
 
+            /* Deplacemennt du joueur */
 			if (entreeToucheEnfoncee(entree, SDLK_UP) == 1)
 				sceneDeplaceVaisseauJoueurHaut( &jeu->scene, dureeBoucle );
 			if (entreeToucheEnfoncee(entree, SDLK_DOWN) == 1)
@@ -127,9 +129,20 @@ void jeuBoucle(JeuSDL *jeu)
         	    sceneDeplaceVaisseauJoueurDroite(&jeu->scene, dureeBoucle);
             if (entreeToucheEnfoncee(entree, SDLK_LEFT)==1)
         	    sceneDeplaceVaisseauJoueurGauche(&jeu->scene, dureeBoucle);
-	
+
+            /* Declenchement des tirs */
+            if (entreeToucheEnfoncee(entree, SDLK_SPACE)==1)
+                toucheDetectee= SDLK_SPACE;
+            if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
+			{
+				sceneJoueurDeclencheTir(&jeu->scene, &jeu->ressource);
+				toucheDetectee=-1;
+
+			}
+
+
 			if ( (getTempsSecondes() - tempsDernierDefilementScene) >= periodeDefilementScene)
-			{				
+			{
 				sceneDefileScene(&jeu->scene);
 				tempsDernierDefilementScene = getTempsSecondes();
 			}
@@ -150,12 +163,12 @@ void jeuBoucle(JeuSDL *jeu)
 
         		tempsDernierAffichage 	= getTempsSecondes();
         	}
-			
+
 			break;
 
 		case JEU_ETAT_MENU:			/*-------------   M E N U   ---------------*/
 
-			/* on passe au menu les entrées souris et la durée de la boucle (en secondes) */		
+			/* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
 			sourisX 	= entreeGetSourisX(entree);
 			sourisY		= entreeGetSourisY(entree);
 			sourisBoutonGauche = entreeBoutonSourisGauche(entree);
@@ -202,14 +215,14 @@ void jeuBoucle(JeuSDL *jeu)
 
 					} else if (rectangleContient(&menu->elements[i].rect, sourisX, sourisY) == 1)
 							menu->elements[i].surligne = 1;
-				}	
+				}
 
 			/* Cas où on doit lire le clavier pour entrer un nom de joueur */
 			if (menu->etat == MENU_ETAT_ENTREE_JOUEUR)
 			{
 				alphaNum = entreeGetAlphaNum(entree);
 				if (alphaNum != 0)
-				{	
+				{
 					menuSetCaractere(menu, alphaNum);
 				}
 				if (entreeToucheEnfoncee(entree, SDLK_BACKSPACE) == 1)
@@ -257,9 +270,9 @@ void jeuBoucle(JeuSDL *jeu)
 			/* Si le Menu est en état 'Quitter' : on quitte le jeu. */
 			if (menu->etat == MENU_ETAT_QUITTER)
 				continueJeu = 0;
-		
+
 			break;
-		
+
 		case JEU_ETAT_CHARGEMENT_NIVEAU :	/*--------------	CHARGEMENT D'UN NIVEAU 	-------------------*/
 
 			if (jeu->chargementOK == 0)

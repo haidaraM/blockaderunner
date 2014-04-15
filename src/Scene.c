@@ -21,11 +21,12 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 	scene->hauteurAffichage = hauteurGraphique;
 	scene->niveau 			= NULL;
 	scene->ressource 		= res;
-	scene->numElements 		= 1;
-	scene->elements			= (ElementScene**)malloc(scene->numElements * sizeof(ElementScene*));
-	assert( scene->elements != NULL);
-	for (i=0; i< scene->numElements; i++)
-		scene->elements[i] 		= 0;
+
+	tabDynInit(&scene->elements);
+
+	assert( scene->elements.tab != NULL);
+	/*for (i=0; i< scene->numElements; i++)
+		scene->elements[i] 		= 0; */
 
 
 	/* Initialisation des points de défilement */
@@ -40,29 +41,29 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 	/* TEST : initialisation element du vaisseau joueur */
 	element 				= (ElementScene*)malloc(sizeof(ElementScene));
 	assert( element != NULL);
-	elementInit(element, 0, RESS_IMG_VAISSEAU_JOUEUR,
+	elementInit(element, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,
 				ressourceGetLargeurImage(res, RESS_IMG_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_IMG_VAISSEAU_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
-	elementSetType(element, SPRITE_TYPE_VAISSEAU_JOUEUR);
 	elementSetPosition(element, 32, (hauteurGraphique - element->hauteur)/2);
-	scene->elements[0]		= element;
+	tabDynAjoute(&scene->elements, ( void *) element );
+
 }
 
 void sceneLibere(Scene *scene)
 {
 	int i;
+	ElementScene *e;
 	assert( scene != NULL);
 
-	for (i=0; i<scene->numElements; i++)
+	for (i=0; i<sceneGetNbElements(scene); i++)
 	{
-		if (scene->elements[i] != NULL)
+        e=(ElementScene *)tabDynGetElement(&scene->elements, i);
+		if ( e!= NULL)
 		{
-			elementLibere(scene->elements[i]);
-			free(scene->elements[i]);
+			elementLibere(e);
+			free(e);
 		}
 	}
-
-	free(scene->elements);
-	scene->numElements = 0;
+    tabDynLibere(&scene->elements);
 }
 
 
@@ -70,7 +71,7 @@ void sceneLibere(Scene *scene)
 void sceneChargeNiveau(Scene *scene, Niveau *niveau)
 {
 	assert(scene != NULL && niveau != NULL);
-	
+
 	scene->niveau = niveau;
 	scene->indexImageFond = niveau->imageFond;
 	scene->rectangleImageFond.x = 0;
@@ -93,8 +94,10 @@ void sceneDefileScene(Scene *scene)
 
 void sceneAnime(Scene *scene, float tempsSecondes)
 {
-	int i, dx;
+	int i, dx, x;
 	float dt 	= tempsSecondes - scene->horlogePrecedente;
+	ElementScene * e=NULL;
+	float vitesseDeplacementLaser;
 
 	/* Points de défilement */
 	dx     = -(int)(dt * SCENE_VITESSE_DEFILEMENT_POINTS);
@@ -108,10 +111,29 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 		}
 	}
 
+    /* Deplacement des lazers par parcours des elements de la scene de type tir */
+    vitesseDeplacementLaser 	= 512.0f;
+    dx						= (int)(dt * vitesseDeplacementLaser);
+
+    for(i=1; i<sceneGetNbElements(scene); i++)
+    {
+        e=(ElementScene *) tabDynGetElement(&scene->elements, i);
+        if(elementGetType(e)==ELEMENT_TYPE_LASER)
+        {
+            x= elementGetX(scene->elements.tab[i]);
+            elementSetPosition(scene->elements.tab[i], x+dx, elementGetY(scene->elements.tab[i]));
+        }
+    }
+
 	scene->horlogePrecedente = tempsSecondes;
 }
-		
-	
+
+int sceneGetNbElements(const Scene * scene)
+{
+    assert(scene!=NULL);
+    return scene->elements.tailleUtilisee;
+}
+
 
 ElementScene* sceneCreerElementScene(Scene *scene, int type)
 {
@@ -121,7 +143,7 @@ ElementScene* sceneCreerElementScene(Scene *scene, int type)
 
 void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 {
-	ElementScene *vaiss			= scene->elements[0];
+	ElementScene *vaiss			=(ElementScene *) scene->elements.tab[0];
 	float vitesseDeplacement 	= 768.0f/0.88f;
 	int dy						= -(int)(tempsSecondes * vitesseDeplacement);
 	int y 						= elementGetY( vaiss );
@@ -135,7 +157,7 @@ void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 
 void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 {
-	ElementScene *vaiss			= scene->elements[0];
+	ElementScene *vaiss			= (ElementScene *)scene->elements.tab[0];
 	float vitesseDeplacement 	= 768.0f/0.88f;
 	int dy						= (int)(tempsSecondes * vitesseDeplacement);
 	int y 						= elementGetY( vaiss );
@@ -149,7 +171,7 @@ void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 
 void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			= scene->elements[0];
+    ElementScene *vaiss			= (ElementScene *)scene->elements.tab[0];
 	float vitesseDeplacement 	= 768.0f/3.0f;
 	int dx						= (int)(tempsSecondes * vitesseDeplacement);
 	int x                       = elementGetX(vaiss);
@@ -162,7 +184,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 
 void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			= scene->elements[0];
+    ElementScene *vaiss			=(ElementScene *) scene->elements.tab[0];
 	float vitesseDeplacement 	= 768.0f/3.0f;
 	int dx						= -(int)(tempsSecondes * vitesseDeplacement);
 	int x                       = elementGetX(vaiss);
@@ -173,6 +195,23 @@ void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
 
     elementSetPosition(vaiss, x+dx, elementGetY(vaiss));
 }
+
+void sceneJoueurDeclencheTir(Scene * scene,const Ressource *res)
+{
+    ElementScene * tir=NULL;
+    tir=(ElementScene *) malloc(sizeof(ElementScene));
+    assert(tir!=NULL);
+    elementInit(tir, ELEMENT_TYPE_LASER, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(res,RESS_IMG_TIR_JOUEUR_LASER),
+                        ressourceGetHauteurImage(res, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
+
+    /* positionne le tir en fonction de la position du vaisseau */
+    elementSetPosition(tir, elementGetX(scene->elements.tab[0]), elementGetY(scene->elements.tab[0]));
+
+   tabDynAjoute(&scene->elements, (void *) tir);
+}
+
+
+
 
 
 

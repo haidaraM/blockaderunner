@@ -8,13 +8,13 @@
 
 #define VAISSEAU_NB_TYPES                               2
 
-/* Caracteristiques du vaisseau du joueur */
+/* Caracteristiques du vaisseau joueur  A REVOIR!!!!!!!!!!!*/
 #define VAISSEAU_JOUEUR_TYPE                            1
 #define JOUEUR_NB_ARMES                                 1
 #define JOUEUR_POINTECRAN                               100
 #define JOUEUR_POINTSTRUCTURE                           100
 
-/* Caracteristiques du vaisseau ennemi */
+/* Caracteristiques du vaisseau ennemi A REVOIR!!!!!!!!!!!!! */
 #define VAISSEAU_ENNEMI_TYPE                            2
 #define ENNEMI_ARMES                                    1
 #define ENNEMI_POINTECRAN                               50
@@ -108,7 +108,7 @@ int vaisseauGetPointEcran(const Vaisseau * vaisseau);
 */
 int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 
-/** 
+/**
 * @fn int vaisseauGetTypeArme(const Vaisseau * vaisseau, int numArme)
 * @brief renvoie le type d'une arme du vaisseau
 * @param [in] vaisseau
