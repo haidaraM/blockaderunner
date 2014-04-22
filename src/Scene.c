@@ -27,8 +27,6 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 	tabDynInit(&scene->bonus);
 	tabDynInit(&scene->decors);
 
-	assert( scene->acteurs.tab != NULL && scene->tirs.tab != NULL && scene->bonus.tab != NULL && scene->decors.tab != NULL );
-	
 	/* Initialisation des points de défilement */
 	scene->pointsDefilement	= (Point*)malloc(SCENE_NUM_POINTS_DEFILEMENT*sizeof(Point));
 	assert(scene->pointsDefilement != NULL);
@@ -53,6 +51,9 @@ void sceneLibere(Scene *scene)
 	int i;
 	ElementScene *e;
 	assert( scene != NULL);
+
+	/* lbération des points de défilement. */
+	free(scene->pointsDefilement);
 
 	/* libération des acteurs restants. */
 	for (i=0; i<sceneGetNbActeurs(scene); i++)

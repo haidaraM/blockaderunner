@@ -48,9 +48,6 @@ void jeuInit(JeuSDL *jeu)
 	/* Initialisation des entrées souris + clavier */
 	entreeInit(&jeu->entree);
 
-	/* Initialisation de la scène */
-	sceneInit(&jeu->scene, &jeu->ressource, jeu->graphique.largeur, jeu->graphique.hauteur);
-
 
 	jeu->etatCourantJeu 	= JEU_ETAT_MENU;
 	jeu->joueur 			= NULL;
@@ -80,13 +77,13 @@ void jeuBoucle(JeuSDL *jeu)
 
     float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
     /* Période de temps (secondes) entre deux raffraichissements écran */
-    float periodeAffichage = 1.0f/32.0f;
-	float periodeDefilementScene = 1.0f/8.0f;
+    float periodeAffichage 			= 1.0f/32.0f;
+	float periodeDefilementScene 	= 1.0f/8.0f;
 
 	graphiqueRaffraichit(graphique);
 
-    tempsDernierAffichage	= getTempsSecondes();
-	dureeBoucle	 			= 0.0f;
+    tempsDernierAffichage			= getTempsSecondes();
+	dureeBoucle	 					= 0.0f;
 
 	/***************************************/
 	/* Tant que ce n'est pas la fin du Jeu */
@@ -105,6 +102,13 @@ void jeuBoucle(JeuSDL *jeu)
 
 		switch( jeu->etatCourantJeu )
 		{
+		
+		case JEU_RETOUR_MENU:
+			
+				sceneLibere( &jeu->scene );
+				jeu->etatCourantJeu 	= JEU_ETAT_MENU;
+				menuPrincipal((void*)menu);
+				break;
 
 		case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
 
@@ -115,8 +119,7 @@ void jeuBoucle(JeuSDL *jeu)
 			if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE)
 			{
 				/*continueJeu	 		= 0;*/
-				jeu->etatCourantJeu 	= JEU_ETAT_MENU;
-				menuPrincipal((void*)menu);
+				jeu->etatCourantJeu 	= JEU_RETOUR_MENU;
 				toucheDetectee=-1;
 			}
 
@@ -137,10 +140,9 @@ void jeuBoucle(JeuSDL *jeu)
 			{
 				sceneJoueurDeclencheTir(&jeu->scene, &jeu->ressource);
 				toucheDetectee=-1;
-
 			}
 
-
+			/* Défilement de l'image de fond. */
 			if ( (getTempsSecondes() - tempsDernierDefilementScene) >= periodeDefilementScene)
 			{
 				sceneDefileScene(&jeu->scene);
@@ -259,7 +261,7 @@ void jeuBoucle(JeuSDL *jeu)
         		graphiqueEfface( graphique );
 				/*
 				*/
-				graphiqueAfficheMenu( graphique, &jeu->menu );
+				graphiqueAfficheMenu( graphique, menu );
 				/*
 				*/
             	graphiqueRaffraichit( graphique );
@@ -278,6 +280,8 @@ void jeuBoucle(JeuSDL *jeu)
 			if (jeu->chargementOK == 0)
 			{
 				niveau 					= ressourceGetNiveau(&jeu->ressource, jeu->niveauCourant);
+				/* Initialisation de la scène */
+				sceneInit(&jeu->scene, &jeu->ressource, jeu->graphique.largeur, jeu->graphique.hauteur);
 				sceneChargeNiveau(&jeu->scene, &niveau);
 				jeu->etatCourantJeu 	= JEU_ETAT_JEU;
 
@@ -290,12 +294,8 @@ void jeuBoucle(JeuSDL *jeu)
         	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
         	{
         		graphiqueEfface( graphique );
-				/*
-				*/
-				/*graphiqueAfficheMenu( graphique, &jeu->menu );*/
-				/*
-				*/
-            	graphiqueRaffraichit( graphique );
+
+	           	graphiqueRaffraichit( graphique );
 
         		tempsDernierAffichage 	= getTempsSecondes();
         	}
@@ -314,7 +314,6 @@ void jeuLibere( JeuSDL *jeu )
 {
 	ressourceLibere( &jeu->ressource );
 	menuLibere( &jeu->menu );
-	sceneLibere( &jeu->scene );
 	entreeLibere( &jeu->entree );
 	graphiqueLibere( &jeu->graphique );
 
