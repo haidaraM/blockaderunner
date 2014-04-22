@@ -94,6 +94,11 @@ void elementSetPosition(ElementScene *element, int x, int y);
 * @brief renvoie le handle de l'image associée au element (handle lisible par Ressource).
 */
 int elementGetImageIndex(const ElementScene *element);
+/**
+* @fn void elementSceneTestDeRegression()
+* @brief Effectue tout une serie de test pour vérifier l'intégrité du module
+*/
+void elementSceneTestDeRegression();
 
 
 #endif

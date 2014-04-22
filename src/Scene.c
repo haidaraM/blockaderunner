@@ -273,9 +273,13 @@ void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j,const Ressource *re
         elementSetPosition(tir, elementGetX(scene->acteurs.tab[0]), elementGetY(scene->acteurs.tab[0]));
 
         tabDynAjoute(&scene->tirs, (void *) tir);
-        j->vaisseau->armes[0].munitions--;
     }
+}
 
+void sceneTestDeRegression()
+{
+    Scene sc;
+    printf("Test de regression du module scene \n ");
 }
 
 

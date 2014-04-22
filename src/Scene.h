@@ -15,8 +15,6 @@
 #include "Ressource.h"
 #include "Niveau.h"
 #include "Outils.h"
-#include "Joueur.h"
-
 
 
 typedef struct
@@ -145,7 +143,11 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 */
 void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j, const Ressource *res);
 
-
+/**
+* @fn void sceneTestDeRegression()
+* @brief Effectue les tests pour verifier l'integrité du module
+*/
+void sceneTestDeRegression();
 
 #endif
 

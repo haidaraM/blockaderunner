@@ -40,8 +40,10 @@ void elementSetType(ElementScene *element, int type)
 	{
 		case ELEMENT_TYPE_VAISSEAU_JOUEUR:
 			element->destructible = 1;
+			break;
 		default:
 			element->destructible = 0;
+			break;
 	}
 }
 
@@ -85,6 +87,36 @@ int elementGetImageIndex(const ElementScene *element)
 	return element->indexImage;
 }
 
+void elementSceneTestDeRegression()
+{
+    ElementScene eS;
+    printf("Test de regression du module elementScene \n");
+
+    printf("------------- Test de elementInit --------------\n");
+    elementInit(&eS, ELEMENT_TYPE_LASER, 1, 40, 40, 1366,768);
+    assert(eS.type==ELEMENT_TYPE_LASER && eS.indexImage==1 && eS.hauteur== 40 && eS.hauteur==40);
+    printf("===========> Resultat : OK! \n");
+    printf("\n");
+
+    printf("------------ Test de elementSetType ----------\n");
+    elementSetType(&eS, ELEMENT_TYPE_MISSILE);
+    assert(eS.type== ELEMENT_TYPE_MISSILE);
+    printf("===========> Resultat : OK! \n");
+    printf("\n");
+
+    printf("------------- Test de elementGetType ----------- \n");
+    assert(elementGetType(&eS)==ELEMENT_TYPE_MISSILE);
+    printf("===========> Resultat : OK! \n");
+    printf("\n");
+
+    printf(" ----------- Test de elementSetPosition ---------- \n");
+    elementSetPosition(&eS, 40, 50);
+    assert(eS.x==40 && eS.y==50);
+    printf("===========> Resultat : OK! \n");
+    printf("\n");
+
+
+}
 
 
 

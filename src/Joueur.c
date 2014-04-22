@@ -20,6 +20,7 @@ void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score, 
     joueur->score=score;
     joueur->progression=progression;
     joueur->vaisseau=(Vaisseau *)malloc(sizeof(Vaisseau));
+    assert(joueur->vaisseau!=NULL);
 
    vaisseauInit(joueur->vaisseau,VAISSEAU_JOUEUR_TYPE, pointS, pointE, nbArmes);
 }
@@ -28,6 +29,7 @@ void joueurLibere(Joueur * joueur)
 {
     vaisseauLibere(joueur->vaisseau);
     free(joueur->vaisseau);
+    joueur->vaisseau=NULL;
 }
 
 unsigned int joueurGetProgression(const Joueur *joueur)
