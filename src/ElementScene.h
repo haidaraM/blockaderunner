@@ -12,8 +12,8 @@
 
 #define ELEMENT_TYPE_NON_DEFINI					-1
 #define ELEMENT_TYPE_VAISSEAU_JOUEUR			 0
-
 #define ELEMENT_TYPE_LASER                       1
+#define ELEMENT_TYPE_MISSILE                     2
 
 
 /**

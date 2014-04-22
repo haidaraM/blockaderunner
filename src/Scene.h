@@ -15,6 +15,7 @@
 #include "Ressource.h"
 #include "Niveau.h"
 #include "Outils.h"
+#include "Joueur.h"
 
 
 
@@ -142,8 +143,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 * @param [in] res (utile pour creer un cree un element )
 *
 */
-void sceneJoueurDeclencheTir(Scene * scene, const Ressource *res, float *temps1, float *temps2);
-
+void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j, const Ressource *res);
 
 
 

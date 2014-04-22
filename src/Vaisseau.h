@@ -6,15 +6,13 @@
 #ifndef _VAISSEAU_H
 #define _VAISSEAU_H
 
-#define VAISSEAU_NB_TYPES                               2
-
-/* Caracteristiques du vaisseau joueur  A REVOIR!!!!!!!!!!!*/
+/* Caracteristiques du vaisseau joueur*/
 #define VAISSEAU_JOUEUR_TYPE                            1
 #define JOUEUR_NB_ARMES                                 1
 #define JOUEUR_POINTECRAN                               100
 #define JOUEUR_POINTSTRUCTURE                           100
 
-/* Caracteristiques du vaisseau ennemi A REVOIR!!!!!!!!!!!!! */
+/* Caracteristiques du vaisseau ennemi*/
 #define VAISSEAU_ENNEMI_TYPE                            2
 #define ENNEMI_ARMES                                    1
 #define ENNEMI_POINTECRAN                               50
@@ -74,13 +72,7 @@ typedef struct
 * @fn void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes)
 * @brief Initialise le vaisseau du joueur
 */
-void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes);
-
-/**
-* @fn void vaisseauEnnemiInit(Vaisseau *vaisseau, int pointS, int pointE, int nbArmes)
-* @brief Initialise le vaisseau ennemi
-*/
-void vaisseauEnnemiInit(Vaisseau *vaisseau, int pointS, int pointE, int nbArmes);
+void vaisseauInit(Vaisseau *vaisseauJ, int type, int pointS, int pointE, int nbArmes);
 
 /**
 * @fn void vaisseauLibere(Vaisseau * vaisseau)
@@ -95,7 +87,7 @@ void vaisseauLibere(Vaisseau * vaisseau);
 * @param [in, out] arme
 * @param [in] type
 */
-void armeInit(Arme *a, int type);
+void vaisseauArmeInit(Arme *a, int type);
 
 /**
 * @fn int vaisseauGetNbArmes(const Vaisseau * vaisseau)
@@ -119,18 +111,17 @@ int vaisseauGetPointEcran(const Vaisseau * vaisseau);
 int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 
 /**
-* @fn int vaisseauGetTypeArme(const Vaisseau * vaisseau, int numArme)
-* @brief renvoie le type d'une arme du vaisseau
-* @param [in] vaisseau
-* @param [in] numArme
+* @fn Arme vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
+* @brief renvoie l'arme selectionnee
 */
-int vaisseauGetTypeArme(const Vaisseau * vaisseau, int numArme);
+Arme vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
 
 /**
 * @fn void vaisseauTestDeregression()
 * @brief Effectue les tests pour verifier l'integrité du module
 */
 void vaisseauTestDeregression();
+
 
 #endif
 
