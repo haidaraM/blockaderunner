@@ -140,8 +140,9 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 * @brief Cree un element qui correspond au tir du joueur
 * @param [in, out] scene (doit etre initialisé )
 * @param [in] res (utile pour creer un cree un element )
+*
 */
-void sceneJoueurDeclencheTir(Scene * scene, const Ressource *res);
+void sceneJoueurDeclencheTir(Scene * scene, const Ressource *res, float *temps1, float *temps2);
 
 
 

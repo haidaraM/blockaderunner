@@ -22,7 +22,7 @@ typedef struct
        char nom[JOUEUR_NOM_MAXCHAR];
        unsigned int progression;
        int score;
-       Vaisseau vaisseau;
+       Vaisseau *vaisseau;
 } Joueur;
 
 /**

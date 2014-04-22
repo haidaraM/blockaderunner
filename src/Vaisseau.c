@@ -10,7 +10,6 @@ void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes
     assert(vaisseauJ!=NULL);
     assert(nbArmes!=0);
 
-
     vaisseauJ->type=VAISSEAU_JOUEUR_TYPE;
 
     vaisseauJ->pointEcran=pointE;
@@ -23,8 +22,10 @@ void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes
     vaisseauJ->armes=(Arme *)malloc(sizeof(Arme)*nbArmes);
     for(i=0; i<nbArmes; i++)
     {
-        armeInit(&vaisseauJ->armes[i], ARME_0);
+        armeInit(&vaisseauJ->armes[i], ARME_LAZER);
     }
+    /* Arme 0 est selectionnée par défaut */
+    vaisseauJ->armeSelectionne=0;
 }
 
 void vaisseauEnnemiInit(Vaisseau *vaisseau, int pointS, int pointE, int nbArmes)
@@ -45,7 +46,7 @@ void vaisseauEnnemiInit(Vaisseau *vaisseau, int pointS, int pointE, int nbArmes)
     vaisseau->armes=(Arme *)malloc(sizeof(Arme)*nbArmes);
     for(i=0; i<nbArmes; i++)
     {
-        armeInit(&vaisseau->armes[i], ARME_0);
+        armeInit(&vaisseau->armes[i], ARME_LAZER);
     }
 }
 
@@ -54,6 +55,7 @@ void vaisseauLibere(Vaisseau *vaisseau)
     assert(vaisseau!=NULL);
     free(vaisseau->armes);
     vaisseau->armes=NULL;
+    free(vaisseau);
 }
 
 
@@ -79,13 +81,47 @@ void armeInit(Arme * a, int type)
 {
     switch(type)
     {
-        case ARME_0:
-            a->typeArme=ARME_0;
-            a->munitions=ARME_0_MUNITIONS;
-            a->degatEcran=ARME_0_DEGAT_E;
-            a->degatStructure=ARME_0_DEGAT_S;
+        case ARME_LAZER:
+            a->typeArme=ARME_LAZER;
+            a->munitions=ARME_LAZER_MUNITIONS;
+            a->degatEcran=ARME_LAZER_DEGAT_E;
+            a->degatStructure=ARME_LAZER_DEGAT_S;
+            a->cadence=10.5;
             break;
+        case ARME_MISSILE:
+            a->typeArme=ARME_MISSILE;
+            a->munitions=ARME_MISSILE_MUNITIONS;
+            a->degatEcran=ARME_MISSILE_DEGAT_E;
+            a->degatStructure=ARME_MISSILE_DEGAT_S;
+            a->cadence=5.5;
         default:
             break;
     }
+}
+
+void vaisseauTestDeregression()
+{
+    Vaisseau v;
+    printf("Test de regression du vaisseau \n");
+
+    printf("--------- Test de vaisseauJoueurInit avec 50 pE, 50 pS, 1 arme ---------\n" );
+    vaisseauJoueurInit(&v, 50, 50, 1 );
+    assert(v.pointStructure==50 && v.pointEcran==50 && v.nbArmes==1);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("--------- Test de vaisseauGetPointStructure ---------\n");
+    assert(vaisseauGetPointStructure(&v)== 50);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("--------- Test de vaisseauGetPointEcran ---------\n");
+    assert(vaisseauGetPointEcran(&v)== 50);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("--------- Test de vaisseauGetNbArmes ------------ \n");
+    assert(vaisseauGetNbArmes(&v)==1);
+    printf("=========> Resultat : OK \n");
+
 }

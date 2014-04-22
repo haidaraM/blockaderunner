@@ -8,5 +8,7 @@
 int main(int argc, char const *argv[])
 {
 	joueurTestDeRegression();
+	/* vaisseauTestDeregression(); */
+
 	return 0;
 }

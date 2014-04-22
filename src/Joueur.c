@@ -19,13 +19,14 @@ void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score, 
     strcpy(joueur->nom, nom);
     joueur->score=score;
     joueur->progression=progression;
+    joueur->vaisseau=(Vaisseau *)malloc(sizeof(Vaisseau));
 
-    vaisseauJoueurInit(&joueur->vaisseau, pointS, pointE, nbArmes);
+   vaisseauJoueurInit(joueur->vaisseau, pointS, pointE, nbArmes);
 }
 
 void joueurLibere(Joueur * joueur)
 {
-    vaisseauLibere(&joueur->vaisseau);
+    vaisseauLibere(joueur->vaisseau);
 }
 
 unsigned int joueurGetProgression(const Joueur *joueur)
@@ -60,27 +61,24 @@ void joueurTestDeRegression()
 
     printf("---------- Test de joueurInit ------------\n");
     joueurInit(&j, nom, 5, 9000, 100, 5, 10);
-    printf("nom : %s \nScore : %d \nNiveau : %d \n", j.nom, j.score, j.progression );
-    assert(strcmp(j.nom, nom)==0 && j.vaisseau.armes!=NULL);
-    printf("nbArmes : %d \n", vaisseauGetNbArmes(&j.vaisseau));
-    printf("PointS : %d \n", vaisseauGetPointStructure(&j.vaisseau));
-    printf("PointE : %d \n", vaisseauGetPointEcran(&j.vaisseau));
-    printf("Types Arme :  %d\n", j.vaisseau.armes[0].typeArme );
-    printf("Munitions :  %d\n", j.vaisseau.armes[0].munitions );
-    printf("degatEcran :  %d\n", j.vaisseau.armes[0].degatEcran );
-    printf("degatStructure :  %d\n", j.vaisseau.armes[0].degatStructure );
-    printf("=========> Resultat : OK!\n");
+    printf("=========> Resultat : OK \n");
     printf("\n");
 
-    printf("---------- Test joueurGetProgression ---------\n");
+    printf("---- Test de joueurGetProgression ----\n");
     assert(joueurGetProgression(&j)==5);
-    printf("=========> Resultat : OK!\n");
+    printf("=========> Resultat : OK \n");
     printf("\n");
 
-    printf("---------- Test joueurGetScore ----------\n");
+    printf("----- Test de joueurGetScore ----\n");
     assert(joueurGetScore(&j)==9000);
-    printf("=========> Resultat : OK!\n");
+    printf("=========> Resultat : OK \n");
     printf("\n");
+
+    printf("----- Test de joueurSetProgression ------ \n");
+    joueurSetProgression(&j);
+    assert(joueurGetProgression(&j)==6);
+    printf("=========> Resultat : OK \n");
+
 
     joueurLibere(&j);
 }

@@ -21,10 +21,16 @@
 #define ENNEMI_POINTSTRUCTURE                           50
 
 /* Armes */
-#define ARME_0                                          0
-#define ARME_0_MUNITIONS                                1000
-#define ARME_0_DEGAT_E                                  50
-#define ARME_0_DEGAT_S                                  50
+#define ARME_LAZER                                      0
+#define ARME_LAZER_MUNITIONS                            1000
+#define ARME_LAZER_DEGAT_E                              25
+#define ARME_LAZER_DEGAT_S                              25
+
+#define ARME_MISSILE                                    1
+#define ARME_MISSILE_MUNITIONS                          100
+#define ARME_MISSILE_DEGAT_E                            50
+#define ARME_MISSILE_DEGAT_S                            50
+
 
 /**
 * @struct Arme
@@ -32,13 +38,15 @@
 */
 typedef struct
 {
-    int typeArme; /*0, 1, 2 ... */
+    int typeArme; /* Lazer, missile*/
 
     int degatEcran;
 
     int degatStructure;
 
     int munitions;
+
+    float cadence;
 
 } Arme;
 
@@ -58,6 +66,8 @@ typedef struct
     int nbArmes;
     /* les armes du vaisseau*/
     Arme *armes;
+    /* */
+    int armeSelectionne;
 } Vaisseau;
 
 /**

@@ -70,6 +70,8 @@ void jeuBoucle(JeuSDL *jeu)
 	unsigned char sourisBoutonGauche;
 	char alphaNum;
 	Niveau niveau;
+	float tempsDernierTir=0.0;
+	float tempsNouveauTir=0.0;
 
 	GraphiqueSDL *graphique	 		= &jeu->graphique;
 	EntreeSDL *entree				= &jeu->entree;
@@ -91,6 +93,7 @@ void jeuBoucle(JeuSDL *jeu)
 	while ( continueJeu == 1 )
 	{
        	debutBoucle 		= getTempsSecondes();
+       	tempsNouveauTir+=dureeBoucle;
 
 		/* Sonde les entrées (souris + clavier) : détecte les évènements */
 		entreeSonde( entree );
@@ -102,9 +105,9 @@ void jeuBoucle(JeuSDL *jeu)
 
 		switch( jeu->etatCourantJeu )
 		{
-		
+
 		case JEU_RETOUR_MENU:
-			
+
 				sceneLibere( &jeu->scene );
 				jeu->etatCourantJeu 	= JEU_ETAT_MENU;
 				menuPrincipal((void*)menu);
@@ -138,8 +141,12 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee= SDLK_SPACE;
             if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
 			{
-				sceneJoueurDeclencheTir(&jeu->scene, &jeu->ressource);
+				sceneJoueurDeclencheTir(&jeu->scene, &jeu->ressource, &tempsDernierTir,&tempsNouveauTir );
 				toucheDetectee=-1;
+
+				printf("Temps dernier tir %f. Temps nouveau tir : %f \n ", tempsDernierTir, tempsNouveauTir);
+
+
 			}
 
 			/* Défilement de l'image de fond. */

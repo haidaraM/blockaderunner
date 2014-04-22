@@ -27,6 +27,9 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
 	tabDynInit(&scene->bonus);
 	tabDynInit(&scene->decors);
 
+	assert( scene->acteurs.tab != NULL && scene->tirs.tab != NULL && scene->bonus.tab != NULL && scene->decors.tab != NULL );
+
+
 	/* Initialisation des points de défilement */
 	scene->pointsDefilement	= (Point*)malloc(SCENE_NUM_POINTS_DEFILEMENT*sizeof(Point));
 	assert(scene->pointsDefilement != NULL);
@@ -249,8 +252,9 @@ void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
     elementSetPosition(vaiss, x+dx, elementGetY(vaiss));
 }
 
-void sceneJoueurDeclencheTir(Scene * scene,const Ressource *res)
+void sceneJoueurDeclencheTir(Scene * scene,const Ressource *res, float *tempsDernierTir, float *tempsNouveauTir)
 {
+  /* if (*tempsNouveauTir - *tempsDernierTir >= 1.0 )   {*/
     ElementScene * tir=NULL;
     tir=(ElementScene *) malloc(sizeof(ElementScene));
     assert(tir!=NULL);
@@ -258,9 +262,12 @@ void sceneJoueurDeclencheTir(Scene * scene,const Ressource *res)
                         ressourceGetHauteurImage(res, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
 
     /* positionne le tir en fonction de la position du vaisseau */
-    elementSetPosition(tir, elementGetX(scene->acteurs.tab[0]), elementGetY(scene->acteurs.tab[0]));
+   elementSetPosition(tir, elementGetX(scene->acteurs.tab[0]), elementGetY(scene->acteurs.tab[0]));
 
    tabDynAjoute(&scene->tirs, (void *) tir);
+  /* *tempsDernierTir=0;
+   *tempsNouveauTir=0;
+   }*/
 }
 
 
