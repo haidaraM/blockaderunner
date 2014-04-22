@@ -48,8 +48,11 @@ unsigned char rectangleContient(Rectangle *rect, int x, int y);
 */
 typedef struct
 {
+	/** taille du tableau (note: le tableau est compact à gauche). */
 	int tailleUtilisee;
+	/** capacité du tableau. */
 	int capacite;
+	/** tableau de pointeurs génériques. */
 	void **tab;
 } TabDyn;
 
@@ -58,7 +61,7 @@ typedef struct
 */
 void tabDynInit(TabDyn *t);
 /**
-* @brief Libère un tableau dynamique : les éléments du tableau doivent être éventuellement préalablement libérés par l'utilisateur.
+* @brief Libère un tableau dynamique : les éléments du tableau doivent être impérativement libérés un à un, au préalable, par l'utilisateur.
 */
 void tabDynLibere(TabDyn *t);
 /**
@@ -69,7 +72,6 @@ void tabDynAjoute(TabDyn *t, void* element);
 * @brief Renvoie un des éléments du tableau dynamique.
 */
 void* tabDynGetElement(TabDyn *t, int index);
-
 /**
 * @brief supprime un element du tableau dynamique
 * @param [in, out] t (doit etre initialise)

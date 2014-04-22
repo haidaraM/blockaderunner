@@ -89,7 +89,6 @@ void graphiqueSetTitre(GraphiqueSDL *graphique, char *titre);
 * @brief Définit la couleur de fond.
 */
 void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsigned char vert, unsigned char bleu);
-
 /**
 * @brief Remplit la surface d'affichage d'une couleur unie, laquelle est définie par appel à graphiqueSetCouleurFond().
 */

@@ -467,7 +467,10 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 {
 	int i;
 	SDL_Rect srcBox, dstBox;
-	ElementScene **elements = (ElementScene **)scene->elements.tab;
+	ElementScene **acteurs 	= (ElementScene **)scene->acteurs.tab;
+	ElementScene **tirs 	= (ElementScene **)scene->tirs.tab;
+	ElementScene **bonus 	= (ElementScene **)scene->bonus.tab;
+	ElementScene **decors 	= (ElementScene **)scene->decors.tab;
 	Uint32 couleurPointsDefilement = SDL_MapRGB(graphique->surface->format, 0xd0, 0xff, 0xff);
 
 	/* affichage du fond */
@@ -476,6 +479,18 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	srcBox.w		= scene->rectangleImageFond.largeur;
 	srcBox.h		= scene->rectangleImageFond.hauteur;
 	SDL_BlitSurface( graphique->images[scene->indexImageFond], &srcBox, graphique->surface, NULL);
+
+	
+	/* affichage des decors */
+	for (i=0; i< sceneGetNbDecors(scene); i++)
+	{
+		if (decors[i] != NULL && elementVisible(decors[i]) == 1)
+		{
+            dstBox.x = elementGetX(decors[i]);
+			dstBox.y = elementGetY(decors[i]);
+			SDL_BlitSurface( graphique->images[elementGetImageIndex(decors[i])], NULL, graphique->surface, &dstBox);
+		}
+	}
 
 	/* affichage des points de defilement */
     if ( SDL_MUSTLOCK(graphique->surface) ) {
@@ -492,18 +507,40 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
         SDL_UnlockSurface(graphique->surface);
     }
 
-	/* affichage des sprites */
-	for (i=0; i< sceneGetNbElements(scene); i++)
+	/* affichage des bonus */
+	for (i=0; i< sceneGetNbBonus(scene); i++)
 	{
-		if (elements[i] != NULL && elementVisible(elements[i]) == 1)
+		if (bonus[i] != NULL && elementVisible(bonus[i]) == 1)
 		{
-            dstBox.x = elementGetX(elements[i]);
-			dstBox.y = elementGetY(elements[i]);
-			SDL_BlitSurface( graphique->images[elementGetImageIndex(elements[i])], NULL, graphique->surface, &dstBox);
+            dstBox.x = elementGetX(bonus[i]);
+			dstBox.y = elementGetY(bonus[i]);
+			SDL_BlitSurface( graphique->images[elementGetImageIndex(bonus[i])], NULL, graphique->surface, &dstBox);
 		}
 	}
 
-	/* Affichage du HUD */
+	/* affichage des acteurs */
+	for (i=0; i< sceneGetNbActeurs(scene); i++)
+	{
+		if (acteurs[i] != NULL && elementVisible(acteurs[i]) == 1)
+		{
+            dstBox.x = elementGetX(acteurs[i]);
+			dstBox.y = elementGetY(acteurs[i]);
+			SDL_BlitSurface( graphique->images[elementGetImageIndex(acteurs[i])], NULL, graphique->surface, &dstBox);
+		}
+	}
+
+	/* affichage des tirs */
+	for (i=0; i< sceneGetNbTirs(scene); i++)
+	{
+		if (tirs[i] != NULL && elementVisible(tirs[i]) == 1)
+		{
+            dstBox.x = elementGetX(tirs[i]);
+			dstBox.y = elementGetY(tirs[i]);
+			SDL_BlitSurface( graphique->images[elementGetImageIndex(tirs[i])], NULL, graphique->surface, &dstBox);
+		}
+	}
+
+	/* Affichage de l'interface */
 	for (i=0; i< 10; i++)
 	{
 		dstBox.x = GFX_HUD_ELEMENT_LARGEUR;
@@ -531,11 +568,12 @@ void graphiqueSetScore(GraphiqueSDL *graphique, int score)
 	/* conversion : entier -> chaîne de caractères */
 	char scoreChaine[16];
 	int div 	= JOUEUR_MAX_SCORE/10;
+	int digit;
+	int i 		= 0;
 	int s 		= score;
 	if (s >= JOUEUR_MAX_SCORE)
 		s		= JOUEUR_MAX_SCORE - 1;
-	int digit;
-	int i 		= 0;
+
 	while (div >= 1)
 	{
 		digit 			= s / div;

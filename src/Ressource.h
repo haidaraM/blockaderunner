@@ -65,6 +65,11 @@
 #define RESS_IMG_LARGEUR_TIR_JOUEUR_LASER                       32
 #define RESS_IMG_HAUTEUR_TIR_JOUEUR_LASER                       4
 
+#define RESS_IMG_TIR_LASER_JOUEUR                               3
+#define RESS_IMG_FICHIER_TIR_LASER_JOUEUR                       "laser_tir.png"
+#define RESS_IMG_LARGEUR_TIR_LASER_JOUEUR                             32
+#define RESS_IMG_HAUTEUR_TIR_LASER_JOUEUR                             4
+
 #define RESS_IMG_SPLASH						 					10
 #define RESS_IMG_FICHIER_SPLASH									"splash0.jpg"
 #define RESS_IMG_LARGEUR_SPLASH									1366

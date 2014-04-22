@@ -24,8 +24,14 @@ typedef struct
 	float horlogePrecedente;
 	/** Portion visible de la scène. */
 	int largeurAffichage, hauteurAffichage;
-	/** tableau dynamique qui regroupent tous les éléments qui composent la scène (vaisseaux, bonus, tirs) en cours.*/
-	TabDyn elements;
+	/** tableau dynamique qui regroupent tous les acteurs de la scène (vaisseaux et asteroides 'collisionables').*/
+	TabDyn acteurs;
+	/** tableau dynamique des tirs. */
+	TabDyn tirs;
+	/** tableau dynamique des bonus. */
+	TabDyn bonus;
+	/** tableau dynamique des éléments de décor. */
+	TabDyn decors;
 	/** index image fond (background du niveau). */
 	int indexImageFond;
 	/** position courante (et taille) du fond du niveau (background). */
@@ -66,16 +72,35 @@ void sceneResetHorloge(Scene *scene, float horloge);
 void sceneDefileScene(Scene *scene);
 
 /**
-* @fn int sceneGetNbElements(const Scene * scene)
-* @brief renvoie le nombre d'element de la scene
+* @fn int sceneGetNbActeurs(const Scene * scene)
+* @brief renvoie le nombre d'acteurs sur la scene
 */
-int sceneGetNbElements(const Scene * scene);
+int sceneGetNbActeurs(const Scene * scene);
+/**
+* @fn int sceneGetNbTirs(const Scene * scene)
+* @brief renvoie le nombre de tirs actifs.
+*/
+int sceneGetNbTirs(const Scene * scene);
+/**
+* @fn int sceneGetNbBonus(const Scene * scene)
+* @brief renvoie le nombre de bonus capturables.
+*/
+int sceneGetNbBonus(const Scene * scene);
+/**
+* @fn int sceneGetNbDecors(const Scene * scene)
+* @brief renvoie le nombre d'éléments de décor.
+*/
+int sceneGetNbDecors(const Scene * scene);
+
 
 /**
-* @brief Permet de passer le temps écoulé à la scène : utile pour les animations ().
+* @brief Permet de passer le temps écoulé à la scène : fait évoluer les animations.
 */
 void sceneAnime(Scene *scene, float tempsSecondes);
 
+/**
+* @brief (inutilisé)
+*/
 ElementScene* sceneCreerElementScene(Scene *scene, int type);
 
 /**
