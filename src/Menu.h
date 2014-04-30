@@ -13,7 +13,7 @@
 
 
 
-#define MENU_DUREE_INTRO					5.0f		/* 8 secondes */
+#define MENU_DUREE_INTRO					5.0f		/* 5 secondes */
 
 
 #define MENU_ETAT_INTRO						0
@@ -23,8 +23,8 @@
 #define MENU_ETAT_CMD						9
 #define MENU_ETAT_OPTION					10
 #define MENU_ETAT_INFO						11
-#define MENU_ETAT_CHOIX_NIVEAU				12	
-#define MENU_ETAT_SCORE						13					
+#define MENU_ETAT_CHOIX_NIVEAU				12
+#define MENU_ETAT_SCORE						13
 #define MENU_ETAT_CHARGEMENT				64
 #define MENU_ETAT_QUITTER					128
 
@@ -38,7 +38,7 @@
 
 
 #define MENU_NUM_BASIC_ELEMENTS				17
-#define MENU_NUM_ELEMENTS					(MENU_NUM_BASIC_ELEMENTS + RESS_SAU_MAX_JOUEURS) 
+#define MENU_NUM_ELEMENTS					(MENU_NUM_BASIC_ELEMENTS + RESS_SAU_MAX_JOUEURS)
 
 #define MENU_RETOUR							0
 #define MENU_JOUEURS						1
@@ -88,6 +88,7 @@ typedef struct
 
 
 /**
+* @struct Menu
 * @brief Structure principale du module Menu.
 */
 typedef struct

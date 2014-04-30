@@ -1,6 +1,6 @@
 /**
-* @file fichier d'implementation du module GraphiqueSDL
-* @brief
+* @file GraphiqueSDL.c
+* @brief fichier d'implementation du module GraphiqueSDL
 */
 #include "GraphiqueSDL.h"
 #include "ElementScene.h"

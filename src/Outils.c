@@ -29,7 +29,6 @@ void tabDynInit(TabDyn *t)
 
 void tabDynLibere(TabDyn *t)
 {
-    int i;
     assert(t != NULL);
     free(t->tab);
     t->tab = NULL;

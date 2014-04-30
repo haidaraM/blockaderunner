@@ -2,9 +2,9 @@
 #include "JeuSDL.h"
 
 /** @file main.c
+* @brief Fichier main principal. C'est ici que s'effectue le lancement du jeu
 *
 *
-* 
 * \mainpage
 * 	Université Claude Bernard Lyon 1 - Licence Info - LIF7
 *	Semestre printemps 2014
@@ -16,7 +16,7 @@
 *	Auteurs :
 *	Mohamed El Mouctar HAIDARA (p1212684)
 *	Yann Cortial (x7005186)
-*	
+*
 */
 int main ()
 {

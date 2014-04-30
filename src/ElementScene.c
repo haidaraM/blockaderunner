@@ -1,6 +1,6 @@
 /**
 * @file ElementScene.c
-* @brief
+* @brief Fichier d'implementation du module ElementScene
 */
 #include "ElementScene.h"
 #include <stdio.h>

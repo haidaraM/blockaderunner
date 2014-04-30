@@ -21,9 +21,6 @@
 #define RESS_NUM_POLICES										1
 
 
-/* NIVEAUX */
-#define RESS_NIV_0_DESCRIPTION									"Sortir du champ d'astéroïdes !"
-
 
 /* REPERTOIRES */
 
@@ -130,11 +127,11 @@ void ressourceLibere(Ressource *res);
 /**
 * @brief Renvoie le nombre de joueurs sauvegardés.
 */
-int ressourceGetNumJoueurs(Ressource *res);
+int ressourceGetNumJoueurs(const Ressource *res);
 /**
 * @brief Renvoie le tableau de pointeurs sur Joueur (ie tous les joueurs connus).
 */
-Joueur** ressourceGetJoueurs(Ressource *res);
+Joueur** ressourceGetJoueurs(const Ressource *res);
 /**
 * @brief Ajoute un joueur à la liste des joueurs sauvegardés.
 */

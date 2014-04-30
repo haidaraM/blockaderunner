@@ -1,6 +1,6 @@
 /**
-* @file fichier d'implementation du module EntreeSDL
-* @brief
+* @file EntreeSDL.c
+* @brief fichier d'implementation du module EntreeSDL
 */
 #include "EntreeSDL.h"
 #include <assert.h>

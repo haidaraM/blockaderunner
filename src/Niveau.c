@@ -1,3 +1,7 @@
+/**
+* @file Niveau.c
+* @brief Fichier d'implementation du module Niveau
+*/
 #include "Niveau.h"
 #include <stdlib.h>
 #include <assert.h>
@@ -12,7 +16,6 @@ void niveauInit(Niveau *niveau, int numero)
     assert(niveau != NULL);
 
     niveau->numero = numero;
-    niveau->description = NULL;
     niveau->imageFond = 0; /* vide */
     niveauChargeFichier(niveau, numero);
 }
@@ -35,15 +38,18 @@ void niveauChargeFichier (Niveau * niveau, int numero)
     int valRet=0;
 
     assert(niveau!=NULL);
+    assert(numero>=0 && numero <=6);
     strcpy(nomFichier, RESS_DIR_NIVEAU);
 
     switch(numero)
     {
     case 0:
         strcat(nomFichier, "niveau0");
+        strcat(niveau->description, NIVEAU_0_DESCRIPTION);
         break;
     default:
         strcat(nomFichier, "niveau1");
+        strcat(niveau->description, NIVEAU_1_DESCRIPTION);
         break;
     }
 

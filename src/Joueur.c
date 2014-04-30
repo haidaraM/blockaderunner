@@ -1,6 +1,7 @@
 /**
 * @file Joueur.c
 * @brief fichier d'implementation du module Joueur
+* @author Yann Cortial - Mohamed El Mouctar HAIDARA
 */
 
 #include "Joueur.h"

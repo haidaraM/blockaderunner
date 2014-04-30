@@ -48,7 +48,7 @@ typedef struct
 
 /**
 * @brief Initialise un element.
-* @param element[in, out] : le element à initialiser, doit être non null.
+* @param [in, out] element : le element à initialiser, doit être non null.
 * @param type : type d'entité
 * @param indexImage : image associée au element (fournie par Ressource).
 * @param largeur : largeur du element.

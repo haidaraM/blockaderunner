@@ -218,13 +218,13 @@ void ressourceLibere(Ressource *res)
 	free(res->dimensionImages);
 }
 
-int ressourceGetNumJoueurs(Ressource *res)
+int ressourceGetNumJoueurs(const Ressource *res)
 {
 	assert( res!=NULL);
 	return res->numJoueurs;
 }
 
-Joueur** ressourceGetJoueurs(Ressource *res)
+Joueur** ressourceGetJoueurs(const Ressource *res)
 {
 	assert( res != NULL);
 	return res->joueurs;

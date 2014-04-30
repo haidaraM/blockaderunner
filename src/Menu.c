@@ -1,3 +1,7 @@
+/**
+* @file Menu.c
+* @brief fichier d'implementation du Menu
+*/
 #include "Menu.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -34,7 +38,7 @@ void creeListeJoueurs(Menu *menu)
 		menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
 		menu->elements[index].rect.y				= MENU_ZONE_Y + (3 + i)*24;
 		if (i < numJoueurs)
-				menu->elements[index].action		= menuPrincipal;			
+				menu->elements[index].action		= menuPrincipal;
 	}
 }
 
@@ -70,7 +74,7 @@ void menuInit(Menu *menu, Ressource *res)
 	assert( menu->elements != NULL);
 
 	/* Definition des Elements des Menus */
-	
+
 	index = MENU_RETOUR;
 	menu->elements[index].texte 				= MENU_TXT_RETOUR;
 	menu->elements[index].visible 				= 0;
@@ -158,12 +162,12 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
 	menu->elements[index].rect.y				= MENU_ZONE_Y + MENU_ZONE_HAUTEUR - 2*MENU_PADDING_VERT;
 	menu->elements[index].action				= menuQuitter;
-	
+
 	for (i=MENU_NIVEAU; i< MENU_NUM_BASIC_ELEMENTS; i++)
 	{
 		strcpy(niv, MENU_TXT_NIVEAU);
 		sprintf(indexNiv, "%d", i-MENU_NIVEAU);
-		strcat(niv, indexNiv); 
+		strcat(niv, indexNiv);
 		index = i;
 		menu->elements[index].texte 			= (char*)malloc(64*sizeof(char));
 		assert(menu->elements[index].texte != NULL);
@@ -176,10 +180,10 @@ void menuInit(Menu *menu, Ressource *res)
 		menu->elements[index].action			= menuCommencerNiveau;
 	}
 
-	
+
 	/* Remplissage de la liste des noms de joueurs */
 	creeListeJoueurs(menu);
-		
+
 	#ifdef JEU_VERBOSE
 		printf("	initialisation OK.\n");
 	#endif
@@ -253,7 +257,7 @@ void menuChoixJoueur(void *m)
 
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
 		menu->elements[i].visible = 0;
-	
+
 	menu->joueurCourant = -1;
 
 	menu->etat 	= MENU_ETAT_CHOIX_JOUEUR;
@@ -268,7 +272,7 @@ void menuNouveauJoueur(void *m)
 	Menu *menu = (Menu*)m;
 
 	assert(menu != NULL);
-	
+
 	numJoueurs = ressourceGetNumJoueurs(menu->ressource);
 	/* le joueur courant est le prochain joueur vide dans la liste (ou le premier de la liste si elle est pleine, auquel cas l'ancien premier joueur sera écrasé).*/
 	menu->joueurCourant = numJoueurs;
@@ -385,7 +389,7 @@ void menuSelectionneJoueur(Menu *menu, int indexElement)
 		return;
 
 	} else {
-		menuNouveauJoueur(menu);		
+		menuNouveauJoueur(menu);
 	}
 }
 
@@ -399,7 +403,7 @@ void menuSetCaractere(Menu *menu, char alphaNum)
 
 	s[0] = alphaNum;
 	s[1] = '\0';
-	
+
 	strcat(menu->nomNouveauJoueur, s);
 }
 
@@ -417,7 +421,7 @@ void menuEffaceCaractere(Menu *menu)
 void menuSetFinLectureClavier(Menu *menu)
 {
 	assert(menu != NULL);
-	
+
 	if (strlen(menu->nomNouveauJoueur) != 0)
 	{
 		ressourceAjouteJoueur(menu->ressource, menu->nomNouveauJoueur, menu->joueurCourant);

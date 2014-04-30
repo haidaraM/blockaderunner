@@ -1,7 +1,7 @@
 /**
 * @file Scene.h
 * @brief Gère la scène : positions, statuts de toutes les instances, potentiellement 'affichables' (visuel et audio).
-* @author Yann Cortial
+* @author Yann Cortial - Mohamed El Mouctar HAIDARA
 */
 #ifndef _SCENE_H
 #define _SCENE_H

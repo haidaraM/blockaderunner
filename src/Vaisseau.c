@@ -1,3 +1,7 @@
+/**
+* @file Vaisseau.c
+* @brief Fichier d'implementation du module Vaisseau
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>

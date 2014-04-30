@@ -1,7 +1,7 @@
 /**
 * @file JeuSDL.c
 * @brief Fichier d'implémentation du module JeuSDL
-* @author Yann Cortial.
+* @author Yann Cortial - Mohamed El Mouctar HAIDARA.
 */
 #include "JeuSDL.h"
 #include <SDL/SDL.h>

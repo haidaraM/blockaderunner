@@ -1,6 +1,6 @@
 /**
 * @file Outils.h
-* @brief Boîte à outils : math, geométrie, ...
+* @brief Boîte à outils : listeChainee, tableaudynamique etc ...
 * @author Yann Cortial
 */
 #ifndef _OUTILS_H
@@ -9,6 +9,7 @@
 /*----------------------------------------------------------------------------  NOMBRES ALEATOIRES ------------------------------------------------------------------------*/
 
 /**
+* @fn int randomInt(int borneInf, int borneSup)
 * @brief Renvoie un entier pseudo-aléatoire uniformément distribué entre borneInf et borneSup tel que :    borneInf <= (retour) < borneSup
 */
 int randomInt(int borneInf, int borneSup);
@@ -16,6 +17,7 @@ int randomInt(int borneInf, int borneSup);
 /*----------------------------------------------------------------------------	GEOMETRIE ---------------------------------------------------------------------------------*/
 
 /**
+* @struct Point
 * @brief un Point 2D.
 */
 typedef struct
@@ -82,19 +84,29 @@ void tabDynSupprimeElement(TabDyn *t, int position);
 /*----------------------------------------------------------------------------	LISTE CHAINEE ---------------------------------------------------------------------------------*/
 
 /**
-* @brief Cellule de liste chaînée.
+* @struct CelluleListe
+* @brief Cellule de liste doublement chaînée.
 */
 struct s_CelluleListe
 {
+    /** Pointeur vers la cellule suivante de la cellule**/
 	struct s_CelluleListe *suiv;
+	/** Pointeur vers la cellule precedente de la cellule**/
 	struct s_CelluleListe *prec;
+	/** Pointeur generique constituant la donnee qui sera sauvegardee dans la cellule */
 	void *donnee;
 };
 typedef struct s_CelluleListe CelluleListe;
 
+/**
+* @struct Liste
+* @brief Constitut la liste en elle meme
+*/
 typedef struct
 {
+    /** Pointeur vers le premier element de la liste **/
 	CelluleListe *premier;
+	/** Pointeur vers le dernier element de la liste **/
 	CelluleListe *dernier;
 } Liste;
 
