@@ -466,7 +466,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
 void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 {
 	int i;
-	SDL_Rect srcBox, dstBox;
+	SDL_Rect srcBox, dstBox, vBox;
 	ElementScene **acteurs 	= (ElementScene **)scene->acteurs.tab;
 	ElementScene **tirs 	= (ElementScene **)scene->tirs.tab;
 	ElementScene **bonus 	= (ElementScene **)scene->bonus.tab;
@@ -480,7 +480,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	srcBox.h		= scene->rectangleImageFond.hauteur;
 	SDL_BlitSurface( graphique->images[scene->indexImageFond], &srcBox, graphique->surface, NULL);
 
-	
+
 	/* affichage des decors */
 	for (i=0; i< sceneGetNbDecors(scene); i++)
 	{
@@ -528,6 +528,11 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 			SDL_BlitSurface( graphique->images[elementGetImageIndex(acteurs[i])], NULL, graphique->surface, &dstBox);
 		}
 	}
+
+	/* affiche du vaisseau joueur */
+	vBox.x=elementGetX(scene->vaisseauJoueur);
+	vBox.y=elementGetY(scene->vaisseauJoueur);
+	SDL_BlitSurface(graphique->images[elementGetImageIndex(scene->vaisseauJoueur)], NULL, graphique->surface, &vBox);
 
 	/* affichage des tirs */
 	for (i=0; i< sceneGetNbTirs(scene); i++)

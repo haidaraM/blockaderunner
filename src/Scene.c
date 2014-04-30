@@ -12,7 +12,6 @@
 void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGraphique)
 {
     int i;
-    ElementScene *element	= NULL;
 
     assert( scene != NULL && res != NULL );
 
@@ -40,12 +39,11 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
     }
 
     /* TEST -------------- initialisation element du vaisseau joueur */
-    element 				= (ElementScene*)malloc(sizeof(ElementScene));
-    assert( element != NULL);
-    elementInit(element, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,
+    scene->vaisseauJoueur= (ElementScene*)malloc(sizeof(ElementScene));
+    assert( scene->vaisseauJoueur != NULL);
+    elementInit(scene->vaisseauJoueur, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,
                 ressourceGetLargeurImage(res, RESS_IMG_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_IMG_VAISSEAU_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
-    elementSetPosition(element, 32, (hauteurGraphique - element->hauteur)/2);
-    tabDynAjoute(&scene->acteurs, ( void *) element );
+    elementSetPosition(scene->vaisseauJoueur, 32, (hauteurGraphique - scene->vaisseauJoueur->hauteur)/2);
 
 }
 
@@ -105,6 +103,8 @@ void sceneLibere(Scene *scene)
         }
     }
     tabDynLibere(&scene->decors);
+    /* Liberation du vaisseauJoueur */
+    free(scene->vaisseauJoueur);
 }
 
 
@@ -152,7 +152,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         }
     }
 
-    /* Deplacement des lazers par parcours des elements de la scene de type tir */
+    /* Deplacement des tirs par parcours des elements de la scene de type tir */
     vitesseDeplacementLaser 	= 512.0f;
     dx						= (int)(dt * vitesseDeplacementLaser);
 
@@ -199,7 +199,7 @@ ElementScene* sceneCreerElementScene(Scene *scene, int type)
 
 void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			=(ElementScene *) scene->acteurs.tab[0];
+    ElementScene *vaiss			=scene->vaisseauJoueur;
     float vitesseDeplacement 	= 768.0f/0.88f;
     int dy						= -(int)(tempsSecondes * vitesseDeplacement);
     int y 						= elementGetY( vaiss );
@@ -213,7 +213,7 @@ void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 
 void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			= (ElementScene *)scene->acteurs.tab[0];
+    ElementScene *vaiss			= scene->vaisseauJoueur;
     float vitesseDeplacement 	= 768.0f/0.88f;
     int dy						= (int)(tempsSecondes * vitesseDeplacement);
     int y 						= elementGetY( vaiss );
@@ -222,12 +222,12 @@ void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
     if ( (y + dy) > (vaiss->hauteurSceneVisible - vaiss->hauteur))
         dy 						= (vaiss->hauteurSceneVisible - vaiss->hauteur) - y;
 
-    elementSetPosition( vaiss, elementGetX( vaiss ), y + dy );
+    elementSetPosition( scene->vaisseauJoueur, elementGetX( vaiss ), y + dy );
 }
 
 void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			= (ElementScene *)scene->acteurs.tab[0];
+    ElementScene *vaiss			= scene->vaisseauJoueur;
     float vitesseDeplacement 	= 768.0f/3.0f;
     int dx						= (int)(tempsSecondes * vitesseDeplacement);
     int x                       = elementGetX(vaiss);
@@ -240,7 +240,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 
 void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			=(ElementScene *) scene->acteurs.tab[0];
+    ElementScene *vaiss			=scene->vaisseauJoueur;
     float vitesseDeplacement 	= 768.0f/3.0f;
     int dx						= -(int)(tempsSecondes * vitesseDeplacement);
     int x                       = elementGetX(vaiss);
@@ -270,7 +270,7 @@ void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j,const Ressource *re
             break;
         }
         /* positionne le tir en fonction de la position du vaisseau */
-        elementSetPosition(tir, elementGetX(scene->acteurs.tab[0]), elementGetY(scene->acteurs.tab[0]));
+        elementSetPosition(tir, elementGetX(scene->vaisseauJoueur), elementGetY(scene->vaisseauJoueur));
 
         tabDynAjoute(&scene->tirs, (void *) tir);
     }
@@ -278,7 +278,6 @@ void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j,const Ressource *re
 
 void sceneTestDeRegression()
 {
-    Scene sc;
     printf("Test de regression du module scene \n ");
 }
 

@@ -71,7 +71,7 @@ void tabDynAjoute(TabDyn *t, void* element);
 /**
 * @brief Renvoie un des éléments du tableau dynamique.
 */
-void* tabDynGetElement(TabDyn *t, int index);
+void* tabDynGetElement(const TabDyn *t, int index);
 /**
 * @brief supprime un element du tableau dynamique
 * @param [in, out] t (doit etre initialise)
@@ -84,27 +84,36 @@ void tabDynSupprimeElement(TabDyn *t, int position);
 /**
 * @brief Cellule de liste chaînée.
 */
-/*struct s_CelluleListe
+struct s_CelluleListe
 {
-	s_CelluleListe *suiv;
-	void *data;
+	struct s_CelluleListe *suiv;
+	struct s_CelluleListe *prec;
+	void *donnee;
 };
 typedef struct s_CelluleListe CelluleListe;
 
 typedef struct
 {
-	CelluleListe *prem;
+	CelluleListe *premier;
+	CelluleListe *dernier;
 } Liste;
 
-CelluleListe* celluleListeCreer(void *data);
-Liste* listeCreer();
-void listeDetruire(Liste *liste);
 void listeInit(Liste *liste);
+
 void listeLibere(Liste *liste);
+
+Liste* listeCreer();
+
+void listeDetruire(Liste *liste);
+
+CelluleListe* celluleListeCreer(void *data);
+
 void listeAjouteTete(Liste *liste, void *data);
+
 void listeAjouteQueue(Liste *liste, void *data);
+
 void listeSupprime(Liste *liste, void *data);
-*/
+
 
 
 #endif

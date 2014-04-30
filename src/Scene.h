@@ -23,7 +23,9 @@ typedef struct
 	float horlogePrecedente;
 	/** Portion visible de la scène. */
 	int largeurAffichage, hauteurAffichage;
-	/** tableau dynamique qui regroupent tous les acteurs de la scène (vaisseaux et asteroides 'collisionables').*/
+	/** Element constituant le vaisseau du joueur **/
+	ElementScene *vaisseauJoueur;
+	/** tableau dynamique qui regroupent tous les ennemis de la scène (vaisseaux et asteroides 'collisionables').*/
 	TabDyn acteurs;
 	/** tableau dynamique des tirs. */
 	TabDyn tirs;

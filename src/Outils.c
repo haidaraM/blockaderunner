@@ -16,9 +16,6 @@ unsigned char rectangleContient(Rectangle *rect, int x, int y)
 	return 0;
 }
 
-
-
-
 void tabDynInit(TabDyn *t)
 {
 	assert(t != NULL);
@@ -59,7 +56,7 @@ void tabDynAjoute(TabDyn *t, void* element)
 	t->tailleUtilisee++;
 }
 
-void* tabDynGetElement(TabDyn *t, int index)
+void* tabDynGetElement(const TabDyn *t, int index)
 {
 	assert(t != NULL && index < t->tailleUtilisee);
 	return t->tab[index];
@@ -89,14 +86,20 @@ void tabDynSupprimeElement(TabDyn *t, int index)
     }
     t->tailleUtilisee--;
 }
+/* *************************************** Partie liste chainée *************************************** */
+void listeInit(Liste *liste)
+{
+	assert(liste != NULL);
+	liste->dernier = NULL;
+	liste->premier=NULL;
+}
 
-/*
-CelluleListe* celluleListeCreer(void *data)
+CelluleListe* celluleListeCreer(void *donnee)
 {
 	CelluleListe *cell = (CelluleListe*)malloc(sizeof(CelluleListe));
 	cell->suiv = NULL;
-	cell->data = data;
-
+	cell->prec = NULL;
+	cell->donnee = donnee;
 	return cell;
 }
 
@@ -117,19 +120,12 @@ void listeDetruire(Liste *liste)
 	liste = NULL;
 }
 
-void listeInit(Liste *liste)
-{
-	assert(liste != NULL);
-
-	liste->prem = NULL;
-}
-
 void listeLibere(Liste *liste)
 {
 	CelluleListe *cell, *suiv;
 
 	assert(liste != NULL);
-	cell = liste->prem;
+	cell = liste->premier;
 
 	while (cell != NULL)
 	{
@@ -137,53 +133,56 @@ void listeLibere(Liste *liste)
 		free(cell);
 		cell = suiv;
 	}
+	liste->dernier=NULL;
+	liste->premier=NULL;
 }
 
-void listeAjouteTete(Liste *liste, void *data)
+void listeAjouteTete(Liste *liste, void *donnee)
 {
-	CelluleListe *cell, *nw;
+	CelluleListe *nouvelleCellule;
 	assert(liste != NULL);
+	nouvelleCellule=celluleListeCreer(donnee);
 
-	cell = liste->prem;
-	if (cell == NULL)
+ 	if (liste->premier==NULL)
 	{
-		liste->prem = celluleListeCreer(data);
-		return;
+		liste->dernier=nouvelleCellule;
 	}
-
-	nw = celluleListeCreer(data);
-	nw->suiv = liste->prem;
-	liste->prem = nw;
+	else
+	{
+        liste->premier->prec=nouvelleCellule;
+	}
+	nouvelleCellule->suiv = liste->premier;
+	liste->premier = nouvelleCellule;
 }
 
-void listeAjouteQueue(Liste *liste, void *data)
+void listeAjouteQueue(Liste *liste, void *donnee)
 {
-	CelluleListe *nw, cell;
+	CelluleListe *nouvelleCelule;
 	assert(liste != NULL);
+	nouvelleCelule=celluleListeCreer(donnee);
 
-	cell = liste->prem;
-	if (cell = NULL)
+	if (liste->dernier==NULL)
 	{
-		liste->prem = celluleListeCreer(data);
-		return;
+		liste->premier = nouvelleCelule;
 	}
-
-	while(cell->suiv != NULL)
-		cell = cell->suiv;
-
-	cell->suiv = celluleListeCreer(data);
+	else
+	{
+        liste->dernier->suiv=nouvelleCelule;
+	}
+	nouvelleCelule->prec=liste->dernier;
+	liste->dernier=nouvelleCelule;
 }
 
-int listeGetIndex(Liste *liste, void *data)
+int listeGetIndex(Liste *liste, void *donnee)
 {
 	int index = 0;
 	CelluleListe *cell;
 	assert(liste != NULL);
 
-	cell = liste->prem;
+	cell = liste->premier;
 	while (cell != NULL)
 	{
-		if (data == cell->data)
+		if (donnee == cell->donnee)
 			return index;
 		index++;
 	}
@@ -191,18 +190,18 @@ int listeGetIndex(Liste *liste, void *data)
 	return  -1;
 }
 
-void listeSupprime(Liste *liste, void *data)
+void listeSupprime(Liste *liste, void *donnee)
 {
 	CelluleListe *cell, *prec;
 	assert(liste !=NULL);
 
-	cell = liste->prem;
+	cell = liste->premier;
 	if (cell == NULL)
 		return;
 
-	if (data == cell->data)
+	if (donnee == cell->donnee)
 	{
-		liste->prem = cell->suiv;
+		liste->premier = cell->suiv;
 		free(cell);
 		return;
 	}
@@ -211,13 +210,13 @@ void listeSupprime(Liste *liste, void *data)
 	{
 		prec = cell;
 		cell = cell->suiv;
-		if (data == cell->data)
+		if (donnee == cell->donnee)
 		{
 			prec->suiv = cell->suiv;
 			free(cell);
 		}
 	}
 }
-*/
+
 
 
