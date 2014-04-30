@@ -283,7 +283,7 @@ void jeuBoucle(JeuSDL *jeu)
 				niveau 					= ressourceGetNiveau(&jeu->ressource, jeu->niveauCourant);
 				/* Initialisation de la scène */
 				sceneInit(&jeu->scene, &jeu->ressource, jeu->graphique.largeur, jeu->graphique.hauteur);
-				sceneChargeNiveau(&jeu->scene, &niveau);
+				sceneChargeNiveau(&jeu->scene, &niveau, &jeu->ressource);
 				jeu->etatCourantJeu 	= JEU_ETAT_JEU;
 
 				graphiqueSetScore(&jeu->graphique, 9052);

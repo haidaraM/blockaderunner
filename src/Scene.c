@@ -38,7 +38,7 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
         scene->pointsDefilement[i].y = randomInt(0, scene->hauteurAffichage);
     }
 
-    /* TEST -------------- initialisation element du vaisseau joueur */
+    /* initialisation element du vaisseauJoueur */
     scene->vaisseauJoueur= (ElementScene*)malloc(sizeof(ElementScene));
     assert( scene->vaisseauJoueur != NULL);
     elementInit(scene->vaisseauJoueur, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,
@@ -103,22 +103,34 @@ void sceneLibere(Scene *scene)
         }
     }
     tabDynLibere(&scene->decors);
+
     /* Liberation du vaisseauJoueur */
     free(scene->vaisseauJoueur);
 }
 
 
 
-void sceneChargeNiveau(Scene *scene, Niveau *niveau)
+void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
 {
+    int i;
     assert(scene != NULL && niveau != NULL);
-
     scene->niveau = niveau;
     scene->indexImageFond = niveau->imageFond;
     scene->rectangleImageFond.x = 0;
     scene->rectangleImageFond.y = 0;
     scene->rectangleImageFond.largeur = scene->largeurAffichage;
     scene->rectangleImageFond.hauteur = scene->hauteurAffichage;
+
+    /* chargement des ennemis du niveau */
+    for(i=0; i<scene->niveau->nbEnnemis; i++)
+    {
+        ElementScene * ennemi=(ElementScene *) malloc(sizeof(ElementScene));
+        elementInit(ennemi, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(res, RESS_IMG_ASTEROIDE),
+            ressourceGetHauteurImage(res, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
+         /* Positionnement aleatoire des ennemis sur la scene */
+        elementSetPosition(ennemi, randomInt(2000, 6000), randomInt(0, 720));
+        tabDynAjoute(&scene->acteurs, (void *)ennemi );
+    }
 }
 
 void sceneResetHorloge(Scene *scene, float horloge)
@@ -138,7 +150,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     int i, dx, x;
     float dt 	= tempsSecondes - scene->horlogePrecedente;
     ElementScene * e=NULL;
-    float vitesseDeplacementLaser;
+    float vitesseDeplacementLaser, vitesseDeplacementAsteroide;
 
     /* Points de défilement */
     dx     = -(int)(dt * SCENE_VITESSE_DEFILEMENT_POINTS);
@@ -152,7 +164,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         }
     }
 
-    /* Deplacement des tirs par parcours des elements de la scene de type tir */
+    /* Deplacement des tirs de la scene de type tir */
     vitesseDeplacementLaser 	= 512.0f;
     dx						= (int)(dt * vitesseDeplacementLaser);
 
@@ -161,8 +173,26 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         e=(ElementScene *) tabDynGetElement(&scene->tirs, i);
         if(elementGetType(e) == ELEMENT_TYPE_LASER)
         {
-            x = elementGetX(scene->tirs.tab[i]);
-            elementSetPosition(scene->tirs.tab[i], x+dx, elementGetY(scene->tirs.tab[i]));
+            x = elementGetX(e);
+            elementSetPosition(e, x+dx, elementGetY(e));
+            /* Suppression des tirs qui sortent de l'ecran */
+            if(x+dx > 1366)
+            {
+                tabDynSupprimeElement(&scene->tirs, i);
+            }
+        }
+    }
+
+    /* Deplacement des asteroides de la scene */
+    vitesseDeplacementAsteroide     =100.0f;
+    dx                  = -(int) (dt * vitesseDeplacementAsteroide);
+    for(i=0; i<sceneGetNbActeurs(scene); i++)
+    {
+        e=(ElementScene *) tabDynGetElement(&scene->acteurs, i);
+        if(elementGetType(e)==ELEMENT_TYPE_ASTEROIDE)
+        {
+            x=elementGetX(e);
+            elementSetPosition(e, x+dx, elementGetY(e));
         }
     }
 

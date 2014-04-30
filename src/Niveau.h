@@ -15,6 +15,8 @@ typedef struct
 	char *description;
 	/** index dans Ressource de l'image de fond (background) du niveau. */
 	int imageFond;
+	/** Nombre d'ennemis du niveau : asteroides et vaisseauEnnemis **/
+	int nbEnnemis;
 } Niveau;
 
 
@@ -29,6 +31,11 @@ void niveauInit(Niveau *niveau, int numero);
 void niveauLibere(Niveau *niveau);
 
 void niveauSetImageFond(Niveau *niveau, int indexImage);
+
+/**
+* @brief Charge les caractéristiques du niveau a partir d'un fichier (cf M Meyer ). FICHIER A COMPLETER!!!
+*/
+void niveauChargeFichier (Niveau * niveau, int numero);
 
 #endif
 

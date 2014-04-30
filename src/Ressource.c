@@ -31,17 +31,18 @@ void creeListeImages(Ressource *res)
 		res->dimensionImages[i].hauteur = 0;
 	}
 
-	/* données */
+	/* Image joueur */
 
 	res->images[RESS_IMG_VAISSEAU_JOUEUR] 							= RESS_IMG_FICHIER_VAISSEAU_JOUEUR;
 	res->dimensionImages[RESS_IMG_VAISSEAU_JOUEUR].largeur 			= RESS_IMG_LARGEUR_VAISSEAU_JOUEUR;
 	res->dimensionImages[RESS_IMG_VAISSEAU_JOUEUR].hauteur 			= RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR;
 
+    /* Images des tirs */
 	res->images[RESS_IMG_TIR_JOUEUR_LASER]                                =RESS_IMG_FICHIER_TIR_JOUEUR_LASER;
 	res->dimensionImages[RESS_IMG_TIR_JOUEUR_LASER].largeur               =RESS_IMG_LARGEUR_TIR_JOUEUR_LASER;
 	res->dimensionImages[RESS_IMG_TIR_JOUEUR_LASER].hauteur               =RESS_IMG_HAUTEUR_TIR_JOUEUR_LASER;
 
-
+    /* Images du menu */
 	res->images[RESS_IMG_SPLASH]		 							= RESS_IMG_FICHIER_SPLASH;
 	res->dimensionImages[RESS_IMG_SPLASH].largeur 					= RESS_IMG_LARGEUR_SPLASH;
 	res->dimensionImages[RESS_IMG_SPLASH].hauteur 					= RESS_IMG_HAUTEUR_SPLASH;
@@ -50,9 +51,20 @@ void creeListeImages(Ressource *res)
 	res->dimensionImages[RESS_IMG_FOND_MENU].largeur 				= RESS_IMG_LARGEUR_FOND_MENU;
 	res->dimensionImages[RESS_IMG_FOND_MENU].hauteur 				= RESS_IMG_HAUTEUR_FOND_MENU;
 
+    /* Caracteristiques des images des niveaux */
 	res->images[RESS_IMG_FOND_NIVEAU_0] 							= RESS_IMG_FICHIER_FOND_NIVEAU_0;
-	res->dimensionImages[RESS_IMG_FOND_NIVEAU_0].largeur 			= RESS_IMG_LARGEUR_FOND_NIVEAU_0;
-	res->dimensionImages[RESS_IMG_FOND_NIVEAU_0].hauteur 			= RESS_IMG_HAUTEUR_FOND_NIVEAU_0;
+	res->dimensionImages[RESS_IMG_FOND_NIVEAU_0].largeur 			= RESS_IMG_LARGEUR_FOND_NIVEAU;
+	res->dimensionImages[RESS_IMG_FOND_NIVEAU_0].hauteur 			= RESS_IMG_HAUTEUR_FOND_NIVEAU;
+
+	res->images[RESS_IMG_FOND_NIVEAU_1]                             = RESS_IMG_FICHIER_FOND_NIVEAU_1;
+   	res->dimensionImages[RESS_IMG_FOND_NIVEAU_1].largeur 			= RESS_IMG_LARGEUR_FOND_NIVEAU;
+	res->dimensionImages[RESS_IMG_FOND_NIVEAU_1].hauteur 			= RESS_IMG_HAUTEUR_FOND_NIVEAU;
+
+	/* Images asteroides */
+	res->images[RESS_IMG_ASTEROIDE]                                 =RESS_IMG_FICHIER_ASTEROIDE;
+	res->dimensionImages[RESS_IMG_ASTEROIDE].largeur                =RESS_IMG_LARGEUR_ASTEROIDE;
+	res->dimensionImages[RESS_IMG_ASTEROIDE].hauteur                =RESS_IMG_HAUTEUR_ASTEROIDE;
+
 }
 
 void creeListeSons(Ressource *res)
@@ -132,7 +144,7 @@ void creeNiveaux(Ressource *res)
 	{
 		/*sprintf(desc, "Niveau %d", i);*/
 		niveauInit(&res->niveaux[i], i);
-		niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0);	/* ONLY A TEST */
+		niveauSetImageFond(&res->niveaux[i], 20+i);	/* L'index des images des niveaux commence à partir de 20 */
 	}
 }
 

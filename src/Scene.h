@@ -62,7 +62,7 @@ void sceneLibere(Scene *scene);
 /**
 * @brief Charge un Niveau du Jeu.
 */
-void sceneChargeNiveau(Scene *scene, Niveau *niveau);
+void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res);
 /**
 * @brief Initialise l'horloge de la scene.
 */
@@ -95,7 +95,7 @@ int sceneGetNbDecors(const Scene * scene);
 
 
 /**
-* @brief Permet de passer le temps écoulé à la scène : fait évoluer les animations.
+* @brief Permet de passer le temps écoulé à la scène : fait évoluer les animations (tir, ennemis).
 */
 void sceneAnime(Scene *scene, float tempsSecondes);
 

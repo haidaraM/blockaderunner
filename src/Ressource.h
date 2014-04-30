@@ -31,6 +31,7 @@
 #define RESS_DIR_SONS											"data/sons/"
 #define RESS_DIR_POLICES										"data/polices/"
 #define RESS_DIR_SAUVEGARDES									"data/sauvegardes/"
+#define RESS_DIR_NIVEAU                                         "data/niveau/"
 
 
 /* SAUVEGARDES */
@@ -60,15 +61,15 @@
 #define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
 #define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						45
 
-#define RESS_IMG_TIR_JOUEUR_LASER                               2
+#define RESS_IMG_ASTEROIDE                                      2
+#define RESS_IMG_FICHIER_ASTEROIDE                                 "asteroide_00.png"
+#define RESS_IMG_LARGEUR_ASTEROIDE                              161
+#define RESS_IMG_HAUTEUR_ASTEROIDE                              128
+
+#define RESS_IMG_TIR_JOUEUR_LASER                               3
 #define RESS_IMG_FICHIER_TIR_JOUEUR_LASER                      "laser_tir.png"
 #define RESS_IMG_LARGEUR_TIR_JOUEUR_LASER                       32
 #define RESS_IMG_HAUTEUR_TIR_JOUEUR_LASER                       4
-
-#define RESS_IMG_TIR_LASER_JOUEUR                               3
-#define RESS_IMG_FICHIER_TIR_LASER_JOUEUR                       "laser_tir.png"
-#define RESS_IMG_LARGEUR_TIR_LASER_JOUEUR                             32
-#define RESS_IMG_HAUTEUR_TIR_LASER_JOUEUR                             4
 
 #define RESS_IMG_SPLASH						 					10
 #define RESS_IMG_FICHIER_SPLASH									"splash0.jpg"
@@ -81,9 +82,12 @@
 #define RESS_IMG_HAUTEUR_FOND_MENU		 						720
 
 #define RESS_IMG_FOND_NIVEAU_0				 					20
-#define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg1.jpg"
-#define RESS_IMG_LARGEUR_FOND_NIVEAU_0							4098
-#define RESS_IMG_HAUTEUR_FOND_NIVEAU_0	 						720
+#define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"
+#define RESS_IMG_LARGEUR_FOND_NIVEAU							4098
+#define RESS_IMG_HAUTEUR_FOND_NIVEAU     						720
+
+#define RESS_IMG_FOND_NIVEAU_1				 					21
+#define RESS_IMG_FICHIER_FOND_NIVEAU_1							"bg1.jpg"
 
 
 /**
