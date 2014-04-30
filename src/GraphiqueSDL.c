@@ -109,7 +109,7 @@ void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 
 /* --------------------------------------------------------------------------------------------------			Interface du Module */
 
-void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode)
+void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode)
 {
 	SDL_Rect **modes;
 	char **fichiersImages;
@@ -339,7 +339,7 @@ void graphiqueRaffraichit(GraphiqueSDL *graphique)
 	assert( SDL_Flip( graphique->surface ) !=-1 );
 }
 
-void graphiqueSetTitre(GraphiqueSDL *graphique, char *titre)
+void graphiqueSetTitre(GraphiqueSDL *graphique, const char *titre)
 {
 	if (titre != NULL)
 	{
@@ -392,7 +392,7 @@ void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu)
 	}
 }
 
-void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu)
+void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 {
 	int i;
 	SDL_Rect offset;

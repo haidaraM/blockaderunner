@@ -50,40 +50,45 @@ typedef struct
 
 /**
 * @struct Vaisseau
-* @brief Represente un vaisseau soit du joueur soit de l'ennemis
+* @brief Represente le vaisseau du joueur soit de l'ennemi
 */
 typedef struct
 {
-    /* Type du vaisseau : 1 pour le joueur, 2 pour l'ennemi*/
+    /** Type du vaisseau : 1 pour le joueur, 2 pour l'ennemi **/
     int type;
-    /* */
+    /** Point ecran du vaisseau**/
     int pointEcran;
-    /* */
+    /** Point structure du vaisseau */
     int pointStructure;
-    /* */
+    /** Nombre d'arme du vaisseau. Une arme pour un debut **/
     int nbArmes;
-    /* les armes du vaisseau*/
+    /** Tableau d'armes du vaisseau*/
     Arme *armes;
-    /* */
+    /** Entier qui represente l'arme selectionnée. Arme 0 selectionnée par defaut **/
     int armeSelectionne;
 } Vaisseau;
 
 /**
 * @fn void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes)
 * @brief Initialise le vaisseau du joueur
+* @param [in, out] vaisseauJ
+* @param [in] type
+* @param [in] points
+* @param [in] pointE
+* @param [in] nbArmes
 */
 void vaisseauInit(Vaisseau *vaisseauJ, int type, int pointS, int pointE, int nbArmes);
 
 /**
 * @fn void vaisseauLibere(Vaisseau * vaisseau)
-* @brief Libere la memoire alloue pour le vaisseau
+* @brief Libere la memoire alloue pour le vaisseau. Vaisseau doit etre non null
 * @param [in, out] vaisseau
 */
 void vaisseauLibere(Vaisseau * vaisseau);
 
 /**
 * @fn void armeInit(Arme * a);
-* @brief Initialise l'arme correspondant à type
+* @brief Initialise l'arme correspondant à 'type' passé en parametre
 * @param [in, out] arme
 * @param [in] type
 */

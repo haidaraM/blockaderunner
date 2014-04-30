@@ -31,10 +31,6 @@ void tabDynLibere(TabDyn *t)
 {
     int i;
     assert(t != NULL);
-    for(i=0; i<t->tailleUtilisee; i++)
-    {
-        free(t->tab[i]);
-    }
     free(t->tab);
     t->tab = NULL;
     t->capacite = -1;

@@ -18,6 +18,7 @@
 
 
 /**
+* @struct ElementScene
 * @brief Element de la Scene : element affichable et jouable (audio).
 */
 typedef struct

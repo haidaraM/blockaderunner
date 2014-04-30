@@ -31,7 +31,7 @@
 * @struct GraphiqueSDL
 * @brief Structure de gestion de l'affichage video.
 *
-* 
+*
 */
 typedef struct
 {
@@ -68,43 +68,76 @@ typedef struct
 
 
 /**
-* @fn void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, int largeur, int hauteur, char *titre, int mode)
+* @fn void graphiqueInit(GraphiqueSDL *graphique, const Ressource *ressource,Menu *menu int largeur, int hauteur, char *titre, int mode)
 * @brief Initialise le sous-système video.
-* @param graphique[in, out] : doit être non NULL.
+* @param [in, out] graphique : doit être non NULL.
+* @param [in] ressource : doit être non NULL.
+* @param [in, out] menu
 */
-void graphiqueInit(GraphiqueSDL *graphique, Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode);
+void graphiqueInit(GraphiqueSDL *graphique, const Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode);
+
 /**
+* @fn void graphiqueLibere(GraphiqueSDL *graphique)
 * @brief Libère les ressources.
+* @param [in, out] graphique : doit etre initialisé
 */
 void graphiqueLibere(GraphiqueSDL *graphique);
+
 /**
+* @fn void graphiqueRaffraichit(GraphiqueSDL *graphique)
 * @brief Permute les deux buffer-écran (double-buffering), raffraîchissant ainsi l'affichage.
+* @param [in, out] graphique
 */
 void graphiqueRaffraichit(GraphiqueSDL *graphique);
+
 /**
+* @fn void graphiqueSetTitre(GraphiqueSDL *graphique, const char *titre)
 * @brief Affiche un titre dans la fenêtre principale (caption).
+* @param [in, out] graphique
+* @param [in] titre
 */
-void graphiqueSetTitre(GraphiqueSDL *graphique, char *titre);
+void graphiqueSetTitre(GraphiqueSDL *graphique, const char *titre);
+
 /**
+* @fn void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsigned char vert, unsigned char bleu)
 * @brief Définit la couleur de fond.
+* @param [in, out] graphique
+* @param [in] rouge
+* @param [in] vert
+* @param [in] bleu
 */
 void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsigned char vert, unsigned char bleu);
+
 /**
+* @fn void graphiqueEfface(GraphiqueSDL *graphique)
 * @brief Remplit la surface d'affichage d'une couleur unie, laquelle est définie par appel à graphiqueSetCouleurFond().
+* @param [in, out] graphique
 */
 void graphiqueEfface(GraphiqueSDL *graphique);
+
 /**
+* @fn void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu)
 * @brief Recalcule le rendu de la liste des noms de joueurs. (pour usage dans Menu).
+* @param [in, out] graphique
+* @param [in, out] menu
 */
 void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu);
-/** 
+
+/**
+* @fn void graphiqueSetScore(GraphiqueSDL *graphique, int score)
 * @brief Met à jour l'affichage du score
+* @param [in, out] graphique
+* @param [in] score
 */
 void graphiqueSetScore(GraphiqueSDL *graphique, int score);
+
 /**
+* @fn void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu )
 * @brief Affiche le Menu.
+* @param graphique
 */
-void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu );
+void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu );
+
 /**
 * @brief Affiche la portion visible de la scène sur la surface d'affichage principale (fenêtre).
 */
