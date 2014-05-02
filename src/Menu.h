@@ -8,7 +8,6 @@
 #define _MENU_H
 
 #include "Outils.h"
-#include "Joueur.h"
 #include "Ressource.h"
 
 

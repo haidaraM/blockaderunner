@@ -13,7 +13,6 @@
 
 #include "ElementScene.h"
 #include "Ressource.h"
-#include "Niveau.h"
 #include "Outils.h"
 
 

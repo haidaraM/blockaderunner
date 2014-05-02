@@ -17,11 +17,7 @@
 /*#include "AudioSDL.h"*/
 #include "EntreeSDL.h"
 #include "Ressource.h"
-#include "Menu.h"
-/*#include "Niveau.h"*/
-#include "Joueur.h"
 #include "Scene.h"
-#include "Outils.h"
 
 #define JEU_ETAT_MENU 				0
 #define JEU_ETAT_CHARGEMENT_NIVEAU	1

@@ -4,7 +4,6 @@
 */
 #include "GraphiqueSDL.h"
 #include "ElementScene.h"
-#include "Joueur.h"
 
 #include <assert.h>
 #include <stdio.h>
