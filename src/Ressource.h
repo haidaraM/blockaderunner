@@ -59,9 +59,9 @@
 #define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						45
 
 #define RESS_IMG_ASTEROIDE                                      2
-#define RESS_IMG_FICHIER_ASTEROIDE                                 "asteroide_00.png"
-#define RESS_IMG_LARGEUR_ASTEROIDE                              161
-#define RESS_IMG_HAUTEUR_ASTEROIDE                              128
+#define RESS_IMG_FICHIER_ASTEROIDE                              "asteroide_00.png"
+#define RESS_IMG_LARGEUR_ASTEROIDE                              64
+#define RESS_IMG_HAUTEUR_ASTEROIDE                              51
 
 #define RESS_IMG_TIR_JOUEUR_LASER                               3
 #define RESS_IMG_FICHIER_TIR_JOUEUR_LASER                      "laser_tir.png"
@@ -78,6 +78,7 @@
 #define RESS_IMG_LARGEUR_FOND_MENU								1366
 #define RESS_IMG_HAUTEUR_FOND_MENU		 						720
 
+/* Images des niveaux */
 #define RESS_IMG_FOND_NIVEAU_0				 					20
 #define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"
 #define RESS_IMG_LARGEUR_FOND_NIVEAU							4098
@@ -85,6 +86,12 @@
 
 #define RESS_IMG_FOND_NIVEAU_1				 					21
 #define RESS_IMG_FICHIER_FOND_NIVEAU_1							"bg1.jpg"
+
+#define RESS_IMG_FOND_NIVEAU_2				 					22
+#define RESS_IMG_FICHIER_FOND_NIVEAU_2							"bg2.jpg"
+
+#define RESS_IMG_FOND_NIVEAU_3				 					23
+#define RESS_IMG_FICHIER_FOND_NIVEAU_3							"bg3.jpg"
 
 
 /**

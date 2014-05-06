@@ -47,9 +47,17 @@ void niveauChargeFichier (Niveau * niveau, int numero)
         strcat(nomFichier, "niveau0");
         strcat(niveau->description, NIVEAU_0_DESCRIPTION);
         break;
-    default:
+    case 1:
         strcat(nomFichier, "niveau1");
         strcat(niveau->description, NIVEAU_1_DESCRIPTION);
+        break;
+    case 2:
+        strcat(nomFichier, "niveau2");
+        strcat(niveau->description, NIVEAU_2_DESCRIPTION);
+        break;
+    default:
+        strcat(nomFichier, "niveau3");
+        strcat(niveau->description, NIVEAU_3_DESCRIPTION);
         break;
     }
 
@@ -59,10 +67,9 @@ void niveauChargeFichier (Niveau * niveau, int numero)
         printf("Erreur :(Niveau) Impossible d'ouvrir le fichier %s.\n", nomFichier);
         exit(EXIT_FAILURE);
     }
-
     /* lecture du nombre d'ennemis */
-    valRet=fscanf(fic, "#nbEnnemis : %d", &niveau->nbEnnemis);
-    assert(valRet>0);
+    valRet=fscanf(fic, "#nbEnnemis : %d #nbBonus : %d", &niveau->nbEnnemis, &niveau->nbBonus);
+    assert(valRet==2);
 
     fclose(fic);
 }

@@ -9,6 +9,8 @@
 
 #define NIVEAU_0_DESCRIPTION									"Sortir du champ d'astéroïdes !"
 #define NIVEAU_1_DESCRIPTION                                    "Ennemis Eclaireurs!"
+#define NIVEAU_2_DESCRIPTION                                    "Niveau 2"
+#define NIVEAU_3_DESCRIPTION                                    "Niveau 3"
 
 typedef struct
 {
@@ -20,6 +22,8 @@ typedef struct
 	int imageFond;
 	/** Nombre d'ennemis du niveau : asteroides et vaisseauEnnemis **/
 	int nbEnnemis;
+	/** Nombre de bonus du niveau */
+	int nbBonus;
 } Niveau;
 
 

@@ -1,6 +1,6 @@
 /**
 * @file Scene.h
-* @brief Gère la scène : positions, statuts de toutes les instances, potentiellement 'affichables' (visuel et audio).
+* @brief Gère la scène : positions des elements, collisions, statuts de toutes les instances, potentiellement 'affichables' (visuel et audio).
 * @author Yann Cortial - Mohamed El Mouctar HAIDARA
 */
 #ifndef _SCENE_H
@@ -94,7 +94,9 @@ int sceneGetNbDecors(const Scene * scene);
 
 
 /**
-* @brief Permet de passer le temps écoulé à la scène : fait évoluer les animations (tir, ennemis).
+* @fn void sceneAnime(Scene *scene, float tempsSecondes)
+* @brief Permet de passer le temps écoulé à la scène : fait évoluer les animations et les supprime s'il sortent de l'ecran.
+* @param [in, out] scene
 */
 void sceneAnime(Scene *scene, float tempsSecondes);
 
@@ -143,6 +145,12 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 *
 */
 void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j, const Ressource *res);
+
+
+/**
+* @brief test de collision
+*/
+void sceneTestDeCollision(Scene *scene);
 
 /**
 * @fn void sceneTestDeRegression()

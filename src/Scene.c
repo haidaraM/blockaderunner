@@ -1,6 +1,7 @@
 /**
 * @file Scene.c
-* @brief
+* @brief Fichier d'implementation du module
+* @author Mohamed El Mouctar HAIDARA - YANN COrtial
 */
 #include "Scene.h"
 #include <stdlib.h>
@@ -128,7 +129,7 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
         elementInit(ennemi, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(res, RESS_IMG_ASTEROIDE),
             ressourceGetHauteurImage(res, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
          /* Positionnement aleatoire des ennemis sur la scene */
-        elementSetPosition(ennemi, randomInt(2000, 6000), randomInt(0, 720));
+        elementSetPosition(ennemi, randomInt(2000, 6000), randomInt(0, 700));
         tabDynAjoute(&scene->acteurs, (void *)ennemi );
     }
 }
@@ -176,7 +177,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
             x = elementGetX(e);
             elementSetPosition(e, x+dx, elementGetY(e));
             /* Suppression des tirs qui sortent de l'ecran */
-            if(x+dx > 1366)
+            if(x+dx > scene->largeurAffichage)
             {
                 tabDynSupprimeElement(&scene->tirs, i);
             }
@@ -184,7 +185,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     }
 
     /* Deplacement des asteroides de la scene */
-    vitesseDeplacementAsteroide     =100.0f;
+    vitesseDeplacementAsteroide     =125.0f;
     dx                  = -(int) (dt * vitesseDeplacementAsteroide);
     for(i=0; i<sceneGetNbActeurs(scene); i++)
     {
@@ -193,9 +194,13 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         {
             x=elementGetX(e);
             elementSetPosition(e, x+dx, elementGetY(e));
+            /* Suppression des ennemis qui sortent completement de l'ecran */
+            if(x+dx < - e->largeur)
+            {
+                tabDynSupprimeElement(&scene->acteurs, i);
+            }
         }
     }
-
     scene->horlogePrecedente = tempsSecondes;
 }
 
@@ -303,6 +308,28 @@ void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j,const Ressource *re
         elementSetPosition(tir, elementGetX(scene->vaisseauJoueur), elementGetY(scene->vaisseauJoueur));
 
         tabDynAjoute(&scene->tirs, (void *) tir);
+    }
+}
+
+void sceneTestDeCollision(Scene *scene)
+{
+    int i, j;
+    ElementScene * t=NULL, *e=NULL;
+    /* collision tir - ennemi */
+    for(i=0; i<sceneGetNbTirs(scene); i++)
+    {
+        t=(ElementScene *) tabDynGetElement(&scene->tirs, i);
+        for(j=0; j<sceneGetNbActeurs(scene); j++)
+        {
+            e=(ElementScene *) tabDynGetElement(&scene->acteurs, j);
+            if(elementTestDeCollision(t, e))
+            {
+                /* Suppression du tir */
+                tabDynSupprimeElement(&scene->tirs, i);
+                /* Suppression du l'ennemis : ennemis ou asteroide */
+                tabDynSupprimeElement(&scene->acteurs, j);
+            }
+        }
     }
 }
 

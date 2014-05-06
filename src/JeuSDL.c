@@ -166,6 +166,9 @@ void jeuBoucle(JeuSDL *jeu)
         		tempsDernierAffichage 	= getTempsSecondes();
         	}
 
+        	/* test de collision */
+        	sceneTestDeCollision(&jeu->scene);
+
 			break;
 
 		case JEU_ETAT_MENU:			/*-------------   M E N U   ---------------*/

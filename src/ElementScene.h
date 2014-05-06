@@ -54,48 +54,83 @@ typedef struct
 * @param largeur : largeur du element.
 * @param hauteur : hauteur du element.
 * @param largeurEcran : largeur de l'ecran (portion visible de la scène).
-* @param largeurEcran : hauteur de l'ecran (portion visible de la scène).
+* @param hauteurEcran : hauteur de l'ecran (portion visible de la scène).
 */
 void elementInit(ElementScene *element, int type, int indexImage, int largeur, int hauteur, int largeurEcran, int hauteurEcran);
+
 /**
+* @fn void elementLibere(ElementScene *element)
 * @brief libère proprement un element.
+* @param [in, out] element : initialisé
 */
 void elementLibere(ElementScene *element);
+
 /**
+* @fn void elementSetType(ElementScene *element, int type)
 * @brief Affecte le type d'element.
+* @param [in, out] element : initialisé
+* @param [in] type
 */
 void elementSetType(ElementScene *element, int type);
 
 /**
 * @fn elementGetType(ElementScene * scene)
 * @brief Renvoie le type d'element
+* @param [in] element : initialisé
 */
 int elementGetType(const ElementScene * element);
 
 /**
+* @fn int elementDestructible(const ElementScene *element)
 * @brief renvoie 1 si l'element est destructible, 0 sinon.
+* @param [in] element
 */
 int elementDestructible(const ElementScene *element);
+
 /**
+* @fn int elementVisible(const ElementScene *element)
 * @brief renvoie 1 si l'element est visible (ie. dans la portion visible de la Scene), 0 sinon.
+* @param [in] element
 */
 int elementVisible(const ElementScene *element);
+
 /**
+* @fn int elementGetX(const ElementScene *element)
 * @brief renvoie la position en X du element.
+* @param [in] element : initialisé
 */
 int elementGetX(const ElementScene *element);
+
 /**
+* @fn int elementGetY(const ElementScene *element)
 * @brief renvoie la position en Y du element.
+* @param [in] element : initialisé
 */
 int elementGetY(const ElementScene *element);
+
 /**
+* @fn void elementSetPosition(ElementScene *element, int x, int y)
 * @brief Affecte une nouvelle position au element.
+* @param [in, out] element : initialisé
+* @param [in] x
+* @param [in] y
 */
 void elementSetPosition(ElementScene *element, int x, int y);
+
 /**
 * @brief renvoie le handle de l'image associée au element (handle lisible par Ressource).
 */
 int elementGetImageIndex(const ElementScene *element);
+
+/**
+* @fn int elementTestDeCollision(ElementScene * e1, ElementScene *e2);
+* @brief Test de la collision entre deux elementsScene
+* @param [in] e1 : initialisé
+* @param [in] e2 : initialisé
+* @return renvoi 1 en cas de collision. 0 sinon
+*/
+int elementTestDeCollision(ElementScene * e1, ElementScene *e2);
+
 /**
 * @fn void elementSceneTestDeRegression()
 * @brief Effectue tout une serie de test pour vérifier l'intégrité du module

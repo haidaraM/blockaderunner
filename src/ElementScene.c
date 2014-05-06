@@ -87,6 +87,23 @@ int elementGetImageIndex(const ElementScene *element)
 	return element->indexImage;
 }
 
+int elementTestDeCollision(ElementScene * e1, ElementScene *e2)
+{
+    int x1, x2, y1, y2;
+    x1=elementGetX(e1);
+    x2=elementGetX(e2);
+    y1=elementGetY(e1);
+    y2=elementGetY(e2);
+
+    if((x2 >= x1 + e1->largeur)      /* trop à droite */
+	|| (x2 + e2->largeur <= x1)  /* trop à gauche */
+	|| (y2 >= y1 + e1->hauteur)  /*trop en bas */
+	|| (y2 + e2->hauteur <= y1))  /* trop en haut */
+          return 0;
+   else
+          return 1;
+}
+
 void elementSceneTestDeRegression()
 {
     ElementScene eS;

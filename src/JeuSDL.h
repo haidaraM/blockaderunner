@@ -74,5 +74,9 @@ void jeuBoucle(JeuSDL *jeu);
 */
 void jeuLibere(JeuSDL *jeu);
 
+/**
+*  @brief test de collision
+*/
+
 #endif
 
