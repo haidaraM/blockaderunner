@@ -68,6 +68,10 @@ void creeListeImages(Ressource *res)
 	res->dimensionImages[RESS_IMG_FOND_NIVEAU_3].largeur            =RESS_IMG_LARGEUR_FOND_MENU;
 	res->dimensionImages[RESS_IMG_FOND_NIVEAU_3].hauteur            =RESS_IMG_HAUTEUR_FOND_MENU;
 
+	res->images[RESS_IMG_FOND_NIVEAU_4]                             =RESS_IMG_FICHIER_FOND_NIVEAU_4;
+	res->dimensionImages[RESS_IMG_FOND_NIVEAU_4].largeur            =RESS_IMG_LARGEUR_FOND_MENU;
+	res->dimensionImages[RESS_IMG_FOND_NIVEAU_4].hauteur            =RESS_IMG_HAUTEUR_FOND_MENU;
+
 	/* Images asteroides */
 	res->images[RESS_IMG_ASTEROIDE]                                 =RESS_IMG_FICHIER_ASTEROIDE;
 	res->dimensionImages[RESS_IMG_ASTEROIDE].largeur                =RESS_IMG_LARGEUR_ASTEROIDE;

@@ -146,11 +146,19 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 */
 void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j, const Ressource *res);
 
-
 /**
+* @fn void sceneTestDeCollision(Scene *scene)
 * @brief test de collision
+* @param [in, out] scene : initialisée
 */
 void sceneTestDeCollision(Scene *scene);
+
+/**
+* @brief met à jour les caractèristiques du vaisseau joueur. Nécessaire pour la scene pour mettre à jour l'affichage des pS et pE
+* @param [in, out] scene
+* @param [in] vaisseau
+*/
+void sceneSetVaisseauJoueur(Scene * scene, Vaisseau * vaisseau);
 
 /**
 * @fn void sceneTestDeRegression()

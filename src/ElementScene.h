@@ -14,7 +14,8 @@
 #define ELEMENT_TYPE_VAISSEAU_JOUEUR			 0
 #define ELEMENT_TYPE_ASTEROIDE      			 1
 #define ELEMENT_TYPE_LASER                       2
-#define ELEMENT_TYPE_MISSILE                     3
+#define ELEMENT_TYPE_VAISSEAU_ENNEMI             3
+#define ELEMENT_TYPE_MISSILE                     4
 
 
 /**
@@ -25,8 +26,6 @@ typedef struct
 {
 	/** type d'entité. */
 	int type;
-	/** destructible par un tir */
-	int destructible;
 	/** booléen : le element est dans la portion visible de la scène (ecran) ou pas. */
 	int visible;
 	/** position en X sur la scène. */
@@ -43,6 +42,8 @@ typedef struct
 	int largeurSceneVisible;
 	/** Hauteur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
 	int hauteurSceneVisible;
+	/** pointeur generique */
+	void * data;
 } ElementScene;
 
 
@@ -79,13 +80,6 @@ void elementSetType(ElementScene *element, int type);
 * @param [in] element : initialisé
 */
 int elementGetType(const ElementScene * element);
-
-/**
-* @fn int elementDestructible(const ElementScene *element)
-* @brief renvoie 1 si l'element est destructible, 0 sinon.
-* @param [in] element
-*/
-int elementDestructible(const ElementScene *element);
 
 /**
 * @fn int elementVisible(const ElementScene *element)

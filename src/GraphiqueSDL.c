@@ -277,13 +277,15 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	assert(graphique->elementsHUD != NULL);
 	graphique->elementsHUD[0] 	= SDL_CreateRGBSurface(	SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR, GFX_HUD_ELEMENT_HAUTEUR, 32,
                                    						graphique->rmask, graphique->gmask, graphique->bmask, 0 );
-    if(graphique->elementsHUD[0] == NULL) {
+    if(graphique->elementsHUD[0] == NULL)
+    {
         printf("ERREUR : (GraphiqueSDL) : impossible de créer élément du HUD.  %s\n", SDL_GetError());
         exit(1);
     }
 	graphique->elementsHUD[1] 	= SDL_CreateRGBSurface(	SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR, GFX_HUD_ELEMENT_HAUTEUR, 32,
                                    						graphique->rmask, graphique->gmask, graphique->bmask, 0 );
-    if(graphique->elementsHUD[1] == NULL) {
+    if(graphique->elementsHUD[1] == NULL)
+    {
         printf("ERREUR : (GraphiqueSDL) : impossible de créer élément du HUD.  %s\n", SDL_GetError());
         exit(1);
     }
@@ -545,13 +547,13 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	}
 
 	/* Affichage de l'interface */
-	for (i=0; i< 10; i++)
+	for (i=0; i<vaisseauGetPointEcran(scene->vaisseauJoueur->data); i++)
 	{
 		dstBox.x = GFX_HUD_ELEMENT_LARGEUR;
 		dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);
 		SDL_BlitSurface( graphique->elementsHUD[0], NULL, graphique->surface, &dstBox);
 	}
-	for (i=0; i< 10; i++)
+	for (i=0; i< vaisseauGetPointStructure(scene->vaisseauJoueur->data); i++)
 	{
 		dstBox.x = 2* GFX_HUD_ELEMENT_LARGEUR + GFX_HUD_ELEMENT_OFFSET;
 		dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);

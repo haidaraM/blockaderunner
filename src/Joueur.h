@@ -14,14 +14,18 @@
 
 /**
 * @struct Joueur
-* @brief
+* @brief Represente les caractéristique du joueur
 */
 
 typedef struct
 {
+        /** Chaine de caractères correspondant au nom du joueur */
        char nom[JOUEUR_NOM_MAXCHAR];
+       /** Progression du joueur */
        unsigned int progression;
+       /** Score */
        int score;
+       /** Pointeur vers le vaisseau du joueur */
        Vaisseau *vaisseau;
 } Joueur;
 

@@ -93,6 +93,10 @@
 #define RESS_IMG_FOND_NIVEAU_3				 					23
 #define RESS_IMG_FICHIER_FOND_NIVEAU_3							"bg3.jpg"
 
+#define RESS_IMG_FOND_NIVEAU_4				 					24
+#define RESS_IMG_FICHIER_FOND_NIVEAU_4							"bg4.jpg"
+
+
 
 /**
 * @struct Ressource

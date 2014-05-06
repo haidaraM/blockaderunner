@@ -9,14 +9,14 @@
 /* Caracteristiques du vaisseau joueur*/
 #define VAISSEAU_JOUEUR_TYPE                            1
 #define JOUEUR_NB_ARMES                                 1
-#define JOUEUR_POINTECRAN                               100
-#define JOUEUR_POINTSTRUCTURE                           100
+#define JOUEUR_POINTECRAN                               10
+#define JOUEUR_POINTSTRUCTURE                           10
 
 /* Caracteristiques du vaisseau ennemi*/
 #define VAISSEAU_ENNEMI_TYPE                            2
 #define ENNEMI_ARMES                                    1
-#define ENNEMI_POINTECRAN                               50
-#define ENNEMI_POINTSTRUCTURE                           50
+#define ENNEMI_POINTECRAN                               5
+#define ENNEMI_POINTSTRUCTURE                           5
 
 /* Armes */
 #define ARME_LAZER                                      0
@@ -36,14 +36,15 @@
 */
 typedef struct
 {
-    int typeArme; /* Lazer, missile*/
+    /** type de l'arme : laser, missile */
+    int typeArme;
 
     int degatEcran;
 
     int degatStructure;
-
+    /** Munitions (infinies pour le laze ) */
     int munitions;
-
+    /** cadence de tir : utile pour le missile */
     float cadence;
 
 } Arme;

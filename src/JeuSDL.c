@@ -289,7 +289,10 @@ void jeuBoucle(JeuSDL *jeu)
 				sceneChargeNiveau(&jeu->scene, &niveau, &jeu->ressource);
 				jeu->etatCourantJeu 	= JEU_ETAT_JEU;
 
-				graphiqueSetScore(&jeu->graphique, 9052);
+				graphiqueSetScore(&jeu->graphique, joueurGetScore(jeu->joueur));
+
+                /* On recupère les caractèristique du vaisseau du joueur pour les donnner à la scene */
+                sceneSetVaisseauJoueur(&jeu->scene, jeu->joueur->vaisseau);
 
 				sceneResetHorloge(&jeu->scene, getTempsSecondes());
 				tempsDernierDefilementScene = getTempsSecondes();

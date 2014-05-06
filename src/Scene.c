@@ -129,9 +129,10 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
         elementInit(ennemi, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(res, RESS_IMG_ASTEROIDE),
             ressourceGetHauteurImage(res, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
          /* Positionnement aleatoire des ennemis sur la scene */
-        elementSetPosition(ennemi, randomInt(2000, 6000), randomInt(0, 700));
+        elementSetPosition(ennemi, randomInt(2000, 6000), randomInt(0, 670));
         tabDynAjoute(&scene->acteurs, (void *)ennemi );
     }
+
 }
 
 void sceneResetHorloge(Scene *scene, float horloge)
@@ -315,6 +316,7 @@ void sceneTestDeCollision(Scene *scene)
 {
     int i, j;
     ElementScene * t=NULL, *e=NULL;
+    assert(scene!=NULL);
     /* collision tir - ennemi */
     for(i=0; i<sceneGetNbTirs(scene); i++)
     {
@@ -331,6 +333,13 @@ void sceneTestDeCollision(Scene *scene)
             }
         }
     }
+}
+
+void sceneSetVaisseauJoueur(Scene * scene, Vaisseau * vaisseau)
+{
+    assert(scene!=NULL);
+    assert(vaisseau!=NULL);
+    scene->vaisseauJoueur->data=vaisseau;
 }
 
 void sceneTestDeRegression()

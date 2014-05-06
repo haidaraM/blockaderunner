@@ -3,7 +3,9 @@
 * @brief Fichier d'implementation du module ElementScene
 */
 #include "ElementScene.h"
+#include "Vaisseau.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 
 
@@ -15,7 +17,6 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 	assert( element != NULL );
 
 	/* element->type			= type; */
-	element->destructible  	= 0;
 	element->x 				= 0;
 	element->y				= 0;
 	element->largeur 		= largeur;
@@ -24,12 +25,19 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 	element->hauteurSceneVisible	= hauteurEcran;
 	element->visible 		= 0;
 	element->indexImage 		= indexImage;
+	element->data=NULL;
 	elementSetType(element, type);
 
 }
 
 void elementLibere(ElementScene *element)
-{}
+{
+    assert(element!=NULL);
+    if(element->data !=NULL)
+    {
+        free(element->data);
+    }
+}
 
 
 void elementSetType(ElementScene *element, int type)
@@ -38,37 +46,36 @@ void elementSetType(ElementScene *element, int type)
 	element->type = type;
 	switch (type)
 	{
-		case ELEMENT_TYPE_VAISSEAU_JOUEUR:
-			element->destructible = 1;
+		case ELEMENT_TYPE_VAISSEAU_ENNEMI:
+            element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
+            vaisseauInit(element->data, VAISSEAU_ENNEMI_TYPE, ENNEMI_POINTSTRUCTURE, ENNEMI_POINTECRAN, 1);
 			break;
 		default:
-			element->destructible = 0;
 			break;
 	}
 }
 
 int elementVisible(const ElementScene *element)
 {
+    assert(element!=NULL);
 	return element->visible;
-}
-
-int elementDestructible(const ElementScene *element)
-{
-	return element->destructible;
 }
 
 int elementGetX(const ElementScene *element)
 {
+    assert(element!=NULL);
 	return element->x;
 }
 
 int elementGetY(const ElementScene *element)
 {
+    assert(element!=NULL);
 	return element->y;
 }
 
 int elementGetType(const ElementScene * element)
 {
+    assert(element!=NULL);
     return element->type;
 }
 
