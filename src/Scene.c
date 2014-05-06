@@ -127,8 +127,8 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
     {
         ElementScene * ennemi=(ElementScene *) malloc(sizeof(ElementScene));
         elementInit(ennemi, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(res, RESS_IMG_ASTEROIDE),
-            ressourceGetHauteurImage(res, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
-         /* Positionnement aleatoire des ennemis sur la scene */
+                    ressourceGetHauteurImage(res, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
+        /* Positionnement aleatoire des ennemis sur la scene */
         elementSetPosition(ennemi, randomInt(2000, 6000), randomInt(0, 670));
         tabDynAjoute(&scene->acteurs, (void *)ennemi );
     }
@@ -312,27 +312,45 @@ void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j,const Ressource *re
     }
 }
 
-void sceneTestDeCollision(Scene *scene)
+void sceneTestDeCollision(Scene *scene, int *score)
 {
     int i, j;
     ElementScene * t=NULL, *e=NULL;
     assert(scene!=NULL);
-    /* collision tir - ennemi */
+    /* collision tir - acteurs */
     for(i=0; i<sceneGetNbTirs(scene); i++)
     {
         t=(ElementScene *) tabDynGetElement(&scene->tirs, i);
         for(j=0; j<sceneGetNbActeurs(scene); j++)
         {
             e=(ElementScene *) tabDynGetElement(&scene->acteurs, j);
-            if(elementTestDeCollision(t, e))
+            if(elementGetType(e)==ELEMENT_TYPE_ASTEROIDE)
             {
-                /* Suppression du tir */
-                tabDynSupprimeElement(&scene->tirs, i);
-                /* Suppression du l'ennemis : ennemis ou asteroide */
-                tabDynSupprimeElement(&scene->acteurs, j);
+                /* Les asteroides disparaissent avec un seul tir */
+                if(elementTestDeCollision(t, e))
+                {
+                    /* Suppression du tir */
+                    tabDynSupprimeElement(&scene->tirs, i);
+                    /* Suppression du l'ennemis : ennemis ou asteroide */
+                    tabDynSupprimeElement(&scene->acteurs, j);
+                    /* mise à jour du score */
+                    *score=*score+10;
+                }
             }
         }
     }
+
+    /* collision vaisseauJoueur - acteurs */
+    for(j=0; j<sceneGetNbActeurs(scene); j++)
+    {
+        e=(ElementScene *) tabDynGetElement(&scene->acteurs, j);
+        if(elementTestDeCollision(scene->vaisseauJoueur, e))
+        {
+            /* Suppression de l'acteur */
+            tabDynSupprimeElement(&scene->acteurs, j);
+        }
+    }
+
 }
 
 void sceneSetVaisseauJoueur(Scene * scene, Vaisseau * vaisseau)

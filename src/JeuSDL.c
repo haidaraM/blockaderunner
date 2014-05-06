@@ -74,6 +74,7 @@ void jeuBoucle(JeuSDL *jeu)
 	GraphiqueSDL *graphique	 		= &jeu->graphique;
 	EntreeSDL *entree				= &jeu->entree;
 	Menu *menu						= &jeu->menu;
+	int score                       =0;
 
     float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
     /* Période de temps (secondes) entre deux raffraichissements écran */
@@ -167,7 +168,11 @@ void jeuBoucle(JeuSDL *jeu)
         	}
 
         	/* test de collision */
-        	sceneTestDeCollision(&jeu->scene);
+        	sceneTestDeCollision(&jeu->scene, &score);
+        	/* mise à jour du score au cours du jeu */
+        	graphiqueSetScore(graphique, score);
+
+        	joueurSetScore(jeu->joueur, score);
 
 			break;
 
@@ -289,7 +294,8 @@ void jeuBoucle(JeuSDL *jeu)
 				sceneChargeNiveau(&jeu->scene, &niveau, &jeu->ressource);
 				jeu->etatCourantJeu 	= JEU_ETAT_JEU;
 
-				graphiqueSetScore(&jeu->graphique, joueurGetScore(jeu->joueur));
+                score=joueurGetScore(jeu->joueur);
+				graphiqueSetScore(&jeu->graphique, score);
 
                 /* On recupère les caractèristique du vaisseau du joueur pour les donnner à la scene */
                 sceneSetVaisseauJoueur(&jeu->scene, jeu->joueur->vaisseau);
