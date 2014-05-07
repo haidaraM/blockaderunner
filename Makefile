@@ -21,12 +21,12 @@ ifeq ($(OS),WIN32)
 	INCLUDE		 	= -I$(SRC) -I"C:\code\lib\SDL\include\SDL"
 endif
 ifeq ($(OS),LINUX)
-	LIBS 			= -lSDL -lSDL_image -lSDL_ttf
+	LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64
 	INCLUDE		 	= -I/usr/include -I/usr/include/SDL -I$(SRC)
 endif
 
 
-LDFLAGS  		=
+LDFLAGS  		= 
 CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2   # pour optimiser
 
 
@@ -34,7 +34,7 @@ all: $(BIN)/$(EXEC) $(BIN)/$(MAIN_TEST)
 
 
 
-$(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Outils.o $(OBJ)/Ressource.o $(OBJ)/Joueur.o $(OBJ)/Niveau.o $(OBJ)/GraphiqueSDL.o $(OBJ)/EntreeSDL.o $(OBJ)/Menu.o $(OBJ)/Scene.o $(OBJ)/ElementScene.o $(OBJ)/Vaisseau.o
+$(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Outils.o $(OBJ)/Ressource.o $(OBJ)/Joueur.o $(OBJ)/Niveau.o $(OBJ)/GraphiqueSDL.o $(OBJ)/EntreeSDL.o $(OBJ)/Menu.o $(OBJ)/Scene.o $(OBJ)/ElementScene.o $(OBJ)/Vaisseau.o $(OBJ)/Audio.o
 	$(LD)  $^ $(LDFLAGS) $(LIBS) -o $@
 
 $(BIN)/$(MAIN_TEST): $(OBJ)/MainTest.o $(OBJ)/Joueur.o $(OBJ)/Vaisseau.o $(OBJ)/ElementScene.o

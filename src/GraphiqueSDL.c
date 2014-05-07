@@ -13,7 +13,7 @@
 
 
 
-/* --------------------------------------------------------------------------------------------------			Fonctions internes */
+/* -----------Fonctions internes ----------------- */
 
 SDL_Surface* chargeImage(char* nomFichier)
 {

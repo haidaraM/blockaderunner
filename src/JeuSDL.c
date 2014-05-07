@@ -39,6 +39,9 @@ void jeuInit(JeuSDL *jeu)
 	/* Initialisation du dictionnaire des ressources du jeu */
 	ressourceInit(&jeu->ressource);
 
+    /* Initialisation du système audio */
+	audioInit(&jeu->audio, &jeu->ressource);
+
 	/* Initialisation du Menu */
 	menuInit(&jeu->menu, &jeu->ressource);
 
@@ -140,6 +143,7 @@ void jeuBoucle(JeuSDL *jeu)
             if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
 			{
 				sceneJoueurDeclencheTir(&jeu->scene, jeu->joueur, &jeu->ressource);
+                audioJoueSon(&jeu->audio, RESS_SON_TIR_LASER);
 				toucheDetectee=-1;
 			}
 
@@ -177,12 +181,10 @@ void jeuBoucle(JeuSDL *jeu)
 			break;
 
 		case JEU_ETAT_MENU:			/*-------------   M E N U   ---------------*/
-
 			/* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
 			sourisX 	= entreeGetSourisX(entree);
 			sourisY		= entreeGetSourisY(entree);
 			sourisBoutonGauche = entreeBoutonSourisGauche(entree);
-
 			/* Si on est dans l'intro, on incrémente le temps dans le module Menu. */
 			if (menu->etat == MENU_ETAT_INTRO)
 				menuIntro(menu, dureeBoucle);
@@ -296,7 +298,6 @@ void jeuBoucle(JeuSDL *jeu)
 
                 score=joueurGetScore(jeu->joueur);
 				graphiqueSetScore(&jeu->graphique, score);
-
                 /* On recupère les caractèristique du vaisseau du joueur pour les donnner à la scene */
                 sceneSetVaisseauJoueur(&jeu->scene, jeu->joueur->vaisseau);
 
@@ -329,7 +330,7 @@ void jeuLibere( JeuSDL *jeu )
 	menuLibere( &jeu->menu );
 	entreeLibere( &jeu->entree );
 	graphiqueLibere( &jeu->graphique );
-
+    audioLibere(&jeu->audio);
 	SDL_Quit();
 }
 

@@ -14,7 +14,7 @@
 #define _JEU_SDL_H
 
 #include "GraphiqueSDL.h"
-/*#include "Audio.h"*/
+#include "Audio.h"
 #include "EntreeSDL.h"
 #include "Ressource.h"
 #include "Scene.h"
@@ -32,7 +32,9 @@ typedef struct {
 
 	/** Initialise et dispose la fenetre principale. */
 	GraphiqueSDL graphique;
-	/* AudioSDL audio; */
+
+	/** Audio : sons joués durant le cours du jeu */
+	AudioFMOD audio;
 	/** Initialise et gère les évènements (clavier, souris ..). */
 	EntreeSDL entree;
 
@@ -73,10 +75,6 @@ void jeuBoucle(JeuSDL *jeu);
 * @param [in, out] jeu
 */
 void jeuLibere(JeuSDL *jeu);
-
-/**
-*  @brief test de collision
-*/
 
 #endif
 

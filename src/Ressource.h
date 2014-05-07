@@ -17,7 +17,8 @@
 
 #define RESS_NUM_NIVEAUX										7
 #define RESS_NUM_IMAGES											32
-#define RESS_NUM_SONS											0
+#define RESS_NUM_SONS_COURTS       								1
+#define RESS_NUM_SONS_LONGS    	    							2
 #define RESS_NUM_POLICES										1
 
 
@@ -96,7 +97,14 @@
 #define RESS_IMG_FOND_NIVEAU_4				 					24
 #define RESS_IMG_FICHIER_FOND_NIVEAU_4							"bg4.jpg"
 
-
+/* Sons longs */
+#define RESS_SON_MENU                                           0
+#define RESS_SON_FICHIER_MENU                                   "menu_fond.wav"
+#define RESS_SON_MENU_SUITE                                     1
+#define RESS_SON_FICHIER_MENU_SUITE                             "menu_fond_suite.wav"
+/* sons courts */
+#define RESS_SON_TIR_LASER                                      2
+#define RESS_SON_FICHIER_TIR_LASER                              "tir_laser.wav"
 
 /**
 * @struct Ressource
