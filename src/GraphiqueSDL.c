@@ -340,7 +340,7 @@ void graphiqueRaffraichit(GraphiqueSDL *graphique)
 	assert( SDL_Flip( graphique->surface ) !=-1 );
 }
 
-void graphiqueSetTitre(GraphiqueSDL *graphique, const char *titre)
+void graphiqueSetTitre(GraphiqueSDL *graphique, char *titre)
 {
 	if (titre != NULL)
 	{

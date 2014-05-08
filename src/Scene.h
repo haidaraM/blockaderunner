@@ -6,14 +6,23 @@
 #ifndef _SCENE_H
 #define _SCENE_H
 
-#define SCENE_VITESSE_DEFILEMENT_POINTS 	420.0f
-#define SCENE_NUM_POINTS_DEFILEMENT 		64
-
-
-
 #include "ElementScene.h"
 #include "Ressource.h"
 #include "Outils.h"
+
+
+
+
+#define SCENE_VITESSE_DEFILEMENT_POINTS 	420.0f
+#define SCENE_NUM_POINTS_DEFILEMENT 		64
+
+#define SCENE_VITESSE_LASER					640.0f
+#define SCENE_VITESSE_ASTEROIDE				128.0f			
+
+
+
+
+
 
 
 typedef struct

@@ -16,7 +16,7 @@
 
 
 #define RESS_NUM_NIVEAUX										7
-#define RESS_NUM_IMAGES											32
+#define RESS_NUM_IMAGES											64
 #define RESS_NUM_SONS_COURTS       								1
 #define RESS_NUM_SONS_LONGS    	    							2
 #define RESS_NUM_POLICES										1
@@ -59,42 +59,79 @@
 #define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
 #define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						45
 
-#define RESS_IMG_ASTEROIDE                                      2
-#define RESS_IMG_FICHIER_ASTEROIDE                              "asteroide_00.png"
-#define RESS_IMG_LARGEUR_ASTEROIDE                              64
-#define RESS_IMG_HAUTEUR_ASTEROIDE                              51
+#define RESS_IMG_DEBRIS_ASTEROIDE                               2
+#define RESS_IMG_FICHIER_DEBRIS_ASTEROIDE                       "debris_asteroide.png"
+#define RESS_IMG_LARGEUR_DEBRIS_ASTEROIDE                       24
+#define RESS_IMG_HAUTEUR_DEBRIS_ASTEROIDE                       24
 
-#define RESS_IMG_TIR_JOUEUR_LASER                               3
+#define RESS_IMG_ASTEROIDE      		                        3
+#define RESS_IMG_FICHIER_ASTEROIDE                              "asteroide_00.png"
+#define RESS_IMG_LARGEUR_ASTEROIDE                              88
+#define RESS_IMG_HAUTEUR_ASTEROIDE                              70
+
+#define RESS_IMG_TIR_JOUEUR_LASER                               8
 #define RESS_IMG_FICHIER_TIR_JOUEUR_LASER                      "laser_tir.png"
 #define RESS_IMG_LARGEUR_TIR_JOUEUR_LASER                       32
 #define RESS_IMG_HAUTEUR_TIR_JOUEUR_LASER                       4
 
-#define RESS_IMG_SPLASH						 					10
+#define RESS_IMG_TIR_ENNEMI_LASER                               9
+#define RESS_IMG_FICHIER_TIR_ENNEMI_LASER                      "laser_tir_ennemi.png"
+#define RESS_IMG_LARGEUR_TIR_ENNEMI_LASER                       32
+#define RESS_IMG_HAUTEUR_TIR_ENNEMI_LASER                       4
+
+#define RESS_IMG_BONUS_SCORE		                            14
+#define RESS_IMG_FICHIER_BONUS_SCORE        	              	"bonus_score.png"
+#define RESS_IMG_LARGEUR_BONUS_SCORE    	        	        40
+#define RESS_IMG_HAUTEUR_BONUS_SCORE 	             	        40
+
+#define RESS_IMG_BONUS_MISSILE		                            15
+#define RESS_IMG_FICHIER_BONUS_MISSILE        	              	"bonus_missile.png"
+#define RESS_IMG_LARGEUR_BONUS_MISSILE    		                40
+#define RESS_IMG_HAUTEUR_BONUS_MISSILE	  		                40
+
+#define RESS_IMG_VAISSEAU_ECLAIREUR			 					16
+#define RESS_IMG_FICHIER_VAISSEAU_ECLAIREUR						"ennemi_eclaireur.png"
+#define RESS_IMG_LARGEUR_VAISSEAU_ECLAIREUR						48
+#define RESS_IMG_HAUTEUR_VAISSEAU_ECLAIREUR						46
+
+#define RESS_IMG_VAISSEAU_CHASSEUR			 					17
+#define RESS_IMG_FICHIER_VAISSEAU_CHASSEUR						"ennemi_chasseur.png"
+#define RESS_IMG_LARGEUR_VAISSEAU_CHASSEUR						96
+#define RESS_IMG_HAUTEUR_VAISSEAU_CHASSEUR						34
+
+#define RESS_IMG_VAISSEAU_CROISEUR			 					18
+#define RESS_IMG_FICHIER_VAISSEAU_CROISEUR						"ennemi_croiseur.png"
+#define RESS_IMG_LARGEUR_VAISSEAU_CROISEUR						286
+#define RESS_IMG_HAUTEUR_VAISSEAU_CROISEUR						91
+
+
+
+#define RESS_IMG_SPLASH						 					32
 #define RESS_IMG_FICHIER_SPLASH									"splash0.jpg"
 #define RESS_IMG_LARGEUR_SPLASH									1366
 #define RESS_IMG_HAUTEUR_SPLASH			 						720
 
-#define RESS_IMG_FOND_MENU					 					11
+#define RESS_IMG_FOND_MENU					 					33
 #define RESS_IMG_FICHIER_FOND_MENU								"menu.jpg"
 #define RESS_IMG_LARGEUR_FOND_MENU								1366
 #define RESS_IMG_HAUTEUR_FOND_MENU		 						720
 
 /* Images des niveaux */
-#define RESS_IMG_FOND_NIVEAU_0				 					20
+#define RESS_IMG_FOND_NIVEAU_0				 					48
 #define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"
 #define RESS_IMG_LARGEUR_FOND_NIVEAU							4098
 #define RESS_IMG_HAUTEUR_FOND_NIVEAU     						720
 
-#define RESS_IMG_FOND_NIVEAU_1				 					21
+#define RESS_IMG_FOND_NIVEAU_1				 					49
 #define RESS_IMG_FICHIER_FOND_NIVEAU_1							"bg1.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_2				 					22
+#define RESS_IMG_FOND_NIVEAU_2				 					50
 #define RESS_IMG_FICHIER_FOND_NIVEAU_2							"bg2.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_3				 					23
+#define RESS_IMG_FOND_NIVEAU_3				 					51
 #define RESS_IMG_FICHIER_FOND_NIVEAU_3							"bg3.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_4				 					24
+#define RESS_IMG_FOND_NIVEAU_4				 					52
 #define RESS_IMG_FICHIER_FOND_NIVEAU_4							"bg4.jpg"
 
 /* Sons longs */

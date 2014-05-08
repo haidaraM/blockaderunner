@@ -96,7 +96,7 @@ void graphiqueRaffraichit(GraphiqueSDL *graphique);
 * @param [in, out] graphique
 * @param [in] titre
 */
-void graphiqueSetTitre(GraphiqueSDL *graphique, const char *titre);
+void graphiqueSetTitre(GraphiqueSDL *graphique, char *titre);
 
 /**
 * @fn void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsigned char vert, unsigned char bleu)

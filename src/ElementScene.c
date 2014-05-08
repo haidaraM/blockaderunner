@@ -117,19 +117,19 @@ void elementSceneTestDeRegression()
     printf("Test de regression du module elementScene \n");
 
     printf("------------- Test de elementInit --------------\n");
-    elementInit(&eS, ELEMENT_TYPE_LASER, 1, 40, 40, 1366,768);
-    assert(eS.type==ELEMENT_TYPE_LASER && eS.indexImage==1 && eS.hauteur== 40 && eS.hauteur==40);
+    elementInit(&eS, ELEMENT_TYPE_LASER_JOUEUR, 1, 40, 40, 1366,768);
+    assert(eS.type==ELEMENT_TYPE_LASER_JOUEUR && eS.indexImage==1 && eS.hauteur== 40 && eS.hauteur==40);
     printf("===========> Resultat : OK! \n");
     printf("\n");
 
     printf("------------ Test de elementSetType ----------\n");
-    elementSetType(&eS, ELEMENT_TYPE_MISSILE);
-    assert(eS.type== ELEMENT_TYPE_MISSILE);
+    elementSetType(&eS, ELEMENT_TYPE_MISSILE_JOUEUR);
+    assert(eS.type== ELEMENT_TYPE_MISSILE_JOUEUR);
     printf("===========> Resultat : OK! \n");
     printf("\n");
 
     printf("------------- Test de elementGetType ----------- \n");
-    assert(elementGetType(&eS)==ELEMENT_TYPE_MISSILE);
+    assert(elementGetType(&eS)==ELEMENT_TYPE_MISSILE_JOUEUR);
     printf("===========> Resultat : OK! \n");
     printf("\n");
 

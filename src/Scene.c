@@ -166,14 +166,14 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         }
     }
 
-    /* Deplacement des tirs de la scene de type tir */
-    vitesseDeplacementLaser 	= 512.0f;
-    dx						= (int)(dt * vitesseDeplacementLaser);
+    /* Deplacement des tirs de la scene (tirs joueur et ennemis) */
+    vitesseDeplacementLaser 	= SCENE_VITESSE_LASER;
+    dx							= (int)(dt * vitesseDeplacementLaser);
 
     for(i=0; i<sceneGetNbTirs(scene); i++)
     {
         e=(ElementScene *) tabDynGetElement(&scene->tirs, i);
-        if(elementGetType(e) == ELEMENT_TYPE_LASER)
+        if(elementGetType(e) == ELEMENT_TYPE_LASER_JOUEUR)
         {
             x = elementGetX(e);
             elementSetPosition(e, x+dx, elementGetY(e));
@@ -183,10 +183,20 @@ void sceneAnime(Scene *scene, float tempsSecondes)
                 tabDynSupprimeElement(&scene->tirs, i);
             }
         }
+		if (elementGetType(e) == ELEMENT_TYPE_LASER_ENNEMI)
+		{
+			x = elementGetX(e);
+			elementSetPosition(e, x-dx, elementGetY(e));
+			/* Suppression des tirs ennemis qui sortent de l'ecran (à gauche)*/
+			if (x-dx + e->largeur < 0)
+			{
+				tabDynSupprimeElement(&scene->tirs, i);
+			}
+		}
     }
 
     /* Deplacement des asteroides de la scene */
-    vitesseDeplacementAsteroide     =125.0f;
+    vitesseDeplacementAsteroide     = SCENE_VITESSE_ASTEROIDE;
     dx                  = -(int) (dt * vitesseDeplacementAsteroide);
     for(i=0; i<sceneGetNbActeurs(scene); i++)
     {
@@ -299,7 +309,7 @@ void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j,const Ressource *re
         switch(vaisseauGetArmeSelectionnee(j->vaisseau).typeArme)
         {
         case ARME_LAZER:
-            elementInit(tir, ELEMENT_TYPE_LASER, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(res,RESS_IMG_TIR_JOUEUR_LASER),
+            elementInit(tir, ELEMENT_TYPE_LASER_JOUEUR, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(res,RESS_IMG_TIR_JOUEUR_LASER),
                         ressourceGetHauteurImage(res, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
             break;
         default :

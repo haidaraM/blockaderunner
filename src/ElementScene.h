@@ -11,11 +11,20 @@
 
 
 #define ELEMENT_TYPE_NON_DEFINI					-1
+
 #define ELEMENT_TYPE_VAISSEAU_JOUEUR			 0
+
 #define ELEMENT_TYPE_ASTEROIDE      			 1
-#define ELEMENT_TYPE_LASER                       2
-#define ELEMENT_TYPE_VAISSEAU_ENNEMI             3
-#define ELEMENT_TYPE_MISSILE                     4
+
+#define ELEMENT_TYPE_LASER_JOUEUR                2
+#define ELEMENT_TYPE_LASER_ENNEMI                3
+#define ELEMENT_TYPE_MISSILE_JOUEUR              4
+#define ELEMENT_TYPE_MISSILE_ENNEMI              5
+#define ELEMENT_TYPE_BONUS			             6
+
+#define ELEMENT_TYPE_VAISSEAU_ENNEMI             8
+
+
 
 
 /**
