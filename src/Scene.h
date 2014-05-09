@@ -8,6 +8,7 @@
 
 #include "ElementScene.h"
 #include "Ressource.h"
+#include "Joueur.h"
 #include "Outils.h"
 
 
@@ -17,7 +18,10 @@
 #define SCENE_NUM_POINTS_DEFILEMENT 		64
 
 #define SCENE_VITESSE_LASER					640.0f
-#define SCENE_VITESSE_ASTEROIDE				128.0f			
+#define SCENE_VITESSE_ASTEROIDE				128.0f	
+#define SCENE_VITESSE_ECLAIREUR				180.0f
+#define SCENE_VITESSE_CHASSEUR				128.0f
+#define SCENE_VITESSE_CROISEUR				64.0f
 
 
 
@@ -49,6 +53,8 @@ typedef struct
 	Point *pointsDefilement;
 	/** pointeur vers l'instance en cours du module Niveau : décrit le niveau du jeu en cours.*/
 	Niveau *niveau;
+	/** pointeur vers  le joueur courant */
+	Joueur *joueur;
 	/** pointeur vers l'instance du module Ressource : utile pour créer des elements. */
 	Ressource *ressource;
 } Scene;
@@ -60,7 +66,7 @@ typedef struct
 * Un lien vers le module Ressource est nécessaire pour instancier les divers elements (Ressource permet d'associer des ressources (images, sons)).
 *
 */
-void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGraphique);
+void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphique, int hauteurGraphique);
 /**
 * @brief Libère les ressources du module.
 */
@@ -150,25 +156,24 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 * @fn void sceneJoueurDeclencheTir(Scene * scene)
 * @brief Cree un element qui correspond au tir du joueur
 * @param [in, out] scene (doit etre initialisé )
-* @param [in] res (utile pour creer un cree un element )
-*
 */
-void sceneJoueurDeclencheTir(Scene * scene, const Joueur * j, const Ressource *res);
+void sceneJoueurDeclencheTir(Scene * scene);
+
+/**
+* @fn void sceneEnnemiTirLaser(Scene * scene)
+* @brief Cree un element qui correspond au tir laser d'un ennemi.
+* @param [in, out] scene (doit etre initialisé )
+* @param x position en x du point de départ du tir
+* @param y position en y du point de départ du tir.
+*/
+void sceneEnnemiTirLaser(Scene * scene, int x, int y);
 
 /**
 * @fn void sceneTestDeCollision(Scene *scene)
 * @brief test de collision
 * @param [in, out] scene : initialisée
-* @param [in, out] score : utile pour mettre à jour le score du joueur en cas de collision!
 */
-void sceneTestDeCollision(Scene *scene, int *score);
-
-/**
-* @brief met à jour les caractèristiques du vaisseau joueur. Nécessaire pour la scene pour mettre à jour l'affichage des pS et pE
-* @param [in, out] scene : initialisé
-* @param [in] vaisseau : non null
-*/
-void sceneSetVaisseauJoueur(Scene * scene, Vaisseau * vaisseau);
+void sceneTestDeCollision(Scene *scene);
 
 /**
 * @fn void sceneTestDeRegression()

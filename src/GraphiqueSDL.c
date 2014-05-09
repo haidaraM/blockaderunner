@@ -547,6 +547,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	}
 
 	/* Affichage de l'interface */
+
 	/* Affichage des points ecrans */
 	for (i=0; i<vaisseauGetPointEcran(scene->vaisseauJoueur->data); i++)
 	{
@@ -564,6 +565,9 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	dstBox.x = graphique->largeur/2 - graphique->elementsHUD[2]->w;
 	dstBox.y = GFX_HUD_ELEMENT_OFFSET;
 	SDL_BlitSurface( graphique->elementsHUD[2], NULL, graphique->surface, &dstBox);
+
+	/* Affichage du score*/
+	graphiqueSetScore(graphique, joueurGetScore(scene->joueur));
 	dstBox.x = GFX_HUD_ELEMENT_LARGEUR + graphique->largeur/2;
 	SDL_BlitSurface( graphique->elementsHUD[3], NULL, graphique->surface, &dstBox);
 

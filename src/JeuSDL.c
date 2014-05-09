@@ -140,7 +140,7 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee= SDLK_SPACE;
             if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
 			{
-				sceneJoueurDeclencheTir(&jeu->scene, jeu->joueur, &jeu->ressource);
+				sceneJoueurDeclencheTir(&jeu->scene);
                 audioJoueSon(&jeu->audio, RESS_SON_TIR_LASER);
 				toucheDetectee=-1;
 			}
@@ -155,13 +155,13 @@ void jeuBoucle(JeuSDL *jeu)
         	/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
         	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
         	{
-				/* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran). */
+				/* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran de sorte que les incréments soient suffisament significatifs en pixels). */
 				sceneAnime(&jeu->scene, getTempsSecondes());
 
         		graphiqueEfface( graphique );
 				/*
 				*/
-				graphiqueAfficheScene( graphique, &jeu->scene );
+					graphiqueAfficheScene( graphique, &jeu->scene );
 				/*
 				*/
             	graphiqueRaffraichit( graphique );
@@ -170,11 +170,10 @@ void jeuBoucle(JeuSDL *jeu)
         	}
 
         	/* test de collision */
-        	sceneTestDeCollision(&jeu->scene, &score);
+        	/*sceneTestDeCollision(&jeu->scene, &score);*/
         	/* mise à jour du score au cours du jeu */
-        	graphiqueSetScore(graphique, score);
-
-        	joueurSetScore(jeu->joueur, score);
+        	/*graphiqueSetScore(graphique, score);*/
+        	/*joueurSetScore(jeu->joueur, score);*/
 
 			break;
 
@@ -290,19 +289,18 @@ void jeuBoucle(JeuSDL *jeu)
 			{
 				niveau 					= ressourceGetNiveau(&jeu->ressource, jeu->niveauCourant);
 				/* Initialisation de la scène */
-				sceneInit(&jeu->scene, &jeu->ressource, jeu->graphique.largeur, jeu->graphique.hauteur);
+				sceneInit(&jeu->scene, &jeu->ressource, jeu->joueur, jeu->graphique.largeur, jeu->graphique.hauteur);
 				sceneChargeNiveau(&jeu->scene, &niveau, &jeu->ressource);
 				jeu->etatCourantJeu 	= JEU_ETAT_JEU;
 
-                score=joueurGetScore(jeu->joueur);
-				graphiqueSetScore(&jeu->graphique, score);
-                /* On recupère les caractèristiques du vaisseau du joueur pour les donnner à la scene */
-                sceneSetVaisseauJoueur(&jeu->scene, jeu->joueur->vaisseau);
+                /*score=joueurGetScore(jeu->joueur);*/
+				/*graphiqueSetScore(&jeu->graphique, score);*/
+		        /* deprecated:sceneSetVaisseauJoueur(&jeu->scene, jeu->joueur->vaisseau);*/
 
 				sceneResetHorloge(&jeu->scene, getTempsSecondes());
 				tempsDernierDefilementScene = getTempsSecondes();
 			}
-			/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
+			/* (affichage vide). */
         	if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
         	{
         		graphiqueEfface( graphique );

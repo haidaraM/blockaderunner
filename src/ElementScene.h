@@ -22,7 +22,10 @@
 #define ELEMENT_TYPE_MISSILE_ENNEMI              5
 #define ELEMENT_TYPE_BONUS			             6
 
-#define ELEMENT_TYPE_VAISSEAU_ENNEMI             8
+#define ELEMENT_TYPE_ECLAIREUR					 16
+#define ELEMENT_TYPE_CHASSEUR					 17
+#define ELEMENT_TYPE_CROISEUR					 18
+#define ELEMENT_TYPE_VAISSEAU_ENNEMI             20
 
 
 
@@ -35,15 +38,15 @@ typedef struct
 {
 	/** type d'entité. */
 	int type;
-	/** booléen : le element est dans la portion visible de la scène (ecran) ou pas. */
+	/** booléen : l'élement est dans la portion visible de la scène (ecran) ou pas. */
 	int visible;
 	/** position en X sur la scène. */
 	int x;
 	/** position en Y sur la scène. */
 	int y;
-	/** largeur du element. */
+	/** largeur de l'élement. */
 	int largeur;
-	/** hauteur du element. */
+	/** hauteur de l'élement. */
 	int hauteur;
 	/** handle référençable dans Ressource (associe une image). */
 	int indexImage;
@@ -53,6 +56,7 @@ typedef struct
 	int hauteurSceneVisible;
 	/** pointeur generique */
 	void * data;
+
 } ElementScene;
 
 
