@@ -296,7 +296,7 @@ void jeuBoucle(JeuSDL *jeu)
 
                 score=joueurGetScore(jeu->joueur);
 				graphiqueSetScore(&jeu->graphique, score);
-                /* On recupère les caractèristique du vaisseau du joueur pour les donnner à la scene */
+                /* On recupère les caractèristiques du vaisseau du joueur pour les donnner à la scene */
                 sceneSetVaisseauJoueur(&jeu->scene, jeu->joueur->vaisseau);
 
 				sceneResetHorloge(&jeu->scene, getTempsSecondes());

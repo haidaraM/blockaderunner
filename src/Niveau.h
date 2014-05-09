@@ -6,25 +6,46 @@
 #ifndef _NIVEAU_H
 #define _NIVEAU_H
 
+#include "Outils.h"
+
+
 
 #define NIVEAU_0_DESCRIPTION									"Sortir du champ d'astéroïdes !"
 #define NIVEAU_1_DESCRIPTION                                    "Ennemis Eclaireurs!"
 #define NIVEAU_2_DESCRIPTION                                    "Niveau 2"
 #define NIVEAU_3_DESCRIPTION                                    "Niveau 3"
 
+#define NIVEAU_GROUPE_ASTEROIDES								0
+#define NIVEAU_GROUPE_ECLAIREURS								1
+#define NIVEAU_GROUPE_CHASSEURS									2
+#define NIVEAU_GROUPE_CROISEURS									3
+
+
+
 typedef struct
 {
-	/** entier : 1, 2, 3... */
+	/** type d'element : champ d'asteroides, escadre de chasseurs, ... */
+	int type;
+	/** position min en x*/
+	int xmin;
+	/** position max en x*/
+	int xmax;
+	/** nombre d'éléments constituants (exemple : nombre de chasseurs dans l'escadre).*/
+	int nombre;
+} GroupeNiveau;
+
+typedef struct
+{
+	/** entier : 0, 1, 2, 3... */
 	char numero;
 	/** chaîne de caractères : description courte du niveau. */
-	char description[100];
+	char description[255];
 	/** index dans Ressource de l'image de fond (background) du niveau. */
 	int imageFond;
-	/** Nombre d'ennemis du niveau : asteroides et vaisseauEnnemis **/
-	int nbEnnemis;
-	/** Nombre de bonus du niveau */
-	int nbBonus;
+	/** Composition du niveau : asteroides, vaisseaux ennemi, etc. **/
+	TabDyn composition;
 } Niveau;
+
 
 
 /**
@@ -51,12 +72,19 @@ void niveauLibere(Niveau *niveau);
 void niveauSetImageFond(Niveau *niveau, int indexImage);
 
 /**
-* @fn void niveauChargeFichier (Niveau * niveau, int numero)
+* @fn void niveauChargeFichier(Niveau * niveau, int numero)
 * @brief Charge les caractéristiques du niveau a partir d'un fichier (cf M Meyer ). FICHIER A COMPLETER!!!
 * @param [in, out] niveau
 * @param [in] numero : correspond au numero du niveau
 */
-void niveauChargeFichier (Niveau * niveau, int numero);
+void niveauChargeFichier(Niveau * niveau, int numero);
+
+/**
+* @fn void niveauGetNumGroupes(Niveau * niveau)
+* @brief Renvoie le nombre de groupes qui composent le niveau (rappel : un groupe peut-etre un champ d'asteroides, une escadre de chasseurs ennemis, etc...)
+* @param [in, out] niveau
+*/
+int niveauGetNumGroupes(Niveau * niveau);
 
 #endif
 

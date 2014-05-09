@@ -190,7 +190,6 @@ void chargeJoueurs(Ressource *res)
 void creeNiveaux(Ressource *res)
 {
     int i;
-    /*char desc[256];*/
     assert(res != NULL);
 
     res->niveaux = (Niveau*)malloc(RESS_NUM_NIVEAUX * sizeof(Niveau));
@@ -198,7 +197,7 @@ void creeNiveaux(Ressource *res)
 
     for (i=0; i< RESS_NUM_NIVEAUX; i++)
     {
-        /*sprintf(desc, "Niveau %d", i);*/
+		printf("Creation niveau %d\n", i);
         niveauInit(&res->niveaux[i], i);
         niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0 + i);
     }

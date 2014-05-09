@@ -39,7 +39,7 @@ void sceneInit(Scene *scene, Ressource *res, int largeurGraphique, int hauteurGr
         scene->pointsDefilement[i].y = randomInt(0, scene->hauteurAffichage);
     }
 
-    /* initialisation element du vaisseauJoueur */
+    /* initialisation vaisseau du Joueur */
     scene->vaisseauJoueur= (ElementScene*)malloc(sizeof(ElementScene));
     assert( scene->vaisseauJoueur != NULL);
     elementInit(scene->vaisseauJoueur, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,
@@ -106,6 +106,7 @@ void sceneLibere(Scene *scene)
     tabDynLibere(&scene->decors);
 
     /* Liberation du vaisseauJoueur */
+	elementLibere(scene->vaisseauJoueur);
     free(scene->vaisseauJoueur);
 }
 
@@ -113,8 +114,10 @@ void sceneLibere(Scene *scene)
 
 void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
 {
-    int i;
+    int i, j, numGroupes;
+	GroupeNiveau *groupe;
     assert(scene != NULL && niveau != NULL);
+
     scene->niveau = niveau;
     scene->indexImageFond = niveau->imageFond;
     scene->rectangleImageFond.x = 0;
@@ -122,17 +125,26 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
     scene->rectangleImageFond.largeur = scene->largeurAffichage;
     scene->rectangleImageFond.hauteur = scene->hauteurAffichage;
 
-    /* chargement des ennemis du niveau */
-    for(i=0; i<scene->niveau->nbEnnemis; i++)
-    {
-        ElementScene * ennemi=(ElementScene *) malloc(sizeof(ElementScene));
-        elementInit(ennemi, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(res, RESS_IMG_ASTEROIDE),
-                    ressourceGetHauteurImage(res, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
-        /* Positionnement aleatoire des ennemis sur la scene */
-        elementSetPosition(ennemi, randomInt(2000, 6000), randomInt(0, 670));
-        tabDynAjoute(&scene->acteurs, (void *)ennemi );
-    }
-
+    /* chargement de la composition du niveau */
+	numGroupes = niveauGetNumGroupes(niveau);
+	for (i=0; i< numGroupes; i++)
+	{
+		groupe = (GroupeNiveau*)tabDynGetElement(&niveau->composition, i);
+		
+		/* asteroides ... */
+		if (groupe->type == NIVEAU_GROUPE_ASTEROIDES)
+		{
+		    for(j=0; j<groupe->nombre; j++)
+		    {
+		        ElementScene * asteroide = (ElementScene *) malloc(sizeof(ElementScene));
+		        elementInit(asteroide, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(res, RESS_IMG_ASTEROIDE),
+			                    ressourceGetHauteurImage(res, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
+		        /* Positionnement aleatoire sur la scene */
+		        elementSetPosition(asteroide, randomInt(groupe->xmin, groupe->xmax), randomInt(0, 720));
+		        tabDynAjoute(&scene->acteurs, (void *)asteroide );
+		    }
+		}
+	}		
 }
 
 void sceneResetHorloge(Scene *scene, float horloge)
