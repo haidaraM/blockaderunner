@@ -23,7 +23,7 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 	element->hauteur 		= hauteur;
 	element->largeurSceneVisible	= largeurEcran;
 	element->hauteurSceneVisible	= hauteurEcran;
-	element->visible 		= 0;
+	element->visible 		= 1;
 	element->indexImage 		= indexImage;
 	element->data=NULL;
 	elementSetType(element, type);

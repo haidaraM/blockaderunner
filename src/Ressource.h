@@ -17,7 +17,7 @@
 
 #define RESS_NUM_NIVEAUX										7
 #define RESS_NUM_IMAGES											64
-#define RESS_NUM_SONS_COURTS       								1
+#define RESS_NUM_SONS_COURTS       								3
 #define RESS_NUM_SONS_LONGS    	    							2
 #define RESS_NUM_POLICES										1
 
@@ -56,8 +56,8 @@
 
 #define RESS_IMG_VAISSEAU_JOUEUR			 					1
 #define RESS_IMG_FICHIER_VAISSEAU_JOUEUR						"playership2.png"
-#define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
-#define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						45
+#define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						115
+#define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						39
 
 #define RESS_IMG_DEBRIS_ASTEROIDE                               2
 #define RESS_IMG_FICHIER_DEBRIS_ASTEROIDE                       "debris_asteroide.png"
@@ -68,6 +68,11 @@
 #define RESS_IMG_FICHIER_ASTEROIDE                              "asteroide_00.png"
 #define RESS_IMG_LARGEUR_ASTEROIDE                              88
 #define RESS_IMG_HAUTEUR_ASTEROIDE                              70
+
+#define RESS_IMG_MISSILE_JOUEUR                                 7
+#define RESS_IMG_FICHIER_MISSILE_JOUEUR                         "missile_tir_joueur.png"
+#define RESS_IMG_LARGEUR_MISSILE_JOUEUR                         45
+#define RESS_IMG_HAUTEUR_MISSILE_JOUEUR                         20
 
 #define RESS_IMG_TIR_JOUEUR_LASER                               8
 #define RESS_IMG_FICHIER_TIR_JOUEUR_LASER                      "laser_tir.png"
@@ -137,11 +142,18 @@
 /* Sons longs */
 #define RESS_SON_MENU                                           0
 #define RESS_SON_FICHIER_MENU                                   "menu_fond.wav"
+
 #define RESS_SON_MENU_SUITE                                     1
 #define RESS_SON_FICHIER_MENU_SUITE                             "menu_fond_suite.wav"
 /* sons courts */
 #define RESS_SON_TIR_LASER                                      2
 #define RESS_SON_FICHIER_TIR_LASER                              "tir_laser.wav"
+
+#define RESS_SON_MISSILE                                        3
+#define RESS_SON_FICHIER_MISSILE                                "missile.mp3"
+
+#define RESS_SON_ERREUR                                         4
+#define RESS_SON_FICHIER_ERREUR                                 "erreur.wav"
 
 /**
 * @struct Ressource
@@ -149,20 +161,20 @@
 */
 typedef struct
 {
-	int numJoueurs;
-	/** Tableau de pointeurs sur Joueur : tous les joueurs sauvegardés. */
-	Joueur **joueurs;
-	/** Tableau de chaines de caractères (noms des fichiers images) */
-	char **images;
-	/** Tableau de Rectangles stockant les dimensions de chaque image */
-	Rectangle *dimensionImages;
-	/** Tableau de chaines de caractères (noms des fichiers sons) */
-	char **sons;
-	/** Tableau de chaines de caractères (noms des fichiers ttf) */
-	char **polices;
+    int numJoueurs;
+    /** Tableau de pointeurs sur Joueur : tous les joueurs sauvegardés. */
+    Joueur **joueurs;
+    /** Tableau de chaines de caractères (noms des fichiers images) */
+    char **images;
+    /** Tableau de Rectangles stockant les dimensions de chaque image */
+    Rectangle *dimensionImages;
+    /** Tableau de chaines de caractères (noms des fichiers sons) */
+    char **sons;
+    /** Tableau de chaines de caractères (noms des fichiers ttf) */
+    char **polices;
 
-	/** Tableau de tous les niveaux du jeu. */
-	Niveau *niveaux;
+    /** Tableau de tous les niveaux du jeu. */
+    Niveau *niveaux;
 
 } Ressource;
 

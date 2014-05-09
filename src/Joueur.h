@@ -14,7 +14,7 @@
 
 /**
 * @struct Joueur
-* @brief Represente les caractéristique du joueur
+* @brief Represente les caractéristiques du joueur.
 */
 
 typedef struct
@@ -58,6 +58,13 @@ void joueurLibere(Joueur * joueur);
 void joueurSetScore(Joueur * joueur, int score);
 
 /**
+* @fn Vaisseau * joueurGetVaisseau(const Joueur * joueur)
+* @brief Renvoie le vaisseau du joueur
+* @param [in] joueur : initialisé
+*/
+Vaisseau * joueurGetVaisseau(const Joueur * joueur);
+
+/**
 * @fn int joueurGetScore(const Joueur *joueur)
 * @brief renvoie le score du joueur
 * @param [in] joueur
@@ -74,10 +81,26 @@ unsigned int joueurGetProgression(const Joueur *joueur);
 
 /**
 * @fn void joueurSetProgression(Joueur * joueur)
-* @brief met a jour la progression (niveau )du joueur dans le jeu. A REVOIR!!!!!!
+* @brief met a jour la progression (niveau )du joueur dans le jeu.
 * @param [in, out] joueur
 */
 void joueurSetProgression(Joueur * joueur);
+
+/**
+* @fn void joueurSetArmeSelectionne(Joueur * joueur, int numArme)
+* @brief Met à jour l'arme selectionné par le joueur
+* @param [in, out] joueur : initialisé
+* @param [in] numArme : 0 <= numArme <nbArme
+*/
+void joueurSetArmeSelectionne(Joueur * joueur, int numArme );
+
+/**
+* @fn int joueurGetNumArmeSelectionne(Joueur * joueur)
+* @brief Renvoie le numero de l'arme selectionné par le joueur
+* @param [in] joueur : initialisé
+*/
+int joueurGetNumArmeSelectionne(const Joueur * joueur);
+
 
 /**
 * @fn void joueurTestDeRegression()

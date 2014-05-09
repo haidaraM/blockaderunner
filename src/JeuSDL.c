@@ -73,11 +73,11 @@ void jeuBoucle(JeuSDL *jeu)
 	unsigned char sourisBoutonGauche;
 	char alphaNum;
 	Niveau niveau;
+	int sonTir=-1; /* Variable utilisée pour jouer un son lors d'un tir */
 
 	GraphiqueSDL *graphique	 		= &jeu->graphique;
 	EntreeSDL *entree				= &jeu->entree;
 	Menu *menu						= &jeu->menu;
-	int score                       =0;
 
     float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
     /* Période de temps (secondes) entre deux raffraichissements écran */
@@ -140,10 +140,37 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee= SDLK_SPACE;
             if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
 			{
-				sceneJoueurDeclencheTir(&jeu->scene);
-                audioJoueSon(&jeu->audio, RESS_SON_TIR_LASER);
+				sonTir=sceneJoueurDeclencheTir(&jeu->scene);
+				switch(sonTir)
+				{
+                    case 0: audioJoueSon(&jeu->audio, RESS_SON_TIR_LASER);
+                        break;
+                    case 1: audioJoueSon(&jeu->audio, RESS_SON_MISSILE);
+                        break;
+                    default :
+                            audioJoueSon(&jeu->audio, RESS_SON_ERREUR);
+                        break;
+				}
 				toucheDetectee=-1;
 			}
+
+            /* Choix de l'arme */
+            /* Laser */
+            if (entreeToucheEnfoncee(entree, SDLK_F1)==1)
+                toucheDetectee= SDLK_F1;
+            if(entreeToucheEnfoncee(entree, SDLK_F1)==0 && toucheDetectee == SDLK_F1)
+            {
+                joueurSetArmeSelectionne(jeu->joueur, 0);
+                toucheDetectee=-1;
+            }
+            /* Missile */
+            if (entreeToucheEnfoncee(entree, SDLK_F2)==1)
+                toucheDetectee= SDLK_F2;
+            if(entreeToucheEnfoncee(entree, SDLK_F2)==0 && toucheDetectee == SDLK_F2)
+            {
+                joueurSetArmeSelectionne(jeu->joueur, 1);
+                toucheDetectee=-1;
+            }
 
 			/* Défilement de l'image de fond. */
 			if ( (getTempsSecondes() - tempsDernierDefilementScene) >= periodeDefilementScene)

@@ -1,7 +1,7 @@
 /**
 * @file Menu.h
 * @brief Le module Menu gère l'introduction au jeu et le menu principal.
-* @author Yann Cortial
+* @author Yann Cortial - Mohamed El Mouctar HAIDARA
 *
 */
 #ifndef _MENU_H
@@ -67,6 +67,7 @@
 
 
 /**
+* @struct ElementMenu
 * @brief Element du Menu : un texte avec états (actionable, visible, surlignable) et position & dimension.
 */
 typedef struct
@@ -112,89 +113,152 @@ typedef struct
 
 
 /**
+* @fn void menuInit(Menu *menu, Ressource *res)
 * @brief Initialise le module.
 * @param menu[in, out] : doit être non NULL.
 * @param res[in, out] : doit être non NULL et initialisé.
 */
 void menuInit(Menu *menu, Ressource *res);
+
 /**
+* @fn void menuLibere(Menu *menu)
 * @brief Libère les ressources du module.
+* @param [in, out] menu
 */
 void menuLibere(Menu *menu);
+
 /**
+* @fn void menuIntro(Menu *menu, float tempsBoucleEcoule)
 * @brief On affiche l'image d'intro (splashscreen).
+* @param [in, out] menu
+* @param [in] tempsBoucleEcoule
 */
 void menuIntro(Menu *menu, float tempsBoucleEcoule);
+
 /**
+* @fn void menuRetour(void *m)
 * @brief Appelée lorque l'utilisateur souhaite remonter d'un cran dans les menus.
+* @param [in] m
 */
 void menuRetour(void *m);
+
 /**
+* @fn void menuQuitter(void *m)
 * @brief Callback appelée lorque l'utilisateur souhaite quitter l'application.
+* @param [in] m
 */
 void menuQuitter(void *m);
+
 /**
+* @fn void menuChoixJoueur(void *m)
 * @brief Callback appelée lorque l'utilisateur doit choisir le Joueur.
+* @param [in] m
 */
 void menuChoixJoueur(void *m);
+
 /**
+* @fn void menuNouveauJoueur(void *m)
 * @brief Callback appelée lorque l'utilisateur souhaite créer un nouveau Joueur.
+* @param [in] m
 */
 void menuNouveauJoueur(void *m);
+
 /**
+* @fn void menuPrincipal(void *m)
 * @brief Callback appelée lorque l'utilisateur doit entrer dans le Menu principal.
+* @param [in] m
 */
 void menuPrincipal(void *m);
+
 /**
+* @fn void menuCommandes(void *m);
 * @brief Callback appelée lorque l'utilisateur souhaite voir les commandes du jeu (clavier).
+* @param [in] m
 */
 void menuCommandes(void *m);
+
 /**
+* @fn void menuOptions(void *m)
 * @brief Callback appelée lorque l'utilisateur souhaite modifier les options de jeu.
+* @param [in] m
 */
 void menuOptions(void *m);
+
 /**
+* @fn void menuInfo(void *m
 * @brief Callback appelée lorque l'utilisateur souhaite avoir des informations sur le jeu (auteurs, ...).
+* @param [in]
 */
 void menuInfo(void *m);
+
 /**
+* @fn void menuScores(void *m)
 * @brief Callback appelée lorque l'utilisateur souhaite voir les meilleurs scores.
+* @param [in] m
 */
 void menuScores(void *m);
+
 /**
+* @fn void menuJouer(void *m)
 * @brief Callback appelée lorque l'utilisateur souhaite lancer une partie.
+* @param [in] m
 */
 void menuJouer(void *m);
+
 /**
 * @brief Callback (vide - inutilisée, JeuSDL appelle directement le chargement d'un niveau).
 */
 void menuCommencerNiveau(void* m);
+
 /**
+* @fn void menuSelectionneJoueur(Menu *menu, int indexElement)
 * @brief Appelée lorque l'utilisateur a sélectionné un joueur.
+* @param [in, out] menu
+* @param [in] indexElement
 */
 void menuSelectionneJoueur(Menu *menu, int indexElement);
+
 /**
+* @fn void menuSetCaractere(Menu *menu, char alphaNum);
 * @brief Appelée lorque l'utilisateur tape au clavier : un caractère alphanumérique a été saisi.
+* @param [in,out] menu
+* @param [in] alphaNum
 */
 void menuSetCaractere(Menu *menu, char alphaNum);
+
 /**
+* @fn void menuEffaceCaractere(Menu *menu)
 * @brief Appelée lorque l'utilisateur tape au clavier : la touche Backspace a été pressée.
+* @param [in, out] menu
 */
 void menuEffaceCaractere(Menu *menu);
+
 /**
+* @fn void menuSetFinLectureClavier(Menu *menu)
 * @brief Appelée lorque l'utilisateur tape au clavier : la touche ENTER a été pressée, signifiant la fin de la saisie.
+* @param [in, out] menu
 */
 void menuSetFinLectureClavier(Menu *menu);
+
 /**
+* @fn Joueur* menuGetJoueurChoisi(const Menu *menu)
 * @brief Renvoie le pointeur sur le joueur actif (ou NULL si aucun joueur n'a été selectionné dans le menu).
+* @param [in] menu
 */
 Joueur* menuGetJoueurChoisi(const Menu *menu);
+
 /**
+* @fn void menuSelectionneNiveau(Menu *menu, int indexElement)
 * @brief Appelée lorsque l'utilisateur a choisi un niveau de jeu.
+* @param [in, out] menue
+* @param [in] indexElement
 */
 void menuSelectionneNiveau(Menu *menu, int indexElement);
+
 /**
+* @fn int menuGetNiveauChoisi(const Menu *menu)
 * @brief Renvoie le niveau selectionné ou -1 si aucun niveau n'a été selectionné.
+* @param [in] menu
 */
 int menuGetNiveauChoisi(const Menu *menu);
 #endif

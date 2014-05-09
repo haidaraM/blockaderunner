@@ -1,10 +1,9 @@
 /**
 * @file GraphiqueSDL.h
 * @brief Le module GraphiqueSDL gère l'affichage avec l'aide de SDL : fenêtre principale, double-buffering, bliting d'images.
-* @author Yann Cortial
-*
 * Le module GraphiqueSDL interface avec SDL et SDL_image.
 * Résolution de la fenêtre principale : 1366 x 720 px.
+* @author Yann Cortial
 */
 #ifndef _GRAPHIQUE_SDL_H
 #define _GRAPHIQUE_SDL_H
@@ -13,7 +12,6 @@
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_ttf.h"
 
-#include "Ressource.h"
 #include "Menu.h"
 #include "Scene.h"
 
@@ -73,6 +71,10 @@ typedef struct
 * @param [in, out] graphique : doit être non NULL.
 * @param [in] ressource : doit être non NULL.
 * @param [in, out] menu
+* @param [in] largeur
+* @param [in] hauteur
+* @param [in] titre
+* @param [in] mode
 */
 void graphiqueInit(GraphiqueSDL *graphique, const Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode);
 
@@ -134,12 +136,16 @@ void graphiqueSetScore(GraphiqueSDL *graphique, int score);
 /**
 * @fn void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu )
 * @brief Affiche le Menu.
-* @param graphique
+* @param [in] graphique
+* @param [in] menu
 */
 void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu );
 
 /**
+* @fn void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 * @brief Affiche la portion visible de la scène sur la surface d'affichage principale (fenêtre).
+* @param [in] graphique
+* @param [in] scene
 */
 void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene );
 

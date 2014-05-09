@@ -108,7 +108,7 @@ void sceneLibere(Scene *scene)
     tabDynLibere(&scene->decors);
 
     /* Liberation du vaisseauJoueur */
-	elementLibere(scene->vaisseauJoueur);
+    /*elementLibere(scene->vaisseauJoueur); */ /* Bug quand on quitte le niveau et on revient dans la partie */
     free(scene->vaisseauJoueur);
 }
 
@@ -117,7 +117,7 @@ void sceneLibere(Scene *scene)
 void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
 {
     int i, j, numGroupes;
-	GroupeNiveau *groupe;
+    GroupeNiveau *groupe;
     assert(scene != NULL && niveau != NULL);
 
     scene->niveau = niveau;
@@ -132,8 +132,8 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
 	for (i=0; i< numGroupes; i++)
 	{
 		groupe = (GroupeNiveau*)tabDynGetElement(&niveau->composition, i);
-		
-		/* asteroides ... */
+
+        /* asteroides ... */
 		switch(groupe->type)
 		{
 		case NIVEAU_GROUPE_ASTEROIDES:
@@ -163,8 +163,9 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
 			break;
 
 		}
-	}		
+	}
 }
+
 
 void sceneResetHorloge(Scene *scene, float horloge)
 {
@@ -204,7 +205,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     for(i=0; i<sceneGetNbTirs(scene); i++)
     {
         e=(ElementScene *) tabDynGetElement(&scene->tirs, i);
-        if(elementGetType(e) == ELEMENT_TYPE_LASER_JOUEUR)
+        if(elementGetType(e) == ELEMENT_TYPE_LASER_JOUEUR || elementGetType(e)==ELEMENT_TYPE_MISSILE_JOUEUR)
         {
             x = elementGetX(e);
             elementSetPosition(e, x+dx, elementGetY(e));
@@ -237,7 +238,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 		{
 		case ELEMENT_TYPE_ASTEROIDE:
 			dx = -(int)(dt * SCENE_VITESSE_ASTEROIDE);
-            elementSetPosition(e, x+dx, y);           
+            elementSetPosition(e, x+dx, y);
         	break;
 		case ELEMENT_TYPE_ECLAIREUR:
 			dx = -(int)(dt * SCENE_VITESSE_ECLAIREUR);
@@ -248,8 +249,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 			break;
 		default:
 			dx = -(int)(dt * SCENE_VITESSE_ASTEROIDE);
-            elementSetPosition(e, x+dx, y);           
-        	break;    
+            elementSetPosition(e, x+dx, y);
+        	break;
         }
 
 		if(x+dx < - (e->largeur))
@@ -306,6 +307,28 @@ void sceneTestDeCollision(Scene *scene)
 		        }
 		    }
 			break;
+
+        case ELEMENT_TYPE_MISSILE_JOUEUR:
+
+			for(j=0; j<sceneGetNbActeurs(scene); j++)
+		    {
+		    	e=(ElementScene *) tabDynGetElement(&scene->acteurs, j);
+		    	if(elementGetType(e)==ELEMENT_TYPE_ASTEROIDE)
+		        {
+		        	/* Les asteroides disparaissent avec un seul tir */
+		            if(elementTestDeCollision(t, e))
+		            {
+		        	    /* Suppression du tir */
+		                tabDynSupprimeElement(&scene->tirs, i);
+		                /* Suppression du l'ennemis : ennemis ou asteroide */
+		                tabDynSupprimeElement(&scene->acteurs, j);
+		                /* mise à jour du score */
+		                joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
+		            }
+		        }
+		    }
+			break;
+
 
 		}
     }
@@ -408,19 +431,27 @@ void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
     elementSetPosition(vaiss, x+dx, elementGetY(vaiss));
 }
 
-void sceneJoueurDeclencheTir(Scene * scene)
+int sceneJoueurDeclencheTir(Scene * scene)
 {
-    if(vaisseauGetArmeSelectionnee(scene->joueur->vaisseau).munitions > 0)
+    int valret=-1;
+    ElementScene * tir=NULL;
+    if(vaisseauGetMunitionsArme(scene->joueur->vaisseau) > 0)
     {
-        ElementScene * tir=NULL;
+        /* mise à jours des munitions */
+        vaisseauMajMunitions(scene->joueur->vaisseau);
         tir=(ElementScene *) malloc(sizeof(ElementScene));
         assert(tir!=NULL);
-
-        switch(vaisseauGetArmeSelectionnee(scene->joueur->vaisseau).typeArme)
+        switch(joueurGetNumArmeSelectionne(scene->joueur))
         {
-        case ARME_LAZER:
+        case ARME_LASER:
             elementInit(tir, ELEMENT_TYPE_LASER_JOUEUR, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(scene->ressource,RESS_IMG_TIR_JOUEUR_LASER),
                         ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
+                        valret=0;
+            break;
+        case ARME_MISSILE:
+            elementInit(tir, ELEMENT_TYPE_MISSILE_JOUEUR, RESS_IMG_MISSILE_JOUEUR, ressourceGetLargeurImage(scene->ressource    , RESS_IMG_MISSILE_JOUEUR),
+                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_MISSILE_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
+                        valret=1;
             break;
         default :
             break;
@@ -430,6 +461,7 @@ void sceneJoueurDeclencheTir(Scene * scene)
 
         tabDynAjoute(&scene->tirs, (void *) tir);
     }
+    return valret;
 }
 
 void sceneEnnemiTirLaser(Scene * scene, int x, int y)

@@ -8,9 +8,9 @@
 
 int main(int argc, char const *argv[])
 {
-	/* oueurTestDeRegression(); */
+	 joueurTestDeRegression(); 
 	/* vaisseauTestDeregression(); */
-	elementSceneTestDeRegression();
+	/* elementSceneTestDeRegression(); */
 
 
 	return 0;

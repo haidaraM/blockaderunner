@@ -11,6 +11,8 @@
 /**
 * @fn int randomInt(int borneInf, int borneSup)
 * @brief Renvoie un entier pseudo-aléatoire uniformément distribué entre borneInf et borneSup tel que :    borneInf <= (retour) < borneSup
+* @param [in] borneInf
+* @param [in] borneSup
 */
 int randomInt(int borneInf, int borneSup);
 
@@ -27,6 +29,7 @@ typedef struct
 } Point;
 
 /**
+* @struct Rectangle
 * @brief un Rectangle = une position (coin supérieur gauche) + une dimension (largeur, hauteur).
 */
 typedef struct
@@ -38,14 +41,19 @@ typedef struct
 } Rectangle;
 
 /**
+* @fn unsigned char rectangleContient(const Rectangle *rect, int x, int y)
 * @brief Renvoie 1 si le rectangle contient le point (x, y), 0 sinon.
+* @param [in] rect
+* @param x
+* @param y
 */
-unsigned char rectangleContient(Rectangle *rect, int x, int y);
+unsigned char rectangleContient(const Rectangle *rect, int x, int y);
 
 
 /*----------------------------------------------------------------------------	TABLEAU DYNAMIQUE ---------------------------------------------------------------------------------*/
 
 /**
+* @struct TadDyn
 * @brief Tableau dynamique
 */
 typedef struct
@@ -59,21 +67,35 @@ typedef struct
 } TabDyn;
 
 /**
-* @brief Initialise un tableau dynamique : t doit être non NULL.
+* @fn void tabDynInit(TabDyn *t)
+* @brief Initialise un tableau dynamique
+* @param [in, out] t doit être non NULL.
 */
 void tabDynInit(TabDyn *t);
+
 /**
+* @fn void tabDynLibere(TabDyn *t)
 * @brief Libère un tableau dynamique : les éléments du tableau doivent être impérativement libérés un à un, au préalable, par l'utilisateur.
+* @param [in, out] t
 */
 void tabDynLibere(TabDyn *t);
+
 /**
+* @fn void tabDynAjoute(TabDyn *t, void* element)
 * @brief Ajoute un élément générique à un tableau dynamique.
+* @param [in, out]
+* @param [in] element
 */
 void tabDynAjoute(TabDyn *t, void* element);
+
 /**
+* @fn void* tabDynGetElement(const TabDyn *t, int index)
 * @brief Renvoie un des éléments du tableau dynamique.
+* @param [in] t
+* @param [in] index
 */
 void* tabDynGetElement(const TabDyn *t, int index);
+
 /**
 * @brief supprime un element du tableau dynamique
 * @param [in, out] t (doit etre initialise)

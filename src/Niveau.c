@@ -81,7 +81,7 @@ void niveauChargeFichier(Niveau * niveau, int numero)
         printf("Erreur :(Niveau) Impossible d'ouvrir le fichier %s.\n", nomFichier);
         exit(EXIT_FAILURE);
     }
-	
+
 
     /* Lecture de la composition du niveau : */
     while (fscanf(fic, "%s", typeGroupe) > 0)

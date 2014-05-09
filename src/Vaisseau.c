@@ -25,8 +25,8 @@ void vaisseauInit(Vaisseau *vaisseau, int type, int pointS, int pointE, int nbAr
         {
             vaisseauArmeInit(&vaisseau->armes[i], i);
         }
-        /* Arme 0 est selectionnée par défaut */
-        vaisseau->armeSelectionne=0;
+        /* laser est selectionnée par défaut */
+        vaisseau->numArmeSelectionne=ARME_LASER;
         break;
     case VAISSEAU_ENNEMI_TYPE:
         vaisseau->type=VAISSEAU_ENNEMI_TYPE;
@@ -39,6 +39,7 @@ void vaisseauInit(Vaisseau *vaisseau, int type, int pointS, int pointE, int nbAr
         {
             vaisseauArmeInit(&vaisseau->armes[i], i);
         }
+        vaisseau->numArmeSelectionne=ARME_LASER;
         break;
     default:
         break;
@@ -73,13 +74,14 @@ int vaisseauGetPointStructure(const Vaisseau * vaisseau)
 
 void vaisseauArmeInit(Arme * a, int type)
 {
+    assert(a!=NULL);
     switch(type)
     {
-    case ARME_LAZER:
-        a->typeArme=ARME_LAZER;
-        a->munitions=ARME_LAZER_MUNITIONS;
-        a->degatEcran=ARME_LAZER_DEGAT_E;
-        a->degatStructure=ARME_LAZER_DEGAT_S;
+    case ARME_LASER:
+        a->typeArme=ARME_LASER;
+        a->munitions=ARME_LASER_MUNITIONS;
+        a->degatEcran=ARME_LASER_DEGAT_E;
+        a->degatStructure=ARME_LASER_DEGAT_S;
         a->cadence=0.0;
         break;
     case ARME_MISSILE:
@@ -93,10 +95,35 @@ void vaisseauArmeInit(Arme * a, int type)
     }
 }
 
-
 Arme vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau)
 {
-    return vaisseau->armes[vaisseau->armeSelectionne];
+    assert(vaisseau!=NULL);
+    return vaisseau->armes[vaisseau->numArmeSelectionne];
+}
+
+int vaisseauGetDegatEcranArme(const Vaisseau * vaisseau )
+{
+
+    return vaisseauGetArmeSelectionnee(vaisseau).degatEcran;
+}
+
+int vaisseauGetDegatStructureArme(const Vaisseau * vaisseau )
+{
+    return vaisseauGetArmeSelectionnee(vaisseau).degatStructure;
+}
+
+int vaisseauGetMunitionsArme(const Vaisseau * vaisseau)
+{
+    return vaisseauGetArmeSelectionnee(vaisseau).munitions;
+}
+
+void vaisseauMajMunitions(Vaisseau * vaisseau)
+{
+    int nouveau;
+    assert(vaisseau!=NULL);
+    nouveau=vaisseauGetMunitionsArme(vaisseau);
+    nouveau--;
+    vaisseau->armes[vaisseau->numArmeSelectionne].munitions=nouveau;
 }
 
 void vaisseauTestDeregression()

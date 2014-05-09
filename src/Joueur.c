@@ -57,14 +57,39 @@ void joueurSetScore(Joueur *joueur, int score)
 	joueur->score = score;
 }
 
+Vaisseau * joueurGetVaisseau(const Joueur * joueur)
+{
+    assert(joueur!=NULL);
+    return joueur->vaisseau;
+}
+
+int joueurGetNumArmeSelectionne(const Joueur * joueur)
+{
+    return joueurGetVaisseau(joueur)->numArmeSelectionne;
+}
+
+void joueurSetArmeSelectionne(Joueur * joueur, int numArme )
+{
+    Vaisseau * v;
+    assert(joueur!=NULL);
+    v=joueurGetVaisseau(joueur);
+    v->numArmeSelectionne=numArme;
+}
+
 void joueurTestDeRegression()
 {
     Joueur j;
+    Vaisseau *v=NULL;
     char nom[]="Superman";
     printf("Test de regression de Joueur\n");
 
     printf("---------- Test de joueurInit ------------\n");
     joueurInit(&j, nom, 5, 9000, 100, 5, 10);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("--------- Test de joueurGetNumArmeSelectionne ---------\n");
+    assert(joueurGetNumArmeSelectionne(&j)==0);
     printf("=========> Resultat : OK \n");
     printf("\n");
 
@@ -82,8 +107,32 @@ void joueurTestDeRegression()
     joueurSetProgression(&j);
     assert(joueurGetProgression(&j)==6);
     printf("=========> Resultat : OK \n");
+    printf("\n");
 
+    printf("------- Test de joueurSetScore --------- \n");
+    joueurSetScore(&j, 5550);
+    assert(joueurGetScore(&j)==5550);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
 
+    printf("------- Test de joueurGetVaisseau --------\n");
+    v=joueurGetVaisseau(&j);
+    assert(v!=NULL);
+    assert(vaisseauGetPointEcran(v)==5 && vaisseauGetPointStructure(v)==100);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("------ Test de joueurSetArmeSelectionne ---------\n");
+    joueurSetArmeSelectionne(&j, 1);
+    assert(joueurGetNumArmeSelectionne(&j)==1);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("------- Test de joueurLibere ------------\n");
     joueurLibere(&j);
+    assert(j.vaisseau==NULL);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
 }
 

@@ -16,7 +16,6 @@
 #include "GraphiqueSDL.h"
 #include "Audio.h"
 #include "EntreeSDL.h"
-#include "Ressource.h"
 #include "Scene.h"
 
 #define JEU_ETAT_MENU 				0
@@ -26,7 +25,7 @@
 
 /**
 * @struct JeuSDL
-* @brief
+* @brief Structure regroupant tous les elements necessaires a l'application
 */
 typedef struct {
 
@@ -65,8 +64,8 @@ void jeuInit(JeuSDL *jeu);
 /**
 * @fn void jeuBoucle(JeuSDL *)
 * @brief Boucle principale du programme.
-* @param [in, out] jeu
 * Gestion du temps écoulé, lecture des entrées, mise à jour de l'état du jeu et affichage final.
+* @param [in, out] jeu : initialisé
 */
 void jeuBoucle(JeuSDL *jeu);
 /**

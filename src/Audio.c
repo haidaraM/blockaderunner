@@ -20,10 +20,17 @@ FMOD_SOUND * chargeSon(AudioFMOD *audio, char * nomFichier, int typeSon)
     strcpy(file, nomFichier);
     strcpy(dir, RESS_DIR_SONS);
 
-    if(typeSon == 0) /* Chargement son court */
+    if(typeSon == 0)
+    {
+        /* Chargement son court */
         resultat=FMOD_System_CreateSound(audio->system, strcat(dir, file), FMOD_CREATESAMPLE, 0, &son);
-    else resultat=FMOD_System_CreateSound(audio->system, strcat(dir, file), FMOD_CREATESTREAM | FMOD_LOOP_NORMAL, 0, &son); /* chargement son long*/
-    /* On verifie qu'il n'ya pas eu d'erreur */
+    }
+    else
+    {
+        /* chargement son long*/
+        resultat=FMOD_System_CreateSound(audio->system, strcat(dir, file), FMOD_CREATESTREAM | FMOD_LOOP_NORMAL | FMOD_2D, 0, &son);
+    }
+    /* On verifie qu'il n'y a pas eu d'erreur */
     audioVerifieErreur(resultat);
 
     return son;

@@ -40,7 +40,7 @@ void creeListeImages(Ressource *res)
     res->images[RESS_IMG_VAISSEAU_ECLAIREUR] 						= RESS_IMG_FICHIER_VAISSEAU_ECLAIREUR;
     res->dimensionImages[RESS_IMG_VAISSEAU_ECLAIREUR].largeur 		= RESS_IMG_LARGEUR_VAISSEAU_ECLAIREUR;
     res->dimensionImages[RESS_IMG_VAISSEAU_ECLAIREUR].hauteur 		= RESS_IMG_HAUTEUR_VAISSEAU_ECLAIREUR;
-	
+
     res->images[RESS_IMG_VAISSEAU_CHASSEUR] 						= RESS_IMG_FICHIER_VAISSEAU_CHASSEUR;
     res->dimensionImages[RESS_IMG_VAISSEAU_CHASSEUR].largeur 		= RESS_IMG_LARGEUR_VAISSEAU_CHASSEUR;
     res->dimensionImages[RESS_IMG_VAISSEAU_CHASSEUR].hauteur 		= RESS_IMG_HAUTEUR_VAISSEAU_CHASSEUR;
@@ -57,6 +57,10 @@ void creeListeImages(Ressource *res)
 	res->images[RESS_IMG_TIR_ENNEMI_LASER]                          = RESS_IMG_FICHIER_TIR_ENNEMI_LASER;
     res->dimensionImages[RESS_IMG_TIR_ENNEMI_LASER].largeur         = RESS_IMG_LARGEUR_TIR_ENNEMI_LASER;
     res->dimensionImages[RESS_IMG_TIR_ENNEMI_LASER].hauteur         = RESS_IMG_HAUTEUR_TIR_ENNEMI_LASER;
+
+    res->images[RESS_IMG_MISSILE_JOUEUR]                            = RESS_IMG_FICHIER_MISSILE_JOUEUR;
+    res->dimensionImages[RESS_IMG_MISSILE_JOUEUR].largeur           = RESS_IMG_LARGEUR_MISSILE_JOUEUR;
+    res->dimensionImages[RESS_IMG_MISSILE_JOUEUR].hauteur           = RESS_IMG_HAUTEUR_MISSILE_JOUEUR;
 
     /* Images des bonus */
     res->images[RESS_IMG_BONUS_SCORE] 		                        = RESS_IMG_FICHIER_BONUS_SCORE;
@@ -124,6 +128,9 @@ void creeListeSons(Ressource *res)
 
     /*sons des tirs */
     res->sons[RESS_SON_TIR_LASER]                                   =RESS_SON_FICHIER_TIR_LASER;
+    res->sons[RESS_SON_MISSILE]                                     =RESS_SON_FICHIER_MISSILE;
+    /* autres sons */
+    res->sons[RESS_SON_ERREUR]                                      =RESS_SON_FICHIER_ERREUR;
 }
 
 void creeListePolices(Ressource *res)
@@ -181,7 +188,7 @@ void chargeJoueurs(Ressource *res)
 
         res->joueurs[i] = (Joueur*)malloc(sizeof(Joueur));
         assert( res->joueurs[i] != NULL);
-        joueurInit(res->joueurs[i], nom, (unsigned int)progression, score, pointS,pointE, 1);
+        joueurInit(res->joueurs[i], nom, (unsigned int)progression, score, pointS,pointE, 2);
     }
 
     fclose(fic);
