@@ -19,6 +19,8 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 	/* element->type			= type; */
 	element->x 				= 0;
 	element->y				= 0;
+	element->vecX			= -1.0f;
+	element->vecY			= 0.0f;
 	element->largeur 		= largeur;
 	element->hauteur 		= hauteur;
 	element->largeurSceneVisible	= largeurEcran;
@@ -96,6 +98,12 @@ void elementSetPosition(ElementScene *element, int x, int y)
 	if (x < (-element->largeur) || y < (-element->hauteur) || x > element->largeurSceneVisible || y > element->hauteurSceneVisible)
 			element->visible = 0;
 	else	element->visible = 1;
+}
+
+void elementSetDirection(ElementScene *element, float vx, float vy)
+{
+	element->vecX = vx;
+	element->vecY = vy;
 }
 
 int elementGetImageIndex(const ElementScene *element)

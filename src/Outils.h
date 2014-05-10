@@ -15,6 +15,11 @@
 * @param [in] borneSup
 */
 int randomInt(int borneInf, int borneSup);
+/**
+* @fn int randomFloat()
+* @brief Renvoie un float entre 0.0 et 1.0
+*/
+float randomFloat();
 
 /*----------------------------------------------------------------------------	GEOMETRIE ---------------------------------------------------------------------------------*/
 

@@ -15,6 +15,7 @@
 #define ELEMENT_TYPE_VAISSEAU_JOUEUR			 0
 
 #define ELEMENT_TYPE_ASTEROIDE      			 1
+#define ELEMENT_TYPE_DEBRIS_ASTEROIDE			 -2
 
 #define ELEMENT_TYPE_LASER_JOUEUR                2
 #define ELEMENT_TYPE_LASER_ENNEMI                3
@@ -44,6 +45,10 @@ typedef struct
 	int x;
 	/** position en Y sur la scène. */
 	int y;
+	/** direction en X (nombre normalisé) */
+	float vecX;
+	/** direction en Y (nombre normalisé) */
+	float vecY;
 	/** largeur de l'élement. */
 	int largeur;
 	/** hauteur de l'élement. */
@@ -123,6 +128,15 @@ int elementGetY(const ElementScene *element);
 * @param [in] y
 */
 void elementSetPosition(ElementScene *element, int x, int y);
+
+/**
+* @fn void elementSetDirection(ElementScene *element, int vx, int vy)
+* @brief Affecte une nouvelle diection à l'élément.
+* @param [in, out] element : initialisé
+* @param [in] vx
+* @param [in] vy
+*/
+void elementSetDirection(ElementScene *element, float vx, float vy);
 
 /**
 * @brief renvoie le handle de l'image associée au element (handle lisible par Ressource).

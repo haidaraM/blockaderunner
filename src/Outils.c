@@ -9,6 +9,11 @@ int randomInt(int borneInf, int borneSup)
     return rand()%(borneSup-borneInf) +borneInf;
 }
 
+float randomFloat()
+{
+	return (rand()%1048576)/1048576.0f;
+}
+
 unsigned char rectangleContient(const Rectangle *rect, int x, int y)
 {
     if ( x >= rect->x && y >= rect->y && x <= (rect->x + rect->largeur) && y <= (rect->y + rect->hauteur))

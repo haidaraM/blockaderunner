@@ -240,6 +240,11 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 			dx = -(int)(dt * SCENE_VITESSE_ASTEROIDE);
             elementSetPosition(e, x+dx, y);
         	break;
+		case ELEMENT_TYPE_DEBRIS_ASTEROIDE:
+			dx = (int)(dt * e->vecX * SCENE_VITESSE_ASTEROIDE);
+			dy = (int)(dt * e->vecY * SCENE_VITESSE_ASTEROIDE);
+			elementSetPosition(e, x+dx, y+dy);
+			break;
 		case ELEMENT_TYPE_ECLAIREUR:
 			dx = -(int)(dt * SCENE_VITESSE_ECLAIREUR);
 			dy = 0;
@@ -259,6 +264,19 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         }
     }
 
+	/* suppression des debris qui ne sont plus visibles. */
+	/* NOTE DEV :
+		Si on supprime un element du TabDyn alors ce dernier se re-compacte. Probleme: on saute un element dans la boucle.
+		Solution : faire un tableau d'index à supprimer (garbage collection) et on le vide une fois par boucle.
+	*/
+	for (i=0; i< sceneGetNbActeurs(scene); i++)
+	{
+		e = (ElementScene*) tabDynGetElement(&scene->acteurs, i);
+		if (elementVisible(e) ==0 && elementGetType(e) == ELEMENT_TYPE_DEBRIS_ASTEROIDE)
+			tabDynSupprimeElement(&scene->acteurs, i);
+	}			
+
+
 	/* RESOLUTION DES COLLISIONS : */
 	sceneTestDeCollision(scene);
 
@@ -268,7 +286,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 
 void sceneTestDeCollision(Scene *scene)
 {
-    int i, j;
+    int i, j, d, numDebris;
     ElementScene * t=NULL, *e=NULL;
     assert(scene!=NULL);
 
@@ -299,7 +317,18 @@ void sceneTestDeCollision(Scene *scene)
 		            {
 		        	    /* Suppression du tir */
 		                tabDynSupprimeElement(&scene->tirs, i);
-		                /* Suppression du l'ennemis : ennemis ou asteroide */
+						/* Creation des débris d'asteroide ! */
+						numDebris = randomInt(2, 10);
+						for (d=0; d < numDebris; d++)
+						{
+							ElementScene * debris = (ElementScene *) malloc(sizeof(ElementScene));
+		        			elementInit(debris, ELEMENT_TYPE_DEBRIS_ASTEROIDE, RESS_IMG_DEBRIS_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ),
+			                    		ressourceGetHauteurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ), scene->largeurAffichage, scene->hauteurAffichage );
+		        			elementSetPosition(debris, elementGetX(e), elementGetY(e));
+							elementSetDirection(debris, -1.0f + 2.0f*randomFloat(), -1.0f + 2.0f*randomFloat());
+		        			tabDynAjoute(&scene->acteurs, (void *)debris );
+						}
+		                /* Suppression de l'asteroide */
 		                tabDynSupprimeElement(&scene->acteurs, j);
 		                /* mise à jour du score */
 		                joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
@@ -320,7 +349,18 @@ void sceneTestDeCollision(Scene *scene)
 		            {
 		        	    /* Suppression du tir */
 		                tabDynSupprimeElement(&scene->tirs, i);
-		                /* Suppression du l'ennemis : ennemis ou asteroide */
+						/* Creation des débris d'asteroide ! */
+						numDebris = randomInt(2, 10);
+						for (d=0; d < numDebris; d++)
+						{
+							ElementScene * debris = (ElementScene *) malloc(sizeof(ElementScene));
+		        			elementInit(debris, ELEMENT_TYPE_DEBRIS_ASTEROIDE, RESS_IMG_DEBRIS_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ),
+			                    		ressourceGetHauteurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ), scene->largeurAffichage, scene->hauteurAffichage );
+		        			elementSetPosition(debris, elementGetX(e), elementGetY(e));
+							elementSetDirection(debris, -1.0f + 2.0f*randomFloat(), -1.0f + 2.0f*randomFloat());
+		        			tabDynAjoute(&scene->acteurs, (void *)debris );
+						}
+		                /* Suppression de l'asteroide */
 		                tabDynSupprimeElement(&scene->acteurs, j);
 		                /* mise à jour du score */
 		                joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
