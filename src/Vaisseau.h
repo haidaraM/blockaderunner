@@ -6,28 +6,57 @@
 #ifndef _VAISSEAU_H
 #define _VAISSEAU_H
 
+
+
+
+
+
+
 /* Caracteristiques du vaisseau joueur*/
 #define VAISSEAU_JOUEUR_TYPE                            1
 #define JOUEUR_NB_ARMES                                 2
-#define JOUEUR_POINTECRAN                               10
-#define JOUEUR_POINTSTRUCTURE                           10
+#define JOUEUR_POINTECRAN                               100
+#define JOUEUR_POINTSTRUCTURE                           100
 
-/* Caracteristiques du vaisseau ennemi*/
+/* DEPRECATED:Caracteristiques du vaisseau ennemi*/
 #define VAISSEAU_ENNEMI_TYPE                            2
 #define ENNEMI_ARMES                                    1
 #define ENNEMI_POINTECRAN                               50
 #define ENNEMI_POINTSTRUCTURE                           50
 
+/* Caracteristiques éclaireurs ennemi*/
+#define VAISSEAU_ECLAIREUR_TYPE                         3
+#define ECLAIREUR_ARMES  								1
+#define ECLAIREUR_POINTECRAN                            0
+#define ECLAIREUR_POINTSTRUCTURE                        25
+
+/* Caracteristiques chasseurs ennemi*/
+#define VAISSEAU_CHASSEUR_TYPE   	                    4
+#define CHASSEUR_ARMES  								1
+#define CHASSEUR_POINTECRAN                            25
+#define CHASSEUR_POINTSTRUCTURE                        50
+
+/* Caracteristiques croiseurs ennemi*/
+#define VAISSEAU_CROISEUR_TYPE                         	5
+#define CROISEUR_ARMES  								2
+#define CROISEUR_POINTECRAN                            	100
+#define CROISEUR_POINTSTRUCTURE                         300
+
 /* Armes */
 #define ARME_LASER                                      0
 #define ARME_LASER_MUNITIONS                            1000
 #define ARME_LASER_DEGAT_E                              25
-#define ARME_LASER_DEGAT_S                              25
+#define ARME_LASER_DEGAT_S                              20
 
 #define ARME_MISSILE                                    1
 #define ARME_MISSILE_MUNITIONS                          10
-#define ARME_MISSILE_DEGAT_E                            50
-#define ARME_MISSILE_DEGAT_S                            50
+#define ARME_MISSILE_DEGAT_E                            0
+#define ARME_MISSILE_DEGAT_S                            100
+
+#define VAISSEAU_COLLISION								2
+#define VAISSEAU_COLLISION_DEGAT_E						0
+#define VAISSEAU_COLLISION_DEGAT_S						20
+
 
 
 /**
@@ -44,8 +73,10 @@ typedef struct
     int degatStructure;
     /** Munitions (infinies pour le laser ) */
     int munitions;
-    /** cadence de tir : utile pour le missile */
-    float cadence;
+    /** stocke le temps du dernier tir : pour ne pas tirer trop de fois par seconde. */
+    float tempsDernierTir;
+	/** cadence de tir max */
+	float cadence;
 
 } Arme;
 
@@ -77,6 +108,8 @@ typedef struct
 * @param [in] points
 * @param [in] pointE
 * @param [in] nbArmes
+*
+* NOTE : TODO : enlever pointS, pointE et nbArmes qui ne servent à rien pour le moment.
 */
 void vaisseauInit(Vaisseau *vaisseauJ, int type, int pointS, int pointE, int nbArmes);
 
@@ -104,17 +137,34 @@ int vaisseauGetNbArmes(const Vaisseau * vaisseau);
 
 /**
 * @fn int vaisseauGetPointEcran(const Vaisseau * vaisseau);
-* @brief Renvoie les points ecran du vaisseau du joueur
+* @brief Renvoie les points ecran du vaisseau
 * @param [in] vaisseau
 */
 int vaisseauGetPointEcran(const Vaisseau * vaisseau);
 
 /**
 * @fn int vaisseauGetPointStructure(const Vaisseau * vaisseau);
-* @brief Renvoie les points structure du vaisseau du joueur
+* @brief Renvoie les points structure du vaisseau
 * @param [in] vaisseau
 */
 int vaisseauGetPointStructure(const Vaisseau * vaisseau);
+
+/**
+* @fn void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure);
+* @brief Affecte les points ecran &  les points structure du vaisseau
+* @param [in] vaisseau
+* @param [in] pEcran 
+* @param [in] pStructure
+*/
+void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure);
+
+/**
+* @fn void vaisseauSetDegats(const Vaisseau * vaisseau, int arme);
+* @brief Inflige des dégats au vaisseau (affecte les points ecran et structure).
+* @param [in] vaisseau
+* @param [in] typeDegats type de dommages : arme utilisée (laser ou missile), ou collision.
+*/
+void vaisseauSetDegats(Vaisseau * vaisseau, int typeDegats);
 
 /**
 * @fn int vaisseauGetMunitionsArme(Const Vaisseau * vaisseau)
@@ -124,11 +174,11 @@ int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 int vaisseauGetMunitionsArme(const Vaisseau * vaisseau);
 
 /**
-* @fn Arme vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
-* @brief renvoie l'arme selectionnee
+* @fn Arme* vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
+* @brief renvoie un pointeur sur l'arme selectionnee
 * @param [in] vaisseau : initialisé
 */
-Arme vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
+Arme* vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
 
 /**
 * @fn void vaisseauMajMunitions(Vaisseau * joueur)

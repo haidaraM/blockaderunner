@@ -1,8 +1,13 @@
 #include "Outils.h"
 #include <assert.h>
 #include <stdlib.h>
+#include <time.h>
 
 
+float getTempsSecondes()
+{
+	return (float)clock()/(float)CLOCKS_PER_SEC;
+}
 
 int randomInt(int borneInf, int borneSup)
 {

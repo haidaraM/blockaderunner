@@ -4,6 +4,8 @@
 * @author Yann Cortial - Mohamed El Mouctar HAIDARA.
 */
 #include "JeuSDL.h"
+#include "Outils.h"
+
 #include <SDL/SDL.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -11,14 +13,6 @@
 #include <time.h>
 
 
-
-/*-------------------------------------------------------------------------------------------
- FONCTIONS INTERNES */
-
-float getTempsSecondes()
-{
-	return (float)clock()/(float)CLOCKS_PER_SEC;
-}
 
 
 

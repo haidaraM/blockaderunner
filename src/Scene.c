@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
+#include <math.h>
 
 
 
@@ -181,7 +182,7 @@ void sceneDefileScene(Scene *scene)
 
 void sceneAnime(Scene *scene, float tempsSecondes)
 {
-    int i, dx, x, y, dy;
+    int i, dx, x, y, dy, viseurEnnemi;
     float dt 	= tempsSecondes - scene->horlogePrecedente;
     ElementScene * e=NULL;
     float vitesseDeplacementLaser;
@@ -244,12 +245,21 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 			dx = (int)(dt * e->vecX * SCENE_VITESSE_ASTEROIDE);
 			dy = (int)(dt * e->vecY * SCENE_VITESSE_ASTEROIDE);
 			elementSetPosition(e, x+dx, y+dy);
+			/* on supprime le debris dès qu'il n'est plus visible */
+			if (elementVisible(e) != 1)
+				tabDynSupprimeElement(&scene->acteurs, i);
 			break;
 		case ELEMENT_TYPE_ECLAIREUR:
 			dx = -(int)(dt * SCENE_VITESSE_ECLAIREUR);
 			dy = 0;
 			if (elementVisible(e) == 1)
-				dy =  (int)(dt * 0.5f * (float)(elementGetY(scene->vaisseauJoueur) - y));/* Les ennemis se rapprochent du joueur (selon l'axe vertical) pour pouvoir le dégommer!*/
+			{
+				viseurEnnemi = elementGetY(scene->vaisseauJoueur) - y;
+				/* L'ennemi  tente de tirer */
+				if (abs(viseurEnnemi) < 64)	
+					sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
+				dy =  (int)(dt * 0.4f * (float)viseurEnnemi);/* Les ennemis tentent de s'aligner avec le joueur */
+			}
 			elementSetPosition(e, x+dx, y+dy);
 			break;
 		default:
@@ -264,19 +274,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         }
     }
 
-	/* suppression des debris qui ne sont plus visibles. */
-	/* NOTE DEV :
-		Si on supprime un element du TabDyn alors ce dernier se re-compacte. Probleme: on saute un element dans la boucle.
-		Solution : faire un tableau d'index à supprimer (garbage collection) et on le vide une fois par boucle.
-	*/
-	for (i=0; i< sceneGetNbActeurs(scene); i++)
-	{
-		e = (ElementScene*) tabDynGetElement(&scene->acteurs, i);
-		if (elementVisible(e) ==0 && elementGetType(e) == ELEMENT_TYPE_DEBRIS_ASTEROIDE)
-			tabDynSupprimeElement(&scene->acteurs, i);
-	}			
-
-
+	
 	/* RESOLUTION DES COLLISIONS : */
 	sceneTestDeCollision(scene);
 
@@ -286,11 +284,11 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 
 void sceneTestDeCollision(Scene *scene)
 {
-    int i, j, d, numDebris;
+    int i, j, d, numDebris, typeElement;
     ElementScene * t=NULL, *e=NULL;
     assert(scene!=NULL);
 
-    /* collision tir-joueur & ennemis (asteroides, vaisseaux) */
+	/* On itère sur tous les TIRS du jeu */
     for(i=0; i<sceneGetNbTirs(scene); i++)
     {
         t = (ElementScene *) tabDynGetElement(&scene->tirs, i);
@@ -301,7 +299,8 @@ void sceneTestDeCollision(Scene *scene)
 			if(elementTestDeCollision(scene->vaisseauJoueur, t))
         	{
             	tabDynSupprimeElement(&scene->tirs, i);
-				/* todo : baisser les points ecran du vaisseau joueur et jouer un son */
+				/* Le vaisseau du joueur encaisse des dégats */
+				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, ARME_LASER);
 			}
 			break;
 
@@ -310,7 +309,10 @@ void sceneTestDeCollision(Scene *scene)
 			for(j=0; j<sceneGetNbActeurs(scene); j++)
 		    {
 		    	e=(ElementScene *) tabDynGetElement(&scene->acteurs, j);
-		    	if(elementGetType(e)==ELEMENT_TYPE_ASTEROIDE)
+				typeElement = elementGetType(e);
+
+				/* Laser contre asteroide : */
+		    	if(typeElement == ELEMENT_TYPE_ASTEROIDE)
 		        {
 		        	/* Les asteroides disparaissent avec un seul tir */
 		            if(elementTestDeCollision(t, e))
@@ -334,6 +336,25 @@ void sceneTestDeCollision(Scene *scene)
 		                joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
 		            }
 		        }
+
+				/* Laser contre vaisseau ennemi : */
+				if (typeElement == ELEMENT_TYPE_ECLAIREUR || typeElement == ELEMENT_TYPE_CHASSEUR || typeElement == ELEMENT_TYPE_CROISEUR)
+				{
+					if (elementTestDeCollision(t, e))
+					{
+						/* Suppression du tir */
+		                tabDynSupprimeElement(&scene->tirs, i);
+						/* Le vaisseau ennemi encaisse des dégats */
+						vaisseauSetDegats((Vaisseau*)e->data, ARME_LASER);
+						/* Le vaisseau ennemi est détruit */
+						if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
+						{
+							tabDynSupprimeElement(&scene->acteurs, j);
+							/* mise à jour du score */
+		                	joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+100);
+						}
+					}
+				}
 		    }
 			break;
 
@@ -381,8 +402,9 @@ void sceneTestDeCollision(Scene *scene)
         {
             /* Suppression de l'acteur */
             tabDynSupprimeElement(&scene->acteurs, j);
-
-			/* todo : baisser les points de structure du vaisseau joueur */
+			/* le vaisseau du joueur encaisse des dégats */
+			if (elementGetType(e) != ELEMENT_TYPE_DEBRIS_ASTEROIDE)
+				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
         }
     }
 
@@ -486,12 +508,12 @@ int sceneJoueurDeclencheTir(Scene * scene)
         case ARME_LASER:
             elementInit(tir, ELEMENT_TYPE_LASER_JOUEUR, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(scene->ressource,RESS_IMG_TIR_JOUEUR_LASER),
                         ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
-                        valret=0;
+            valret=0;
             break;
         case ARME_MISSILE:
             elementInit(tir, ELEMENT_TYPE_MISSILE_JOUEUR, RESS_IMG_MISSILE_JOUEUR, ressourceGetLargeurImage(scene->ressource    , RESS_IMG_MISSILE_JOUEUR),
                         ressourceGetHauteurImage(scene->ressource, RESS_IMG_MISSILE_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
-                        valret=1;
+            valret=1;
             break;
         default :
             break;
@@ -504,16 +526,23 @@ int sceneJoueurDeclencheTir(Scene * scene)
     return valret;
 }
 
-void sceneEnnemiTirLaser(Scene * scene, int x, int y)
+void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
 {
     ElementScene * tir=NULL;
+	Arme *arme = vaisseauGetArmeSelectionnee((Vaisseau*)e->data);
+
+	/* L'ennemi n'a pas eu le temps de recharger son arme : il ne tire pas. */
+	if (tempsCourant - arme->tempsDernierTir < arme->cadence)
+		return;
+
+	/* Sinon, il tire : */
+	arme->tempsDernierTir = tempsCourant; 
     tir=(ElementScene *) malloc(sizeof(ElementScene));
     assert(tir!=NULL);
-
     elementInit(tir, ELEMENT_TYPE_LASER_ENNEMI, RESS_IMG_TIR_ENNEMI_LASER, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER),
                         ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER), scene->largeurAffichage, scene->hauteurAffichage );
     /* positionne le tir en fonction de la position du vaisseau */
-    elementSetPosition(tir, x, y);
+    elementSetPosition(tir, elementGetX(e), elementGetY(e));
     tabDynAjoute(&scene->tirs, (void *) tir);
 }
 

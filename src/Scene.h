@@ -7,6 +7,7 @@
 #define _SCENE_H
 
 #include "ElementScene.h"
+#include "Vaisseau.h"
 #include "Ressource.h"
 #include "Joueur.h"
 #include "Outils.h"
@@ -186,13 +187,13 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 int sceneJoueurDeclencheTir(Scene * scene);
 
 /**
-* @fn void sceneEnnemiTirLaser(Scene * scene)
-* @brief Cree un element qui correspond au tir laser d'un ennemi.
+* @fn void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e)
+* @brief Un ennemi tente de tirer
 * @param [in, out] scene (doit etre initialisé )
-* @param x position en x du point de départ du tir
-* @param y position en y du point de départ du tir.
+* @param [in, out] e element-scene (ennemi)
+* @param [in] tempsCourant temps associé à la frame courante (en secondes).
 */
-void sceneEnnemiTirLaser(Scene * scene, int x, int y);
+void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant);
 
 
 /**
