@@ -125,7 +125,7 @@ void vaisseauSetDegats(Vaisseau * vaisseau, int typeDegats)
 		}
 		break;
 	case ARME_MISSILE:
-		vaisseau->pointStructure -= ARME_LASER_DEGAT_S;
+		vaisseau->pointStructure -= ARME_MISSILE_DEGAT_S;
 		if (vaisseau->pointStructure < 0)
 			vaisseau->pointStructure = 0;
 		break;

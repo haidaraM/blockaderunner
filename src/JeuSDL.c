@@ -76,7 +76,7 @@ void jeuBoucle(JeuSDL *jeu)
     float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
     /* Période de temps (secondes) entre deux raffraichissements écran */
     float periodeAffichage 			= 1.0f/60.0f;
-	float periodeDefilementScene 	= 1.0f/8.0f;
+	float periodeDefilementScene 	= 1.0f/12.0f;
 
 	graphiqueRaffraichit(graphique);
 

@@ -549,14 +549,14 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	/* Affichage de l'interface */
 
 	/* Affichage des points ecrans */
-	for (i=0; i<vaisseauGetPointStructure(scene->vaisseauJoueur->data)/10; i++) /* note : on divise par 10 car les points structure vont de 0 à 100 et l'affichage va de 0 à 10 */
+	for (i=0; i<vaisseauGetPointStructure(scene->vaisseauJoueur->data)/30; i++) /* note : on divise par 30 car les points structure vont de 0 à 300 et l'affichage va de 0 à 10 */
 	{
 		dstBox.x = GFX_HUD_ELEMENT_LARGEUR;
 		dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);
 		SDL_BlitSurface( graphique->elementsHUD[0], NULL, graphique->surface, &dstBox);
 	}
 	/* Affichage des points structures */
-	for (i=0; i< vaisseauGetPointEcran(scene->vaisseauJoueur->data)/10; i++)	/* note : on divise par 10 car les points ecran vont de 0 à 100 et l'affichage va de 0 à 10 */
+	for (i=0; i< vaisseauGetPointEcran(scene->vaisseauJoueur->data)/30; i++)	/* note : on divise par 30 car les points ecran vont de 0 à 300 et l'affichage va de 0 à 10 */
 	{
 		dstBox.x = 2* GFX_HUD_ELEMENT_LARGEUR + GFX_HUD_ELEMENT_OFFSET;
 		dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);

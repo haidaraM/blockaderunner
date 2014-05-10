@@ -10,10 +10,10 @@
 
 
 
-#define NIVEAU_0_DESCRIPTION									"Sortir du champ d'astéroïdes !"
-#define NIVEAU_1_DESCRIPTION                                    "Ennemis Eclaireurs!"
-#define NIVEAU_2_DESCRIPTION                                    "Niveau 2"
-#define NIVEAU_3_DESCRIPTION                                    "Niveau 3"
+#define NIVEAU_0_DESCRIPTION									"Sortir du champ d'astéroïdes : attention aux éclaireurs!"
+#define NIVEAU_1_DESCRIPTION                                    "Ennemis!"
+#define NIVEAU_2_DESCRIPTION                                    "Ennemis!"
+#define NIVEAU_3_DESCRIPTION                                    "Ennemis!"
 
 #define NIVEAU_GROUPE_ASTEROIDES								0
 #define NIVEAU_GROUPE_ECLAIREURS								1

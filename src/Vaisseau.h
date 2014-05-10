@@ -15,8 +15,8 @@
 /* Caracteristiques du vaisseau joueur*/
 #define VAISSEAU_JOUEUR_TYPE                            1
 #define JOUEUR_NB_ARMES                                 2
-#define JOUEUR_POINTECRAN                               100
-#define JOUEUR_POINTSTRUCTURE                           100
+#define JOUEUR_POINTECRAN                               300
+#define JOUEUR_POINTSTRUCTURE                           300
 
 /* DEPRECATED:Caracteristiques du vaisseau ennemi*/
 #define VAISSEAU_ENNEMI_TYPE                            2
@@ -45,17 +45,17 @@
 /* Armes */
 #define ARME_LASER                                      0
 #define ARME_LASER_MUNITIONS                            1000
-#define ARME_LASER_DEGAT_E                              25
+#define ARME_LASER_DEGAT_E                              30
 #define ARME_LASER_DEGAT_S                              20
 
 #define ARME_MISSILE                                    1
 #define ARME_MISSILE_MUNITIONS                          10
 #define ARME_MISSILE_DEGAT_E                            0
-#define ARME_MISSILE_DEGAT_S                            100
+#define ARME_MISSILE_DEGAT_S                            200
 
 #define VAISSEAU_COLLISION								2
 #define VAISSEAU_COLLISION_DEGAT_E						0
-#define VAISSEAU_COLLISION_DEGAT_S						20
+#define VAISSEAU_COLLISION_DEGAT_S						50
 
 
 
