@@ -76,6 +76,16 @@ void joueurSetArmeSelectionne(Joueur * joueur, int numArme )
     v->numArmeSelectionne=numArme;
 }
 
+Joueur * joueurCopieJoueur(Joueur * j)
+{
+    Joueur * nouveauJoueur=NULL;
+    assert(j!=NULL);
+    nouveauJoueur=(Joueur*)malloc(sizeof(Joueur));
+    joueurInit(nouveauJoueur, j->nom, j->progression, j->score, vaisseauGetPointStructure(j->vaisseau), vaisseauGetPointEcran(j->vaisseau), 2);
+    return nouveauJoueur;
+
+}
+
 void joueurTestDeRegression()
 {
     Joueur j;

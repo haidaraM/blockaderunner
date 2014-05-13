@@ -195,13 +195,19 @@ int sceneJoueurDeclencheTir(Scene * scene);
 */
 void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant);
 
-
 /**
 * @fn void sceneTestDeCollision(Scene *scene)
 * @brief test de collision des tous les elements de la scene
 * @param [in, out] scene : initialisée
 */
 void sceneTestDeCollision(Scene *scene);
+
+/**
+* @fn int sceneTestVaisseauMort(Scene * scene)
+* @brief Test si le joueur est mort ou pas
+* @param [in] initialisé
+*/
+int sceneTestVaisseauMort(Scene * scene);
 
 /**
 * @fn void sceneTestDeRegression()

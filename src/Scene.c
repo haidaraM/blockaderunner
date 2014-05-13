@@ -643,6 +643,16 @@ void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
     tabDynAjoute(&scene->tirs, (void *) tir);
 }
 
+int sceneTestVaisseauMort(Scene * scene)
+{
+    Vaisseau * v=NULL;
+    assert(scene!=NULL);
+    v=(Vaisseau *)scene->vaisseauJoueur->data;
+    if(vaisseauGetPointStructure(v)<=0)
+        return 1;
+    else return 0;
+}
+
 void sceneTestDeRegression()
 {
     printf("Test de regression du module scene \n ");

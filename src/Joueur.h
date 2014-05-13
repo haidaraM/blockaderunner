@@ -101,6 +101,10 @@ void joueurSetArmeSelectionne(Joueur * joueur, int numArme );
 */
 int joueurGetNumArmeSelectionne(const Joueur * joueur);
 
+/**
+* @brief fais une copie de joueur
+*/
+Joueur * joueurCopieJoueur(Joueur * j);
 
 /**
 * @fn void joueurTestDeRegression()
