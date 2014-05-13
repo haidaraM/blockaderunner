@@ -205,7 +205,7 @@ void creeNiveaux(Ressource *res)
     for (i=0; i< RESS_NUM_NIVEAUX; i++)
     {
 		printf("Creation niveau %d\n", i);
-        niveauInit(&res->niveaux[i], i);
+        niveauInit(&(res->niveaux[i]), i);
         niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0 + i);
     }
 }
@@ -274,10 +274,15 @@ void ressourceLibere(Ressource *res)
     int i;
     for (i=0; i< RESS_SAU_MAX_JOUEURS; i++)
         if (res->joueurs[i] != NULL)
+        {
+            joueurLibere(res->joueurs[i]);
             free(res->joueurs[i]);
+        }
     free(res->joueurs);
     free(res->images);
     free(res->dimensionImages);
+    free(res->niveaux);
+    free(res->sons);
 }
 
 int ressourceGetNumJoueurs(const Ressource *res)

@@ -172,7 +172,6 @@ typedef struct
     char **sons;
     /** Tableau de chaines de caractères (noms des fichiers ttf) */
     char **polices;
-
     /** Tableau de tous les niveaux du jeu. */
     Niveau *niveaux;
 
@@ -196,10 +195,12 @@ void ressourceLibere(Ressource *res);
 * @brief Renvoie le nombre de joueurs sauvegardés.
 */
 int ressourceGetNumJoueurs(const Ressource *res);
+
 /**
 * @brief Renvoie le tableau de pointeurs sur Joueur (ie tous les joueurs connus).
 */
 Joueur** ressourceGetJoueurs(const Ressource *res);
+
 /**
 * @brief Ajoute un joueur à la liste des joueurs sauvegardés.
 */

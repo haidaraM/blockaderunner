@@ -90,7 +90,7 @@ void tabDynSupprimeElement(TabDyn *t, int index)
     }
 
     free(t->tab[index]);
-    for(i=index; i<t->tailleUtilisee; i++)
+    for(i=index; i<t->tailleUtilisee-1; i++)
     {
         t->tab[i]=t->tab[i+1];
     }

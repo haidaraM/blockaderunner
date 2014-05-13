@@ -241,6 +241,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
                 tabDynSupprimeElement(&scene->tirs, i);
             }
         }
+        else
 		if (elementGetType(e) == ELEMENT_TYPE_LASER_ENNEMI)
 		{
 			x = elementGetX(e);
@@ -281,7 +282,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 			{
 				deltaJoueurEnnemi = elementGetY(scene->vaisseauJoueur) - y;
 				/* L'ennemi  tente de tirer */
-				if (abs(deltaJoueurEnnemi) < 64)	
+				if (abs(deltaJoueurEnnemi) < 64)
 					sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
 				dy =  (int)(dt * 0.4f * (float)deltaJoueurEnnemi);/* Les ennemis tentent de s'aligner avec le joueur */
 			}
@@ -294,7 +295,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 			{
 				deltaJoueurEnnemi = elementGetY(scene->vaisseauJoueur) - y;
 				/* L'ennemi  tente de tirer */
-				if (abs(deltaJoueurEnnemi) < 64)	
+				if (abs(deltaJoueurEnnemi) < 64)
 					sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
 				dy =  (int)(dt * 0.6f * (float)deltaJoueurEnnemi);/* Les ennemis tentent de s'aligner avec le joueur */
 			}
@@ -307,7 +308,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 			{
 				deltaJoueurEnnemi = elementGetY(scene->vaisseauJoueur) - y;
 				/* L'ennemi  tente de tirer */
-				if (abs(deltaJoueurEnnemi) < 128)	
+				if (abs(deltaJoueurEnnemi) < 128)
 					sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
 				dy =  (int)(dt * 0.1f * (float)deltaJoueurEnnemi);/* Les ennemis tentent de s'aligner avec le joueur */
 			}
@@ -325,7 +326,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         }
     }
 
-	
+
 	/* RESOLUTION DES COLLISIONS : */
 	sceneTestDeCollision(scene);
 
@@ -387,7 +388,7 @@ void sceneTestDeCollision(Scene *scene)
 		                joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
 		            }
 		        }
-
+		        else
 				/* Laser contre vaisseau ennemi : */
 				if (typeElement == ELEMENT_TYPE_ECLAIREUR || typeElement == ELEMENT_TYPE_CHASSEUR || typeElement == ELEMENT_TYPE_CROISEUR)
 				{
@@ -400,6 +401,7 @@ void sceneTestDeCollision(Scene *scene)
 						/* Le vaisseau ennemi est détruit */
 						if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
 						{
+                            elementLibere(e);
 							tabDynSupprimeElement(&scene->acteurs, j);
 							/* mise à jour du score */
 		                	joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+100);
@@ -435,12 +437,13 @@ void sceneTestDeCollision(Scene *scene)
 		        			tabDynAjoute(&scene->acteurs, (void *)debris );
 						}
 		                /* Suppression de l'asteroide */
+		                elementLibere(e);
 		                tabDynSupprimeElement(&scene->acteurs, j);
 		                /* mise à jour du score */
 		                joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
 		            }
 		        }
-			
+                else
 				/* Missile contre vaisseau ennemi : */
 				if (typeElement == ELEMENT_TYPE_ECLAIREUR || typeElement == ELEMENT_TYPE_CHASSEUR || typeElement == ELEMENT_TYPE_CROISEUR)
 				{
@@ -453,6 +456,7 @@ void sceneTestDeCollision(Scene *scene)
 						/* Le vaisseau ennemi est détruit */
 						if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
 						{
+                            elementLibere(e);
 							tabDynSupprimeElement(&scene->acteurs, j);
 							/* mise à jour du score */
 		                	joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+250);
@@ -461,6 +465,7 @@ void sceneTestDeCollision(Scene *scene)
 				}
 		    }
 			break;
+			default : break;
 
 
 		}
@@ -471,7 +476,7 @@ void sceneTestDeCollision(Scene *scene)
     {
         e=(ElementScene *) tabDynGetElement(&scene->acteurs, i);
         if(elementTestDeCollision(scene->vaisseauJoueur, e))
-        {            
+        {
 			/* le vaisseau du joueur encaisse des dégats */
 			switch(elementGetType(e))
 			{
@@ -492,8 +497,10 @@ void sceneTestDeCollision(Scene *scene)
 				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
 				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
 				break;
+            default : break;
 			}
 			/* Suppression de l'acteur */
+			elementLibere(e);
             tabDynSupprimeElement(&scene->acteurs, i);
         }
     }
@@ -626,7 +633,7 @@ void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
 		return;
 
 	/* Sinon, il tire : */
-	arme->tempsDernierTir = tempsCourant; 
+	arme->tempsDernierTir = tempsCourant;
     tir=(ElementScene *) malloc(sizeof(ElementScene));
     assert(tir!=NULL);
     elementInit(tir, ELEMENT_TYPE_LASER_ENNEMI, RESS_IMG_TIR_ENNEMI_LASER, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER),

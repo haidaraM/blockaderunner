@@ -328,6 +328,13 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 	TTF_CloseFont(graphique->policeMenu);
 	TTF_CloseFont(graphique->policeListeJoueurs);
 
+	/* Libertation des HUD */
+	for(i=0; i<4; i++)
+	{
+        SDL_FreeSurface(graphique->elementsHUD[i]);
+	}
+    free(graphique->elementsHUD);
+
 	/* SDL_ttf */
 	TTF_Quit();
 

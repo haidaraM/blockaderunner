@@ -21,7 +21,7 @@ Introduction
 Utilisation:
 	- FMOD : Il faudra télécharger la librairie FMOD disponible sur : http://www.fmod.org/download/. 
 			 Plus précisement la version FMOD Ex Programmer's API. 
-			 -	Dans l'archive téléchargé, copié le dossier api (en le rennomant en "lib") dans le dossier du projet.
+			 -	Dans l'archive téléchargé, copiez le dossier api (en le rennomant en "lib") dans le dossier du projet.
 			 	Ce repertoire contient les fichiers nécessaires au bon fonctionnement de la librairie. 
 	 		 -	Ensuite il faudra copier  le fichier ./lib/lib/libfmodex64-4.44.33.so (le numero peut varier selon 
 	 		 	votre version) dans le repertoire /usr/lib/ en le rennomant en libfmodex64.so.

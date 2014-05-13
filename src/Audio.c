@@ -79,6 +79,7 @@ void audioLibere(AudioFMOD *audio)
         audioVerifieErreur(resultat);
         audio->sons[i]=NULL;
     }
+    free(audio->sons);
 
     /* fermeture et liberation du systeme audio */
     resultat=FMOD_System_Close(audio->system);

@@ -34,9 +34,12 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 
 void elementLibere(ElementScene *element)
 {
+    int type;
     assert(element!=NULL);
-    if(element->data !=NULL)
+    type=elementGetType(element);
+    if(type==ELEMENT_TYPE_CHASSEUR || type==ELEMENT_TYPE_CROISEUR || type==ELEMENT_TYPE_ECLAIREUR)
     {
+        vaisseauLibere((Vaisseau *) element->data);
         free(element->data);
     }
 }
