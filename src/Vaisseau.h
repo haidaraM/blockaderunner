@@ -18,12 +18,6 @@
 #define JOUEUR_POINTECRAN                               300
 #define JOUEUR_POINTSTRUCTURE                           300
 
-/* DEPRECATED:Caracteristiques du vaisseau ennemi*/
-#define VAISSEAU_ENNEMI_TYPE                            2
-#define ENNEMI_ARMES                                    1
-#define ENNEMI_POINTECRAN                               50
-#define ENNEMI_POINTSTRUCTURE                           50
-
 /* Caracteristiques éclaireurs ennemi*/
 #define VAISSEAU_ECLAIREUR_TYPE                         3
 #define ECLAIREUR_ARMES  								1
@@ -101,17 +95,14 @@ typedef struct
 } Vaisseau;
 
 /**
-* @fn void vaisseauJoueurInit(Vaisseau *vaisseauJ, int pointS, int pointE, int nbArmes)
+* @fn void vaisseauJoueurInit(Vaisseau *vaisseauJ, int type)
 * @brief Initialise le vaisseau du joueur
 * @param [in, out] vaisseauJ
 * @param [in] type
-* @param [in] points
-* @param [in] pointE
-* @param [in] nbArmes
 *
 * NOTE : TODO : enlever pointS, pointE et nbArmes qui ne servent à rien pour le moment.
 */
-void vaisseauInit(Vaisseau *vaisseauJ, int type, int pointS, int pointE, int nbArmes);
+void vaisseauInit(Vaisseau *vaisseauJ, int type);
 
 /**
 * @fn void vaisseauLibere(Vaisseau * vaisseau)
@@ -153,7 +144,7 @@ int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 * @fn void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure);
 * @brief Affecte les points ecran &  les points structure du vaisseau
 * @param [in] vaisseau
-* @param [in] pEcran 
+* @param [in] pEcran
 * @param [in] pStructure
 */
 void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure);

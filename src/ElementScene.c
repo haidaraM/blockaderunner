@@ -53,15 +53,15 @@ void elementSetType(ElementScene *element, int type)
 	{
 		case ELEMENT_TYPE_ECLAIREUR:
             element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
-            vaisseauInit(element->data, VAISSEAU_ECLAIREUR_TYPE, 0, 0, 1);
+            vaisseauInit(element->data, VAISSEAU_ECLAIREUR_TYPE);
 			break;
 		case ELEMENT_TYPE_CHASSEUR:
             element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
-            vaisseauInit(element->data, VAISSEAU_CHASSEUR_TYPE, 0, 0, 1);
+            vaisseauInit(element->data, VAISSEAU_CHASSEUR_TYPE);
 			break;
 		case ELEMENT_TYPE_CROISEUR:
             element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
-            vaisseauInit(element->data, VAISSEAU_CROISEUR_TYPE, 0, 0, 1);
+            vaisseauInit(element->data, VAISSEAU_CROISEUR_TYPE);
 			break;
 
 		default:

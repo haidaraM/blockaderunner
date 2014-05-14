@@ -68,6 +68,7 @@ void jeuBoucle(JeuSDL *jeu)
 	char alphaNum;
 	Niveau niveau;
 	int sonTir=-1; /* Variable utilisée pour jouer un son lors d'un tir */
+	Joueur * copieJoueur=NULL;
 
 	GraphiqueSDL *graphique	 		= &jeu->graphique;
 	EntreeSDL *entree				= &jeu->entree;
@@ -310,13 +311,11 @@ void jeuBoucle(JeuSDL *jeu)
 			{
 				niveau 					= ressourceGetNiveau(&jeu->ressource, jeu->niveauCourant);
 				/* Initialisation de la scène */
-				sceneInit(&jeu->scene, &jeu->ressource, jeu->joueur, jeu->graphique.largeur, jeu->graphique.hauteur);
+				copieJoueur=joueurCopieJoueur(jeu->joueur);
+				sceneInit(&jeu->scene, &jeu->ressource, copieJoueur, jeu->graphique.largeur, jeu->graphique.hauteur);
 				sceneChargeNiveau(&jeu->scene, &niveau, &jeu->ressource);
 				jeu->etatCourantJeu 	= JEU_ETAT_JEU;
-
-                /*score=joueurGetScore(jeu->joueur);*/
-				/*graphiqueSetScore(&jeu->graphique, score);*/
-		        /* deprecated:sceneSetVaisseauJoueur(&jeu->scene, jeu->joueur->vaisseau);*/
+                printf("joueurressource : %s \n score : %d \n pointE %d \n ", jeu->ressource.joueurs[0]->nom,jeu->ressource.joueurs[0]->score, jeu->ressource.joueurs[0]->vaisseau->pointEcran );
 
 				sceneResetHorloge(&jeu->scene, getTempsSecondes());
 				tempsDernierDefilementScene = getTempsSecondes();

@@ -187,17 +187,21 @@ void ressourceInit(Ressource *res);
 /**
 * @fn void ressourceLibere(Ressource *res)
 * @brief Libère toutes les ressources gérées par le module (images, sons, polices).
+* @param [in, out] res : initialisé
 */
 void ressourceLibere(Ressource *res);
 
 
 /**
+* @fn int ressourceGetNumJoueurs(const Ressource *res)
 * @brief Renvoie le nombre de joueurs sauvegardés.
 */
 int ressourceGetNumJoueurs(const Ressource *res);
 
 /**
+* @fn Joueur** ressourceGetJoueurs(const Ressource *res)
 * @brief Renvoie le tableau de pointeurs sur Joueur (ie tous les joueurs connus).
+* @param [in] res
 */
 Joueur** ressourceGetJoueurs(const Ressource *res);
 
@@ -206,7 +210,13 @@ Joueur** ressourceGetJoueurs(const Ressource *res);
 */
 void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur);
 
-Niveau ressourceGetNiveau(Ressource *res, int numeroNiveau);
+/**
+* @fn Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau)
+* @brief Renvoie le niveau dont le numero est passé en paramètre
+* @param [in] res
+* @param [in] numeroNiveau
+*/
+Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau);
 
 
 /**

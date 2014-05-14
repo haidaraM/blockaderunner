@@ -142,7 +142,7 @@ void chargeJoueurs(Ressource *res)
 
     int i;
     char nom[64];
-    int numJoueurs=0, score=0, progression=0, pointS=JOUEUR_POINTSTRUCTURE, pointE=JOUEUR_POINTECRAN;
+    int numJoueurs=0, score=0, progression=0;
     int valret;
     char nomFic[128], file[64];
 
@@ -179,16 +179,10 @@ void chargeJoueurs(Ressource *res)
             printf("Erreur de lecture du fichier %s : progression et score illisibles.\n", nomFic);
             exit(EXIT_FAILURE);
         }
-        valret = fscanf (fic, "%d %d", &pointS, &pointE);
-        if (valret !=2)
-        {
-            printf("Erreur de lecture du fichier %s : pointS et pointE illisibles.\n",nomFic );
-            exit(EXIT_FAILURE);
-        }
 
         res->joueurs[i] = (Joueur*)malloc(sizeof(Joueur));
         assert( res->joueurs[i] != NULL);
-        joueurInit(res->joueurs[i], nom, (unsigned int)progression, score, pointS,pointE, 2);
+        joueurInit(res->joueurs[i], nom, (unsigned int)progression, score);
     }
 
     fclose(fic);
@@ -306,16 +300,16 @@ void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1],
         indexJoueur = res->numJoueurs;
         res->joueurs[indexJoueur] = (Joueur*)malloc(sizeof(Joueur));
         assert(res->joueurs[indexJoueur] != NULL);
-        joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0,JOUEUR_POINTSTRUCTURE,JOUEUR_POINTECRAN,JOUEUR_NB_ARMES);
+        joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0);
         res->numJoueurs += 1;
     }
     else
     {
-        joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0,JOUEUR_POINTSTRUCTURE,JOUEUR_POINTECRAN,JOUEUR_NB_ARMES);
+        joueurInit(res->joueurs[indexJoueur], nomJoueur, 0, 0);
     }
 }
 
-Niveau ressourceGetNiveau(Ressource *res, int numeroNiveau)
+Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau)
 {
     assert(res != NULL && numeroNiveau >=0 && numeroNiveau < RESS_NUM_NIVEAUX);
 

@@ -30,17 +30,14 @@ typedef struct
 } Joueur;
 
 /**
-* @fn void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score, int pointS, int pointE, int nbArmes)
+* @fn void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
 * @brief Initialise un joueur
 * @param [in, out] joueur
 * @param [in] nom
 * @param [in] progression
 * @param [in] score
-* @param [in] pointS
-* @param [in] pointE
-* @param [in] nbArmes
 */
-void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score, int pointS, int pointE, int nbArmes);
+void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score);
 
 /**
 * @fn void joueurLibere(Joueur * joueur)
@@ -95,14 +92,16 @@ void joueurSetProgression(Joueur * joueur);
 void joueurSetArmeSelectionne(Joueur * joueur, int numArme );
 
 /**
-* @fn int joueurGetNumArmeSelectionne(Joueur * joueur)
+* @fn int joueurGetNumArmeSelectionne(const Joueur * joueur)
 * @brief Renvoie le numero de l'arme selectionné par le joueur
 * @param [in] joueur : initialisé
 */
 int joueurGetNumArmeSelectionne(const Joueur * joueur);
 
 /**
+* @fn Joueur * joueurCopieJoueur(Joueur * j)
 * @brief fais une copie de joueur
+* @param [in] j : initialisé
 */
 Joueur * joueurCopieJoueur(Joueur * j);
 

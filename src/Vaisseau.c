@@ -11,7 +11,7 @@
 
 
 
-void vaisseauInit(Vaisseau *vaisseau, int type, int pointS, int pointE, int nbArmes)
+void vaisseauInit(Vaisseau *vaisseau, int type)
 {
     int i;
     assert(vaisseau!=NULL);
@@ -21,10 +21,10 @@ void vaisseauInit(Vaisseau *vaisseau, int type, int pointS, int pointE, int nbAr
         vaisseau->type=VAISSEAU_JOUEUR_TYPE;
         vaisseau->pointEcran=JOUEUR_POINTECRAN;
         vaisseau->pointStructure=JOUEUR_POINTSTRUCTURE;
-        vaisseau->nbArmes=2;
+        vaisseau->nbArmes=JOUEUR_NB_ARMES;
         /* Initialisation des armes du vaisseau */
-        vaisseau->armes=(Arme *)malloc(sizeof(Arme)*nbArmes);
-        for(i=0; i<nbArmes; i++)
+        vaisseau->armes=(Arme *)malloc(sizeof(Arme)*JOUEUR_NB_ARMES);
+        for(i=0; i<JOUEUR_NB_ARMES; i++)
         {
             vaisseauArmeInit(&vaisseau->armes[i], i);
         }
@@ -37,8 +37,8 @@ void vaisseauInit(Vaisseau *vaisseau, int type, int pointS, int pointE, int nbAr
         vaisseau->pointStructure = ECLAIREUR_POINTSTRUCTURE;
         vaisseau->nbArmes = ECLAIREUR_ARMES;
         /* Initialisation des armes du vaisseau */
-        vaisseau->armes = (Arme *)malloc(sizeof(Arme)*nbArmes);
-        for(i=0; i<nbArmes; i++)
+        vaisseau->armes = (Arme *)malloc(sizeof(Arme)*ECLAIREUR_ARMES);
+        for(i=0; i<ECLAIREUR_ARMES; i++)
         {
             vaisseauArmeInit(&vaisseau->armes[i], i);
         }
@@ -50,8 +50,8 @@ void vaisseauInit(Vaisseau *vaisseau, int type, int pointS, int pointE, int nbAr
         vaisseau->pointStructure = CHASSEUR_POINTSTRUCTURE;
         vaisseau->nbArmes = CHASSEUR_ARMES;
         /* Initialisation des armes du vaisseau */
-        vaisseau->armes = (Arme *)malloc(sizeof(Arme)*nbArmes);
-        for(i=0; i<nbArmes; i++)
+        vaisseau->armes = (Arme *)malloc(sizeof(Arme)*CHASSEUR_ARMES);
+        for(i=0; i<CHASSEUR_ARMES; i++)
         {
             vaisseauArmeInit(&vaisseau->armes[i], i);
         }
@@ -63,8 +63,8 @@ void vaisseauInit(Vaisseau *vaisseau, int type, int pointS, int pointE, int nbAr
         vaisseau->pointStructure = CROISEUR_POINTSTRUCTURE;
         vaisseau->nbArmes = CROISEUR_ARMES;
         /* Initialisation des armes du vaisseau */
-        vaisseau->armes = (Arme *)malloc(sizeof(Arme)*nbArmes);
-        for(i=0; i<nbArmes; i++)
+        vaisseau->armes = (Arme *)malloc(sizeof(Arme)*CROISEUR_ARMES);
+        for(i=0; i<CROISEUR_ARMES; i++)
         {
             vaisseauArmeInit(&vaisseau->armes[i], i);
         }
@@ -111,7 +111,7 @@ void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure)
 void vaisseauSetDegats(Vaisseau * vaisseau, int typeDegats)
 {
     assert(vaisseau!=NULL);
-		
+
 	switch(typeDegats)
 	{
 	case ARME_LASER:
@@ -199,8 +199,8 @@ void vaisseauTestDeregression()
     Vaisseau v;
     printf("Test de regression du vaisseau \n");
 
-    printf("--------- Test de vaisseauJoueurInit avec 50 pE, 50 pS, 1 arme ---------\n" );
-    vaisseauInit(&v,VAISSEAU_JOUEUR_TYPE, 50, 50, 1 );
+    printf("--------- Test de vaisseauJoueurInit ---------\n" );
+    vaisseauInit(&v,VAISSEAU_JOUEUR_TYPE);
     assert(v.pointStructure==50 && v.pointEcran==50 && v.nbArmes==1);
     printf("=========> Resultat : OK \n");
     printf("\n");

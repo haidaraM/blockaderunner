@@ -13,7 +13,7 @@
 
 
 
-void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score, int pointS, int pointE, int nbArmes)
+void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
 {
     assert(joueur!=NULL && nom != NULL);
 
@@ -23,7 +23,7 @@ void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score, 
     joueur->vaisseau=(Vaisseau *)malloc(sizeof(Vaisseau));
     assert(joueur->vaisseau!=NULL);
 
-   vaisseauInit(joueur->vaisseau,VAISSEAU_JOUEUR_TYPE, pointS, pointE, nbArmes);
+   vaisseauInit(joueur->vaisseau,VAISSEAU_JOUEUR_TYPE);
 }
 
 void joueurLibere(Joueur * joueur)
@@ -81,7 +81,8 @@ Joueur * joueurCopieJoueur(Joueur * j)
     Joueur * nouveauJoueur=NULL;
     assert(j!=NULL);
     nouveauJoueur=(Joueur*)malloc(sizeof(Joueur));
-    joueurInit(nouveauJoueur, j->nom, j->progression, j->score, vaisseauGetPointStructure(j->vaisseau), vaisseauGetPointEcran(j->vaisseau), 2);
+    assert(nouveauJoueur!=NULL);
+    joueurInit(nouveauJoueur, j->nom, j->progression, j->score);
     return nouveauJoueur;
 
 }
@@ -94,7 +95,7 @@ void joueurTestDeRegression()
     printf("Test de regression de Joueur\n");
 
     printf("---------- Test de joueurInit ------------\n");
-    joueurInit(&j, nom, 5, 9000, 100, 5, 10);
+    joueurInit(&j, nom, 5, 9000);
     printf("=========> Resultat : OK \n");
     printf("\n");
 

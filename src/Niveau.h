@@ -21,7 +21,10 @@
 #define NIVEAU_GROUPE_CROISEURS									3
 
 
-
+/**
+* @struct GroupeNiveau
+* @brief Structure utilisée pour la composition d'un niveau
+*/
 typedef struct
 {
 	/** type d'element : champ d'asteroides, escadre de chasseurs, ... */

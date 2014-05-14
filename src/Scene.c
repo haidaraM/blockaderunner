@@ -42,13 +42,14 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
     }
 
     /* initialisation vaisseau du Joueur */
-    scene->vaisseauJoueur= (ElementScene*)malloc(sizeof(ElementScene));
-    assert( scene->vaisseauJoueur != NULL);
-    elementInit(scene->vaisseauJoueur, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,
+    scene->elementVaisseauJoueur= (ElementScene*)malloc(sizeof(ElementScene));
+    assert( scene->elementVaisseauJoueur != NULL);
+    elementInit(scene->elementVaisseauJoueur, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,
                 ressourceGetLargeurImage(res, RESS_IMG_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_IMG_VAISSEAU_JOUEUR),
 				scene->largeurAffichage, scene->hauteurAffichage);
-    elementSetPosition(scene->vaisseauJoueur, 32, (hauteurGraphique - scene->vaisseauJoueur->hauteur)/2);
-	scene->vaisseauJoueur->data = (void*)player->vaisseau;
+    elementSetPosition(scene->elementVaisseauJoueur, 32, (hauteurGraphique - scene->elementVaisseauJoueur->hauteur)/2);
+	scene->elementVaisseauJoueur->data = (void*)player->vaisseau;
+
 }
 
 void sceneLibere(Scene *scene)
@@ -109,8 +110,12 @@ void sceneLibere(Scene *scene)
     tabDynLibere(&scene->decors);
 
     /* Liberation du vaisseauJoueur */
-    /*elementLibere(scene->vaisseauJoueur); */ /* Bug quand on quitte le niveau et on revient dans la partie */
-    free(scene->vaisseauJoueur);
+    /*elementLibere(scene->elementVaisseauJoueur); */ /* Bug quand on quitte le niveau et on revient dans la partie */
+    free(scene->elementVaisseauJoueur);
+
+    /* Liberation du joueur qu'on a passé à la scene : correspond à la copie */
+	joueurLibere(scene->joueur);
+
 }
 
 
@@ -280,7 +285,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 			dy = 0;
 			if (elementVisible(e) == 1)
 			{
-				deltaJoueurEnnemi = elementGetY(scene->vaisseauJoueur) - y;
+				deltaJoueurEnnemi = elementGetY(scene->elementVaisseauJoueur) - y;
 				/* L'ennemi  tente de tirer */
 				if (abs(deltaJoueurEnnemi) < 64)
 					sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
@@ -293,7 +298,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 			dy = 0;
 			if (elementVisible(e) == 1)
 			{
-				deltaJoueurEnnemi = elementGetY(scene->vaisseauJoueur) - y;
+				deltaJoueurEnnemi = elementGetY(scene->elementVaisseauJoueur) - y;
 				/* L'ennemi  tente de tirer */
 				if (abs(deltaJoueurEnnemi) < 64)
 					sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
@@ -306,7 +311,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 			dy = 0;
 			if (elementVisible(e) == 1)
 			{
-				deltaJoueurEnnemi = elementGetY(scene->vaisseauJoueur) - y;
+				deltaJoueurEnnemi = elementGetY(scene->elementVaisseauJoueur) - y;
 				/* L'ennemi  tente de tirer */
 				if (abs(deltaJoueurEnnemi) < 128)
 					sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
@@ -348,11 +353,11 @@ void sceneTestDeCollision(Scene *scene)
 		{
 		case ELEMENT_TYPE_LASER_ENNEMI:
 
-			if(elementTestDeCollision(scene->vaisseauJoueur, t))
+			if(elementTestDeCollision(scene->elementVaisseauJoueur, t))
         	{
             	tabDynSupprimeElement(&scene->tirs, i);
 				/* Le vaisseau du joueur encaisse des dégats */
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, ARME_LASER);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, ARME_LASER);
 			}
 			break;
 
@@ -383,6 +388,7 @@ void sceneTestDeCollision(Scene *scene)
 		        			tabDynAjoute(&scene->acteurs, (void *)debris );
 						}
 		                /* Suppression de l'asteroide */
+		                elementLibere(e);
 		                tabDynSupprimeElement(&scene->acteurs, j);
 		                /* mise à jour du score */
 		                joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
@@ -475,27 +481,27 @@ void sceneTestDeCollision(Scene *scene)
     for(i=0; i<sceneGetNbActeurs(scene); i++)
     {
         e=(ElementScene *) tabDynGetElement(&scene->acteurs, i);
-        if(elementTestDeCollision(scene->vaisseauJoueur, e))
+        if(elementTestDeCollision(scene->elementVaisseauJoueur, e))
         {
 			/* le vaisseau du joueur encaisse des dégats */
 			switch(elementGetType(e))
 			{
 			case ELEMENT_TYPE_ASTEROIDE:
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
 				break;
 			case ELEMENT_TYPE_ECLAIREUR:
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
 				break;
 			case ELEMENT_TYPE_CHASSEUR:
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
 				break;
 			case ELEMENT_TYPE_CROISEUR:
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
-				vaisseauSetDegats((Vaisseau*)scene->vaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
 				break;
             default : break;
 			}
@@ -537,7 +543,7 @@ ElementScene* sceneCreerElementScene(Scene *scene, int type)
 
 void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			=scene->vaisseauJoueur;
+    ElementScene *vaiss			=scene->elementVaisseauJoueur;
     float vitesseDeplacement 	= 768.0f/0.88f;
     int dy						= -(int)(tempsSecondes * vitesseDeplacement);
     int y 						= elementGetY( vaiss );
@@ -551,7 +557,7 @@ void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 
 void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			= scene->vaisseauJoueur;
+    ElementScene *vaiss			= scene->elementVaisseauJoueur;
     float vitesseDeplacement 	= 768.0f/0.88f;
     int dy						= (int)(tempsSecondes * vitesseDeplacement);
     int y 						= elementGetY( vaiss );
@@ -560,12 +566,12 @@ void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
     if ( (y + dy) > (vaiss->hauteurSceneVisible - vaiss->hauteur))
         dy 						= (vaiss->hauteurSceneVisible - vaiss->hauteur) - y;
 
-    elementSetPosition( scene->vaisseauJoueur, elementGetX( vaiss ), y + dy );
+    elementSetPosition( scene->elementVaisseauJoueur, elementGetX( vaiss ), y + dy );
 }
 
 void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			= scene->vaisseauJoueur;
+    ElementScene *vaiss			= scene->elementVaisseauJoueur;
     float vitesseDeplacement 	= 768.0f/3.0f;
     int dx						= (int)(tempsSecondes * vitesseDeplacement);
     int x                       = elementGetX(vaiss);
@@ -578,7 +584,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 
 void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
 {
-    ElementScene *vaiss			=scene->vaisseauJoueur;
+    ElementScene *vaiss			=scene->elementVaisseauJoueur;
     float vitesseDeplacement 	= 768.0f/3.0f;
     int dx						= -(int)(tempsSecondes * vitesseDeplacement);
     int x                       = elementGetX(vaiss);
@@ -616,7 +622,7 @@ int sceneJoueurDeclencheTir(Scene * scene)
             break;
         }
         /* positionne le tir en fonction de la position du vaisseau */
-        elementSetPosition(tir, elementGetX(scene->vaisseauJoueur), elementGetY(scene->vaisseauJoueur));
+        elementSetPosition(tir, elementGetX(scene->elementVaisseauJoueur), elementGetY(scene->elementVaisseauJoueur));
 
         tabDynAjoute(&scene->tirs, (void *) tir);
     }
@@ -647,7 +653,7 @@ int sceneTestVaisseauMort(Scene * scene)
 {
     Vaisseau * v=NULL;
     assert(scene!=NULL);
-    v=(Vaisseau *)scene->vaisseauJoueur->data;
+    v=(Vaisseau *)scene->elementVaisseauJoueur->data;
     if(vaisseauGetPointStructure(v)<=0)
         return 1;
     else return 0;

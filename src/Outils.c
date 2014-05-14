@@ -89,7 +89,7 @@ void tabDynSupprimeElement(TabDyn *t, int index)
         free(temp);
     }
 
-    free(t->tab[index]);
+   /* free(t->tab[index]); */ /* Cette ligne doit etre à l'origine des bugs durant les collisions */
     for(i=index; i<t->tailleUtilisee-1; i++)
     {
         t->tab[i]=t->tab[i+1];
