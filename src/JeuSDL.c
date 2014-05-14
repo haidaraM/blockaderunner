@@ -157,7 +157,7 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee= SDLK_F1;
             if(entreeToucheEnfoncee(entree, SDLK_F1)==0 && toucheDetectee == SDLK_F1)
             {
-                joueurSetArmeSelectionne(jeu->joueur, 0);
+                joueurSetArmeSelectionne(copieJoueur, 0);
                 toucheDetectee=-1;
             }
             /* Missile */
@@ -165,7 +165,7 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee= SDLK_F2;
             if(entreeToucheEnfoncee(entree, SDLK_F2)==0 && toucheDetectee == SDLK_F2)
             {
-                joueurSetArmeSelectionne(jeu->joueur, 1);
+                joueurSetArmeSelectionne(copieJoueur, 1);
                 toucheDetectee=-1;
             }
 
