@@ -17,7 +17,7 @@
 
 #define RESS_NUM_NIVEAUX										7
 #define RESS_NUM_IMAGES											64
-#define RESS_NUM_SONS_COURTS       								3
+#define RESS_NUM_SONS_COURTS       								5
 #define RESS_NUM_SONS_LONGS    	    							2
 #define RESS_NUM_POLICES										1
 
@@ -155,6 +155,11 @@
 #define RESS_SON_ERREUR                                         4
 #define RESS_SON_FICHIER_ERREUR                                 "erreur.wav"
 
+#define RESS_SON_MORT                                           5
+#define RESS_SON_FICHIER_MORT                                   "mort.wav"
+
+#define RESS_SON_EXPLOSION                                      6
+#define RESS_SON_FICHIER_EXPLOSION                              "explosion.wav"
 /**
 * @struct Ressource
 * @brief

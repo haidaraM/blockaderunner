@@ -131,6 +131,8 @@ void creeListeSons(Ressource *res)
     res->sons[RESS_SON_MISSILE]                                     =RESS_SON_FICHIER_MISSILE;
     /* autres sons */
     res->sons[RESS_SON_ERREUR]                                      =RESS_SON_FICHIER_ERREUR;
+    res->sons[RESS_SON_MORT]                                        =RESS_SON_FICHIER_MORT;
+    res->sons[RESS_SON_EXPLOSION]                                    =RESS_SON_FICHIER_EXPLOSION;
 }
 
 void creeListePolices(Ressource *res)

@@ -104,8 +104,9 @@ void sceneResetHorloge(Scene *scene, float horloge);
 * @fn void sceneDefileScene(Scene *scene)
 * @brief fait defiler le fond d'ecran.
 * @param [in, out] scene
+* @return Renvoie 1 si on arrive à la fin de la scene, 0 sinon
 */
-void sceneDefileScene(Scene *scene);
+int sceneDefileScene(Scene *scene);
 
 /**
 * @fn int sceneGetNbActeurs(const Scene * scene)

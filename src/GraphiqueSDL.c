@@ -270,6 +270,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	/* cree le rendu de la liste des noms de joueurs */
 	graphiquePrepareRenduListeJoueurs(graphique, menu);
 
+    /* partie mort du joueur */
+    graphique->mort= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMenuSurvol);
 
 	/*------- Elements du HUD ---------------------------------------------*/
 
@@ -577,7 +579,6 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 	graphiqueSetScore(graphique, joueurGetScore(scene->joueur));
 	dstBox.x = GFX_HUD_ELEMENT_LARGEUR + graphique->largeur/2;
 	SDL_BlitSurface( graphique->elementsHUD[3], NULL, graphique->surface, &dstBox);
-
 }
 
 void graphiqueSetScore(GraphiqueSDL *graphique, int score)
@@ -607,5 +608,21 @@ void graphiqueSetScore(GraphiqueSDL *graphique, int score)
 	SDL_FreeSurface(graphique->elementsHUD[3]);
 	graphique->elementsHUD[3]	= TTF_RenderText_Blended( graphique->policeListeJoueurs,  scoreChaine, couleurTexteScore);
 	/*assert(graphique->elementsHUD[3] != NULL);*/
+}
+
+void graphiqueAfficheMort(GraphiqueSDL * graphique)
+{
+    SDL_Rect positionText;
+    positionText.x=graphique->largeur/2-50;
+    positionText.y=graphique->hauteur/2;
+    assert(graphique!=NULL);
+
+    /* On blit le texte au centre de l'ecran */
+    SDL_BlitSurface(graphique->mort, NULL, graphique->surface, &positionText);
+    /* On met à jour l'ecran */
+    graphiqueRaffraichit(graphique);
+    /* On met le jeu en pause pendant 3s */
+    SDL_Delay(3000);
+
 }
 

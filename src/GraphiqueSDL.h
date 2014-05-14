@@ -61,6 +61,8 @@ typedef struct
 
 	/* Utilisé en interne par SDL lors de la création de Surfaces. */
 	Uint32 rmask, gmask, bmask, amask;
+    /** Surface utilisée pour afficher un message quand le joueur meurt */
+	SDL_Surface *mort;
 
 } GraphiqueSDL;
 
@@ -148,6 +150,11 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu );
 * @param [in] scene
 */
 void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene );
+
+/**
+* @brief affiche un texte quand le joueur meurt
+*/
+void graphiqueAfficheMort(GraphiqueSDL * graphique);
 
 #endif
 
