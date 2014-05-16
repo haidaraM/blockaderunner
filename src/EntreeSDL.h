@@ -92,18 +92,19 @@ unsigned char entreeBoutonSourisGauche(const EntreeSDL *entree);
 * @param entree[in, out] : instance d'EntreeSDL.
 * @return 1 si le bouton est enfoncé, 0 sinon.
 */
-
 unsigned char entreeBoutonSourisDroit(const EntreeSDL *entree);
+
 /**
+* @fn int entreeGetSourisX(const EntreeSDL *entree)
 * @brief Renvoie la position courante en X de la souris.
-*
 * @param entree[in, out] : instance d'EntreeSDL.
 * @return un entier décrivant la position en X de la souris.
 */
 int entreeGetSourisX(const EntreeSDL *entree);
+
 /**
+* @fn int entreeGetSourisY(const EntreeSDL *entree)
 * @brief Renvoie la position courante en Y de la souris.
-*
 * @param entree[in, out] : instance d'EntreeSDL.
 * @return un entier décrivant la position en Y de la souris.
 */

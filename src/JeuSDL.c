@@ -103,6 +103,7 @@ void jeuBoucle(JeuSDL *jeu)
         case JEU_RETOUR_MENU:
 
             sceneLibere( &jeu->scene );
+            free(copieJoueur);
             jeu->etatCourantJeu 	= JEU_ETAT_MENU;
             menuPrincipal((void*)menu);
             break;
@@ -153,17 +154,17 @@ void jeuBoucle(JeuSDL *jeu)
 
             /* Choix de l'arme */
             /* Laser */
-            if (entreeToucheEnfoncee(entree, SDLK_F1)==1)
-                toucheDetectee= SDLK_F1;
-            if(entreeToucheEnfoncee(entree, SDLK_F1)==0 && toucheDetectee == SDLK_F1)
+            if (entreeToucheEnfoncee(entree, SDLK_F5)==1)
+                toucheDetectee= SDLK_F5;
+            if(entreeToucheEnfoncee(entree, SDLK_F5)==0 && toucheDetectee == SDLK_F5)
             {
                 joueurSetArmeSelectionne(copieJoueur, 0);
                 toucheDetectee=-1;
             }
             /* Missile */
-            if (entreeToucheEnfoncee(entree, SDLK_F2)==1)
-                toucheDetectee= SDLK_F2;
-            if(entreeToucheEnfoncee(entree, SDLK_F2)==0 && toucheDetectee == SDLK_F2)
+            if (entreeToucheEnfoncee(entree, SDLK_F6)==1)
+                toucheDetectee= SDLK_F6;
+            if(entreeToucheEnfoncee(entree, SDLK_F6)==0 && toucheDetectee == SDLK_F6)
             {
                 joueurSetArmeSelectionne(copieJoueur, 1);
                 toucheDetectee=-1;
@@ -172,7 +173,16 @@ void jeuBoucle(JeuSDL *jeu)
             /* Défilement de l'image de fond. */
             if ( (getTempsSecondes() - tempsDernierDefilementScene) >= periodeDefilementScene)
             {
-                sceneDefileScene(&jeu->scene);
+                if(sceneDefileScene(&jeu->scene))
+                {
+                    /* si  on arrive à la fin du niveau, on retourne au menu */
+                    jeu->etatCourantJeu=JEU_RETOUR_MENU;
+                    /* on met à jour la progression du  joueur */
+                    if(jeu->niveauCourant==joueurGetProgression(jeu->joueur))
+                        joueurSetProgression(jeu->joueur);
+
+                    printf("Nom %s. Progression : %d", jeu->ressource.joueurs[0]->nom,jeu->ressource.joueurs[0]->progression );
+                }
                 tempsDernierDefilementScene = getTempsSecondes();
             }
 

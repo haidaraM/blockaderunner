@@ -52,17 +52,15 @@ typedef struct
 	SDL_Surface **textesMenu;
 	/** Tableau de pointeurs sur SDL_Surface (tous les rendus de texte des noms des joueurs). */
 	SDL_Surface **textesNomsJoueurs;
-	/* Un tableau des petites surfaces pour l'affichage des niveaux d'Ecran et Coque du vaisseau du joueur. */
+	/** Un tableau des petites surfaces pour l'affichage des niveaux d'Ecran, Coque du vaisseau du joueur, texte quand le joueur meurt */
 	SDL_Surface **elementsHUD;
-	/* police du Menu */
+	/** police du Menu */
 	TTF_Font *policeMenu;
-	/* police pour la liste des joueurs */
+	/** police pour la liste des joueurs */
 	TTF_Font *policeListeJoueurs;
 
 	/* Utilisé en interne par SDL lors de la création de Surfaces. */
 	Uint32 rmask, gmask, bmask, amask;
-    /** Surface utilisée pour afficher un message quand le joueur meurt */
-	SDL_Surface *mort;
 
 } GraphiqueSDL;
 

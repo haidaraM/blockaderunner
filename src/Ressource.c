@@ -36,7 +36,7 @@ void creeListeImages(Ressource *res)
     res->dimensionImages[RESS_IMG_VAISSEAU_JOUEUR].largeur 			= RESS_IMG_LARGEUR_VAISSEAU_JOUEUR;
     res->dimensionImages[RESS_IMG_VAISSEAU_JOUEUR].hauteur 			= RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR;
 
-	/* Images ennemis */
+    /* Images ennemis */
     res->images[RESS_IMG_VAISSEAU_ECLAIREUR] 						= RESS_IMG_FICHIER_VAISSEAU_ECLAIREUR;
     res->dimensionImages[RESS_IMG_VAISSEAU_ECLAIREUR].largeur 		= RESS_IMG_LARGEUR_VAISSEAU_ECLAIREUR;
     res->dimensionImages[RESS_IMG_VAISSEAU_ECLAIREUR].hauteur 		= RESS_IMG_HAUTEUR_VAISSEAU_ECLAIREUR;
@@ -54,7 +54,7 @@ void creeListeImages(Ressource *res)
     res->dimensionImages[RESS_IMG_TIR_JOUEUR_LASER].largeur         = RESS_IMG_LARGEUR_TIR_JOUEUR_LASER;
     res->dimensionImages[RESS_IMG_TIR_JOUEUR_LASER].hauteur         = RESS_IMG_HAUTEUR_TIR_JOUEUR_LASER;
 
-	res->images[RESS_IMG_TIR_ENNEMI_LASER]                          = RESS_IMG_FICHIER_TIR_ENNEMI_LASER;
+    res->images[RESS_IMG_TIR_ENNEMI_LASER]                          = RESS_IMG_FICHIER_TIR_ENNEMI_LASER;
     res->dimensionImages[RESS_IMG_TIR_ENNEMI_LASER].largeur         = RESS_IMG_LARGEUR_TIR_ENNEMI_LASER;
     res->dimensionImages[RESS_IMG_TIR_ENNEMI_LASER].hauteur         = RESS_IMG_HAUTEUR_TIR_ENNEMI_LASER;
 
@@ -200,7 +200,7 @@ void creeNiveaux(Ressource *res)
 
     for (i=0; i< RESS_NUM_NIVEAUX; i++)
     {
-		printf("Creation niveau %d\n", i);
+        printf("Creation niveau %d\n", i);
         niveauInit(&(res->niveaux[i]), i);
         niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0 + i);
     }
@@ -268,6 +268,7 @@ void ressourceInit(Ressource *res)
 void ressourceLibere(Ressource *res)
 {
     int i;
+    /* Liberation des joueurs */
     for (i=0; i< RESS_SAU_MAX_JOUEURS; i++)
         if (res->joueurs[i] != NULL)
         {
@@ -275,9 +276,16 @@ void ressourceLibere(Ressource *res)
             free(res->joueurs[i]);
         }
     free(res->joueurs);
+
+    /*Liberation des niveaux */
+    for(i=0; i<RESS_NUM_NIVEAUX; i++)
+    {
+        niveauLibere(&res->niveaux[i]);
+    }
+    free(res->niveaux);
+
     free(res->images);
     free(res->dimensionImages);
-    free(res->niveaux);
     free(res->sons);
 }
 

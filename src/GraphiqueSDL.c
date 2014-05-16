@@ -270,12 +270,10 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	/* cree le rendu de la liste des noms de joueurs */
 	graphiquePrepareRenduListeJoueurs(graphique, menu);
 
-    /* partie mort du joueur */
-    graphique->mort= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMenuSurvol);
 
 	/*------- Elements du HUD ---------------------------------------------*/
 
-	graphique->elementsHUD 		= (SDL_Surface**)malloc( 4 * sizeof(SDL_Surface*) );
+	graphique->elementsHUD 		= (SDL_Surface**)malloc( 5 * sizeof(SDL_Surface*) );
 	assert(graphique->elementsHUD != NULL);
 	graphique->elementsHUD[0] 	= SDL_CreateRGBSurface(	SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR, GFX_HUD_ELEMENT_HAUTEUR, 32,
                                    						graphique->rmask, graphique->gmask, graphique->bmask, 0 );
@@ -299,6 +297,10 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	assert(graphique->elementsHUD[2] != NULL);
 	graphique->elementsHUD[3]	= TTF_RenderText_Blended( graphique->policeListeJoueurs,  "0000000", couleurTexteScore);
 	assert(graphique->elementsHUD[3] != NULL);
+
+	 /* partie mort du joueur */
+    graphique->elementsHUD[4]= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMenuSurvol);
+
 
 	/*---------------------------------------------------------------------
 		FIN */
@@ -331,7 +333,7 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 	TTF_CloseFont(graphique->policeListeJoueurs);
 
 	/* Libertation des HUD */
-	for(i=0; i<4; i++)
+	for(i=0; i<5; i++)
 	{
         SDL_FreeSurface(graphique->elementsHUD[i]);
 	}
@@ -618,7 +620,7 @@ void graphiqueAfficheMort(GraphiqueSDL * graphique)
     assert(graphique!=NULL);
 
     /* On blit le texte au centre de l'ecran */
-    SDL_BlitSurface(graphique->mort, NULL, graphique->surface, &positionText);
+    SDL_BlitSurface(graphique->elementsHUD[4], NULL, graphique->surface, &positionText);
     /* On met à jour l'ecran */
     graphiqueRaffraichit(graphique);
     /* On met le jeu en pause pendant 3s */

@@ -16,7 +16,7 @@ void creeListeJoueurs(Menu *menu)
 {
 	int i;
 	int index, numJoueurs;
-	Joueur **joueurs;
+	Joueur **joueurs=NULL;
 	assert( menu != NULL);
 
 	numJoueurs 				= ressourceGetNumJoueurs(menu->ressource);
