@@ -106,10 +106,14 @@ void jeuBoucle(JeuSDL *jeu)
             free(copieJoueur);
             jeu->etatCourantJeu 	= JEU_ETAT_MENU;
             menuPrincipal((void*)menu);
+            /* on arrete le son de la scene */
+            audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
             break;
 
         case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
-
+            /* On arrete le son du menu et on joue le son de la scene */
+            audioStopSon(&jeu->audio, RESS_SON_MENU);
+            audioJoueSon(&jeu->audio, RESS_SON_AMBIENCE);
             /* L'utilisateur a appuyé sur ESC */
             if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
                 toucheDetectee = SDLK_ESCAPE;
@@ -180,8 +184,6 @@ void jeuBoucle(JeuSDL *jeu)
                     /* on met à jour la progression du  joueur */
                     if(jeu->niveauCourant==joueurGetProgression(jeu->joueur))
                         joueurSetProgression(jeu->joueur);
-
-                    printf("Nom %s. Progression : %d", jeu->ressource.joueurs[0]->nom,jeu->ressource.joueurs[0]->progression );
                 }
                 tempsDernierDefilementScene = getTempsSecondes();
             }
@@ -203,12 +205,6 @@ void jeuBoucle(JeuSDL *jeu)
                 tempsDernierAffichage 	= getTempsSecondes();
             }
 
-            /* test de collision */
-            /*sceneTestDeCollision(&jeu->scene, &score);*/
-            /* mise à jour du score au cours du jeu */
-            /*graphiqueSetScore(graphique, score);*/
-            /*joueurSetScore(jeu->joueur, score);*/
-
             if(sceneTestVaisseauMort(&jeu->scene))
             {
                 audioJoueSon(&jeu->audio, RESS_SON_MORT);
@@ -218,6 +214,8 @@ void jeuBoucle(JeuSDL *jeu)
             break;
 
         case JEU_ETAT_MENU:			/*-------------   M E N U   ---------------*/
+           /* on joue le son du menu */
+            audioJoueSon(&jeu->audio, RESS_SON_MENU);
             /* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
             sourisX 	= entreeGetSourisX(entree);
             sourisY		= entreeGetSourisY(entree);

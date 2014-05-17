@@ -18,7 +18,7 @@
 #define RESS_NUM_NIVEAUX										7
 #define RESS_NUM_IMAGES											64
 #define RESS_NUM_SONS_COURTS       								5
-#define RESS_NUM_SONS_LONGS    	    							2
+#define RESS_NUM_SONS_LONGS    	    							3
 #define RESS_NUM_POLICES										1
 
 
@@ -141,24 +141,28 @@
 
 /* Sons longs */
 #define RESS_SON_MENU                                           0
-#define RESS_SON_FICHIER_MENU                                   "menu_fond.wav"
+#define RESS_SON_FICHIER_MENU                                   "menu_fond.mp3"
 
 #define RESS_SON_MENU_SUITE                                     1
 #define RESS_SON_FICHIER_MENU_SUITE                             "menu_fond_suite.wav"
+
+#define RESS_SON_AMBIENCE                                       2
+#define RESS_SON_FICHIER_AMBIENCE                               "ambience1.mp3"
+
 /* sons courts */
-#define RESS_SON_TIR_LASER                                      2
+#define RESS_SON_TIR_LASER                                      3
 #define RESS_SON_FICHIER_TIR_LASER                              "tir_laser.wav"
 
-#define RESS_SON_MISSILE                                        3
+#define RESS_SON_MISSILE                                        4
 #define RESS_SON_FICHIER_MISSILE                                "missile.mp3"
 
-#define RESS_SON_ERREUR                                         4
+#define RESS_SON_ERREUR                                         5
 #define RESS_SON_FICHIER_ERREUR                                 "erreur.wav"
 
-#define RESS_SON_MORT                                           5
+#define RESS_SON_MORT                                           6
 #define RESS_SON_FICHIER_MORT                                   "mort.wav"
 
-#define RESS_SON_EXPLOSION                                      6
+#define RESS_SON_EXPLOSION                                      7
 #define RESS_SON_FICHIER_EXPLOSION                              "explosion.wav"
 /**
 * @struct Ressource

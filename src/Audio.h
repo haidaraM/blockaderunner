@@ -63,4 +63,26 @@ FMOD_SOUND * chargeSon(AudioFMOD *audio, char * nomFichier, int typeSon);
 */
 void audioVerifieErreur(FMOD_RESULT resultat);
 
+/**
+* @fn void audioStopSon(Audio * audio, int index)
+* @brief Arrete un son en cours de lecture
+* @param [in, out] audio
+* @param [in] index
+*/
+void audioStopSon(AudioFMOD * audio, int index);
+
+/**
+* @fn FMOD_CHANNEL * audioGetCanal(AudioFMOD * audio, int index)
+* @brief Renvoie le canal sur lequel le son correspondant à index est joué
+* @param [in] audio : intialisé
+*/
+FMOD_CHANNEL * audioGetCanal(AudioFMOD * audio, int index);
+
+/**
+* @fn FMOD_BOOL audioGetStatutSon(AudioFMOD *audio, int index)
+* @brief Test si le son est en lecture
+* @return Renvoie vrai si le son est en lecture, faux sinon
+*/
+FMOD_BOOL audioGetStatutSon(AudioFMOD *audio, int index);
+
 #endif

@@ -132,7 +132,8 @@ void creeListeSons(Ressource *res)
     /* autres sons */
     res->sons[RESS_SON_ERREUR]                                      =RESS_SON_FICHIER_ERREUR;
     res->sons[RESS_SON_MORT]                                        =RESS_SON_FICHIER_MORT;
-    res->sons[RESS_SON_EXPLOSION]                                    =RESS_SON_FICHIER_EXPLOSION;
+    res->sons[RESS_SON_EXPLOSION]                                   =RESS_SON_FICHIER_EXPLOSION;
+    res->sons[RESS_SON_AMBIENCE]                                    =RESS_SON_FICHIER_AMBIENCE;
 }
 
 void creeListePolices(Ressource *res)
