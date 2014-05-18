@@ -76,6 +76,16 @@ void joueurSetArmeSelectionne(Joueur * joueur, int numArme )
     v->numArmeSelectionne=numArme;
 }
 
+void joueurAjouteMissiles(Joueur *joueur, int numMissiles)
+{
+	Vaisseau *v;
+	assert(joueur != NULL);
+	v = joueurGetVaisseau(joueur);
+	v->armes[ARME_MISSILE].munitions += numMissiles;
+	if (v->armes[ARME_MISSILE].munitions > JOUEUR_MAX_MISSILES)
+		v->armes[ARME_MISSILE].munitions = JOUEUR_MAX_MISSILES;
+}
+
 Joueur * joueurCopieJoueur(Joueur * j)
 {
     Joueur * nouveauJoueur=NULL;

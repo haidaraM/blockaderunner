@@ -234,6 +234,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 	scene->evenements.ennemi_degats_missile	= 0;
 	scene->evenements.joueur_explosion		= 0;			
 	scene->evenements.ennemi_explosion		= 0;
+	scene->evenements.joueur_bonus_score	= 0;
+	scene->evenements.joueur_bonus_missile	= 0;
 
     /* Points de défilement */
     dx     = -(int)(dt * SCENE_VITESSE_DEFILEMENT_POINTS);
@@ -246,6 +248,20 @@ void sceneAnime(Scene *scene, float tempsSecondes)
             scene->pointsDefilement[i].y = randomInt(0, scene->hauteurAffichage);
         }
     }
+
+	/* Deplacement des Bonus */
+	for (i=0; i< sceneGetNbBonus(scene); i++)
+	{
+		e = (ElementScene*)tabDynGetElement(&scene->bonus, i);
+		x = elementGetX(e);
+		y = elementGetY(e);
+		dx = (int)(dt * e->vecX * SCENE_VITESSE_BONUS);
+        dy = (int)(dt * e->vecY * SCENE_VITESSE_BONUS);
+        elementSetPosition(e, x+dx, y+dy);
+        /* on supprime le bonus dès qu'il n'est plus visible */
+        if (elementVisible(e) != 1)
+			tabDynSupprimeElement(&scene->bonus, i);
+	}
 
     /* Deplacement des tirs de la scene (tirs joueur et ennemis) */
     vitesseDeplacementLaser 	= SCENE_VITESSE_LASER;
@@ -267,7 +283,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         else if (elementGetType(e) == ELEMENT_TYPE_LASER_ENNEMI)
         {
             x = elementGetX(e);
-            elementSetPosition(e, x-dx*3/4, elementGetY(e));
+            elementSetPosition(e, x-dx*3/4, elementGetY(e)); /* (note:le facteur 3/4 simule la vitesse moindre des lasers ennemis par rapport au laser du joueur) */
             /* Suppression des tirs ennemis qui sortent de l'ecran (à gauche)*/
             if (x-dx*3/4 + e->largeur < 0)
             {
@@ -356,19 +372,103 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     scene->horlogePrecedente = tempsSecondes;
 }
 
+void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
+{
+	int r;
+	switch(elementGetType(pere))
+	{
+	case ELEMENT_TYPE_ECLAIREUR:
+		/* bonus eventuel */
+		if (randomInt(0, 101) <= SCENE_PROBA_BONUS_SCORE_ECLAIREUR)
+		{
+			ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
+			elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE), 
+						ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
+			elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
+			elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
+			tabDynAjoute(&scene->bonus, (void*)bonus);
+		}
+		break;
+	case ELEMENT_TYPE_CHASSEUR:
+		/* bonus eventuel */
+		if (randomInt(0, 101) <= SCENE_PROBA_BONUS_SCORE_CHASSEUR)
+		{
+			ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
+			elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE), 
+						ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
+			elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
+			elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
+			tabDynAjoute(&scene->bonus, (void*)bonus);
+		}
+		break;
+	case ELEMENT_TYPE_CROISEUR:
+		/* bonus eventuel */
+		r = randomInt(0, 101);
+		if (r <= SCENE_PROBA_BONUS_MISSILE_CROISEUR)
+		{
+			ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
+			elementInit(bonus, ELEMENT_TYPE_BONUS_MISSILE, RESS_IMG_BONUS_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_MISSILE), 
+						ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_MISSILE), scene->largeurAffichage, scene->hauteurAffichage);
+			elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
+			elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
+			tabDynAjoute(&scene->bonus, (void*)bonus);
+		} else if (r <= SCENE_PROBA_BONUS_SCORE_CROISEUR)
+		{
+			ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
+			elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE), 
+						ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
+			elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
+			elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
+			tabDynAjoute(&scene->bonus, (void*)bonus);
+		}
+		break;
+	}
+}
 
 void sceneTestDeCollision(Scene *scene)
 {
     int i, j, d, numDebris, typeElement;
-    ElementScene * t=NULL, *e=NULL;
+    ElementScene * t=NULL, *e=NULL, *b=NULL;
     assert(scene!=NULL);
+
+	/* On itère sur tous les BONUS du jeu */
+    for(i=0; i<sceneGetNbBonus(scene); i++)
+    {
+        b = (ElementScene *) tabDynGetElement(&scene->bonus, i);
+        switch(elementGetType(b))
+        {
+		case ELEMENT_TYPE_BONUS_SCORE:
+			
+			if (elementTestDeCollision(scene->elementVaisseauJoueur, b))
+			{
+				tabDynSupprimeElement(&scene->bonus, i);
+				/* on augmente le score du joueur */
+				joueurSetScore(scene->joueur, joueurGetScore(scene->joueur) + SCENE_BONUS_SCORE);
+				/* on met le flag associé dans les évènements à 1 */
+				scene->evenements.joueur_bonus_score = 1;
+			}
+			break;
+
+		case ELEMENT_TYPE_BONUS_MISSILE:
+			
+			if (elementTestDeCollision(scene->elementVaisseauJoueur, b))
+			{
+				tabDynSupprimeElement(&scene->bonus, i);
+				/* on augmente le nombre de missiles restants du joueur */
+				joueurAjouteMissiles(scene->joueur, SCENE_BONUS_MISSILE);
+				/* on met le flag associé dans les évèenements à 1 */
+				scene->evenements.joueur_bonus_missile = 1;
+			}
+			break;
+		}
+	}
 
     /* On itère sur tous les TIRS du jeu */
     for(i=0; i<sceneGetNbTirs(scene); i++)
     {
         t = (ElementScene *) tabDynGetElement(&scene->tirs, i);
         switch(elementGetType(t))
-        {
+        {			
         case ELEMENT_TYPE_LASER_ENNEMI:
 
             if(elementTestDeCollision(scene->elementVaisseauJoueur, t))
@@ -444,6 +544,9 @@ void sceneTestDeCollision(Scene *scene)
                             /* Cas où le vaisseau ennemi est détruit */
                             if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                             {
+								sceneCreeBonusEventuel(scene, e);
+
+								/* liberation du vaisseau detruit */
                                 elementLibere(e);
                                 tabDynSupprimeElement(&scene->acteurs, j);
                                 /* mise à jour du score */
@@ -506,6 +609,8 @@ void sceneTestDeCollision(Scene *scene)
                             /* Cas où le vaisseau ennemi est détruit */
                             if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                             {
+								sceneCreeBonusEventuel(scene, e);
+
                                 elementLibere(e);
                                 tabDynSupprimeElement(&scene->acteurs, j);
                                 /* mise à jour du score */

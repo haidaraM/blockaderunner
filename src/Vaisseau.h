@@ -43,7 +43,7 @@
 #define ARME_LASER_DEGAT_S                              20
 
 #define ARME_MISSILE                                    1
-#define ARME_MISSILE_MUNITIONS                          10
+#define ARME_MISSILE_MUNITIONS                          3
 #define ARME_MISSILE_DEGAT_E                            0
 #define ARME_MISSILE_DEGAT_S                            200
 
@@ -177,6 +177,7 @@ Arme* vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
 * @param [in, out] vaisseau : initialisé
 */
 void vaisseauMajMunitions(Vaisseau * vaisseau);
+
 
 
 /**

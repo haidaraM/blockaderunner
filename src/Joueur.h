@@ -10,6 +10,7 @@
 
 #define JOUEUR_NOM_MAXCHAR				47
 #define JOUEUR_MAX_SCORE				10000000
+#define JOUEUR_MAX_MISSILES				8
 
 
 /**
@@ -97,6 +98,15 @@ void joueurSetArmeSelectionne(Joueur * joueur, int numArme );
 * @param [in] joueur : initialisé
 */
 int joueurGetNumArmeSelectionne(const Joueur * joueur);
+
+/**
+* @fn void joueurAjouteMissiles(Joueur * joueur, int mun)
+* @brief Augmente les missiles du vaisseau du joueur.
+* @param [in, out] joueur : doit être initialisé
+* @param [in] numMissiles : increment de munitions.
+*/
+void joueurAjouteMissiles(Joueur *joueur, int numMissiles);
+
 
 /**
 * @fn Joueur * joueurCopieJoueur(Joueur * j)

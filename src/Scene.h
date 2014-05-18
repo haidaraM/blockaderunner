@@ -14,10 +14,17 @@
 
 
 
+#define SCENE_BONUS_SCORE					500		/* nombre de points de score ajoutés si le joueur acquiere un Bonus de score */
+#define SCENE_BONUS_MISSILE					3		/* nombre de missiles que le joueur acquière lorsqu'il touche un Bonus missile */
+#define SCENE_PROBA_BONUS_SCORE_ECLAIREUR 	5
+#define SCENE_PROBA_BONUS_SCORE_CHASSEUR	20		/* note: pourcentages */
+#define SCENE_PROBA_BONUS_SCORE_CROISEUR	70
+#define SCENE_PROBA_BONUS_MISSILE_CROISEUR  40
 
 #define SCENE_VITESSE_DEFILEMENT_POINTS 	420.0f
 #define SCENE_NUM_POINTS_DEFILEMENT 		64
 
+#define SCENE_VITESSE_BONUS					64.0f
 #define SCENE_VITESSE_LASER					640.0f
 #define SCENE_VITESSE_ASTEROIDE				128.0f
 #define SCENE_VITESSE_ECLAIREUR				180.0f
@@ -47,6 +54,9 @@ typedef struct
 	char joueur_explosion;			/* le joueur explose */
 	char ennemi_explosion;			/* un ennemi explose */
 	char asteroide_explosion;		/* un asteroide explose */
+
+	char joueur_bonus_score;		/* le joueur vient d'acquerir un bonus de score */
+	char joueur_bonus_missile;		/* le joueur vient d'acquerir un bonus missile */
 
 } EvenementScene;
 

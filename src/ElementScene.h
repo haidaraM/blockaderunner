@@ -21,7 +21,8 @@
 #define ELEMENT_TYPE_LASER_ENNEMI                3
 #define ELEMENT_TYPE_MISSILE_JOUEUR              4
 #define ELEMENT_TYPE_MISSILE_ENNEMI              5
-#define ELEMENT_TYPE_BONUS			             6
+#define ELEMENT_TYPE_BONUS_SCORE	             6
+#define ELEMENT_TYPE_BONUS_MISSILE	             7
 
 #define ELEMENT_TYPE_ECLAIREUR					 16
 #define ELEMENT_TYPE_CHASSEUR					 17

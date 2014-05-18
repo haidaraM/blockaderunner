@@ -194,6 +194,8 @@ void vaisseauMajMunitions(Vaisseau * vaisseau)
     vaisseau->armes[vaisseau->numArmeSelectionne].munitions=nouveau;
 }
 
+
+
 void vaisseauTestDeregression()
 {
     Vaisseau v;
