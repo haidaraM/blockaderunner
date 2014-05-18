@@ -28,11 +28,32 @@
 
 
 /**
+* @struct EvenementScene
+* @brief Structure qui represente les évènements de la scène (sert à faire jouer des sons associés par le module Audio)
+*/
+typedef struct
+{
+	char joueur_tir_laser;
+	char joueur_tir_missile;
+	char ennemi_tir_laser;
+	char ennemi_tir_missile;
+
+	char joueur_degats_collision;	/* un asteroide ou vaisseau collisionne avec le joueur */	
+	char joueur_degats_laser; 		/* un laser touche le joueur */
+	char ennemi_degats_laser; 		/* un laser touche un ennemi */
+	char joueur_degats_missile;		/* un missile touche le joueur */
+	char ennemi_degats_missile;		/* un missile touche un ennemi */
+	
+	char joueur_explosion;			/* le joueur explose */
+	char ennemi_explosion;			/* un ennemi explose */
+	char asteroide_explosion;		/* un asteroide explose */
+
+} EvenementScene;
+
+/**
 * @struct Scene
 * @brief Structure qui represente tous les elements de la scene
 */
-
-
 typedef struct
 {
 	/** garde trace du temps écoulé (pour animations). */
@@ -55,12 +76,15 @@ typedef struct
 	Rectangle rectangleImageFond;
 	/** Tableau de points de defilement (FX).*/
 	Point *pointsDefilement;
+	/** structure encapsulant les évènements courant (rédéfinis à chaque frame) */
+	EvenementScene evenements;
 	/** pointeur vers l'instance en cours du module Niveau : décrit le niveau du jeu en cours.*/
 	Niveau *niveau;
 	/** pointeur vers  le joueur courant */
 	Joueur *joueur;
 	/** pointeur vers l'instance du module Ressource : utile pour créer des elements. */
 	Ressource *ressource;
+
 } Scene;
 
 

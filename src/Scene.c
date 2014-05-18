@@ -222,6 +222,19 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     ElementScene * e=NULL;
     float vitesseDeplacementLaser;
 
+	/* Réinitialisation des evenements */
+	scene->evenements.joueur_tir_laser 		= 0;
+	scene->evenements.joueur_tir_missile	= 0;
+	scene->evenements.ennemi_tir_laser		= 0;
+	scene->evenements.ennemi_tir_missile	= 0;
+	scene->evenements.joueur_degats_laser	= 0; 		
+	scene->evenements.ennemi_degats_laser	= 0; 		
+	scene->evenements.joueur_degats_collision = 0;	
+	scene->evenements.joueur_degats_missile	= 0;	
+	scene->evenements.ennemi_degats_missile	= 0;
+	scene->evenements.joueur_explosion		= 0;			
+	scene->evenements.ennemi_explosion		= 0;
+
     /* Points de défilement */
     dx     = -(int)(dt * SCENE_VITESSE_DEFILEMENT_POINTS);
     for (i=0; i< SCENE_NUM_POINTS_DEFILEMENT; i++)
@@ -363,6 +376,20 @@ void sceneTestDeCollision(Scene *scene)
                 tabDynSupprimeElement(&scene->tirs, i);
                 /* Le vaisseau du joueur encaisse des dégats */
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, ARME_LASER);
+				/* on met le flag associé dans les évènements à 1 */
+				scene->evenements.joueur_degats_laser = 1;
+            }
+            break;
+	
+		case ELEMENT_TYPE_MISSILE_ENNEMI:
+
+            if(elementTestDeCollision(scene->elementVaisseauJoueur, t))
+            {
+                tabDynSupprimeElement(&scene->tirs, i);
+                /* Le vaisseau du joueur encaisse des dégats */
+                vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, ARME_MISSILE);
+				/* on met le flag associé dans les évènements à 1 */
+				scene->evenements.joueur_degats_missile = 1;
             }
             break;
 
@@ -397,6 +424,8 @@ void sceneTestDeCollision(Scene *scene)
                         tabDynSupprimeElement(&scene->acteurs, j);
                         /* mise à jour du score */
                         joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
+						/* on met le flag associé dans les évènements à 1 */
+						scene->evenements.asteroide_explosion = 1;
                     }
                 }
                 else
@@ -409,13 +438,18 @@ void sceneTestDeCollision(Scene *scene)
                             tabDynSupprimeElement(&scene->tirs, i);
                             /* Le vaisseau ennemi encaisse des dégats */
                             vaisseauSetDegats((Vaisseau*)e->data, ARME_LASER);
-                            /* Le vaisseau ennemi est détruit */
+							/* on met le flag associé dans les évènements à 1 */
+							scene->evenements.ennemi_degats_laser = 1;	
+
+                            /* Cas où le vaisseau ennemi est détruit */
                             if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                             {
                                 elementLibere(e);
                                 tabDynSupprimeElement(&scene->acteurs, j);
                                 /* mise à jour du score */
                                 joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+100);
+								/* on met le flag associé dans les évènements à 1 */
+								scene->evenements.ennemi_explosion = 1;
                             }
                         }
                     }
@@ -452,6 +486,8 @@ void sceneTestDeCollision(Scene *scene)
                         tabDynSupprimeElement(&scene->acteurs, j);
                         /* mise à jour du score */
                         joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
+						/* on met le flag associé dans les évènements à 1 */
+						scene->evenements.asteroide_explosion = 1;
                     }
                 }
                 else
@@ -464,13 +500,18 @@ void sceneTestDeCollision(Scene *scene)
                             tabDynSupprimeElement(&scene->tirs, i);
                             /* Le vaisseau ennemi encaisse des dégats */
                             vaisseauSetDegats((Vaisseau*)e->data, ARME_MISSILE);
-                            /* Le vaisseau ennemi est détruit */
+							/* on met le flag associé dans les évènements à 1 */
+							scene->evenements.ennemi_degats_missile = 1;
+
+                            /* Cas où le vaisseau ennemi est détruit */
                             if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                             {
                                 elementLibere(e);
                                 tabDynSupprimeElement(&scene->acteurs, j);
                                 /* mise à jour du score */
-                                joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+250);
+	                            joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+250);
+								/* on met le flag associé dans les évènements à 1 */
+								scene->evenements.ennemi_explosion = 1;
                             }
                         }
                     }
@@ -490,6 +531,8 @@ void sceneTestDeCollision(Scene *scene)
         if(elementTestDeCollision(scene->elementVaisseauJoueur, e))
         {
             /* le vaisseau du joueur encaisse des dégats */
+			/* on met le flag associé dans les évènements à 1 */
+			scene->evenements.joueur_degats_collision = 1;
             switch(elementGetType(e))
             {
             case ELEMENT_TYPE_ASTEROIDE:
@@ -498,8 +541,10 @@ void sceneTestDeCollision(Scene *scene)
                 break;
             case ELEMENT_TYPE_ECLAIREUR:
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
+                vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 break;
             case ELEMENT_TYPE_CHASSEUR:
+                vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 break;
@@ -507,6 +552,8 @@ void sceneTestDeCollision(Scene *scene)
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
+		        vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
+				vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 break;
             default :
@@ -619,11 +666,15 @@ int sceneJoueurDeclencheTir(Scene * scene)
             elementInit(tir, ELEMENT_TYPE_LASER_JOUEUR, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(scene->ressource,RESS_IMG_TIR_JOUEUR_LASER),
                         ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
             valret=0;
+			/* on met le flag associé dans les évènements à 1 */
+			scene->evenements.joueur_tir_laser = 1;
             break;
         case ARME_MISSILE:
             elementInit(tir, ELEMENT_TYPE_MISSILE_JOUEUR, RESS_IMG_MISSILE_JOUEUR, ressourceGetLargeurImage(scene->ressource    , RESS_IMG_MISSILE_JOUEUR),
                         ressourceGetHauteurImage(scene->ressource, RESS_IMG_MISSILE_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
             valret=1;
+			/* on met le flag associé dans les évènements à 1 */
+			scene->evenements.joueur_tir_missile = 1;
             break;
         default :
             break;
@@ -654,6 +705,9 @@ void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
     /* positionne le tir en fonction de la position du vaisseau */
     elementSetPosition(tir, elementGetX(e), elementGetY(e));
     tabDynAjoute(&scene->tirs, (void *) tir);
+
+	/* on met le flag associé dans les évènements à 1 */
+	scene->evenements.ennemi_tir_laser = 1;
 }
 
 int sceneTestVaisseauMort(Scene * scene)
@@ -662,8 +716,13 @@ int sceneTestVaisseauMort(Scene * scene)
     assert(scene!=NULL);
     v=(Vaisseau *)scene->elementVaisseauJoueur->data;
     if(vaisseauGetPointStructure(v)<=0)
-        return 1;
-    else return 0;
+    {
+		/* on met le flag associé dans les évènements à 1 */
+		scene->evenements.joueur_explosion = 1;
+		return 1;
+
+	} else
+		return 0;
 }
 
 void sceneTestDeRegression()

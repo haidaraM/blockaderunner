@@ -15,7 +15,7 @@
 
 
 
-#define RESS_NUM_NIVEAUX										7
+#define RESS_NUM_NIVEAUX										8
 #define RESS_NUM_IMAGES											64
 #define RESS_NUM_SONS_COURTS       								5
 #define RESS_NUM_SONS_LONGS    	    							3
@@ -218,6 +218,13 @@ Joueur** ressourceGetJoueurs(const Ressource *res);
 * @brief Ajoute un joueur à la liste des joueurs sauvegardés.
 */
 void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur);
+
+/**
+* @fn void ressourceSauveJoueurs(Ressource *res)
+* @brief Sauve sur disque les données des joueurs.
+* @param [in] res
+*/
+void ressourceSauveJoueurs(Ressource *res);
 
 /**
 * @fn Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau)

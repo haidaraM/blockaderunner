@@ -77,7 +77,7 @@ void jeuBoucle(JeuSDL *jeu)
     float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
     /* Période de temps (secondes) entre deux raffraichissements écran */
     float periodeAffichage 			= 1.0f/60.0f;
-    float periodeDefilementScene 	= 1.0f/12.0f;
+    float periodeDefilementScene 	= 1.0f/24.0f;/*1.0f/12.0f;*/
 
     graphiqueRaffraichit(graphique);
 
@@ -111,9 +111,30 @@ void jeuBoucle(JeuSDL *jeu)
             break;
 
         case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
+
             /* On arrete le son du menu et on joue le son de la scene */
+			/* Note  : tu appelles ces fonctions à chaque tour de boucle ? pourquoi ne pas  les mettre dans JEU_ETAT_CHARGEMENT_NIvEAU*/
             audioStopSon(&jeu->audio, RESS_SON_MENU);
             audioJoueSon(&jeu->audio, RESS_SON_AMBIENCE);
+
+			/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
+            if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
+            {
+                /* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran de sorte que les incréments soient suffisament significatifs en pixels). */
+                sceneAnime(&jeu->scene, getTempsSecondes());
+
+                graphiqueEfface( graphique );
+                /*
+                */
+                graphiqueAfficheScene( graphique, &jeu->scene );
+                /*
+                */
+                graphiqueRaffraichit( graphique );
+
+                tempsDernierAffichage 	= getTempsSecondes();
+            }
+
+
             /* L'utilisateur a appuyé sur ESC */
             if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
                 toucheDetectee = SDLK_ESCAPE;
@@ -141,6 +162,7 @@ void jeuBoucle(JeuSDL *jeu)
             if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
             {
                 sonTir=sceneJoueurDeclencheTir(&jeu->scene);
+				/* DEPRECATED ... */
                 switch(sonTir)
                 {
                 case 0:
@@ -153,6 +175,7 @@ void jeuBoucle(JeuSDL *jeu)
                     audioJoueSon(&jeu->audio, RESS_SON_ERREUR);
                     break;
                 }
+
                 toucheDetectee=-1;
             }
 
@@ -180,40 +203,33 @@ void jeuBoucle(JeuSDL *jeu)
                 if(sceneDefileScene(&jeu->scene))
                 {
                     /* si  on arrive à la fin du niveau, on retourne au menu */
-                    jeu->etatCourantJeu=JEU_RETOUR_MENU;
-                    /* on met à jour la progression du  joueur */
+                    jeu->etatCourantJeu = JEU_RETOUR_MENU;
+                    /* Eventuellement (si le joueur joue son niveau max) : on met à jour la progression du  joueur & on sauve sur disque la progression du joueur */
                     if(jeu->niveauCourant==joueurGetProgression(jeu->joueur))
+					{
                         joueurSetProgression(jeu->joueur);
+						joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));/* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder. */
+						ressourceSauveJoueurs(&jeu->ressource);
+					}
+					/* on affiche le texte de fin de niveau */
+					graphiqueAfficheFinNiveau(graphique);
                 }
                 tempsDernierDefilementScene = getTempsSecondes();
             }
 
-            /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
-            if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
-            {
-                /* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran de sorte que les incréments soient suffisament significatifs en pixels). */
-                sceneAnime(&jeu->scene, getTempsSecondes());
-
-                graphiqueEfface( graphique );
-                /*
-                */
-                graphiqueAfficheScene( graphique, &jeu->scene );
-                /*
-                */
-                graphiqueRaffraichit( graphique );
-
-                tempsDernierAffichage 	= getTempsSecondes();
-            }
-
+            
             if(sceneTestVaisseauMort(&jeu->scene))
             {
                 audioJoueSon(&jeu->audio, RESS_SON_MORT);
-                jeu->etatCourantJeu=JEU_JOUEUR_MORT;
+                graphiqueAfficheMort(graphique);
+	            jeu->etatCourantJeu=JEU_RETOUR_MENU;
             }
 
             break;
 
+
         case JEU_ETAT_MENU:			/*-------------   M E N U   ---------------*/
+
            /* on joue le son du menu */
             audioJoueSon(&jeu->audio, RESS_SON_MENU);
             /* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
@@ -226,10 +242,12 @@ void jeuBoucle(JeuSDL *jeu)
 
             /* Pour chaque élément visible du Menu : on évalue la position souris (surlignage) et le click (activation). */
             for (i=0; i< MENU_NUM_ELEMENTS; i++)
+
                 if (menu->elements[i].visible == 1 && menu->elements[i].actionable == 1)
                 {
                     if (menu->elements[i].surligne == 1)
                     {
+
                         if (rectangleContient(&menu->elements[i].rect, sourisX, sourisY) == 0)
                         {
                             menu->elements[i].surligne = 0;
@@ -261,6 +279,9 @@ void jeuBoucle(JeuSDL *jeu)
                             /* On appelle la callback associé à l'élément menu. */
                             (menu->elements[i].action)((void*)menu);
                             choixMenu = -1;
+
+							/* MOHAMED :  Là tu devrais faire jouer un petit son correspondant au click souris sur un element du menu (un petit fx electronique par exmple)
+							-*/
                         }
 
                     }
@@ -324,6 +345,7 @@ void jeuBoucle(JeuSDL *jeu)
 
             break;
 
+
         case JEU_ETAT_CHARGEMENT_NIVEAU :	/*--------------	CHARGEMENT D'UN NIVEAU 	-------------------*/
 
             if (jeu->chargementOK == 0)
@@ -348,10 +370,12 @@ void jeuBoucle(JeuSDL *jeu)
                 tempsDernierAffichage 	= getTempsSecondes();
             }
             break;
-        case JEU_JOUEUR_MORT :
+
+        /*case JEU_JOUEUR_MORT :
+
             graphiqueAfficheMort(graphique);
             jeu->etatCourantJeu=JEU_RETOUR_MENU;
-            break;
+            break;*/
 
         default:
             break;

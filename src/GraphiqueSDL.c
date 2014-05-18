@@ -273,7 +273,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 
 	/*------- Elements du HUD ---------------------------------------------*/
 
-	graphique->elementsHUD 		= (SDL_Surface**)malloc( 5 * sizeof(SDL_Surface*) );
+	graphique->elementsHUD 		= (SDL_Surface**)malloc( GFX_NUM_ELEMENTS_HUD * sizeof(SDL_Surface*) );
 	assert(graphique->elementsHUD != NULL);
 	graphique->elementsHUD[0] 	= SDL_CreateRGBSurface(	SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR, GFX_HUD_ELEMENT_HAUTEUR, 32,
                                    						graphique->rmask, graphique->gmask, graphique->bmask, 0 );
@@ -298,9 +298,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	graphique->elementsHUD[3]	= TTF_RenderText_Blended( graphique->policeListeJoueurs,  "0000000", couleurTexteScore);
 	assert(graphique->elementsHUD[3] != NULL);
 
-	 /* partie mort du joueur */
-    graphique->elementsHUD[4]= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMenuSurvol);
-
+	/* fin de niveau ou mort du joueur */
+    graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMenuSurvol);
+	graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteMenuSurvol);
 
 	/*---------------------------------------------------------------------
 		FIN */
@@ -333,7 +333,7 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 	TTF_CloseFont(graphique->policeListeJoueurs);
 
 	/* Libertation des HUD */
-	for(i=0; i<5; i++)
+	for(i=0; i<GFX_NUM_ELEMENTS_HUD; i++)
 	{
         SDL_FreeSurface(graphique->elementsHUD[i]);
 	}
@@ -621,6 +621,22 @@ void graphiqueAfficheMort(GraphiqueSDL * graphique)
 
     /* On blit le texte au centre de l'ecran */
     SDL_BlitSurface(graphique->elementsHUD[4], NULL, graphique->surface, &positionText);
+    /* On met à jour l'ecran */
+    graphiqueRaffraichit(graphique);
+    /* On met le jeu en pause pendant 3s */
+    SDL_Delay(3000);
+
+}
+
+void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique)
+{
+    SDL_Rect positionText;
+    positionText.x=graphique->largeur/2-50;
+    positionText.y=graphique->hauteur/2;
+    assert(graphique!=NULL);
+
+    /* On blit le texte au centre de l'ecran */
+    SDL_BlitSurface(graphique->elementsHUD[5], NULL, graphique->surface, &positionText);
     /* On met à jour l'ecran */
     graphiqueRaffraichit(graphique);
     /* On met le jeu en pause pendant 3s */

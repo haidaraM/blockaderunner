@@ -19,6 +19,7 @@
 #define GFX_MODE_FENETRE	 				1
 #define GFX_FENETRE_TITRE_DEFAUT			"Blockade Runner"
 
+#define GFX_NUM_ELEMENTS_HUD				6
 #define GFX_HUD_ELEMENT_LARGEUR				8
 #define GFX_HUD_ELEMENT_HAUTEUR				6
 #define GFX_HUD_ELEMENT_OFFSET				2
@@ -52,7 +53,7 @@ typedef struct
 	SDL_Surface **textesMenu;
 	/** Tableau de pointeurs sur SDL_Surface (tous les rendus de texte des noms des joueurs). */
 	SDL_Surface **textesNomsJoueurs;
-	/** Un tableau des petites surfaces pour l'affichage des niveaux d'Ecran, Coque du vaisseau du joueur, texte quand le joueur meurt */
+	/** Un tableau des petites surfaces pour l'affichage des niveaux d'Ecran, Coque du vaisseau du joueur, texte quand le joueur meurt, etc. */
 	SDL_Surface **elementsHUD;
 	/** police du Menu */
 	TTF_Font *policeMenu;
@@ -153,6 +154,11 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene );
 * @brief affiche un texte quand le joueur meurt
 */
 void graphiqueAfficheMort(GraphiqueSDL * graphique);
+
+/**
+* @brief affiche un texte quand le joueur a complété un niveau
+*/
+void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique);
 
 #endif
 

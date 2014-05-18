@@ -373,7 +373,6 @@ void menuJouer(void *m)
 void menuCommencerNiveau(void* m)
 {}
 
-
 void menuSelectionneJoueur(Menu *menu, int indexElement)
 {
 	int index;
@@ -409,7 +408,6 @@ void menuSetCaractere(Menu *menu, char alphaNum)
 
 void menuEffaceCaractere(Menu *menu)
 {
-	/*char nom[JOUEUR_NOM_MAXCHAR+1];*/
 	assert(menu != NULL);
 
 	if( strlen(menu->nomNouveauJoueur) == 0)
@@ -424,14 +422,16 @@ void menuSetFinLectureClavier(Menu *menu)
 
 	if (strlen(menu->nomNouveauJoueur) != 0)
 	{
+		/* on ajoute le nouveau joueur à Ressource */
 		ressourceAjouteJoueur(menu->ressource, menu->nomNouveauJoueur, menu->joueurCourant);
-		/*printf("--> joueur ajouté. \n");*/
+		/* on demande à Ressource de sauver sur disque l'etat des joueurs (dont le nouveau) */
+		ressourceSauveJoueurs(menu->ressource);
+
+		printf("%s --> joueur ajouté. \n", menu->nomNouveauJoueur);
 		creeListeJoueurs(menu);
-		/*printf("--> menu mis a jour. \n");*/
 	}
 
 	menuPrincipal(menu);
-	/*printf("--> retour choix joueur. \n");*/
 }
 
 Joueur* menuGetJoueurChoisi(const Menu *menu)

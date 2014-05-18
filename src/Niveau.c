@@ -51,7 +51,7 @@ void niveauChargeFichier(Niveau * niveau, int numero)
 	GroupeNiveau *groupe;
 
     assert(niveau!=NULL);
-    assert(numero>=0 && numero <=6);
+    assert(numero>=0 && numero < RESS_NUM_NIVEAUX);
 
     strcpy(nomFichier, RESS_DIR_NIVEAU);
 

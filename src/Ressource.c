@@ -320,6 +320,49 @@ void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1],
     }
 }
 
+void ressourceSauveJoueurs(Ressource *res)
+{
+	FILE *fic;
+
+    int i;
+    int valret;
+    char nomFic[128], file[64];
+
+    assert( res!=NULL && res->joueurs!=NULL);
+
+    strcpy(nomFic, RESS_DIR_SAUVEGARDES);
+    strcpy(file, RESS_SAU_FICHIER_JOUEURS);
+    strcat(nomFic, file);
+
+    fic 		= fopen(nomFic, "w");
+    if(fic == NULL)
+    {
+        printf("Erreur : (Ressource) : Impossible d'ouvrir le fichier %s.\n", nomFic);
+        exit(EXIT_FAILURE);
+    }
+
+    valret = fprintf(fic, "%d\n", res->numJoueurs);
+    assert(valret >= 1);
+
+    for (i=0; i< res->numJoueurs; i++)
+    {
+        valret = fprintf(fic, "%s\n", res->joueurs[i]->nom);
+        if (valret < 1)
+        {
+            printf("Erreur d'ecriture du fichier %s.\n", nomFic);
+            exit(EXIT_FAILURE);
+        }
+        valret = fprintf(fic, "%d %d\n", (int)res->joueurs[i]->progression, res->joueurs[i]->score);
+        if (valret <= 0)
+        {
+            printf("Erreur d'ecriture du fichier %s.\n", nomFic);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    fclose(fic);
+}
+
 Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau)
 {
     assert(res != NULL && numeroNiveau >=0 && numeroNiveau < RESS_NUM_NIVEAUX);
