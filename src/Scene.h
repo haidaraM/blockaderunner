@@ -7,9 +7,7 @@
 #define _SCENE_H
 
 #include "ElementScene.h"
-#include "Vaisseau.h"
 #include "Ressource.h"
-#include "Joueur.h"
 #include "Outils.h"
 
 
@@ -45,12 +43,12 @@ typedef struct
 	char ennemi_tir_laser;
 	char ennemi_tir_missile;
 
-	char joueur_degats_collision;	/* un asteroide ou vaisseau collisionne avec le joueur */	
+	char joueur_degats_collision;	/* un asteroide ou vaisseau collisionne avec le joueur */
 	char joueur_degats_laser; 		/* un laser touche le joueur */
 	char ennemi_degats_laser; 		/* un laser touche un ennemi */
 	char joueur_degats_missile;		/* un missile touche le joueur */
 	char ennemi_degats_missile;		/* un missile touche un ennemi */
-	
+
 	char joueur_explosion;			/* le joueur explose */
 	char ennemi_explosion;			/* un ennemi explose */
 	char asteroide_explosion;		/* un asteroide explose */
@@ -118,13 +116,13 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
 void sceneLibere(Scene *scene);
 
 /**
-* @fn void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res)
+* @fn void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res)
 * @brief Charge un Niveau du Jeu.
 * @param [in, out] scene
 * @param [in] niveau
 * @param [in] res
 */
-void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res);
+void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res);
 
 /**
 * @fn void sceneResetHorloge(Scene *scene, float horloge)
@@ -240,9 +238,10 @@ void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
 void sceneTestDeCollision(Scene *scene);
 
 /**
-* @fn int sceneTestVaisseauMort(Scene * scene)
+* @fn int sceneTestVaisseauMort(const Scene * scene)
 * @brief Test si le joueur est mort ou pas
 * @param [in] initialisé
+* @return Renvoie 1 si le joueur est mort, 0 sinon
 */
 int sceneTestVaisseauMort(Scene * scene);
 

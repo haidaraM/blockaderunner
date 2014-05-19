@@ -9,7 +9,6 @@
 
 
 
-#include "Outils.h"
 #include "Joueur.h"
 #include "Niveau.h"
 
@@ -17,7 +16,7 @@
 
 #define RESS_NUM_NIVEAUX										8
 #define RESS_NUM_IMAGES											64
-#define RESS_NUM_SONS_COURTS       								5
+#define RESS_NUM_SONS_COURTS       								9
 #define RESS_NUM_SONS_LONGS    	    							3
 #define RESS_NUM_POLICES										1
 
@@ -48,7 +47,6 @@
 #define RESS_POL_FICHIER_MENU									"boombox2.ttf"
 #define RESS_POL_TAILLE_MENU									18
 #define RESS_POL_TAILLE_LISTE_JOUEURS							12
-
 
 /* IMAGES */
 
@@ -164,6 +162,22 @@
 
 #define RESS_SON_EXPLOSION                                      7
 #define RESS_SON_FICHIER_EXPLOSION                              "explosion.wav"
+
+#define RESS_SON_MENU_SURVOL                                    8
+#define RESS_SON_FICHIER_MENU_SURVOL                            "menu_survol.wav"
+
+#define RESS_SON_MENU_VALIDATE                                  9
+#define RESS_SON_FICHIER_MENU_VALIDATE                          "menu_validate.wav"
+
+#define RESS_SON_TIR_LASER_ENNEMI                               10
+#define RESS_SON_FICHIER_TIR_LASER_ENNEMI                       "tir_laser2.wav"
+
+#define RESS_SON_BONUS_SCORE                                    11
+#define RESS_SON_FICHIER_BONUS_SCORE                            "bonus_score.wav"
+
+
+
+
 /**
 * @struct Ressource
 * @brief

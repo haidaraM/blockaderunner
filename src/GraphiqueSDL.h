@@ -137,7 +137,7 @@ void graphiqueSetScore(GraphiqueSDL *graphique, int score);
 /**
 * @fn void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu )
 * @brief Affiche le Menu.
-* @param [in] graphique
+* @param [in,out] graphique
 * @param [in] menu
 */
 void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu );

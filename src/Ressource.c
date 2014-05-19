@@ -129,11 +129,15 @@ void creeListeSons(Ressource *res)
     /*sons des tirs */
     res->sons[RESS_SON_TIR_LASER]                                   =RESS_SON_FICHIER_TIR_LASER;
     res->sons[RESS_SON_MISSILE]                                     =RESS_SON_FICHIER_MISSILE;
+    res->sons[RESS_SON_TIR_LASER_ENNEMI]                            =RESS_SON_FICHIER_TIR_LASER_ENNEMI;
     /* autres sons */
     res->sons[RESS_SON_ERREUR]                                      =RESS_SON_FICHIER_ERREUR;
     res->sons[RESS_SON_MORT]                                        =RESS_SON_FICHIER_MORT;
     res->sons[RESS_SON_EXPLOSION]                                   =RESS_SON_FICHIER_EXPLOSION;
     res->sons[RESS_SON_AMBIENCE]                                    =RESS_SON_FICHIER_AMBIENCE;
+    res->sons[RESS_SON_MENU_SURVOL]                                 =RESS_SON_FICHIER_MENU_SURVOL;
+    res->sons[RESS_SON_MENU_VALIDATE]                               =RESS_SON_FICHIER_MENU_VALIDATE;
+    res->sons[RESS_SON_BONUS_SCORE]                                 =RESS_SON_FICHIER_BONUS_SCORE;
 }
 
 void creeListePolices(Ressource *res)

@@ -111,7 +111,7 @@ void sceneLibere(Scene *scene)
     tabDynLibere(&scene->decors);
 
     /* Liberation du vaisseauJoueur */
-    /*elementLibere(scene->elementVaisseauJoueur); */ /* Bug quand on quitte le niveau et on revient dans la partie */
+    elementLibere(scene->elementVaisseauJoueur);
     free(scene->elementVaisseauJoueur);
 
     /* Liberation du joueur qu'on a passé à la scene : correspond à la copie */
@@ -121,7 +121,7 @@ void sceneLibere(Scene *scene)
 
 
 
-void sceneChargeNiveau(Scene *scene, Niveau *niveau, Ressource *res )
+void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res )
 {
     int i, j, numGroupes;
     GroupeNiveau *groupe;
@@ -227,12 +227,12 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 	scene->evenements.joueur_tir_missile	= 0;
 	scene->evenements.ennemi_tir_laser		= 0;
 	scene->evenements.ennemi_tir_missile	= 0;
-	scene->evenements.joueur_degats_laser	= 0; 		
-	scene->evenements.ennemi_degats_laser	= 0; 		
-	scene->evenements.joueur_degats_collision = 0;	
-	scene->evenements.joueur_degats_missile	= 0;	
+	scene->evenements.joueur_degats_laser	= 0;
+	scene->evenements.ennemi_degats_laser	= 0;
+	scene->evenements.joueur_degats_collision = 0;
+	scene->evenements.joueur_degats_missile	= 0;
 	scene->evenements.ennemi_degats_missile	= 0;
-	scene->evenements.joueur_explosion		= 0;			
+	scene->evenements.joueur_explosion		= 0;
 	scene->evenements.ennemi_explosion		= 0;
 	scene->evenements.joueur_bonus_score	= 0;
 	scene->evenements.joueur_bonus_missile	= 0;
@@ -382,7 +382,7 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
 		if (randomInt(0, 101) <= SCENE_PROBA_BONUS_SCORE_ECLAIREUR)
 		{
 			ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
-			elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE), 
+			elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE),
 						ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
 			elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
 			elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
@@ -394,7 +394,7 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
 		if (randomInt(0, 101) <= SCENE_PROBA_BONUS_SCORE_CHASSEUR)
 		{
 			ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
-			elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE), 
+			elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE),
 						ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
 			elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
 			elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
@@ -407,7 +407,7 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
 		if (r <= SCENE_PROBA_BONUS_MISSILE_CROISEUR)
 		{
 			ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
-			elementInit(bonus, ELEMENT_TYPE_BONUS_MISSILE, RESS_IMG_BONUS_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_MISSILE), 
+			elementInit(bonus, ELEMENT_TYPE_BONUS_MISSILE, RESS_IMG_BONUS_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_MISSILE),
 						ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_MISSILE), scene->largeurAffichage, scene->hauteurAffichage);
 			elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
 			elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
@@ -415,7 +415,7 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
 		} else if (r <= SCENE_PROBA_BONUS_SCORE_CROISEUR)
 		{
 			ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
-			elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE), 
+			elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE),
 						ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
 			elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
 			elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
@@ -438,7 +438,7 @@ void sceneTestDeCollision(Scene *scene)
         switch(elementGetType(b))
         {
 		case ELEMENT_TYPE_BONUS_SCORE:
-			
+
 			if (elementTestDeCollision(scene->elementVaisseauJoueur, b))
 			{
 				tabDynSupprimeElement(&scene->bonus, i);
@@ -450,7 +450,7 @@ void sceneTestDeCollision(Scene *scene)
 			break;
 
 		case ELEMENT_TYPE_BONUS_MISSILE:
-			
+
 			if (elementTestDeCollision(scene->elementVaisseauJoueur, b))
 			{
 				tabDynSupprimeElement(&scene->bonus, i);
@@ -468,7 +468,7 @@ void sceneTestDeCollision(Scene *scene)
     {
         t = (ElementScene *) tabDynGetElement(&scene->tirs, i);
         switch(elementGetType(t))
-        {			
+        {
         case ELEMENT_TYPE_LASER_ENNEMI:
 
             if(elementTestDeCollision(scene->elementVaisseauJoueur, t))
@@ -480,7 +480,7 @@ void sceneTestDeCollision(Scene *scene)
 				scene->evenements.joueur_degats_laser = 1;
             }
             break;
-	
+
 		case ELEMENT_TYPE_MISSILE_ENNEMI:
 
             if(elementTestDeCollision(scene->elementVaisseauJoueur, t))
@@ -539,7 +539,7 @@ void sceneTestDeCollision(Scene *scene)
                             /* Le vaisseau ennemi encaisse des dégats */
                             vaisseauSetDegats((Vaisseau*)e->data, ARME_LASER);
 							/* on met le flag associé dans les évènements à 1 */
-							scene->evenements.ennemi_degats_laser = 1;	
+							scene->evenements.ennemi_degats_laser = 1;
 
                             /* Cas où le vaisseau ennemi est détruit */
                             if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
@@ -829,6 +829,7 @@ int sceneTestVaisseauMort(Scene * scene)
 	} else
 		return 0;
 }
+
 
 void sceneTestDeRegression()
 {

@@ -48,9 +48,9 @@ void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score);
 void joueurLibere(Joueur * joueur);
 
 /**
-* @fn void joueurSetScore(Joueur * joueur);
+* @fn void joueurSetScore(Joueur * joueur, int score);
 * @brief met à jour le score du joeur. !
-* @param [in, out] joueur : non null et initialisé
+* @param [in, out] joueur : initialisé
 * @param [in] score
 */
 void joueurSetScore(Joueur * joueur, int score);

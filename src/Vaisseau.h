@@ -100,7 +100,6 @@ typedef struct
 * @param [in, out] vaisseauJ
 * @param [in] type
 *
-* NOTE : TODO : enlever pointS, pointE et nbArmes qui ne servent à rien pour le moment.
 */
 void vaisseauInit(Vaisseau *vaisseauJ, int type);
 
@@ -143,7 +142,7 @@ int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 /**
 * @fn void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure);
 * @brief Affecte les points ecran &  les points structure du vaisseau
-* @param [in] vaisseau
+* @param [in,out] vaisseau
 * @param [in] pEcran
 * @param [in] pStructure
 */
@@ -152,14 +151,14 @@ void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure);
 /**
 * @fn void vaisseauSetDegats(const Vaisseau * vaisseau, int arme);
 * @brief Inflige des dégats au vaisseau (affecte les points ecran et structure).
-* @param [in] vaisseau
+* @param [in, out] vaisseau
 * @param [in] typeDegats type de dommages : arme utilisée (laser ou missile), ou collision.
 */
 void vaisseauSetDegats(Vaisseau * vaisseau, int typeDegats);
 
 /**
 * @fn int vaisseauGetMunitionsArme(Const Vaisseau * vaisseau)
-* @brief renvoie les munitions de l'arme selectionnéé
+* @brief Recupere les munitions de l'arme selectionnéé
 * @param [in] vaisseau
 */
 int vaisseauGetMunitionsArme(const Vaisseau * vaisseau);
@@ -172,7 +171,7 @@ int vaisseauGetMunitionsArme(const Vaisseau * vaisseau);
 Arme* vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
 
 /**
-* @fn void vaisseauMajMunitions(Vaisseau * joueur)
+* @fn void vaisseauMajMunitions(Vaisseau * vaisseau)
 * @brief Met à jour les munitions de l'arme selectionnée quand un tir un declenché
 * @param [in, out] vaisseau : initialisé
 */

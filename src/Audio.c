@@ -8,12 +8,13 @@
 
 /* Fonctions internes  */
 
-FMOD_SOUND * chargeSon(AudioFMOD *audio, char * nomFichier, int typeSon)
+FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon)
 {
     FMOD_SOUND * son=NULL;
     FMOD_RESULT resultat;
     char file[64], dir[64];
     assert(typeSon == 0 || typeSon == 1);
+    assert(audio!=NULL);
 
     if (nomFichier == NULL)
         return NULL;
@@ -36,7 +37,7 @@ FMOD_SOUND * chargeSon(AudioFMOD *audio, char * nomFichier, int typeSon)
     return son;
 }
 
-void audioInit(AudioFMOD *audio, Ressource *res)
+void audioInit(AudioFMOD *audio, const Ressource *res)
 {
     FMOD_RESULT resultat;
     int i, nbSons;
@@ -88,7 +89,7 @@ void audioLibere(AudioFMOD *audio)
     audioVerifieErreur(resultat);
 }
 
-void audioVerifieErreur(FMOD_RESULT resultat)
+void audioVerifieErreur(const FMOD_RESULT resultat)
 {
     if (resultat != FMOD_OK)
     {
@@ -97,7 +98,7 @@ void audioVerifieErreur(FMOD_RESULT resultat)
     }
 }
 
-void audioJoueSon(AudioFMOD * audio, int index)
+void audioJoueSon(const AudioFMOD * audio, int index)
 {
     FMOD_RESULT resultat;
     FMOD_BOOL etat;
@@ -106,7 +107,7 @@ void audioJoueSon(AudioFMOD * audio, int index)
     assert(0<=index && index < RESS_NUM_SONS_COURTS + RESS_NUM_SONS_LONGS);
     /* on recupere l'etat du son */
     etat=audioGetStatutSon(audio, index);
-    /* On joue ensuite le son (que les sons longs) s'il n'est pas deja en lecture*/
+    /* On joue ensuite le son s'il n'est pas deja en lecture*/
     if(0<=index && index < RESS_NUM_SONS_LONGS) /* si c'est un son long */
     {
         if(!etat) /* on test son etat et on le joue seulement s'il n'est pas en lecture*/
@@ -115,18 +116,19 @@ void audioJoueSon(AudioFMOD * audio, int index)
             audioVerifieErreur(resultat);
         }
     }
-    else
+    else /* on joue les sons courts en ne tenant pas compte de leurs etats */
     {
         resultat=FMOD_System_PlaySound(audio->system, index, audio->sons[index], 0, NULL);
         audioVerifieErreur(resultat);
     }
 }
 
-void audioStopSon(AudioFMOD * audio, int index)
+void audioStopSon(const AudioFMOD * audio, int index)
 {
     FMOD_CHANNEL * canal;
+    /* recuperation de l'etat du son */
     FMOD_BOOL etat=audioGetStatutSon(audio, index);
-
+    /* recuperation de son canal, utile pour arreter le son */
     canal=audioGetCanal(audio, index);
 
     if(etat)
@@ -134,7 +136,7 @@ void audioStopSon(AudioFMOD * audio, int index)
 
 }
 
-FMOD_BOOL audioGetStatutSon(AudioFMOD *audio, int index)
+FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index)
 {
     FMOD_BOOL etat;
     FMOD_CHANNEL *canal;
@@ -145,7 +147,7 @@ FMOD_BOOL audioGetStatutSon(AudioFMOD *audio, int index)
     return etat;
 }
 
-FMOD_CHANNEL * audioGetCanal(AudioFMOD * audio, int index)
+FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index)
 {
     FMOD_CHANNEL * channel;
     FMOD_RESULT resultat;
@@ -155,5 +157,19 @@ FMOD_CHANNEL * audioGetCanal(AudioFMOD * audio, int index)
     audioVerifieErreur(resultat);
     return channel;
 }
+
+void audioJoueScene(AudioFMOD *audio, const Scene *scene)
+{
+    assert(audio!=NULL);
+    assert(scene!=NULL);
+
+    if(scene->evenements.ennemi_tir_laser==1)
+        audioJoueSon(audio, RESS_SON_TIR_LASER_ENNEMI);
+
+    if(scene->evenements.joueur_bonus_score==1)
+        audioJoueSon(audio, RESS_SON_BONUS_SCORE);
+
+}
+
 
 

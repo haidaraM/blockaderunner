@@ -4,7 +4,6 @@
 * @author Yann Cortial - Mohamed El Mouctar HAIDARA.
 */
 #include "JeuSDL.h"
-#include "Outils.h"
 
 #include <SDL/SDL.h>
 #include <assert.h>
@@ -112,12 +111,7 @@ void jeuBoucle(JeuSDL *jeu)
 
         case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
 
-            /* On arrete le son du menu et on joue le son de la scene */
-			/* Note  : tu appelles ces fonctions à chaque tour de boucle ? pourquoi ne pas  les mettre dans JEU_ETAT_CHARGEMENT_NIvEAU*/
-            audioStopSon(&jeu->audio, RESS_SON_MENU);
-            audioJoueSon(&jeu->audio, RESS_SON_AMBIENCE);
-
-			/* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
+            /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
             if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
             {
                 /* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran de sorte que les incréments soient suffisament significatifs en pixels). */
@@ -134,6 +128,7 @@ void jeuBoucle(JeuSDL *jeu)
                 tempsDernierAffichage 	= getTempsSecondes();
             }
 
+            audioJoueScene(&jeu->audio, &jeu->scene);
 
             /* L'utilisateur a appuyé sur ESC */
             if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
@@ -162,7 +157,7 @@ void jeuBoucle(JeuSDL *jeu)
             if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
             {
                 sonTir=sceneJoueurDeclencheTir(&jeu->scene);
-				/* DEPRECATED ... */
+                /* DEPRECATED ... */
                 switch(sonTir)
                 {
                 case 0:
@@ -206,23 +201,25 @@ void jeuBoucle(JeuSDL *jeu)
                     jeu->etatCourantJeu = JEU_RETOUR_MENU;
                     /* Eventuellement (si le joueur joue son niveau max) : on met à jour la progression du  joueur & on sauve sur disque la progression du joueur */
                     if(jeu->niveauCourant==joueurGetProgression(jeu->joueur))
-					{
+                    {
                         joueurSetProgression(jeu->joueur);
-						joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));/* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder. */
-						ressourceSauveJoueurs(&jeu->ressource);
-					}
-					/* on affiche le texte de fin de niveau */
-					graphiqueAfficheFinNiveau(graphique);
+                        joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));/* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder. */
+                        ressourceSauveJoueurs(&jeu->ressource);
+                    }
+                    /* on affiche le texte de fin de niveau */
+                    graphiqueAfficheFinNiveau(graphique);
                 }
                 tempsDernierDefilementScene = getTempsSecondes();
             }
 
-            
+
             if(sceneTestVaisseauMort(&jeu->scene))
             {
+                /* arret du son de la scene */
+                audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
                 audioJoueSon(&jeu->audio, RESS_SON_MORT);
                 graphiqueAfficheMort(graphique);
-	            jeu->etatCourantJeu=JEU_RETOUR_MENU;
+                jeu->etatCourantJeu=JEU_RETOUR_MENU;
             }
 
             break;
@@ -230,8 +227,8 @@ void jeuBoucle(JeuSDL *jeu)
 
         case JEU_ETAT_MENU:			/*-------------   M E N U   ---------------*/
 
-           /* on joue le son du menu */
-            audioJoueSon(&jeu->audio, RESS_SON_MENU);
+            /* on joue le son du menu */
+             audioJoueSon(&jeu->audio, RESS_SON_MENU);
             /* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
             sourisX 	= entreeGetSourisX(entree);
             sourisY		= entreeGetSourisY(entree);
@@ -280,13 +277,16 @@ void jeuBoucle(JeuSDL *jeu)
                             (menu->elements[i].action)((void*)menu);
                             choixMenu = -1;
 
-							/* MOHAMED :  Là tu devrais faire jouer un petit son correspondant au click souris sur un element du menu (un petit fx electronique par exmple)
-							-*/
+                            audioJoueSon(&jeu->audio, RESS_SON_MENU_VALIDATE);
+
                         }
 
                     }
                     else if (rectangleContient(&menu->elements[i].rect, sourisX, sourisY) == 1)
-                        menu->elements[i].surligne = 1;
+                        {
+                            menu->elements[i].surligne = 1;
+                            audioJoueSon(&jeu->audio, RESS_SON_MENU_SURVOL);
+                        }
                 }
 
             /* Cas où on doit lire le clavier pour entrer un nom de joueur */
@@ -369,13 +369,12 @@ void jeuBoucle(JeuSDL *jeu)
 
                 tempsDernierAffichage 	= getTempsSecondes();
             }
+
+            /* On arrete le son du menu et on joue le son de la scene */
+            audioStopSon(&jeu->audio, RESS_SON_MENU);
+            audioJoueSon(&jeu->audio, RESS_SON_AMBIENCE);
+
             break;
-
-        /*case JEU_JOUEUR_MORT :
-
-            graphiqueAfficheMort(graphique);
-            jeu->etatCourantJeu=JEU_RETOUR_MENU;
-            break;*/
 
         default:
             break;

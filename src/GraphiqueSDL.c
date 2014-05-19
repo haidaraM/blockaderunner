@@ -57,6 +57,7 @@ void chargePolices(GraphiqueSDL *graphique)
     	printf("TTF_OpenFont: %s\n", TTF_GetError());
 	    exit(2);
 	}
+
 }
 
 /**
@@ -117,6 +118,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	SDL_Color couleurTexteMenu 			= { 249, 255, 253 };
 	SDL_Color couleurTexteMenuSurvol 	= { 249, 255, 53 };
 	SDL_Color couleurTexteScore			= { 249, 153, 86 };
+	SDL_Color couleurTexteMessage       = { 255, 0, 0};
 	Uint32 couleurNiveauCoque			= 0x00B0FF;
 	Uint32 couleurNiveauEcran			= 0xFFB000;
 
@@ -299,8 +301,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	assert(graphique->elementsHUD[3] != NULL);
 
 	/* fin de niveau ou mort du joueur */
-    graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMenuSurvol);
-	graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteMenuSurvol);
+    graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMessage);
+	graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteMessage);
 
 	/*---------------------------------------------------------------------
 		FIN */
