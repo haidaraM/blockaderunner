@@ -14,21 +14,21 @@
 
 void elementInit(ElementScene *element, int type, int indexImage, int largeur, int hauteur, int largeurEcran, int hauteurEcran)
 {
-	assert( element != NULL );
+    assert( element != NULL );
 
-	/* element->type			= type; */
-	element->x 				= 0;
-	element->y				= 0;
-	element->vecX			= -1.0f;
-	element->vecY			= 0.0f;
-	element->largeur 		= largeur;
-	element->hauteur 		= hauteur;
-	element->largeurSceneVisible	= largeurEcran;
-	element->hauteurSceneVisible	= hauteurEcran;
-	element->visible 		= 1;
-	element->indexImage 		= indexImage;
-	element->data=NULL;
-	elementSetType(element, type);
+    /* element->type			= type; */
+    element->x 				= 0;
+    element->y				= 0;
+    element->vecX			= -1.0f;
+    element->vecY			= 0.0f;
+    element->largeur 		= largeur;
+    element->hauteur 		= hauteur;
+    element->largeurSceneVisible	= largeurEcran;
+    element->hauteurSceneVisible	= hauteurEcran;
+    element->visible 		= 1;
+    element->indexImage 		= indexImage;
+    element->data=NULL;
+    elementSetType(element, type);
 
 }
 
@@ -55,44 +55,44 @@ void elementDetruit(ElementScene *element)
 
 void elementSetType(ElementScene *element, int type)
 {
-	assert(element != NULL);
-	element->type = type;
-	switch (type)
-	{
-		case ELEMENT_TYPE_ECLAIREUR:
-            element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
-            vaisseauInit(element->data, VAISSEAU_ECLAIREUR_TYPE);
-			break;
-		case ELEMENT_TYPE_CHASSEUR:
-            element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
-            vaisseauInit(element->data, VAISSEAU_CHASSEUR_TYPE);
-			break;
-		case ELEMENT_TYPE_CROISEUR:
-            element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
-            vaisseauInit(element->data, VAISSEAU_CROISEUR_TYPE);
-			break;
+    assert(element != NULL);
+    element->type = type;
+    switch (type)
+    {
+    case ELEMENT_TYPE_ECLAIREUR:
+        element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
+        vaisseauInit(element->data, VAISSEAU_ECLAIREUR_TYPE);
+        break;
+    case ELEMENT_TYPE_CHASSEUR:
+        element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
+        vaisseauInit(element->data, VAISSEAU_CHASSEUR_TYPE);
+        break;
+    case ELEMENT_TYPE_CROISEUR:
+        element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
+        vaisseauInit(element->data, VAISSEAU_CROISEUR_TYPE);
+        break;
 
-		default:
-			break;
-	}
+    default:
+        break;
+    }
 }
 
 int elementVisible(const ElementScene *element)
 {
     assert(element!=NULL);
-	return element->visible;
+    return element->visible;
 }
 
 int elementGetX(const ElementScene *element)
 {
     assert(element!=NULL);
-	return element->x;
+    return element->x;
 }
 
 int elementGetY(const ElementScene *element)
 {
     assert(element!=NULL);
-	return element->y;
+    return element->y;
 }
 
 int elementGetType(const ElementScene * element)
@@ -103,40 +103,45 @@ int elementGetType(const ElementScene * element)
 
 void elementSetPosition(ElementScene *element, int x, int y)
 {
-	element->x	= x;
-	element->y	= y;
+    assert(element!=NULL);
+    element->x	= x;
+    element->y	= y;
 
-	if (x < (-element->largeur) || y < (-element->hauteur) || x > element->largeurSceneVisible || y > element->hauteurSceneVisible)
-			element->visible = 0;
-	else	element->visible = 1;
+    if (x < (-element->largeur) || y < (-element->hauteur) || x > element->largeurSceneVisible || y > element->hauteurSceneVisible)
+        element->visible = 0;
+    else	element->visible = 1;
 }
 
 void elementSetDirection(ElementScene *element, float vx, float vy)
 {
-	element->vecX = vx;
-	element->vecY = vy;
+    assert(element!=NULL);
+    element->vecX = vx;
+    element->vecY = vy;
 }
 
 int elementGetImageIndex(const ElementScene *element)
 {
-	return element->indexImage;
+    assert(element!=NULL);
+    return element->indexImage;
 }
 
-int elementTestDeCollision(ElementScene * e1, ElementScene *e2)
+int elementTestDeCollision(const ElementScene * e1, const ElementScene *e2)
 {
     int x1, x2, y1, y2;
     x1=elementGetX(e1);
     x2=elementGetX(e2);
     y1=elementGetY(e1);
     y2=elementGetY(e2);
+    assert(e1!=NULL);
+    assert(e2!=NULL);
 
     if((x2 >= x1 + e1->largeur)      /* trop à droite */
-	|| (x2 + e2->largeur <= x1)  /* trop à gauche */
-	|| (y2 >= y1 + e1->hauteur)  /*trop en bas */
-	|| (y2 + e2->hauteur <= y1))  /* trop en haut */
-          return 0;
-   else
-          return 1;
+            || (x2 + e2->largeur <= x1)  /* trop à gauche */
+            || (y2 >= y1 + e1->hauteur)  /*trop en bas */
+            || (y2 + e2->hauteur <= y1))  /* trop en haut */
+        return 0;
+    else
+        return 1;
 }
 
 void elementSceneTestDeRegression()

@@ -93,8 +93,11 @@ FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index);
 FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index);
 
 /**
-* @brief Joue les sons de le scene
+* @fn void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
+* @brief Joue les sons qui correspondent au evenemnts de la scene
+* @param [in] audio : initialisé
+* @param [in] scene : initialisé
 */
-void audioJoueScene(AudioFMOD *audio, const Scene *scene);
+void audioJoueScene(const AudioFMOD *audio, const Scene *scene);
 
 #endif

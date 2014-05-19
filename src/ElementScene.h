@@ -101,7 +101,7 @@ void elementDetruit(ElementScene *element);
 void elementSetType(ElementScene *element, int type);
 
 /**
-* @fn elementGetType(ElementScene * scene)
+* @fn elementGetType(ElementScene * element)
 * @brief Renvoie le type d'element
 * @param [in] element : initialisé
 */
@@ -147,7 +147,9 @@ void elementSetPosition(ElementScene *element, int x, int y);
 void elementSetDirection(ElementScene *element, float vx, float vy);
 
 /**
+* @fn int elementGetImageIndex(const ElementScene *element)
 * @brief renvoie le handle de l'image associée au element (handle lisible par Ressource).
+* @param [in] element : initialisé
 */
 int elementGetImageIndex(const ElementScene *element);
 
@@ -158,7 +160,8 @@ int elementGetImageIndex(const ElementScene *element);
 * @param [in] e2 : initialisé
 * @return renvoi 1 en cas de collision. 0 sinon
 */
-int elementTestDeCollision(ElementScene * e1, ElementScene *e2);
+int elementTestDeCollision(const ElementScene * e1,const ElementScene *e2);
+
 
 /**
 * @fn void elementSceneTestDeRegression()

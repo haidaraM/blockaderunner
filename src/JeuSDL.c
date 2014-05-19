@@ -181,6 +181,7 @@ void jeuBoucle(JeuSDL *jeu)
             if(entreeToucheEnfoncee(entree, SDLK_F5)==0 && toucheDetectee == SDLK_F5)
             {
                 joueurSetArmeSelectionne(copieJoueur, 0);
+                audioJoueSon(&jeu->audio, RESS_SON_CHANGE_ARME);
                 toucheDetectee=-1;
             }
             /* Missile */
@@ -189,6 +190,7 @@ void jeuBoucle(JeuSDL *jeu)
             if(entreeToucheEnfoncee(entree, SDLK_F6)==0 && toucheDetectee == SDLK_F6)
             {
                 joueurSetArmeSelectionne(copieJoueur, 1);
+                audioJoueSon(&jeu->audio, RESS_SON_CHANGE_ARME);
                 toucheDetectee=-1;
             }
 

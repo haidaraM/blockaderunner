@@ -477,7 +477,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 }
 
 
-void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
+void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
 {
 	int i;
 	SDL_Rect srcBox, dstBox, vBox;
@@ -645,4 +645,3 @@ void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique)
     SDL_Delay(3000);
 
 }
-

@@ -125,19 +125,24 @@ void creeListeSons(Ressource *res)
     /*sons du menu */
     res->sons[RESS_SON_MENU]                                        =RESS_SON_FICHIER_MENU;
     res->sons[RESS_SON_MENU_SUITE]                                  =RESS_SON_FICHIER_MENU_SUITE;
+    res->sons[RESS_SON_MENU_SURVOL]                                 =RESS_SON_FICHIER_MENU_SURVOL;
+    res->sons[RESS_SON_MENU_VALIDATE]                               =RESS_SON_FICHIER_MENU_VALIDATE;
 
-    /*sons des tirs */
+    /*sons arme */
     res->sons[RESS_SON_TIR_LASER]                                   =RESS_SON_FICHIER_TIR_LASER;
     res->sons[RESS_SON_MISSILE]                                     =RESS_SON_FICHIER_MISSILE;
     res->sons[RESS_SON_TIR_LASER_ENNEMI]                            =RESS_SON_FICHIER_TIR_LASER_ENNEMI;
+    res->sons[RESS_SON_CHANGE_ARME]                                 =RESS_SON_FICHIER_CHANGE_ARME;
+
     /* autres sons */
     res->sons[RESS_SON_ERREUR]                                      =RESS_SON_FICHIER_ERREUR;
     res->sons[RESS_SON_MORT]                                        =RESS_SON_FICHIER_MORT;
-    res->sons[RESS_SON_EXPLOSION]                                   =RESS_SON_FICHIER_EXPLOSION;
     res->sons[RESS_SON_AMBIENCE]                                    =RESS_SON_FICHIER_AMBIENCE;
-    res->sons[RESS_SON_MENU_SURVOL]                                 =RESS_SON_FICHIER_MENU_SURVOL;
-    res->sons[RESS_SON_MENU_VALIDATE]                               =RESS_SON_FICHIER_MENU_VALIDATE;
     res->sons[RESS_SON_BONUS_SCORE]                                 =RESS_SON_FICHIER_BONUS_SCORE;
+
+    /* explosions */
+    res->sons[RESS_SON_EXPLOSION_ASTEROIDE]                         =RESS_SON_FICHIER_EXPLOSION_ASTEROIDE;
+    res->sons[RESS_SON_EXPLOSION_ENNEMI]                            =RESS_SON_FICHIER_EXPLOSION_ENNEMI;
 }
 
 void creeListePolices(Ressource *res)

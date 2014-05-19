@@ -145,18 +145,22 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu );
 /**
 * @fn void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
 * @brief Affiche la portion visible de la scène sur la surface d'affichage principale (fenêtre).
-* @param [in] graphique
-* @param [in] scene
+* @param [in,out] graphique : initialisé
+* @param [in] scene: initialisé
 */
-void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene );
+void graphiqueAfficheScene(GraphiqueSDL *graphique,const Scene *scene );
 
 /**
+* @fn void void graphiqueAfficheMort(GraphiqueSDL * graphique)
 * @brief affiche un texte quand le joueur meurt
+* @param [in,out] graphiqe : initialisé
 */
 void graphiqueAfficheMort(GraphiqueSDL * graphique);
 
 /**
+* @fn void graphiqueAfficheFinNiveau(const GraphiqueSDL * graphique)
 * @brief affiche un texte quand le joueur a complété un niveau
+* @param [in,out] graphique : initialisé
 */
 void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique);
 

@@ -16,7 +16,7 @@
 
 #define RESS_NUM_NIVEAUX										8
 #define RESS_NUM_IMAGES											64
-#define RESS_NUM_SONS_COURTS       								9
+#define RESS_NUM_SONS_COURTS       								11
 #define RESS_NUM_SONS_LONGS    	    							3
 #define RESS_NUM_POLICES										1
 
@@ -54,8 +54,8 @@
 
 #define RESS_IMG_VAISSEAU_JOUEUR			 					1
 #define RESS_IMG_FICHIER_VAISSEAU_JOUEUR						"playership2.png"
-#define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						115
-#define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						39
+#define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
+#define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						45
 
 #define RESS_IMG_DEBRIS_ASTEROIDE                               2
 #define RESS_IMG_FICHIER_DEBRIS_ASTEROIDE                       "debris_asteroide.png"
@@ -160,8 +160,8 @@
 #define RESS_SON_MORT                                           6
 #define RESS_SON_FICHIER_MORT                                   "mort.wav"
 
-#define RESS_SON_EXPLOSION                                      7
-#define RESS_SON_FICHIER_EXPLOSION                              "explosion.wav"
+#define RESS_SON_EXPLOSION_ASTEROIDE                            7
+#define RESS_SON_FICHIER_EXPLOSION_ASTEROIDE                    "explosion_asteroide.mp3"
 
 #define RESS_SON_MENU_SURVOL                                    8
 #define RESS_SON_FICHIER_MENU_SURVOL                            "menu_survol.wav"
@@ -174,6 +174,12 @@
 
 #define RESS_SON_BONUS_SCORE                                    11
 #define RESS_SON_FICHIER_BONUS_SCORE                            "bonus_score.wav"
+
+#define RESS_SON_EXPLOSION_ENNEMI                               12
+#define RESS_SON_FICHIER_EXPLOSION_ENNEMI                       "explosion_ennemi.wav"
+
+#define RESS_SON_CHANGE_ARME                                    13
+#define RESS_SON_FICHIER_CHANGE_ARME                            "change_arme.wav"
 
 
 

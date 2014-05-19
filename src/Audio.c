@@ -158,7 +158,7 @@ FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index)
     return channel;
 }
 
-void audioJoueScene(AudioFMOD *audio, const Scene *scene)
+void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
 {
     assert(audio!=NULL);
     assert(scene!=NULL);
@@ -178,6 +178,12 @@ void audioJoueScene(AudioFMOD *audio, const Scene *scene)
     /* plus de munitions */
     if(scene->evenements.joueur_tir_erreur==1)
         audioJoueSon(audio, RESS_SON_ERREUR);
+    /* explosion asteroide */
+    if(scene->evenements.asteroide_explosion==1)
+        audioJoueSon(audio, RESS_SON_EXPLOSION_ASTEROIDE);
+    /* explosion ennemi*/
+    if(scene->evenements.ennemi_explosion==1)
+        audioJoueSon(audio, RESS_SON_EXPLOSION_ENNEMI);
 
 }
 

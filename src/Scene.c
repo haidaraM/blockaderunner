@@ -217,20 +217,21 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     float vitesseDeplacementLaser;
 
     /* Réinitialisation des evenements */
+    scene->evenements.asteroide_explosion   = 0;
     scene->evenements.joueur_tir_laser 		= 0;
     scene->evenements.joueur_tir_missile	= 0;
     scene->evenements.joueur_tir_erreur     = 0;
+    scene->evenements.joueur_degats_laser	= 0;
+    scene->evenements.joueur_explosion		= 0;
+    scene->evenements.joueur_degats_collision = 0;
+    scene->evenements.joueur_bonus_missile	= 0;
+    scene->evenements.joueur_degats_missile	= 0;
+    scene->evenements.joueur_bonus_score	= 0;
     scene->evenements.ennemi_tir_laser		= 0;
     scene->evenements.ennemi_tir_missile	= 0;
-    scene->evenements.joueur_degats_laser	= 0;
     scene->evenements.ennemi_degats_laser	= 0;
-    scene->evenements.joueur_degats_collision = 0;
-    scene->evenements.joueur_degats_missile	= 0;
     scene->evenements.ennemi_degats_missile	= 0;
-    scene->evenements.joueur_explosion		= 0;
     scene->evenements.ennemi_explosion		= 0;
-    scene->evenements.joueur_bonus_score	= 0;
-    scene->evenements.joueur_bonus_missile	= 0;
 
     /* Points de défilement */
     dx     = -(int)(dt * SCENE_VITESSE_DEFILEMENT_POINTS);
