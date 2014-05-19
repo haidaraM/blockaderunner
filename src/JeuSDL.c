@@ -126,9 +126,9 @@ void jeuBoucle(JeuSDL *jeu)
                 graphiqueRaffraichit( graphique );
 
                 tempsDernierAffichage 	= getTempsSecondes();
-            }
 
-            audioJoueScene(&jeu->audio, &jeu->scene);
+                 audioJoueScene(&jeu->audio, &jeu->scene);
+            }
 
             /* L'utilisateur a appuyé sur ESC */
             if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
@@ -157,7 +157,7 @@ void jeuBoucle(JeuSDL *jeu)
             if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
             {
                 sonTir=sceneJoueurDeclencheTir(&jeu->scene);
-                /* DEPRECATED ... */
+                /* Je voulais faire pareil avec les tirs ennemis mais ça ne marche pas d'abord*/
                 switch(sonTir)
                 {
                 case 0:

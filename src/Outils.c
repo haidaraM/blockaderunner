@@ -67,7 +67,8 @@ void tabDynAjoute(TabDyn *t, void* element)
 
 void* tabDynGetElement(const TabDyn *t, int index)
 {
-    assert(t != NULL && index < t->tailleUtilisee);
+    assert(t != NULL );
+    assert(index < t->tailleUtilisee);
     return t->tab[index];
 }
 
@@ -89,7 +90,6 @@ void tabDynSupprimeElement(TabDyn *t, int index)
         free(temp);
     }
 
-   /* free(t->tab[index]); */ /* Cette ligne doit etre à l'origine des bugs durant les collisions */
     for(i=index; i<t->tailleUtilisee-1; i++)
     {
         t->tab[i]=t->tab[i+1];

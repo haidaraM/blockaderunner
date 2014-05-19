@@ -163,11 +163,21 @@ void audioJoueScene(AudioFMOD *audio, const Scene *scene)
     assert(audio!=NULL);
     assert(scene!=NULL);
 
+    /* laser ennemi */
     if(scene->evenements.ennemi_tir_laser==1)
         audioJoueSon(audio, RESS_SON_TIR_LASER_ENNEMI);
-
+    /* bonus score trouvé */
     if(scene->evenements.joueur_bonus_score==1)
         audioJoueSon(audio, RESS_SON_BONUS_SCORE);
+    /* laser joueur */
+    if(scene->evenements.joueur_tir_laser==1)
+        audioJoueSon(audio, RESS_SON_TIR_LASER);
+    /* missile joueur */
+    if(scene->evenements.joueur_tir_missile==1)
+         audioJoueSon(audio, RESS_SON_MISSILE);
+    /* plus de munitions */
+    if(scene->evenements.joueur_tir_erreur==1)
+        audioJoueSon(audio, RESS_SON_ERREUR);
 
 }
 

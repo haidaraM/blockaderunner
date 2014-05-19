@@ -44,6 +44,14 @@ void elementLibere(ElementScene *element)
     }
 }
 
+void elementDetruit(ElementScene *element)
+{
+    assert(element!=NULL);
+    elementLibere(element);
+    free(element);
+    element=NULL;
+}
+
 
 void elementSetType(ElementScene *element, int type)
 {

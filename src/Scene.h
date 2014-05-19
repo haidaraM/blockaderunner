@@ -40,6 +40,7 @@ typedef struct
 {
 	char joueur_tir_laser;
 	char joueur_tir_missile;
+	char joueur_tir_erreur;
 	char ennemi_tir_laser;
 	char ennemi_tir_missile;
 
@@ -217,7 +218,6 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 * @fn int sceneJoueurDeclencheTir(Scene * scene)
 * @brief Cree un element qui correspond au tir du joueur
 * @param [in, out] scene
-* @return renvoie -1 s'il n'ya pas de tir, 0 si c'est un laser et 1 si c'est un laser
 */
 int sceneJoueurDeclencheTir(Scene * scene);
 
