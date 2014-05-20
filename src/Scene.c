@@ -520,6 +520,7 @@ void sceneTestDeCollision(Scene *scene)
                     if(elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
+						elementDetruit(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Creation des débris d'asteroide ! */
                         numDebris = randomInt(2, 10);
@@ -547,6 +548,7 @@ void sceneTestDeCollision(Scene *scene)
                     if (elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
+						elementDetruit(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Le vaisseau ennemi encaisse des dégats */
                         vaisseauSetDegats((Vaisseau*)e->data, ARME_LASER);
@@ -584,6 +586,7 @@ void sceneTestDeCollision(Scene *scene)
                     if(elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
+						elementDetruit(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Creation des débris d'asteroide ! */
                         numDebris = randomInt(2, 10);
@@ -612,6 +615,7 @@ void sceneTestDeCollision(Scene *scene)
                         if (elementTestDeCollision(t, e))
                         {
                             /* Suppression du tir */
+							elementDetruit(t);
                             tabDynSupprimeElement(&scene->tirs, i);
                             /* Le vaisseau ennemi encaisse des dégats */
                             vaisseauSetDegats((Vaisseau*)e->data, ARME_MISSILE);
