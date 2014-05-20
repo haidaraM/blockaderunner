@@ -4,6 +4,7 @@
 */
 #include "GraphiqueSDL.h"
 #include "ElementScene.h"
+#include "Ressource.h" /* utile pour l'affichage HUD des nombres de missiles ... */
 
 #include <assert.h>
 #include <stdio.h>
@@ -118,6 +119,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	SDL_Color couleurTexteMenu 			= { 249, 255, 253 };
 	SDL_Color couleurTexteMenuSurvol 	= { 249, 255, 53 };
 	SDL_Color couleurTexteScore			= { 249, 153, 86 };
+	SDL_Color couleurTexteMunitions     = { 0, 255, 253};
 	SDL_Color couleurTexteMessage       = { 255, 0, 0};
 	Uint32 couleurNiveauCoque			= 0x00B0FF;
 	Uint32 couleurNiveauEcran			= 0xFFB000;
@@ -304,6 +306,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMessage);
 	graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteMessage);
 
+	/* nbre de missiles */
+	graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions);
+
 	/*---------------------------------------------------------------------
 		FIN */
 
@@ -334,7 +339,7 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 	TTF_CloseFont(graphique->policeMenu);
 	TTF_CloseFont(graphique->policeListeJoueurs);
 
-	/* Libertation des HUD */
+	/* Liberation des HUD */
 	for(i=0; i<GFX_NUM_ELEMENTS_HUD; i++)
 	{
         SDL_FreeSurface(graphique->elementsHUD[i]);
@@ -575,11 +580,17 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
 		dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);
 		SDL_BlitSurface( graphique->elementsHUD[1], NULL, graphique->surface, &dstBox);
 	}
+	/* Affichage du nombre de missiles restant */
+	dstBox.x = 5* GFX_HUD_ELEMENT_LARGEUR;
+	dstBox.y = graphique->hauteur - 4*GFX_HUD_ELEMENT_HAUTEUR;
+	SDL_BlitSurface( graphique->elementsHUD[6], NULL, graphique->surface, &dstBox);
+	dstBox.x = 7*GFX_HUD_ELEMENT_LARGEUR + GFX_HUD_ELEMENT_OFFSET;
+	SDL_BlitSurface( graphique->images[RESS_IMG_MISSILE_JOUEUR], NULL, graphique->surface, &dstBox);
+
+	/* Affichage du score*/
 	dstBox.x = graphique->largeur/2 - graphique->elementsHUD[2]->w;
 	dstBox.y = GFX_HUD_ELEMENT_OFFSET;
 	SDL_BlitSurface( graphique->elementsHUD[2], NULL, graphique->surface, &dstBox);
-
-	/* Affichage du score*/
 	graphiqueSetScore(graphique, joueurGetScore(scene->joueur));
 	dstBox.x = GFX_HUD_ELEMENT_LARGEUR + graphique->largeur/2;
 	SDL_BlitSurface( graphique->elementsHUD[3], NULL, graphique->surface, &dstBox);
@@ -611,7 +622,22 @@ void graphiqueSetScore(GraphiqueSDL *graphique, int score)
 	/* mise à jour du texte */
 	SDL_FreeSurface(graphique->elementsHUD[3]);
 	graphique->elementsHUD[3]	= TTF_RenderText_Blended( graphique->policeListeJoueurs,  scoreChaine, couleurTexteScore);
-	/*assert(graphique->elementsHUD[3] != NULL);*/
+	assert(graphique->elementsHUD[3] != NULL);
+}
+
+void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles)
+{
+	static SDL_Color couleurTexteMunitions = { 0, 255, 253 };
+
+	char chaineMun[2];
+	if (numMissiles > 9)
+		numMissiles = 9;/* pour etre sur de rester à un digit */
+	chaineMun[0] = '0' + numMissiles;
+	chaineMun[1] = '\0';
+	
+	SDL_FreeSurface(graphique->elementsHUD[6]);
+	graphique->elementsHUD[6] = TTF_RenderText_Blended( graphique->policeListeJoueurs, chaineMun, couleurTexteMunitions);
+	assert(graphique->elementsHUD[6] != NULL);
 }
 
 void graphiqueAfficheMort(GraphiqueSDL * graphique)

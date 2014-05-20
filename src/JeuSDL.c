@@ -194,6 +194,10 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee=-1;
             }
 
+			/* Si le joueur a gagné un bonus missile OU tiré un missile ==> mettre a jour l'affichage des munitions dans graphique */
+			if (jeu->scene.evenements.joueur_bonus_missile == 1  ||  jeu->scene.evenements.joueur_tir_missile == 1)
+				graphiqueSetMunitions(graphique, sceneGetMunitionMissileJoueur(&jeu->scene));
+
             /* Défilement de l'image de fond. */
             if ( (getTempsSecondes() - tempsDernierDefilementScene) >= periodeDefilementScene)
             {
@@ -357,8 +361,9 @@ void jeuBoucle(JeuSDL *jeu)
                 copieJoueur=joueurCopieJoueur(jeu->joueur);
                 sceneInit(&jeu->scene, &jeu->ressource, copieJoueur, jeu->graphique.largeur, jeu->graphique.hauteur);
                 sceneChargeNiveau(&jeu->scene, &niveau, &jeu->ressource);
-                jeu->etatCourantJeu 	= JEU_ETAT_JEU;
+				graphiqueSetMunitions(graphique, sceneGetMunitionMissileJoueur(&jeu->scene));
 
+                jeu->etatCourantJeu 	= JEU_ETAT_JEU;
                 sceneResetHorloge(&jeu->scene, getTempsSecondes());
                 tempsDernierDefilementScene = getTempsSecondes();
             }

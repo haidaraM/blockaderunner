@@ -19,7 +19,7 @@
 #define GFX_MODE_FENETRE	 				1
 #define GFX_FENETRE_TITRE_DEFAUT			"Blockade Runner"
 
-#define GFX_NUM_ELEMENTS_HUD				6
+#define GFX_NUM_ELEMENTS_HUD				7
 #define GFX_HUD_ELEMENT_LARGEUR				8
 #define GFX_HUD_ELEMENT_HAUTEUR				6
 #define GFX_HUD_ELEMENT_OFFSET				2
@@ -133,6 +133,14 @@ void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu);
 * @param [in] score
 */
 void graphiqueSetScore(GraphiqueSDL *graphique, int score);
+
+/**
+* @fn void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles)
+* @brief Met à jour l'affichage du nombre de missiles restant.
+* @param [in, out] graphique
+* @param [in] numMissiles le nombre de missiles restant
+*/
+void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles);
 
 /**
 * @fn void graphiqueAfficheMenu(GraphiqueSDL *graphique, Menu *menu )

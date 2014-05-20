@@ -804,6 +804,14 @@ int sceneJoueurDeclencheTir(Scene * scene)
     return valret;
 }
 
+int sceneGetMunitionMissileJoueur(Scene *scene)
+{
+	int mun = scene->joueur->vaisseau->armes[ARME_MISSILE].munitions;
+	if (mun < 0)
+		mun = 0;
+	return mun;
+}
+
 void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
 {
     ElementScene *tir=NULL;

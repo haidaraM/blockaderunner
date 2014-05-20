@@ -22,7 +22,7 @@
 #define SCENE_VITESSE_DEFILEMENT_POINTS 	420.0f
 #define SCENE_NUM_POINTS_DEFILEMENT 		64
 
-#define SCENE_VITESSE_BONUS					64.0f
+#define SCENE_VITESSE_BONUS					96.0f
 #define SCENE_VITESSE_TIR					640.0f
 #define SCENE_VITESSE_ASTEROIDE				128.0f
 #define SCENE_VITESSE_ECLAIREUR				180.0f
@@ -220,6 +220,13 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 * @param [in, out] scene
 */
 int sceneJoueurDeclencheTir(Scene * scene);
+
+/** 
+* @fn int sceneGetMunitionMissileJoueur(Scene *scene)
+* @brief Renvoie le nombre de missiles restant au joueur.
+* @param [in, out] scene
+*/
+int sceneGetMunitionMissileJoueur(Scene *scene);
 
 /**
 * @fn void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e)
