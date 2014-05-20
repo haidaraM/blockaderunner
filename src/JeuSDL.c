@@ -180,7 +180,7 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee= SDLK_F5;
             if(entreeToucheEnfoncee(entree, SDLK_F5)==0 && toucheDetectee == SDLK_F5)
             {
-                joueurSetArmeSelectionne(copieJoueur, 0);
+                joueurSetArmeSelectionne(copieJoueur, 0); /* Moha : au lieu de 0 mets la constante définie dans le .h ;) */
                 audioJoueSon(&jeu->audio, RESS_SON_CHANGE_ARME);
                 toucheDetectee=-1;
             }

@@ -82,6 +82,11 @@
 #define RESS_IMG_LARGEUR_TIR_ENNEMI_LASER                       32
 #define RESS_IMG_HAUTEUR_TIR_ENNEMI_LASER                       4
 
+#define RESS_IMG_TIR_ENNEMI_MISSILE                             10
+#define RESS_IMG_FICHIER_TIR_ENNEMI_MISSILE                     "missile_tir_ennemi.png"
+#define RESS_IMG_LARGEUR_TIR_ENNEMI_MISSILE                     32
+#define RESS_IMG_HAUTEUR_TIR_ENNEMI_MISSILE                     4
+
 #define RESS_IMG_BONUS_SCORE		                            14
 #define RESS_IMG_FICHIER_BONUS_SCORE        	              	"bonus_score.png"
 #define RESS_IMG_LARGEUR_BONUS_SCORE    	        	        40
@@ -99,8 +104,8 @@
 
 #define RESS_IMG_VAISSEAU_CHASSEUR			 					17
 #define RESS_IMG_FICHIER_VAISSEAU_CHASSEUR						"ennemi_chasseur.png"
-#define RESS_IMG_LARGEUR_VAISSEAU_CHASSEUR						96
-#define RESS_IMG_HAUTEUR_VAISSEAU_CHASSEUR						34
+#define RESS_IMG_LARGEUR_VAISSEAU_CHASSEUR						128
+#define RESS_IMG_HAUTEUR_VAISSEAU_CHASSEUR						53
 
 #define RESS_IMG_VAISSEAU_CROISEUR			 					18
 #define RESS_IMG_FICHIER_VAISSEAU_CROISEUR						"ennemi_croiseur.png"

@@ -62,6 +62,10 @@ void creeListeImages(Ressource *res)
     res->dimensionImages[RESS_IMG_MISSILE_JOUEUR].largeur           = RESS_IMG_LARGEUR_MISSILE_JOUEUR;
     res->dimensionImages[RESS_IMG_MISSILE_JOUEUR].hauteur           = RESS_IMG_HAUTEUR_MISSILE_JOUEUR;
 
+    res->images[RESS_IMG_TIR_ENNEMI_MISSILE]                        = RESS_IMG_FICHIER_TIR_ENNEMI_MISSILE;
+    res->dimensionImages[RESS_IMG_TIR_ENNEMI_MISSILE].largeur       = RESS_IMG_LARGEUR_TIR_ENNEMI_MISSILE;
+    res->dimensionImages[RESS_IMG_TIR_ENNEMI_MISSILE].hauteur       = RESS_IMG_HAUTEUR_TIR_ENNEMI_MISSILE;
+
     /* Images des bonus */
     res->images[RESS_IMG_BONUS_SCORE] 		                        = RESS_IMG_FICHIER_BONUS_SCORE;
     res->dimensionImages[RESS_IMG_BONUS_SCORE].largeur      	    = RESS_IMG_LARGEUR_BONUS_SCORE;

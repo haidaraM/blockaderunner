@@ -156,7 +156,7 @@ void vaisseauArmeInit(Arme * a, int type)
         a->munitions=ARME_MISSILE_MUNITIONS;
         a->degatEcran=ARME_MISSILE_DEGAT_E;
         a->degatStructure=ARME_MISSILE_DEGAT_S;
-        a->cadence=1.0f;
+        a->cadence=1.5f;
 		a->tempsDernierTir = getTempsSecondes();
     default:
         break;
