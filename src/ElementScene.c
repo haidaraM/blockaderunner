@@ -146,7 +146,7 @@ int elementTestDeCollision(const ElementScene * e1, const ElementScene *e2)
 
 void elementSceneTestDeRegression()
 {
-    ElementScene eS;
+    ElementScene eS, eS2;
     printf("Test de regression du module elementScene \n");
 
     printf("------------- Test de elementInit --------------\n");
@@ -154,6 +154,9 @@ void elementSceneTestDeRegression()
     assert(eS.type==ELEMENT_TYPE_LASER_JOUEUR && eS.indexImage==1 && eS.hauteur== 40 && eS.hauteur==40);
     printf("===========> Resultat : OK! \n");
     printf("\n");
+
+    printf("-------------- Test 2 elementInit ---------------\n");
+    elementInit(&eS2, ELEMENT_TYPE_ECLAIREUR, 1, 128, 45, 1366, 720);
 
     printf("------------ Test de elementSetType ----------\n");
     elementSetType(&eS, ELEMENT_TYPE_MISSILE_JOUEUR);
@@ -169,6 +172,11 @@ void elementSceneTestDeRegression()
     printf(" ----------- Test de elementSetPosition ---------- \n");
     elementSetPosition(&eS, 40, 50);
     assert(eS.x==40 && eS.y==50);
+    printf("===========> Resultat : OK! \n");
+    printf("\n");
+
+    printf("--------- Test de elementLibere---------------\n");
+    elementLibere(&eS2);
     printf("===========> Resultat : OK! \n");
     printf("\n");
 

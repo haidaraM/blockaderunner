@@ -43,11 +43,7 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
     }
 
     /* initialisation vaisseau du Joueur */
-    scene->elementVaisseauJoueur= (ElementScene*)malloc(sizeof(ElementScene));
-    assert( scene->elementVaisseauJoueur != NULL);
-    elementInit(scene->elementVaisseauJoueur, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,
-                ressourceGetLargeurImage(res, RESS_IMG_VAISSEAU_JOUEUR), ressourceGetHauteurImage(res, RESS_IMG_VAISSEAU_JOUEUR),
-                scene->largeurAffichage, scene->hauteurAffichage);
+    scene->elementVaisseauJoueur= sceneCreerElementScene(scene, ELEMENT_TYPE_VAISSEAU_JOUEUR);
     elementSetPosition(scene->elementVaisseauJoueur, 32, (hauteurGraphique - scene->elementVaisseauJoueur->hauteur)/2);
     scene->elementVaisseauJoueur->data = (void*)player->vaisseau;
 
@@ -141,9 +137,7 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res )
 
             for(j=0; j<groupe->nombre; j++)
             {
-                ElementScene * asteroide = (ElementScene *) malloc(sizeof(ElementScene));
-                elementInit(asteroide, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(res, RESS_IMG_ASTEROIDE),
-                            ressourceGetHauteurImage(res, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
+                ElementScene * asteroide = sceneCreerElementScene(scene, ELEMENT_TYPE_ASTEROIDE);
                 /* Positionnement aleatoire sur la scene */
                 elementSetPosition(asteroide, randomInt(groupe->xmin, groupe->xmax), randomInt(0, 720));
                 tabDynAjoute(&scene->acteurs, (void *)asteroide );
@@ -154,9 +148,7 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res )
 
             for(j=0; j<groupe->nombre; j++)
             {
-                ElementScene * eclaireur = (ElementScene *) malloc(sizeof(ElementScene));
-                elementInit(eclaireur, ELEMENT_TYPE_ECLAIREUR, RESS_IMG_VAISSEAU_ECLAIREUR, ressourceGetLargeurImage(res, RESS_IMG_VAISSEAU_ECLAIREUR),
-                            ressourceGetHauteurImage(res, RESS_IMG_VAISSEAU_ECLAIREUR), scene->largeurAffichage, scene->hauteurAffichage );
+                ElementScene * eclaireur = sceneCreerElementScene(scene, ELEMENT_TYPE_ECLAIREUR);
                 /* Positionnement aleatoire sur la scene */
                 elementSetPosition(eclaireur, randomInt(groupe->xmin, groupe->xmax), randomInt(0, 720));
                 tabDynAjoute(&scene->acteurs, (void *)eclaireur );
@@ -167,9 +159,7 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res )
 
             for(j=0; j<groupe->nombre; j++)
             {
-                ElementScene * chasseur = (ElementScene *) malloc(sizeof(ElementScene));
-                elementInit(chasseur, ELEMENT_TYPE_CHASSEUR, RESS_IMG_VAISSEAU_CHASSEUR, ressourceGetLargeurImage(res, RESS_IMG_VAISSEAU_CHASSEUR),
-                            ressourceGetHauteurImage(res, RESS_IMG_VAISSEAU_CHASSEUR), scene->largeurAffichage, scene->hauteurAffichage );
+                ElementScene * chasseur = sceneCreerElementScene(scene, ELEMENT_TYPE_CHASSEUR);
                 /* Positionnement aleatoire sur la scene */
                 elementSetPosition(chasseur, randomInt(groupe->xmin, groupe->xmax), randomInt(0, 720));
                 tabDynAjoute(&scene->acteurs, (void *)chasseur );
@@ -180,13 +170,13 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res )
 
             for(j=0; j<groupe->nombre; j++)
             {
-                ElementScene * croiseur = (ElementScene *) malloc(sizeof(ElementScene));
-                elementInit(croiseur, ELEMENT_TYPE_CROISEUR, RESS_IMG_VAISSEAU_CROISEUR, ressourceGetLargeurImage(res, RESS_IMG_VAISSEAU_CROISEUR),
-                            ressourceGetHauteurImage(res, RESS_IMG_VAISSEAU_CROISEUR), scene->largeurAffichage, scene->hauteurAffichage );
+                ElementScene * croiseur = sceneCreerElementScene(scene, ELEMENT_TYPE_CROISEUR);
                 /* Positionnement aleatoire sur la scene */
                 elementSetPosition(croiseur, randomInt(groupe->xmin, groupe->xmax), randomInt(0, 720));
                 tabDynAjoute(&scene->acteurs, (void *)croiseur );
             }
+            break;
+        default :
             break;
         }
     }
@@ -265,34 +255,34 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     for(i=0; i<sceneGetNbTirs(scene); i++)
     {
         e = (ElementScene *) tabDynGetElement(&scene->tirs, i);
-		typeElement = elementGetType(e);
+        typeElement = elementGetType(e);
         x = elementGetX(e);
-		y = elementGetY(e);
-		dx = 0;
-		dy = 0;
+        y = elementGetY(e);
+        dx = 0;
+        dy = 0;
         switch(typeElement)
-		{
-		case ELEMENT_TYPE_LASER_JOUEUR:
-		    dx = (int)(dt * SCENE_VITESSE_TIR);
- 			break;
-		case ELEMENT_TYPE_MISSILE_JOUEUR:
-			dx = (int)(dt * SCENE_VITESSE_TIR);
- 			break;
+        {
+        case ELEMENT_TYPE_LASER_JOUEUR:
+            dx = (int)(dt * SCENE_VITESSE_TIR);
+            break;
+        case ELEMENT_TYPE_MISSILE_JOUEUR:
+            dx = (int)(dt * SCENE_VITESSE_TIR);
+            break;
         case ELEMENT_TYPE_LASER_ENNEMI:
-            dx = -(int)(dt * SCENE_VITESSE_TIR * 3.0f/4.0f);/* (note:le facteur 3/4 simule la vitesse moindre des lasers ennemis par rapport au laser du joueur) */        
-			break;
-		case ELEMENT_TYPE_MISSILE_ENNEMI:
+            dx = -(int)(dt * SCENE_VITESSE_TIR * 3.0f/4.0f);/* (note:le facteur 3/4 simule la vitesse moindre des lasers ennemis par rapport au laser du joueur) */
+            break;
+        case ELEMENT_TYPE_MISSILE_ENNEMI:
             dx = -(int)(dt * SCENE_VITESSE_TIR * 3.0f/4.0f);
-			deltaJoueurEnnemi = elementGetY(scene->elementVaisseauJoueur) - y;
+            deltaJoueurEnnemi = elementGetY(scene->elementVaisseauJoueur) - y;
             dy =  (int)(dt * (float)deltaJoueurEnnemi);/* Les missiles sont à tête chercheuse. */
-			break;
+            break;
         }
-		elementSetPosition(e, x+dx, y+dy); 
-	    /* Suppression des tirs qui sortent de l'ecran */
-		if(elementVisible(e)!=1)
+        elementSetPosition(e, x+dx, y+dy);
+        /* Suppression des tirs qui sortent de l'ecran */
+        if(elementVisible(e)!=1)
         {
             elementDetruit(e);
-	        tabDynSupprimeElement(&scene->tirs, i);
+            tabDynSupprimeElement(&scene->tirs, i);
         }
     }
 
@@ -325,8 +315,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
             if (elementVisible(e) == 1)
             {
                 deltaJoueurEnnemi = elementGetY(scene->elementVaisseauJoueur) - y;
-                /* L'ennemi  tente de tirer */
-                if (abs(deltaJoueurEnnemi) < 64)
+                /* L'ennemi  tente de tirer. Il ne tire pas s'il se trouve derriere le vaisseau du joueur */
+                if (abs(deltaJoueurEnnemi) < 64 && elementGetX(scene->elementVaisseauJoueur) <= elementGetX(e))
                     sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
                 dy =  (int)(dt * 0.4f * (float)deltaJoueurEnnemi);/* Les ennemis tentent de s'aligner sur le joueur */
             }
@@ -338,8 +328,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
             if (elementVisible(e) == 1)
             {
                 deltaJoueurEnnemi = elementGetY(scene->elementVaisseauJoueur) - y;
-                /* L'ennemi  tente de tirer */
-                if (abs(deltaJoueurEnnemi) < 64)
+                /* L'ennemi  tente de tirer.Il ne tire pas s'il se trouve derriere le vaisseau du joueur */
+                if (abs(deltaJoueurEnnemi) < 64 && elementGetX(scene->elementVaisseauJoueur) <= elementGetX(e))
                     sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
                 dy =  (int)(dt * 0.6f * (float)deltaJoueurEnnemi);/* Les ennemis tentent de s'aligner sur le joueur */
             }
@@ -351,8 +341,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
             if (elementVisible(e) == 1)
             {
                 deltaJoueurEnnemi = elementGetY(scene->elementVaisseauJoueur) - y;
-                /* L'ennemi  tente de tirer */
-                if (abs(deltaJoueurEnnemi) < 128)
+                /* L'ennemi  tente de tirer.Il ne tire pas s'il se trouve derriere le vaisseau du joueur */
+                if (abs(deltaJoueurEnnemi) < 128 && elementGetX(scene->elementVaisseauJoueur) <= elementGetX(e))
                     sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
                 dy =  (int)(dt * 0.25f * (float)deltaJoueurEnnemi);/* Les ennemis tentent de s'aligner sur le joueur */
             }
@@ -388,9 +378,7 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
         /* bonus eventuel */
         if (randomInt(0, 101) <= SCENE_PROBA_BONUS_SCORE_ECLAIREUR)
         {
-            ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
-            elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE),
-                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
+            ElementScene* bonus = sceneCreerElementScene(scene, ELEMENT_TYPE_BONUS_SCORE);
             elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
             elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
             tabDynAjoute(&scene->bonus, (void*)bonus);
@@ -400,9 +388,7 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
         /* bonus eventuel */
         if (randomInt(0, 101) <= SCENE_PROBA_BONUS_SCORE_CHASSEUR)
         {
-            ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
-            elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE),
-                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
+            ElementScene* bonus = sceneCreerElementScene(scene, ELEMENT_TYPE_BONUS_SCORE);
             elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
             elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
             tabDynAjoute(&scene->bonus, (void*)bonus);
@@ -413,18 +399,14 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
         r = randomInt(0, 101);
         if (r <= SCENE_PROBA_BONUS_MISSILE_CROISEUR)
         {
-            ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
-            elementInit(bonus, ELEMENT_TYPE_BONUS_MISSILE, RESS_IMG_BONUS_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_MISSILE),
-                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_MISSILE), scene->largeurAffichage, scene->hauteurAffichage);
+            ElementScene* bonus = sceneCreerElementScene(scene, ELEMENT_TYPE_BONUS_MISSILE);
             elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
             elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
             tabDynAjoute(&scene->bonus, (void*)bonus);
         }
         else if (r <= SCENE_PROBA_BONUS_SCORE_CROISEUR)
         {
-            ElementScene* bonus = (ElementScene*)malloc(sizeof(ElementScene));
-            elementInit(bonus, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE),
-                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
+            ElementScene* bonus = sceneCreerElementScene(scene, ELEMENT_TYPE_BONUS_SCORE);
             elementSetPosition(bonus, elementGetX(pere), elementGetY(pere));
             elementSetDirection(bonus, -1.0f + 2.0f*randomFloat(), -1.0f +2.0f*randomFloat());
             tabDynAjoute(&scene->bonus, (void*)bonus);
@@ -520,15 +502,13 @@ void sceneTestDeCollision(Scene *scene)
                     if(elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
-						elementDetruit(t);
+                        elementDetruit(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Creation des débris d'asteroide ! */
                         numDebris = randomInt(2, 10);
                         for (d=0; d < numDebris; d++)
                         {
-                            ElementScene * debris = (ElementScene *) malloc(sizeof(ElementScene));
-                            elementInit(debris, ELEMENT_TYPE_DEBRIS_ASTEROIDE, RESS_IMG_DEBRIS_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ),
-                                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ), scene->largeurAffichage, scene->hauteurAffichage );
+                            ElementScene * debris = sceneCreerElementScene(scene, ELEMENT_TYPE_DEBRIS_ASTEROIDE);
                             elementSetPosition(debris, elementGetX(e), elementGetY(e));
                             elementSetDirection(debris, -1.0f + 2.0f*randomFloat(), -1.0f + 2.0f*randomFloat());
                             tabDynAjoute(&scene->acteurs, (void *)debris );
@@ -548,7 +528,7 @@ void sceneTestDeCollision(Scene *scene)
                     if (elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
-						elementDetruit(t);
+                        elementDetruit(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Le vaisseau ennemi encaisse des dégats */
                         vaisseauSetDegats((Vaisseau*)e->data, ARME_LASER);
@@ -586,15 +566,13 @@ void sceneTestDeCollision(Scene *scene)
                     if(elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
-						elementDetruit(t);
+                        elementDetruit(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Creation des débris d'asteroide ! */
                         numDebris = randomInt(2, 10);
                         for (d=0; d < numDebris; d++)
                         {
-                            ElementScene * debris = (ElementScene *) malloc(sizeof(ElementScene));
-                            elementInit(debris, ELEMENT_TYPE_DEBRIS_ASTEROIDE, RESS_IMG_DEBRIS_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ),
-                                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ), scene->largeurAffichage, scene->hauteurAffichage );
+                            ElementScene * debris = sceneCreerElementScene(scene, ELEMENT_TYPE_DEBRIS_ASTEROIDE);
                             elementSetPosition(debris, elementGetX(e), elementGetY(e));
                             elementSetDirection(debris, -1.0f + 2.0f*randomFloat(), -1.0f + 2.0f*randomFloat());
                             tabDynAjoute(&scene->acteurs, (void *)debris );
@@ -615,7 +593,7 @@ void sceneTestDeCollision(Scene *scene)
                         if (elementTestDeCollision(t, e))
                         {
                             /* Suppression du tir */
-							elementDetruit(t);
+                            elementDetruit(t);
                             tabDynSupprimeElement(&scene->tirs, i);
                             /* Le vaisseau ennemi encaisse des dégats */
                             vaisseauSetDegats((Vaisseau*)e->data, ARME_MISSILE);
@@ -710,10 +688,66 @@ int sceneGetNbDecors(const Scene * scene)
 }
 
 
-ElementScene* sceneCreerElementScene(Scene *scene, int type)
+ElementScene* sceneCreerElementScene(const Scene *scene, int type)
 {
-    /* To Do */
-    return NULL;
+    ElementScene *e=NULL;
+    e=(ElementScene*)malloc(sizeof(ElementScene));
+    assert(scene!=NULL);
+    assert(e!=NULL);
+    switch(type)
+    {
+    case ELEMENT_TYPE_DEBRIS_ASTEROIDE:
+        elementInit(e, ELEMENT_TYPE_DEBRIS_ASTEROIDE, RESS_IMG_DEBRIS_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_BONUS_SCORE:
+        elementInit(e, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
+        break;
+    case ELEMENT_TYPE_BONUS_MISSILE:
+        elementInit(e, ELEMENT_TYPE_BONUS_MISSILE, RESS_IMG_BONUS_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_MISSILE),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_MISSILE), scene->largeurAffichage, scene->hauteurAffichage);
+        break;
+    case ELEMENT_TYPE_CROISEUR:
+        elementInit(e, ELEMENT_TYPE_CROISEUR, RESS_IMG_VAISSEAU_CROISEUR, ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_CROISEUR),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_CROISEUR), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_VAISSEAU_JOUEUR:
+        elementInit(e, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_JOUEUR), ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_JOUEUR),
+                    scene->largeurAffichage, scene->hauteurAffichage);
+        break;
+    case ELEMENT_TYPE_ECLAIREUR:
+        elementInit(e, ELEMENT_TYPE_ECLAIREUR, RESS_IMG_VAISSEAU_ECLAIREUR, ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_ECLAIREUR),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_ECLAIREUR), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_ASTEROIDE:
+        elementInit(e, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_ASTEROIDE),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_CHASSEUR:
+        elementInit(e, ELEMENT_TYPE_CHASSEUR, RESS_IMG_VAISSEAU_CHASSEUR, ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_CHASSEUR),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_CHASSEUR), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_LASER_ENNEMI:
+        elementInit(e, ELEMENT_TYPE_LASER_ENNEMI, RESS_IMG_TIR_ENNEMI_LASER, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_MISSILE_ENNEMI:
+        elementInit(e, ELEMENT_TYPE_MISSILE_ENNEMI, RESS_IMG_TIR_ENNEMI_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_MISSILE),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_MISSILE), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_LASER_JOUEUR :
+        elementInit(e, ELEMENT_TYPE_LASER_JOUEUR, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(scene->ressource,RESS_IMG_TIR_JOUEUR_LASER),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_MISSILE_JOUEUR:
+        elementInit(e, ELEMENT_TYPE_MISSILE_JOUEUR, RESS_IMG_MISSILE_JOUEUR, ressourceGetLargeurImage(scene->ressource    , RESS_IMG_MISSILE_JOUEUR),
+                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_MISSILE_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
+        break;
+    default :
+        break;
+    }
+    return e;
 }
 
 void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
@@ -779,23 +813,19 @@ int sceneJoueurDeclencheTir(Scene * scene)
     {
         /* mise à jours des munitions */
         vaisseauMajMunitions(scene->joueur->vaisseau);
-        tir=(ElementScene *) malloc(sizeof(ElementScene));
-        assert(tir!=NULL);
         switch(joueurGetNumArmeSelectionne(scene->joueur))
         {
         case ARME_LASER:
-            elementInit(tir, ELEMENT_TYPE_LASER_JOUEUR, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(scene->ressource,RESS_IMG_TIR_JOUEUR_LASER),
-                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
+            tir=sceneCreerElementScene(scene, ELEMENT_TYPE_LASER_JOUEUR);
             valret=0;
-			/* on met le flag associé dans les évènements à 1 */
-			scene->evenements.joueur_tir_laser = 1;
+            /* on met le flag associé dans les évènements à 1 */
+            scene->evenements.joueur_tir_laser = 1;
             break;
         case ARME_MISSILE:
-            elementInit(tir, ELEMENT_TYPE_MISSILE_JOUEUR, RESS_IMG_MISSILE_JOUEUR, ressourceGetLargeurImage(scene->ressource    , RESS_IMG_MISSILE_JOUEUR),
-                        ressourceGetHauteurImage(scene->ressource, RESS_IMG_MISSILE_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
+            tir=sceneCreerElementScene(scene, ELEMENT_TYPE_MISSILE_JOUEUR);
             valret=1;
-			/* on met le flag associé dans les évènements à 1 */
-			scene->evenements.joueur_tir_missile = 1;
+            /* on met le flag associé dans les évènements à 1 */
+            scene->evenements.joueur_tir_missile = 1;
             break;
         default :
             break;
@@ -810,55 +840,52 @@ int sceneJoueurDeclencheTir(Scene * scene)
 
 int sceneGetMunitionMissileJoueur(Scene *scene)
 {
-	int mun = scene->joueur->vaisseau->armes[ARME_MISSILE].munitions;
-	if (mun < 0)
-		mun = 0;
-	return mun;
+    int mun = scene->joueur->vaisseau->armes[ARME_MISSILE].munitions;
+    if (mun < 0)
+        mun = 0;
+    return mun;
 }
 
 void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
 {
     ElementScene *tir=NULL;
-	Vaisseau *vaisseau = (Vaisseau*)e->data;
+    Vaisseau *vaisseau = (Vaisseau*)e->data;
     Arme *arme;
-	int probaMissile;
+    int probaMissile;
 
-	/* Le croiseur dispose de missiles .. */
-	if (elementGetType(e) == ELEMENT_TYPE_CROISEUR)
-	{
-		probaMissile = randomInt(0, 101);
-		if (probaMissile < 14)
-			 vaisseau->numArmeSelectionne = ARME_MISSILE;
-		else vaisseau->numArmeSelectionne = ARME_LASER;
-	}
-		
-	arme = vaisseauGetArmeSelectionnee(vaisseau);
+    /* Le croiseur dispose de missiles .. */
+    if (elementGetType(e) == ELEMENT_TYPE_CROISEUR)
+    {
+        probaMissile = randomInt(0, 101);
+        if (probaMissile < 14)
+            vaisseau->numArmeSelectionne = ARME_MISSILE;
+        else vaisseau->numArmeSelectionne = ARME_LASER;
+    }
+
+    arme = vaisseauGetArmeSelectionnee(vaisseau);
 
     /* L'ennemi n'a pas eu le temps de recharger son arme OU il n'a plus de munitions : il ne tire pas. */
-	/* (note: on ajoute un peu d'aléatoire pour ne pas avoir des tirs métronomiques!)*/
+    /* (note: on ajoute un peu d'aléatoire pour ne pas avoir des tirs métronomiques!)*/
     if (tempsCourant - arme->tempsDernierTir - 0.25f*randomFloat() < arme->cadence  ||  vaisseauGetMunitionsArme(vaisseau) <= 0)
         return;
 
     /* Sinon, il tire : */
     arme->tempsDernierTir = tempsCourant;
-    tir=(ElementScene *) malloc(sizeof(ElementScene));
-    assert(tir!=NULL);
 
-	if (arme->typeArme == ARME_LASER)
+    if (arme->typeArme == ARME_LASER)
     {
-		elementInit(tir, ELEMENT_TYPE_LASER_ENNEMI, RESS_IMG_TIR_ENNEMI_LASER, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER),
-	                ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER), scene->largeurAffichage, scene->hauteurAffichage );
-	    /* on met le flag associé dans les évènements à 1 */
-	    scene->evenements.ennemi_tir_laser = 1;
-
-	} else { 
-		/* missile */
-		elementInit(tir, ELEMENT_TYPE_MISSILE_ENNEMI, RESS_IMG_TIR_ENNEMI_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_MISSILE),
-	                ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_MISSILE), scene->largeurAffichage, scene->hauteurAffichage );
-		vaisseauMajMunitions(vaisseau);
-	    /* on met le flag associé dans les évènements à 1 */
-	    scene->evenements.ennemi_tir_missile = 1;
-	}
+        tir=sceneCreerElementScene(scene, ELEMENT_TYPE_LASER_ENNEMI);
+        /* on met le flag associé dans les évènements à 1 */
+        scene->evenements.ennemi_tir_laser = 1;
+    }
+    else
+    {
+        /* missile */
+        tir=sceneCreerElementScene(scene, ELEMENT_TYPE_MISSILE_ENNEMI);
+        vaisseauMajMunitions(vaisseau);
+        /* on met le flag associé dans les évènements à 1 */
+        scene->evenements.ennemi_tir_missile = 1;
+    }
 
     /* positionne le tir en fonction de la position du vaisseau */
     elementSetPosition(tir, elementGetX(e), elementGetY(e));
@@ -884,7 +911,30 @@ int sceneTestVaisseauMort(Scene * scene)
 
 void sceneTestDeRegression()
 {
-    printf("Test de regression du module scene \n ");
+    Scene sc;
+    Ressource res;
+    Joueur j;
+    printf("Test de regression du module scene \n");
+
+    printf("--------Test de sceneInit --------- \n");
+    /* on initialise les ressources et le joueur */
+    ressourceInit(&res);
+    joueurInit(&j, "dev", 1, 7050);
+    sceneInit(&sc, &res, &j, 1366, 720);
+    assert(sc.pointsDefilement!=NULL);
+    assert(sc.acteurs.tailleUtilisee==0 && sc.acteurs.capacite==1);
+    assert(sc.bonus.tailleUtilisee==0 && sc.bonus.capacite==1);
+
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("--------Test de sceneLibere --------- \n");
+    sceneLibere(&sc);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    /* on libere les ressources mobilisées */
+    ressourceLibere(&res);
 }
 
 

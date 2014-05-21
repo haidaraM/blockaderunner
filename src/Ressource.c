@@ -121,6 +121,7 @@ void creeListeSons(Ressource *res)
     /* Initialisation des tableaux */
     nbSons=RESS_NUM_SONS_COURTS + RESS_NUM_SONS_LONGS;
     res->sons=(char **)malloc(nbSons * sizeof(char *));
+    /* initialisation à NULL; */
     for(i=0; i<nbSons; i++)
     {
         res->sons[i]=NULL;
@@ -128,7 +129,6 @@ void creeListeSons(Ressource *res)
 
     /*sons du menu */
     res->sons[RESS_SON_MENU]                                        =RESS_SON_FICHIER_MENU;
-    res->sons[RESS_SON_MENU_SUITE]                                  =RESS_SON_FICHIER_MENU_SUITE;
     res->sons[RESS_SON_MENU_SURVOL]                                 =RESS_SON_FICHIER_MENU_SURVOL;
     res->sons[RESS_SON_MENU_VALIDATE]                               =RESS_SON_FICHIER_MENU_VALIDATE;
 
@@ -290,6 +290,7 @@ void ressourceLibere(Ressource *res)
             free(res->joueurs[i]);
         }
     free(res->joueurs);
+    res->joueurs=NULL;
 
     /*Liberation des niveaux */
     for(i=0; i<RESS_NUM_NIVEAUX; i++)
@@ -297,10 +298,14 @@ void ressourceLibere(Ressource *res)
         niveauLibere(&res->niveaux[i]);
     }
     free(res->niveaux);
+    res->niveaux=NULL;
 
     free(res->images);
+    res->images=NULL;
     free(res->dimensionImages);
+    res->dimensionImages=NULL;
     free(res->sons);
+    res->sons=NULL;
 }
 
 int ressourceGetNumJoueurs(const Ressource *res)
@@ -335,7 +340,7 @@ void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1],
 
 void ressourceSauveJoueurs(Ressource *res)
 {
-	FILE *fic;
+    FILE *fic;
 
     int i;
     int valret;
@@ -395,5 +400,73 @@ int ressourceGetHauteurImage(const Ressource *res, int nomRessource)
     return res->dimensionImages[nomRessource].hauteur;
 }
 
+void ressourceTestDeRegression()
+{
+    Ressource res, tabRes[10];
+    int i;
+    Joueur ** joueurs=NULL;
+    printf("Test de regression du module ressource \n");
+    printf("-------------Test de ressourceInit avec un et plusieurs ressources------------------\n");
+    ressourceInit(&res);
+    assert(res.joueurs!=NULL);
+    assert(res.images!=NULL);
+    assert(res.sons!=NULL);
+    assert(res.niveaux!=NULL);
+    for(i=0; i<10; i++)
+    {
+        ressourceInit(&tabRes[i]);
+        assert(tabRes[i].joueurs!=NULL);
+        assert(tabRes[i].images!=NULL);
+        assert(tabRes[i].sons!=NULL);
+        assert(tabRes[i].niveaux!=NULL);
 
+    }
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("-------------Test de ressourceGetLargeurImage avec vaisseauJoueur-----------\n");
+    assert(ressourceGetLargeurImage(&res, RESS_IMG_VAISSEAU_JOUEUR)==128);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("-------------Test de ressourceGetHauteurImage avec vaisseauJoueur-----------\n");
+    assert(ressourceGetHauteurImage(&res, RESS_IMG_VAISSEAU_JOUEUR)==45);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+
+    printf("-------------Test de ressourceGetLargeurImage avec l'image d'intro-----------\n");
+    assert(ressourceGetLargeurImage(&res, RESS_IMG_SPLASH)==1366);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("-------------Test de ressourceGetHauteurImage avec l'image d'intro-----------\n");
+    assert(ressourceGetHauteurImage(&res, RESS_IMG_SPLASH)==720);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("---------- Test de ressourceGetJoueurs-------------------\n");
+    joueurs=ressourceGetJoueurs(&res);
+    assert(strcmp(joueurs[0]->nom, "dev")==0);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+
+    printf("--------------Test de ressourceLibere-----------\n");
+    ressourceLibere(&res);
+    assert(res.joueurs==NULL);
+    assert(res.images==NULL);
+    assert(res.sons==NULL);
+    assert(res.niveaux==NULL);
+      for(i=0; i<10; i++)
+    {
+        ressourceLibere(&tabRes[i]);
+        assert(tabRes[i].joueurs==NULL);
+        assert(tabRes[i].images==NULL);
+        assert(tabRes[i].sons==NULL);
+        assert(tabRes[i].niveaux==NULL);
+    }
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+}
 

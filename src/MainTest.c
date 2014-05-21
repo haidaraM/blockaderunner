@@ -4,13 +4,18 @@
 #include "Vaisseau.h"
 #include "Joueur.h"
 #include "ElementScene.h"
+#include "Scene.h"
+#include "Ressource.h"
 
 
 int main(int argc, char const *argv[])
 {
-	 joueurTestDeRegression(); 
+/* Decommentez la ligne correspondant au test du modue qui vous voulez effectuer */
+	/* joueurTestDeRegression(); */
 	/* vaisseauTestDeregression(); */
-	/* elementSceneTestDeRegression(); */
+	 elementSceneTestDeRegression(); 
+	/*sceneTestDeRegression();*/
+	/*ressourceTestDeRegression();*/
 
 
 	return 0;

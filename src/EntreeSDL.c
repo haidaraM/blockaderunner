@@ -46,6 +46,7 @@ void entreeInit(EntreeSDL *entree)
 
 void entreeLibere(EntreeSDL *entree)
 {
+    assert(entree!=NULL);
 	free(entree->clavier);
 }
 
@@ -54,6 +55,7 @@ void entreeLibere(EntreeSDL *entree)
 void entreeSonde(EntreeSDL *entree)
 {
 	SDL_Event event;
+	assert(entree!=NULL);
 	entree->toucheRelachee 									= -1;
 
 	/* tant qu'il y a des evenements à traiter : cette boucle n'est pas bloquante */

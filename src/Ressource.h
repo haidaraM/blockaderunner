@@ -17,7 +17,7 @@
 #define RESS_NUM_NIVEAUX										8
 #define RESS_NUM_IMAGES											64
 #define RESS_NUM_SONS_COURTS       								11
-#define RESS_NUM_SONS_LONGS    	    							3
+#define RESS_NUM_SONS_LONGS    	    							2
 #define RESS_NUM_POLICES										1
 
 
@@ -146,44 +146,41 @@
 #define RESS_SON_MENU                                           0
 #define RESS_SON_FICHIER_MENU                                   "menu_fond.mp3"
 
-#define RESS_SON_MENU_SUITE                                     1
-#define RESS_SON_FICHIER_MENU_SUITE                             "menu_fond_suite.wav"
-
-#define RESS_SON_AMBIENCE                                       2
+#define RESS_SON_AMBIENCE                                       1
 #define RESS_SON_FICHIER_AMBIENCE                               "ambience1.mp3"
 
 /* sons courts */
-#define RESS_SON_TIR_LASER                                      3
+#define RESS_SON_TIR_LASER                                      2
 #define RESS_SON_FICHIER_TIR_LASER                              "tir_laser.wav"
 
-#define RESS_SON_MISSILE                                        4
+#define RESS_SON_MISSILE                                        3
 #define RESS_SON_FICHIER_MISSILE                                "missile.mp3"
 
-#define RESS_SON_ERREUR                                         5
+#define RESS_SON_ERREUR                                         4
 #define RESS_SON_FICHIER_ERREUR                                 "erreur.wav"
 
-#define RESS_SON_MORT                                           6
+#define RESS_SON_MORT                                           5
 #define RESS_SON_FICHIER_MORT                                   "mort.wav"
 
-#define RESS_SON_EXPLOSION_ASTEROIDE                            7
+#define RESS_SON_EXPLOSION_ASTEROIDE                            6
 #define RESS_SON_FICHIER_EXPLOSION_ASTEROIDE                    "explosion_asteroide.mp3"
 
-#define RESS_SON_MENU_SURVOL                                    8
+#define RESS_SON_MENU_SURVOL                                    7
 #define RESS_SON_FICHIER_MENU_SURVOL                            "menu_survol.wav"
 
-#define RESS_SON_MENU_VALIDATE                                  9
+#define RESS_SON_MENU_VALIDATE                                  8
 #define RESS_SON_FICHIER_MENU_VALIDATE                          "menu_validate.wav"
 
-#define RESS_SON_TIR_LASER_ENNEMI                               10
+#define RESS_SON_TIR_LASER_ENNEMI                               9
 #define RESS_SON_FICHIER_TIR_LASER_ENNEMI                       "tir_laser2.wav"
 
-#define RESS_SON_BONUS_SCORE                                    11
+#define RESS_SON_BONUS_SCORE                                    10
 #define RESS_SON_FICHIER_BONUS_SCORE                            "bonus_score.wav"
 
-#define RESS_SON_EXPLOSION_ENNEMI                               12
+#define RESS_SON_EXPLOSION_ENNEMI                               11
 #define RESS_SON_FICHIER_EXPLOSION_ENNEMI                       "explosion_ennemi.wav"
 
-#define RESS_SON_CHANGE_ARME                                    13
+#define RESS_SON_CHANGE_ARME                                    12
 #define RESS_SON_FICHIER_CHANGE_ARME                            "change_arme.wav"
 
 
@@ -191,7 +188,7 @@
 
 /**
 * @struct Ressource
-* @brief
+* @brief Cette structure contient tous les elements dont le jeu aura besoin : les joueurs sauvegardés, la liste des fichiers sons et images, les niveaux etc...
 */
 typedef struct
 {
@@ -229,18 +226,23 @@ void ressourceLibere(Ressource *res);
 /**
 * @fn int ressourceGetNumJoueurs(const Ressource *res)
 * @brief Renvoie le nombre de joueurs sauvegardés.
+* @param [in] res : initialisé
 */
 int ressourceGetNumJoueurs(const Ressource *res);
 
 /**
 * @fn Joueur** ressourceGetJoueurs(const Ressource *res)
 * @brief Renvoie le tableau de pointeurs sur Joueur (ie tous les joueurs connus).
-* @param [in] res
+* @param [in] res : initialisé
 */
 Joueur** ressourceGetJoueurs(const Ressource *res);
 
 /**
+* @fn void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur)
 * @brief Ajoute un joueur à la liste des joueurs sauvegardés.
+* @param [in, out] res : initialisé
+* @param [in] nomJoueur
+* @param [in] indexJoueur
 */
 void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur);
 
@@ -261,19 +263,27 @@ Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau);
 
 
 /**
+* @fn int ressourceGetLargeurImage(const Ressource *res, int nomRessource)
 * @brief Renvoie la largeur d'une image cataloguée.
-* @param res[in, out] : instance de Ressource.
-* @param nomRessource : un entier définissant la ressource demandée. Par exemple RESS_VAISSEAU_JOUEUR.
+* @param [in] res : initialisé.
+* @param [in] nomRessource : un entier définissant la ressource demandée. Par exemple RESS_VAISSEAU_JOUEUR.
 * @return largeur de l'image.
 */
 int ressourceGetLargeurImage(const Ressource *res, int nomRessource);
+
 /**
+* @fn int ressourceGetHauteurImage(const Ressource *res, int nomRessource)
 * @brief Renvoie la hauteur d'une image cataloguée.
-* @param res[in, out] : instance de Ressource.
-* @param nomRessource : un entier définissant la ressource demandée. Par exemple RESS_VAISSEAU_JOUEUR.
+* @param [in] res : instance de Ressource.
+* @param [in] nomRessource : un entier définissant la ressource demandée. Par exemple RESS_VAISSEAU_JOUEUR.
 * @return hauteur de l'image.
 */
 int ressourceGetHauteurImage(const Ressource *res, int nomRessource);
+
+/**
+* @brief Test de regression du module Ressource
+*/
+void ressourceTestDeRegression();
 
 #endif
 

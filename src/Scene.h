@@ -102,8 +102,8 @@ typedef struct
 * @brief Initialise la scène.
 * Un lien vers le module Ressource est nécessaire pour instancier les divers elements (Ressource permet d'associer des ressources (images, sons)).
 * @param [in, out] scene
-* @param [in] res
-* @param [in] player
+* @param [in] res : initialisé
+* @param [in,out] player : initialisé
 * @param [in] largeurGraphique
 * @param [in] hauteurGraphique
 */
@@ -135,7 +135,7 @@ void sceneResetHorloge(Scene *scene, float horloge);
 
 /**
 * @fn void sceneDefileScene(Scene *scene)
-* @brief fait defiler le fond d'ecran.
+* @brief Fait defiler le fond d'ecran.
 * @param [in, out] scene
 * @return Renvoie 1 si on arrive à la fin de la scene, 0 sinon
 */
@@ -178,9 +178,12 @@ int sceneGetNbDecors(const Scene * scene);
 void sceneAnime(Scene *scene, float tempsSecondes);
 
 /**
-* @brief (inutilisé)
+* @fn ElementScene* sceneCreerElementScene(const Scene *scene, int type)
+* @brief Cree un element et l'initialise
+* @param [in] scene
+* @return Renvoie un pointeur vers l'element initialisé
 */
-ElementScene* sceneCreerElementScene(Scene *scene, int type);
+ElementScene* sceneCreerElementScene(const Scene *scene, int type);
 
 /**
 * @fn void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
@@ -221,7 +224,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 */
 int sceneJoueurDeclencheTir(Scene * scene);
 
-/** 
+/**
 * @fn int sceneGetMunitionMissileJoueur(Scene *scene)
 * @brief Renvoie le nombre de missiles restant au joueur.
 * @param [in, out] scene
@@ -229,7 +232,7 @@ int sceneJoueurDeclencheTir(Scene * scene);
 int sceneGetMunitionMissileJoueur(Scene *scene);
 
 /**
-* @fn void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e)
+* @fn void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
 * @brief Un ennemi tente de tirer
 * @param [in, out] scene (doit etre initialisé )
 * @param [in, out] e element-scene (ennemi)

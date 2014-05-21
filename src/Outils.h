@@ -95,7 +95,7 @@ void tabDynLibere(TabDyn *t);
 /**
 * @fn void tabDynAjoute(TabDyn *t, void* element)
 * @brief Ajoute un élément générique à un tableau dynamique.
-* @param [in, out]
+* @param [in, out] t : initialisé
 * @param [in] element
 */
 void tabDynAjoute(TabDyn *t, void* element);
@@ -103,7 +103,7 @@ void tabDynAjoute(TabDyn *t, void* element);
 /**
 * @fn void* tabDynGetElement(const TabDyn *t, int index)
 * @brief Renvoie un des éléments du tableau dynamique.
-* @param [in] t
+* @param [in] t : initialisé
 * @param [in] index
 */
 void* tabDynGetElement(const TabDyn *t, int index);
@@ -114,6 +114,12 @@ void* tabDynGetElement(const TabDyn *t, int index);
 * @param [in] position (correspond à la position de l'element dans le tableau )
 */
 void tabDynSupprimeElement(TabDyn *t, int position);
+
+/**
+* @fn void tabDynTestDeRegression();
+* @brief Effectue les tests pour verifier l'intégrité du tableau Dynamique
+*/
+void tabDynTestDeRegression();
 
 /*----------------------------------------------------------------------------	LISTE CHAINEE ---------------------------------------------------------------------------------*/
 

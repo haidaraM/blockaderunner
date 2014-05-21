@@ -80,7 +80,7 @@ unsigned int joueurGetProgression(const Joueur *joueur);
 /**
 * @fn void joueurSetProgression(Joueur * joueur)
 * @brief met a jour la progression (niveau )du joueur dans le jeu.
-* @param [in, out] joueur
+* @param [in, out] joueur : initialisé
 */
 void joueurSetProgression(Joueur * joueur);
 
@@ -100,7 +100,7 @@ void joueurSetArmeSelectionne(Joueur * joueur, int numArme );
 int joueurGetNumArmeSelectionne(const Joueur * joueur);
 
 /**
-* @fn void joueurAjouteMissiles(Joueur * joueur, int mun)
+* @fn void joueurAjouteMissiles(Joueur * joueur, int numMissiles)
 * @brief Augmente les missiles du vaisseau du joueur.
 * @param [in, out] joueur : doit être initialisé
 * @param [in] numMissiles : increment de munitions.
@@ -112,6 +112,7 @@ void joueurAjouteMissiles(Joueur *joueur, int numMissiles);
 * @fn Joueur * joueurCopieJoueur(Joueur * j)
 * @brief fais une copie de joueur
 * @param [in] j : initialisé
+* @return Renvoie un pointeur vers le nouveau joueur
 */
 Joueur * joueurCopieJoueur(Joueur * j);
 

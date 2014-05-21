@@ -23,7 +23,7 @@ void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
     joueur->vaisseau=(Vaisseau *)malloc(sizeof(Vaisseau));
     assert(joueur->vaisseau!=NULL);
 
-   vaisseauInit(joueur->vaisseau,VAISSEAU_JOUEUR_TYPE);
+    vaisseauInit(joueur->vaisseau,VAISSEAU_JOUEUR_TYPE);
 }
 
 void joueurLibere(Joueur * joueur)
@@ -53,8 +53,8 @@ int joueurGetScore(const Joueur *joueur)
 
 void joueurSetScore(Joueur *joueur, int score)
 {
-	assert(joueur != NULL);
-	joueur->score = score;
+    assert(joueur != NULL);
+    joueur->score = score;
 }
 
 Vaisseau * joueurGetVaisseau(const Joueur * joueur)
@@ -78,12 +78,12 @@ void joueurSetArmeSelectionne(Joueur * joueur, int numArme )
 
 void joueurAjouteMissiles(Joueur *joueur, int numMissiles)
 {
-	Vaisseau *v;
-	assert(joueur != NULL);
-	v = joueurGetVaisseau(joueur);
-	v->armes[ARME_MISSILE].munitions += numMissiles;
-	if (v->armes[ARME_MISSILE].munitions > JOUEUR_MAX_MISSILES)
-		v->armes[ARME_MISSILE].munitions = JOUEUR_MAX_MISSILES;
+    Vaisseau *v;
+    assert(joueur != NULL);
+    v = joueurGetVaisseau(joueur);
+    v->armes[ARME_MISSILE].munitions += numMissiles;
+    if (v->armes[ARME_MISSILE].munitions > JOUEUR_MAX_MISSILES)
+        v->armes[ARME_MISSILE].munitions = JOUEUR_MAX_MISSILES;
 }
 
 Joueur * joueurCopieJoueur(Joueur * j)

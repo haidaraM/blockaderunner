@@ -67,6 +67,7 @@ typedef struct
 
 
 /**
+* @fn void elementInit(ElementScene *element, int type, int indexImage, int largeur, int hauteur, int largeurEcran, int hauteurEcran);
 * @brief Initialise un element.
 * @param [in, out] element : l'element à initialiser, doit être non null.
 * @param type : type d'entité
@@ -101,7 +102,7 @@ void elementDetruit(ElementScene *element);
 void elementSetType(ElementScene *element, int type);
 
 /**
-* @fn elementGetType(ElementScene * element)
+* @fn elementGetType(const ElementScene * element)
 * @brief Renvoie le type d'element
 * @param [in] element : initialisé
 */

@@ -121,28 +121,28 @@ void vaisseauArmeInit(Arme *a, int type);
 /**
 * @fn int vaisseauGetNbArmes(const Vaisseau * vaisseau)
 * @brief Renvoie le nombre d'armes du vaisseau
-* @param  [in] vaisseau
+* @param  [in] vaisseau  : initialisé
 */
 int vaisseauGetNbArmes(const Vaisseau * vaisseau);
 
 /**
 * @fn int vaisseauGetPointEcran(const Vaisseau * vaisseau);
 * @brief Renvoie les points ecran du vaisseau
-* @param [in] vaisseau
+* @param [in] vaisseau  : initialisé
 */
 int vaisseauGetPointEcran(const Vaisseau * vaisseau);
 
 /**
 * @fn int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 * @brief Renvoie les points structure du vaisseau
-* @param [in] vaisseau
+* @param [in] vaisseau : initialisé
 */
 int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 
 /**
 * @fn void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure);
 * @brief Affecte les points ecran &  les points structure du vaisseau
-* @param [in,out] vaisseau
+* @param [in,out] vaisseau  : initialisé
 * @param [in] pEcran
 * @param [in] pStructure
 */
@@ -159,7 +159,7 @@ void vaisseauSetDegats(Vaisseau * vaisseau, int typeDegats);
 /**
 * @fn int vaisseauGetMunitionsArme(Const Vaisseau * vaisseau)
 * @brief Recupere les munitions de l'arme selectionnéé
-* @param [in] vaisseau
+* @param [in] vaisseau  : initialisé
 */
 int vaisseauGetMunitionsArme(const Vaisseau * vaisseau);
 
@@ -182,14 +182,14 @@ void vaisseauMajMunitions(Vaisseau * vaisseau);
 /**
 * @fn int vaisseauGetDegatEcranArme(const Vaisseau * vaisseau )
 * @brief Renvoie le degat ecran de l'arme selectionné
-* @param [in] vaisseau
+* @param [in] vaisseau  : initialisé
 */
 int vaisseauGetDegatEcranArme(const Vaisseau * vaisseau );
 
 /**
 * @fn int vaisseauGetDegatStructureArme(const Vaisseau * vaisseau )
 * @brief Renvoie le degat structure de l'arme selectionné
-* @param [in] vaisseau
+* @param [in] vaisseau  : initialisé
 */
 int vaisseauGetDegatStructureArme(const Vaisseau * vaisseau );
 

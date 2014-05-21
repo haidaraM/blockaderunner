@@ -127,7 +127,7 @@ void jeuBoucle(JeuSDL *jeu)
 
                 tempsDernierAffichage 	= getTempsSecondes();
 
-                 audioJoueScene(&jeu->audio, &jeu->scene);
+                audioJoueScene(&jeu->audio, &jeu->scene);
             }
 
             /* L'utilisateur a appuyé sur ESC */
@@ -180,7 +180,7 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee= SDLK_F5;
             if(entreeToucheEnfoncee(entree, SDLK_F5)==0 && toucheDetectee == SDLK_F5)
             {
-                joueurSetArmeSelectionne(copieJoueur, 0); /* Moha : au lieu de 0 mets la constante définie dans le .h ;) */
+                joueurSetArmeSelectionne(copieJoueur, ARME_LASER);
                 audioJoueSon(&jeu->audio, RESS_SON_CHANGE_ARME);
                 toucheDetectee=-1;
             }
@@ -189,7 +189,7 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee= SDLK_F6;
             if(entreeToucheEnfoncee(entree, SDLK_F6)==0 && toucheDetectee == SDLK_F6)
             {
-                joueurSetArmeSelectionne(copieJoueur, 1);
+                joueurSetArmeSelectionne(copieJoueur, ARME_MISSILE);
                 audioJoueSon(&jeu->audio, RESS_SON_CHANGE_ARME);
                 toucheDetectee=-1;
             }
@@ -234,7 +234,7 @@ void jeuBoucle(JeuSDL *jeu)
         case JEU_ETAT_MENU:			/*-------------   M E N U   ---------------*/
 
             /* on joue le son du menu */
-             audioJoueSon(&jeu->audio, RESS_SON_MENU);
+            audioJoueSon(&jeu->audio, RESS_SON_MENU);
             /* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
             sourisX 	= entreeGetSourisX(entree);
             sourisY		= entreeGetSourisY(entree);
@@ -289,10 +289,10 @@ void jeuBoucle(JeuSDL *jeu)
 
                     }
                     else if (rectangleContient(&menu->elements[i].rect, sourisX, sourisY) == 1)
-                        {
-                            menu->elements[i].surligne = 1;
-                            audioJoueSon(&jeu->audio, RESS_SON_MENU_SURVOL);
-                        }
+                    {
+                        menu->elements[i].surligne = 1;
+                        audioJoueSon(&jeu->audio, RESS_SON_MENU_SURVOL);
+                    }
                 }
 
             /* Cas où on doit lire le clavier pour entrer un nom de joueur */
