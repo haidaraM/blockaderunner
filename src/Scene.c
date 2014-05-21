@@ -64,7 +64,7 @@ void sceneLibere(Scene *scene)
         e=(ElementScene *)tabDynGetElement(&scene->acteurs, i);
         if ( e!= NULL)
         {
-            elementDetruit(e);
+            sceneDetruitElement(e);
         }
     }
     tabDynLibere(&scene->acteurs);
@@ -75,7 +75,7 @@ void sceneLibere(Scene *scene)
         e=(ElementScene *)tabDynGetElement(&scene->tirs, i);
         if ( e!= NULL)
         {
-            elementDetruit(e);
+            sceneDetruitElement(e);
         }
     }
     tabDynLibere(&scene->tirs);
@@ -86,7 +86,7 @@ void sceneLibere(Scene *scene)
         e=(ElementScene *)tabDynGetElement(&scene->bonus, i);
         if ( e!= NULL)
         {
-            elementDetruit(e);
+            sceneDetruitElement(e);
         }
     }
     tabDynLibere(&scene->bonus);
@@ -97,13 +97,13 @@ void sceneLibere(Scene *scene)
         e=(ElementScene *)tabDynGetElement(&scene->decors, i);
         if ( e!= NULL)
         {
-            elementDetruit(e);
+            sceneDetruitElement(e);
         }
     }
     tabDynLibere(&scene->decors);
 
     /* Liberation du vaisseauJoueur */
-    elementDetruit(scene->elementVaisseauJoueur);
+    sceneDetruitElement(scene->elementVaisseauJoueur);
     /* Liberation du joueur qu'on a passé à la scene : correspond à la copie */
     joueurLibere(scene->joueur);
 
@@ -246,7 +246,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         /* on supprime le bonus dès qu'il n'est plus visible */
         if (elementVisible(e) != 1)
         {
-            elementDetruit(e);
+            sceneDetruitElement(e);
             tabDynSupprimeElement(&scene->bonus, i);
         }
     }
@@ -281,7 +281,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         /* Suppression des tirs qui sortent de l'ecran */
         if(elementVisible(e)!=1)
         {
-            elementDetruit(e);
+            sceneDetruitElement(e);
             tabDynSupprimeElement(&scene->tirs, i);
         }
     }
@@ -357,7 +357,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
         if(x+dx < - (e->largeur))
         {
             /* Suppression des acteurs qui sortent completement de l'ecran à gauche.*/
-            elementDetruit(e);
+            sceneDetruitElement(e);
             tabDynSupprimeElement(&scene->acteurs, i);
         }
     }
@@ -431,7 +431,7 @@ void sceneTestDeCollision(Scene *scene)
 
             if (elementTestDeCollision(scene->elementVaisseauJoueur, b))
             {
-                elementDetruit(b);
+                sceneDetruitElement(b);
                 tabDynSupprimeElement(&scene->bonus, i);
                 /* on augmente le score du joueur */
                 joueurSetScore(scene->joueur, joueurGetScore(scene->joueur) + SCENE_BONUS_SCORE);
@@ -444,7 +444,7 @@ void sceneTestDeCollision(Scene *scene)
 
             if (elementTestDeCollision(scene->elementVaisseauJoueur, b))
             {
-                elementDetruit(b);
+                sceneDetruitElement(b);
                 tabDynSupprimeElement(&scene->bonus, i);
                 /* on augmente le nombre de missiles restants du joueur */
                 joueurAjouteMissiles(scene->joueur, SCENE_BONUS_MISSILE);
@@ -465,7 +465,7 @@ void sceneTestDeCollision(Scene *scene)
 
             if(elementTestDeCollision(scene->elementVaisseauJoueur, t))
             {
-                elementDetruit(t);
+                sceneDetruitElement(t);
                 tabDynSupprimeElement(&scene->tirs, i);
                 /* Le vaisseau du joueur encaisse des dégats */
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, ARME_LASER);
@@ -478,7 +478,7 @@ void sceneTestDeCollision(Scene *scene)
 
             if(elementTestDeCollision(scene->elementVaisseauJoueur, t))
             {
-                elementDetruit(t);
+                sceneDetruitElement(t);
                 tabDynSupprimeElement(&scene->tirs, i);
                 /* Le vaisseau du joueur encaisse des dégats */
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, ARME_MISSILE);
@@ -502,7 +502,7 @@ void sceneTestDeCollision(Scene *scene)
                     if(elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
-                        elementDetruit(t);
+                        sceneDetruitElement(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Creation des débris d'asteroide ! */
                         numDebris = randomInt(2, 10);
@@ -514,7 +514,7 @@ void sceneTestDeCollision(Scene *scene)
                             tabDynAjoute(&scene->acteurs, (void *)debris );
                         }
                         /* Suppression de l'asteroide */
-                        elementDetruit(e);
+                        sceneDetruitElement(e);
                         tabDynSupprimeElement(&scene->acteurs, j);
                         /* mise à jour du score */
                         joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
@@ -528,7 +528,7 @@ void sceneTestDeCollision(Scene *scene)
                     if (elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
-                        elementDetruit(t);
+                        sceneDetruitElement(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Le vaisseau ennemi encaisse des dégats */
                         vaisseauSetDegats((Vaisseau*)e->data, ARME_LASER);
@@ -541,7 +541,7 @@ void sceneTestDeCollision(Scene *scene)
                             sceneCreeBonusEventuel(scene, e);
 
                             /* liberation du vaisseau detruit */
-                            elementDetruit(e);
+                            sceneDetruitElement(e);
                             tabDynSupprimeElement(&scene->acteurs, j);
                             /* mise à jour du score */
                             joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+100);
@@ -566,7 +566,7 @@ void sceneTestDeCollision(Scene *scene)
                     if(elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
-                        elementDetruit(t);
+                        sceneDetruitElement(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Creation des débris d'asteroide ! */
                         numDebris = randomInt(2, 10);
@@ -578,7 +578,7 @@ void sceneTestDeCollision(Scene *scene)
                             tabDynAjoute(&scene->acteurs, (void *)debris );
                         }
                         /* Suppression de l'asteroide */
-                        elementDetruit(e);
+                        sceneDetruitElement(e);
                         tabDynSupprimeElement(&scene->acteurs, j);
                         /* mise à jour du score */
                         joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+10);
@@ -593,7 +593,7 @@ void sceneTestDeCollision(Scene *scene)
                         if (elementTestDeCollision(t, e))
                         {
                             /* Suppression du tir */
-                            elementDetruit(t);
+                            sceneDetruitElement(t);
                             tabDynSupprimeElement(&scene->tirs, i);
                             /* Le vaisseau ennemi encaisse des dégats */
                             vaisseauSetDegats((Vaisseau*)e->data, ARME_MISSILE);
@@ -605,7 +605,7 @@ void sceneTestDeCollision(Scene *scene)
                             {
                                 sceneCreeBonusEventuel(scene, e);
 
-                                elementDetruit(e);
+                                sceneDetruitElement(e);
                                 tabDynSupprimeElement(&scene->acteurs, j);
                                 /* mise à jour du score */
                                 joueurSetScore(scene->joueur, joueurGetScore(scene->joueur)+250);
@@ -659,7 +659,7 @@ void sceneTestDeCollision(Scene *scene)
                 break;
             }
             /* Suppression de l'acteur */
-            elementDetruit(e);
+            sceneDetruitElement(e);
             tabDynSupprimeElement(&scene->acteurs, i);
         }
     }
@@ -908,6 +908,13 @@ int sceneTestVaisseauMort(Scene * scene)
         return 0;
 }
 
+void sceneDetruitElement(ElementScene *element)
+{
+    assert(element!=NULL);
+    elementLibere(element);
+    free(element);
+    element=NULL;
+}
 
 void sceneTestDeRegression()
 {

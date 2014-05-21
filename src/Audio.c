@@ -39,10 +39,14 @@ FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon)
 
 void audioInit(AudioFMOD *audio, const Ressource *res)
 {
+
     FMOD_RESULT resultat;
     int i, nbSons;
     char **fichiersSons;
     assert(audio!=NULL);
+#ifdef JEU_VERBOSE
+    printf("Audio :\n    initialisation ...\n");
+#endif
 
     nbSons=RESS_NUM_SONS_COURTS + RESS_NUM_SONS_LONGS;
     /* Allocation de l'objet systeme dans la memoire */
@@ -53,6 +57,9 @@ void audioInit(AudioFMOD *audio, const Ressource *res)
     resultat=FMOD_System_Init(audio->system, nbSons, FMOD_INIT_NORMAL, NULL);
     audioVerifieErreur(resultat);
 
+#ifdef JEU_VERBOSE
+    printf("	chargement des sons.\n");
+#endif
     /* Chargement des sons en memoire */
     fichiersSons=res->sons;
     audio->sons=(FMOD_SOUND **) malloc(nbSons * sizeof(FMOD_SOUND *));
@@ -66,6 +73,9 @@ void audioInit(AudioFMOD *audio, const Ressource *res)
     {
         audio->sons[i]=chargeSon(audio, fichiersSons[i],0);
     }
+#ifdef JEU_VERBOSE
+    printf("	initialisation OK.\n");
+#endif
 }
 
 void audioLibere(AudioFMOD *audio)
@@ -174,7 +184,7 @@ void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
         audioJoueSon(audio, RESS_SON_TIR_LASER);
     /* missile joueur */
     if(scene->evenements.joueur_tir_missile==1)
-         audioJoueSon(audio, RESS_SON_MISSILE);
+        audioJoueSon(audio, RESS_SON_MISSILE);
     /* plus de munitions */
     if(scene->evenements.joueur_tir_erreur==1)
         audioJoueSon(audio, RESS_SON_ERREUR);

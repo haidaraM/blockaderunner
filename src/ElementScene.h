@@ -87,13 +87,6 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 void elementLibere(ElementScene *element);
 
 /**
-* @fn void elementDetruit(ElementScene *element)
-* @brief Detruit complement un element : le libere et le met à null
-* @param [in, out] element : initialisé
-*/
-void elementDetruit(ElementScene *element);
-
-/**
 * @fn void elementSetType(ElementScene *element, int type)
 * @brief Affecte le type d'element.
 * @param [in, out] element : initialisé

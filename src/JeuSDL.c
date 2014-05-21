@@ -83,6 +83,7 @@ void jeuBoucle(JeuSDL *jeu)
     tempsDernierAffichage			= getTempsSecondes();
     dureeBoucle	 					= 0.0f;
 
+
     /***************************************/
     /* Tant que ce n'est pas la fin du Jeu */
     /***************************************/

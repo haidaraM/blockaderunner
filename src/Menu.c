@@ -225,10 +225,10 @@ void menuRetour(void *m)
 			menuQuitter((void*)menu);
 			break;
 		case MENU_ETAT_ENTREE_JOUEUR:
-			/*menuChoixJoueur((void*)menu);*/
+			menuChoixJoueur((void*)menu);
 			break;
 		case MENU_ETAT_PRINCIPAL:
-			/*menuChoixJoueur((void*)menu);*/
+			menuChoixJoueur((void*)menu);
 			break;
 		case MENU_ETAT_QUITTER:
 			break;

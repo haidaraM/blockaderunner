@@ -120,7 +120,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	SDL_Color couleurTexteMenuSurvol 	= { 249, 255, 53 };
 	SDL_Color couleurTexteScore			= { 249, 153, 86 };
 	SDL_Color couleurTexteMunitions     = { 0, 255, 253};
-	SDL_Color couleurTexteMessage       = { 255, 0, 0};
+	SDL_Color couleurTexteMort          = { 255, 0, 0}; /* couleur rouge*/
+	SDL_Color couleurTexteFinNiveau     = {33, 238, 47}; /* couleur verte*/
 	Uint32 couleurNiveauCoque			= 0x00B0FF;
 	Uint32 couleurNiveauEcran			= 0xFFB000;
 
@@ -303,8 +304,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	assert(graphique->elementsHUD[3] != NULL);
 
 	/* fin de niveau ou mort du joueur */
-    graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMessage);
-	graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteMessage);
+    graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMort);
+	graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteFinNiveau);
 
 	/* nbre de missiles */
 	graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions);
@@ -634,7 +635,7 @@ void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles)
 		numMissiles = 9;/* pour etre sur de rester à un digit */
 	chaineMun[0] = '0' + numMissiles;
 	chaineMun[1] = '\0';
-	
+
 	SDL_FreeSurface(graphique->elementsHUD[6]);
 	graphique->elementsHUD[6] = TTF_RenderText_Blended( graphique->policeListeJoueurs, chaineMun, couleurTexteMunitions);
 	assert(graphique->elementsHUD[6] != NULL);
@@ -643,7 +644,7 @@ void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles)
 void graphiqueAfficheMort(GraphiqueSDL * graphique)
 {
     SDL_Rect positionText;
-    positionText.x=graphique->largeur/2-50;
+    positionText.x=graphique->largeur/2-45;
     positionText.y=graphique->hauteur/2;
     assert(graphique!=NULL);
 
@@ -659,7 +660,7 @@ void graphiqueAfficheMort(GraphiqueSDL * graphique)
 void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique)
 {
     SDL_Rect positionText;
-    positionText.x=graphique->largeur/2-50;
+    positionText.x=graphique->largeur/2-45;
     positionText.y=graphique->hauteur/2;
     assert(graphique!=NULL);
 

@@ -381,6 +381,45 @@ void ressourceSauveJoueurs(Ressource *res)
     fclose(fic);
 }
 
+void ressourceTrisJoueur(Ressource * res)
+{
+    int i, j, indmax, nbJoueurs;
+    Joueur ** joueurs=NULL, *joueurMax;
+    assert( res!=NULL && res->joueurs!=NULL);
+
+    nbJoueurs=ressourceGetNumJoueurs(res);
+    joueurs=ressourceGetJoueurs(res);
+    /* premier tri par niveau atteint */
+    for(i=0; i<nbJoueurs-1; i++)
+    {
+        indmax=i;
+        for(j=i+1; j<nbJoueurs; j++)
+        {
+            if(joueurGetProgression(joueurs[j]) > joueurGetProgression(joueurs[indmax]))
+                indmax=j;
+        }
+        joueurMax=joueurs[indmax];
+        joueurs[indmax]=joueurs[i];
+        joueurs[i]=joueurMax;
+    }
+
+    /* deuxieme tri par score */
+    for(i=0; i<nbJoueurs-1; i++)
+    {
+        indmax=i;
+        for(j=i+1; j<nbJoueurs; j++)
+        {
+            if(joueurGetProgression(joueurs[j]) == joueurGetProgression(joueurs[indmax]))
+                if(joueurGetScore(joueurs[j]) > joueurGetScore(joueurs[indmax]))
+                    indmax=j;
+        }
+        joueurMax=joueurs[indmax];
+        joueurs[indmax]=joueurs[i];
+        joueurs[i]=joueurMax;
+    }
+
+}
+
 Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau)
 {
     assert(res != NULL && numeroNiveau >=0 && numeroNiveau < RESS_NUM_NIVEAUX);
@@ -458,7 +497,7 @@ void ressourceTestDeRegression()
     assert(res.images==NULL);
     assert(res.sons==NULL);
     assert(res.niveaux==NULL);
-      for(i=0; i<10; i++)
+    for(i=0; i<10; i++)
     {
         ressourceLibere(&tabRes[i]);
         assert(tabRes[i].joueurs==NULL);

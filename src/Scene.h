@@ -185,6 +185,15 @@ void sceneAnime(Scene *scene, float tempsSecondes);
 */
 ElementScene* sceneCreerElementScene(const Scene *scene, int type);
 
+
+/**
+* @fn void sceneDetruitElement(ElementScene *element)
+* @brief Detruit complement un element : le libere et le met à null
+* @param [in, out] element : initialisé
+*/
+void sceneDetruitElement(ElementScene *element);
+
+
 /**
 * @fn void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 * @brief Deplace le vaisseau du joueur vers le haut.
