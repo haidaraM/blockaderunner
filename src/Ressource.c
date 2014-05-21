@@ -84,6 +84,10 @@ void creeListeImages(Ressource *res)
     res->dimensionImages[RESS_IMG_FOND_MENU].largeur 				= RESS_IMG_LARGEUR_FOND_MENU;
     res->dimensionImages[RESS_IMG_FOND_MENU].hauteur 				= RESS_IMG_HAUTEUR_FOND_MENU;
 
+    res->images[RESS_IMG_MENU_CMD]                          = RESS_IMG_FICHIER_MENU_CMD;
+    res->dimensionImages[RESS_IMG_MENU_CMD].largeur         = RESS_IMG_LARGEUR_MENU_CMD;
+    res->dimensionImages[RESS_IMG_MENU_CMD].hauteur         = RESS_IMG_HAUTEUR_MENU_CMD;
+
     /* Images des niveaux (backgrounds) */
     res->images[RESS_IMG_FOND_NIVEAU_0] 							= RESS_IMG_FICHIER_FOND_NIVEAU_0;
     res->dimensionImages[RESS_IMG_FOND_NIVEAU_0].largeur 			= RESS_IMG_LARGEUR_FOND_NIVEAU;

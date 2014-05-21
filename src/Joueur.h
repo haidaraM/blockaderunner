@@ -73,7 +73,7 @@ int joueurGetScore(const Joueur *joueur);
 /**
 * @fn unsigned int joueurGetProgression(const Joueur *joueur)
 * @brief renvoie la progression du joueur
-* @param  [in] joueur
+* @param  [in] joueur : initialisé
 */
 unsigned int joueurGetProgression(const Joueur *joueur);
 
@@ -110,7 +110,7 @@ void joueurAjouteMissiles(Joueur *joueur, int numMissiles);
 
 /**
 * @fn Joueur * joueurCopieJoueur(Joueur * j)
-* @brief fais une copie de joueur
+* @brief Fais une copie du joueur passé en parametre. Utile pour la scene notamment
 * @param [in] j : initialisé
 * @return Renvoie un pointeur vers le nouveau joueur
 */

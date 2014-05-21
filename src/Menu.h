@@ -206,7 +206,9 @@ void menuScores(void *m);
 void menuJouer(void *m);
 
 /**
+* @fn void menuCommencerNiveau(void* m)
 * @brief Callback (vide - inutilisée, JeuSDL appelle directement le chargement d'un niveau).
+* @param [in] m
 */
 void menuCommencerNiveau(void* m);
 

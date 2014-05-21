@@ -463,6 +463,22 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 		SDL_BlitSurface( nomNouveauJoueur, NULL, graphique->surface, &offset);
 		SDL_FreeSurface(nomNouveauJoueur);
 		break;
+    case MENU_ETAT_CMD:
+        offset.x = 0;
+		offset.y = 0;
+		SDL_BlitSurface( graphique->images[RESS_IMG_MENU_CMD], NULL, graphique->surface, &offset);
+		for (i=0; i< MENU_NUM_ELEMENTS; i++)
+		{
+			if (menu->elements[i].visible == 1)
+			{
+				offset.x = menu->elements[i].rect.x;
+				offset.y = menu->elements[i].rect.y;
+				if (menu->elements[i].surligne == 0)
+						SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
+				else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
+			}
+		}
+        break;
 	default:
 		offset.x = 0;
 		offset.y = 0;

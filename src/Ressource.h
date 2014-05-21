@@ -124,6 +124,11 @@
 #define RESS_IMG_LARGEUR_FOND_MENU								1366
 #define RESS_IMG_HAUTEUR_FOND_MENU		 						720
 
+#define RESS_IMG_MENU_CMD                                       34
+#define RESS_IMG_FICHIER_MENU_CMD                               "menu_commandes.jpg"
+#define RESS_IMG_LARGEUR_MENU_CMD                               1366
+#define RESS_IMG_HAUTEUR_MENU_CMD                               720
+
 /* Images des niveaux */
 #define RESS_IMG_FOND_NIVEAU_0				 					48
 #define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"

@@ -104,7 +104,7 @@ void graphiqueSetTitre(GraphiqueSDL *graphique, char *titre);
 /**
 * @fn void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsigned char vert, unsigned char bleu)
 * @brief Définit la couleur de fond.
-* @param [in, out] graphique
+* @param [in, out] graphique :initialisé
 * @param [in] rouge
 * @param [in] vert
 * @param [in] bleu
@@ -121,8 +121,8 @@ void graphiqueEfface(GraphiqueSDL *graphique);
 /**
 * @fn void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu)
 * @brief Recalcule le rendu de la liste des noms de joueurs. (pour usage dans Menu).
-* @param [in, out] graphique
-* @param [in, out] menu
+* @param [in, out] graphique : initialisé
+* @param [in, out] menu : initialisé
 */
 void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu);
 
