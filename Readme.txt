@@ -18,7 +18,7 @@ Introduction
 	Jeu de type shoot'em up à defilement horizontal réalisé en C avec 
 	SDL et FMOD dans le cadre de l'UE LIF7 de l'université Lyon 1 Claude Bernard.
 
-Utilisation:
+Installation:
 	- FMOD : Il faudra télécharger la librairie FMOD disponible sur : http://www.fmod.org/download/. 
 			 Plus précisement la version FMOD Ex Programmer's API. 
 			 -	Dans l'archive téléchargé, copiez le dossier api (en le rennomant en "lib") dans le dossier du projet.
@@ -32,6 +32,7 @@ Utilisation:
 	 		 Reportez vous à ces pages : http://doc.ubuntu-fr.org/sdl
 	 		 							 http://fr.openclassrooms.com/informatique/cours/apprenez-a-programmer-en-c/installation-de-la-sdl 
 	 		 							 http://loka.developpez.com/tutoriel/sdl/installation/
+
 
 
 

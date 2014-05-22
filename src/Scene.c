@@ -417,7 +417,7 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
 
 void sceneTestDeCollision(Scene *scene)
 {
-    int i, j, d, numDebris, typeElement;
+    int i, j, d, numDebris, typeElement, aDetruire;
     ElementScene * t=NULL, *e=NULL, *b=NULL;
     assert(scene!=NULL);
 
@@ -458,6 +458,7 @@ void sceneTestDeCollision(Scene *scene)
     /* On itère sur tous les TIRS du jeu */
     for(i=0; i<sceneGetNbTirs(scene); i++)
     {
+        aDetruire=0;
         t = (ElementScene *) tabDynGetElement(&scene->tirs, i);
         switch(elementGetType(t))
         {
@@ -501,8 +502,8 @@ void sceneTestDeCollision(Scene *scene)
                     /* Les asteroides disparaissent avec un seul tir */
                     if(elementTestDeCollision(t, e))
                     {
+                        aDetruire=1;
                         /* Suppression du tir */
-                        sceneDetruitElement(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Creation des débris d'asteroide ! */
                         numDebris = randomInt(2, 10);
@@ -527,8 +528,7 @@ void sceneTestDeCollision(Scene *scene)
                 {
                     if (elementTestDeCollision(t, e))
                     {
-                        /* Suppression du tir */
-                        sceneDetruitElement(t);
+                        aDetruire=1;
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Le vaisseau ennemi encaisse des dégats */
                         vaisseauSetDegats((Vaisseau*)e->data, ARME_LASER);
@@ -566,7 +566,7 @@ void sceneTestDeCollision(Scene *scene)
                     if(elementTestDeCollision(t, e))
                     {
                         /* Suppression du tir */
-                        sceneDetruitElement(t);
+                        aDetruire=1;
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Creation des débris d'asteroide ! */
                         numDebris = randomInt(2, 10);
@@ -593,7 +593,7 @@ void sceneTestDeCollision(Scene *scene)
                         if (elementTestDeCollision(t, e))
                         {
                             /* Suppression du tir */
-                            sceneDetruitElement(t);
+                            aDetruire=1;
                             tabDynSupprimeElement(&scene->tirs, i);
                             /* Le vaisseau ennemi encaisse des dégats */
                             vaisseauSetDegats((Vaisseau*)e->data, ARME_MISSILE);
@@ -621,6 +621,9 @@ void sceneTestDeCollision(Scene *scene)
 
 
         }
+        /* si le tir a touché au moins un element, on le supprime */
+        if(aDetruire==1)
+                sceneDetruitElement(t);
     }
 
     /* collision vaisseauJoueur - acteurs */
