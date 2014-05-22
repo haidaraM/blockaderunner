@@ -13,7 +13,7 @@
 #include "Niveau.h"
 
 
-
+#define RESS_NUM_MEILLEURS_JOUEURS								5
 #define RESS_NUM_NIVEAUX										8
 #define RESS_NUM_IMAGES											64
 #define RESS_NUM_SONS_COURTS       								11
@@ -35,6 +35,7 @@
 
 #define RESS_SAU_MAX_JOUEURS									20
 #define RESS_SAU_FICHIER_JOUEURS								"joueurs"
+
 
 
 /* TEXTES */
@@ -200,6 +201,8 @@ typedef struct
     int numJoueurs;
     /** Tableau de pointeurs sur Joueur : tous les joueurs sauvegardés. */
     Joueur **joueurs;
+	/** Tableau de pointeurs sur Joueur : les 5 meilleurs joueurs (classement sur le score) */
+	Joueur **meilleursJoueurs;
     /** Tableau de chaines de caractères (noms des fichiers images) */
     char **images;
     /** Tableau de Rectangles stockant les dimensions de chaque image */
@@ -241,6 +244,13 @@ int ressourceGetNumJoueurs(const Ressource *res);
 * @param [in] res : initialisé
 */
 Joueur** ressourceGetJoueurs(const Ressource *res);
+
+/**
+* @fn Joueur** ressourceGetMeilleursJoueurs(const Ressource *res)
+* @brief Renvoie le tableau de pointeurs sur Joueur (= tous les RESS_NUM_MEILLEURS_JOUEURS meilleurs joueurs).
+* @param [in] res : initialisé
+*/
+Joueur** ressourceGetMeilleursJoueurs(const Ressource *res);
 
 /**
 * @fn void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur)
@@ -286,11 +296,11 @@ int ressourceGetLargeurImage(const Ressource *res, int nomRessource);
 int ressourceGetHauteurImage(const Ressource *res, int nomRessource);
 
 /**
-* @fn void ressourceTrisJoueur(Ressource * res)
-* @brief Trie les joueurs par progression puis par score. Tri par selection
+* @fn void ressourceTrieJoueurs(Ressource * res)
+* @brief Classe les meilleurs joueurs par score. (Tri par selection).
 * @param [in, out] res: initialisé
 */
-void ressourceTrisJoueur(Ressource * res);
+void ressourceTrieJoueurs(Ressource * res);
 
 /**
 * @brief Test de regression du module Ressource

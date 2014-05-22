@@ -247,7 +247,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	#endif
 	chargePolices(graphique);
 
-	/* Creation des Elements Menu : MENU_NUM_ELEMENTS paires de rendus de texte (normal & surligné) */
+	/* Creation des Elements Menu : 
+		MENU_NUM_ELEMENTS paires de rendus de texte (normal & surligné) 
+	*/
 	graphique->textesMenu 	= (SDL_Surface**)malloc(2*MENU_NUM_ELEMENTS*sizeof(SDL_Surface*));
 	if (graphique->textesMenu == NULL)
 	{
@@ -404,8 +406,8 @@ void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu)
 		/* On rend une fois le texte normal */
 		while( graphique->textesMenu[2*i] == NULL )
 			graphique->textesMenu[2*i]		= TTF_RenderText_Blended(graphique->policeListeJoueurs, menu->elements[i].texte, couleurTexteMenu);
-		menu->elements[i].rect.largeur 	= graphique->textesMenu[2*i]->w;
-		menu->elements[i].rect.hauteur 	= graphique->textesMenu[2*i]->h;
+		menu->elements[i].rect.largeur 		= graphique->textesMenu[2*i]->w;
+		menu->elements[i].rect.hauteur 		= graphique->textesMenu[2*i]->h;
 		/* On rend une seconde fois avec la couleur correspondant au texte surligné */
 		while( graphique->textesMenu[2*i+1] == NULL )
 			graphique->textesMenu[2*i+1]	= TTF_RenderText_Blended(graphique->policeListeJoueurs, menu->elements[i].texte, couleurTexteMenuSurvol);
@@ -414,19 +416,23 @@ void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu)
 
 void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 {
-	int i;
+	int i, count;
 	SDL_Rect offset;
 	SDL_Surface *nomNouveauJoueur;
 	SDL_Color couleurTexteMenuSurvol 	= { 249, 255, 53 };
+	SDL_Surface **nomsMeilleursJoueurs, **scoresMeilleursJoueurs;
 
 	switch(menu->etat)
 	{
 	case MENU_ETAT_INTRO:
+
 		offset.x = 0;
 		offset.y = 0;
 		SDL_BlitSurface( graphique->images[RESS_IMG_SPLASH], NULL, graphique->surface, &offset);
 		break;
+
 	case MENU_ETAT_CHOIX_JOUEUR:
+
 		offset.x = 0;
 		offset.y = 0;
 		SDL_BlitSurface( graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
@@ -442,7 +448,9 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 			}
 		}
 		break;
+
 	case MENU_ETAT_ENTREE_JOUEUR:
+
 		offset.x = 0;
 		offset.y = 0;
 		SDL_BlitSurface( graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
@@ -463,7 +471,60 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 		SDL_BlitSurface( nomNouveauJoueur, NULL, graphique->surface, &offset);
 		SDL_FreeSurface(nomNouveauJoueur);
 		break;
+
+	case MENU_ETAT_SCORE:
+
+		offset.x = 0;
+		offset.y = 0;
+		SDL_BlitSurface( graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
+
+		count = 0;
+		nomsMeilleursJoueurs = (SDL_Surface**)malloc(RESS_NUM_MEILLEURS_JOUEURS*sizeof(SDL_Surface*));
+		scoresMeilleursJoueurs = (SDL_Surface**)malloc(RESS_NUM_MEILLEURS_JOUEURS*sizeof(SDL_Surface*));
+		assert(nomsMeilleursJoueurs != NULL && scoresMeilleursJoueurs != NULL);
+
+		for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
+		{
+			nomsMeilleursJoueurs[i] = NULL;
+			scoresMeilleursJoueurs[i] = NULL;	
+			if (menu->nomsMeilleursJoueurs[i] != NULL)
+			{
+				nomsMeilleursJoueurs[i] 	= TTF_RenderText_Blended(graphique->policeMenu, menu->nomsMeilleursJoueurs[i], couleurTexteMenuSurvol);
+				offset.x = MENU_ZONE_X + 5*MENU_PADDING_HORZ;
+				offset.y = MENU_ZONE_Y + (5+2*count)*MENU_PADDING_VERT;
+				SDL_BlitSurface( nomsMeilleursJoueurs[i], NULL, graphique->surface, &offset);
+		
+				scoresMeilleursJoueurs[i] 	= TTF_RenderText_Blended(graphique->policeMenu, menu->meilleursScores[i], couleurTexteMenuSurvol);
+				offset.x = MENU_ZONE_X + 25*MENU_PADDING_HORZ;
+				SDL_BlitSurface( scoresMeilleursJoueurs[i], NULL, graphique->surface, &offset);
+				count++;			
+			}
+		}
+		for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
+		{
+			if (nomsMeilleursJoueurs[i] != NULL)
+			{
+				SDL_FreeSurface(nomsMeilleursJoueurs[i]);
+				SDL_FreeSurface(scoresMeilleursJoueurs[i]);
+			}
+		}
+
+		for (i=0; i< MENU_NUM_ELEMENTS; i++)
+		{
+			if (menu->elements[i].visible == 1)
+			{
+				offset.x = menu->elements[i].rect.x;
+				offset.y = menu->elements[i].rect.y;
+				if (menu->elements[i].surligne == 0)
+						SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
+				else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
+			}
+		}
+
+		break;
+
     case MENU_ETAT_CMD:
+
         offset.x = 0;
 		offset.y = 0;
 		SDL_BlitSurface( graphique->images[RESS_IMG_MENU_CMD], NULL, graphique->surface, &offset);
@@ -479,7 +540,9 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 			}
 		}
         break;
+
 	default:
+
 		offset.x = 0;
 		offset.y = 0;
 		SDL_BlitSurface( graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);

@@ -103,9 +103,13 @@ typedef struct
 	int joueurCourant;
 	/** Lors de la création d'un nouveau joueur, sert à stocker le nom. */
 	char nomNouveauJoueur[JOUEUR_NOM_MAXCHAR+1];
+	/** noms des meilleurs joueurs */
+	char **nomsMeilleursJoueurs;
+	/** meilleurs scores (sous forme de chaines de caracteres) */
+	char **meilleursScores;
 	/** Niveau sélectionné. */
 	int niveauChoisi;
-	/** Réference au module Ressource. (Permet de sauver l'etat des joueurs). */
+	/** Réference au module Ressource. (Permet de sauver l'etat des joueurs, d'obtenir les meilleurs joueurs classés). */
 	Ressource *ressource;
 
 } Menu;

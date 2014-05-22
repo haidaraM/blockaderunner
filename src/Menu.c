@@ -3,6 +3,7 @@
 * @brief fichier d'implementation du Menu
 */
 #include "Menu.h"
+#include "Joueur.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -68,10 +69,20 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->tempsEcoule 	= 0.0f;
 	menu->joueurCourant = -1;/* par défaut */
 	menu->nomNouveauJoueur[0] = '\0';
+	menu->nomsMeilleursJoueurs = (char**)malloc(RESS_NUM_MEILLEURS_JOUEURS*sizeof(char*));
+	menu->meilleursScores  = (char**)malloc(RESS_NUM_MEILLEURS_JOUEURS*sizeof(char*));
+	assert(menu->nomsMeilleursJoueurs != NULL && menu->meilleursScores != NULL);
+	for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
+	{
+		menu->meilleursScores[i] = (char*)malloc(16*sizeof(char));
+		assert(menu->meilleursScores[i] != NULL);
+	}
 	menu->niveauChoisi	= -1;
 	menu->elements 		= NULL;
 	menu->elements 		= (ElementMenu*)malloc(MENU_NUM_ELEMENTS * sizeof(ElementMenu));
 	assert( menu->elements != NULL);
+
+
 
 	/* Definition des Elements des Menus */
 
@@ -192,9 +203,15 @@ void menuInit(Menu *menu, Ressource *res)
 void menuLibere(Menu *menu)
 {
 	int i;
+
 	for (i= MENU_NIVEAU; i < MENU_NUM_BASIC_ELEMENTS; i++)
 		free(menu->elements[i].texte);
 
+	for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
+		free(menu->meilleursScores[i]);
+	
+	free(menu->nomsMeilleursJoueurs);
+	free(menu->meilleursScores);
 	free(menu->elements);
 }
 
@@ -298,6 +315,7 @@ void menuPrincipal(void *m)
 
 	menu->etat 	= MENU_ETAT_PRINCIPAL;
 	menu->elements[MENU_JOUER].visible = 1;
+	menu->elements[MENU_SCORE].visible = 1;
 	menu->elements[MENU_CMD].visible = 1;
 	menu->elements[MENU_OPTION].visible = 1;
 	menu->elements[MENU_INFO].visible = 1;
@@ -344,6 +362,22 @@ void menuScores(void *m)
 	int i;
 	Menu *menu = (Menu*)m;
 	assert(menu != NULL);
+
+	/* remise à zero */
+	for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
+		menu->nomsMeilleursJoueurs[i] = NULL;
+
+	/* On demande à ressource (qui maintient la liste des joueurs) de classer les meilleurs joueurs. */
+	ressourceTrieJoueurs(menu->ressource);
+	Joueur **joueursClasses = ressourceGetMeilleursJoueurs(menu->ressource);
+	for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
+		if (joueursClasses[i] != NULL)
+		{
+			menu->nomsMeilleursJoueurs[i] = joueursClasses[i]->nom;
+			sprintf(menu->meilleursScores[i], "%d", joueurGetScore(joueursClasses[i]));
+		}
+			
+		
 
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
 		menu->elements[i].visible = 0;
