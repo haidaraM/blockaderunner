@@ -143,17 +143,20 @@ void creeListeSons(Ressource *res)
     res->sons[RESS_SON_TIR_LASER_ENNEMI]                            =RESS_SON_FICHIER_TIR_LASER_ENNEMI;
     res->sons[RESS_SON_CHANGE_ARME]                                 =RESS_SON_FICHIER_CHANGE_ARME;
 
-    /* autres sons */
-    res->sons[RESS_SON_ERREUR]                                      =RESS_SON_FICHIER_ERREUR;
-    res->sons[RESS_SON_MORT]                                        =RESS_SON_FICHIER_MORT;
-    res->sons[RESS_SON_AMBIENCE]                                    =RESS_SON_FICHIER_AMBIENCE;
     /* bonus */
     res->sons[RESS_SON_BONUS_SCORE]                                 =RESS_SON_FICHIER_BONUS_SCORE;
     res->sons[RESS_SON_BONUS_MISSILE]                               =RESS_SON_FICHIER_BONUS_MISSILE;
 
-    /* explosions */
+    /* explosions et collisions */
     res->sons[RESS_SON_EXPLOSION_ASTEROIDE]                         =RESS_SON_FICHIER_EXPLOSION_ASTEROIDE;
     res->sons[RESS_SON_EXPLOSION_ENNEMI]                            =RESS_SON_FICHIER_EXPLOSION_ENNEMI;
+    res->sons[RESS_SON_DEGAT_LASER_J]                               =RESS_SON_FICHIER_DEGAT_LASER_J;
+
+    /* autres sons */
+    res->sons[RESS_SON_ERREUR]                                      =RESS_SON_FICHIER_ERREUR;
+    res->sons[RESS_SON_MORT]                                        =RESS_SON_FICHIER_MORT;
+    res->sons[RESS_SON_AMBIENCE]                                    =RESS_SON_FICHIER_AMBIENCE;
+    res->sons[RESS_SON_FIN_NIVEAU]                                  =RESS_SON_FICHIER_FIN_NIVEAU;
 }
 
 void creeListePolices(Ressource *res)
@@ -255,7 +258,7 @@ void ressourceInit(Ressource *res)
 
     /* --- */
     res->joueurs = (Joueur**)malloc(RESS_SAU_MAX_JOUEURS*sizeof(Joueur*));
-	res->meilleursJoueurs = (Joueur**)malloc(RESS_NUM_MEILLEURS_JOUEURS*sizeof(Joueur*));
+    res->meilleursJoueurs = (Joueur**)malloc(RESS_NUM_MEILLEURS_JOUEURS*sizeof(Joueur*));
     assert( res->joueurs != NULL && res->meilleursJoueurs != NULL);
 
     for (i=0; i< RESS_SAU_MAX_JOUEURS; i++)
@@ -302,8 +305,8 @@ void ressourceLibere(Ressource *res)
         }
     free(res->joueurs);
     res->joueurs=NULL;
-	free(res->meilleursJoueurs);
-	res->meilleursJoueurs = NULL;
+    free(res->meilleursJoueurs);
+    res->meilleursJoueurs = NULL;
 
     /*Liberation des niveaux */
     for(i=0; i<RESS_NUM_NIVEAUX; i++)
@@ -407,43 +410,43 @@ void ressourceTrieJoueurs(Ressource * res)
     assert( res!=NULL && res->joueurs!=NULL);
 
     nbJoueurs=ressourceGetNumJoueurs(res);
-	joueurs = (Joueur**)malloc(nbJoueurs*sizeof(Joueur*));
-	assert(joueurs != NULL);
+    joueurs = (Joueur**)malloc(nbJoueurs*sizeof(Joueur*));
+    assert(joueurs != NULL);
 
-	/* on re-copie pour ne pas modifier le tableau original dans Ressource (res) */
-	for (i=0; i< nbJoueurs; i++)
-		joueurs[i] = res->joueurs[i];
+    /* on re-copie pour ne pas modifier le tableau original dans Ressource (res) */
+    for (i=0; i< nbJoueurs; i++)
+        joueurs[i] = res->joueurs[i];
 
-	/* on trie sur le score */
-	for(i=0; i<nbJoueurs-1; i++)
+    /* on trie sur le score */
+    for(i=0; i<nbJoueurs-1; i++)
     {
         indmax=i;
         for(j=i+1; j<nbJoueurs; j++)
         {
-        	if(joueurGetScore(joueurs[j]) > joueurGetScore(joueurs[indmax]))
-        	    indmax=j;
+            if(joueurGetScore(joueurs[j]) > joueurGetScore(joueurs[indmax]))
+                indmax=j;
         }
         joueurMax=joueurs[indmax];
         joueurs[indmax]=joueurs[i];
         joueurs[i]=joueurMax;
     }
 
-	/* re-init à zero */
-	for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
-		res->meilleursJoueurs[i] = NULL;
+    /* re-init à zero */
+    for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
+        res->meilleursJoueurs[i] = NULL;
 
-	/* on affecte les meilleurs joueurs */
-	fini = 0;
-	count = 0;
-	while (fini == 0)
-	{
-		res->meilleursJoueurs[count] = joueurs[count];
-		count++;
-		if (count >= RESS_NUM_MEILLEURS_JOUEURS || count >= nbJoueurs)
-			fini = 1;
-	}
+    /* on affecte les meilleurs joueurs */
+    fini = 0;
+    count = 0;
+    while (fini == 0)
+    {
+        res->meilleursJoueurs[count] = joueurs[count];
+        count++;
+        if (count >= RESS_NUM_MEILLEURS_JOUEURS || count >= nbJoueurs)
+            fini = 1;
+    }
 
-	free(joueurs);
+    free(joueurs);
 
     /* premier tri par niveau atteint */
     /*for(i=0; i<nbJoueurs-1; i++)
@@ -459,7 +462,7 @@ void ressourceTrieJoueurs(Ressource * res)
         joueurs[i]=joueurMax;
     }*/
 
-	/* par score */
+    /* par score */
     /*for(i=0; i<nbJoueurs-1; i++)
     {
         indmax=i;

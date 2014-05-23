@@ -122,7 +122,7 @@ void niveauChargeFichier(Niveau * niveau, int numero)
     fclose(fic);
 }
 
-int niveauGetNumGroupes(Niveau *niveau)
+int niveauGetNumGroupes(const Niveau *niveau)
 {
 	assert(niveau != NULL);
 	return niveau->composition.tailleUtilisee;

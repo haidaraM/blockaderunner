@@ -33,7 +33,7 @@ typedef struct
 /**
 * @fn void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
 * @brief Initialise un joueur
-* @param [in, out] joueur
+* @param [in, out] joueur :non nul
 * @param [in] nom
 * @param [in] progression
 * @param [in] score
@@ -43,7 +43,7 @@ void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score);
 /**
 * @fn void joueurLibere(Joueur * joueur)
 * @brief libere un joueur
-* @param [in, out] joueur
+* @param [in, out] joueur : initialisé
 */
 void joueurLibere(Joueur * joueur);
 
@@ -59,6 +59,7 @@ void joueurSetScore(Joueur * joueur, int score);
 * @fn Vaisseau * joueurGetVaisseau(const Joueur * joueur)
 * @brief Renvoie le vaisseau du joueur
 * @param [in] joueur : initialisé
+* @return Pointeur sur vaisseau
 */
 Vaisseau * joueurGetVaisseau(const Joueur * joueur);
 
@@ -66,7 +67,6 @@ Vaisseau * joueurGetVaisseau(const Joueur * joueur);
 * @fn int joueurGetScore(const Joueur *joueur)
 * @brief renvoie le score du joueur
 * @param [in] joueur
-* @return int
 */
 int joueurGetScore(const Joueur *joueur);
 

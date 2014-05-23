@@ -1,5 +1,6 @@
 /**
 * @file AudioSDL.c
+* @brief Fichier d'implementation du module Audio
 */
 #include <assert.h>
 #include <stdlib.h>
@@ -32,7 +33,12 @@ FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon)
         resultat=FMOD_System_CreateSound(audio->system, strcat(dir, file),FMOD_SOFTWARE|FMOD_CREATESTREAM | FMOD_LOOP_NORMAL | FMOD_2D, NULL, &son);
     }
     /* On verifie qu'il n'y a pas eu d'erreur */
-    audioVerifieErreur(resultat);
+    if(resultat==FMOD_ERR_FILE_NOTFOUND)
+    {
+        printf("Impossible de trouvez le fichier %s", file);
+        exit(-1);
+    }
+    else audioVerifieErreur(resultat);
 
     return son;
 }
@@ -118,7 +124,7 @@ void audioJoueSon(const AudioFMOD * audio, int index)
     /* on recupere l'etat du son */
     etat=audioGetStatutSon(audio, index);
     /* On joue ensuite le son s'il n'est pas deja en lecture*/
-    if(0<=index && index < RESS_NUM_SONS_LONGS) /* si c'est un son long */
+    if(0<=index && index < RESS_NUM_SONS_LONGS) /* son long */
     {
         if(!etat) /* on test son etat et on le joue seulement s'il n'est pas en lecture*/
         {
@@ -197,6 +203,8 @@ void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
     /* explosion ennemi*/
     if(scene->evenements.ennemi_explosion==1)
         audioJoueSon(audio, RESS_SON_EXPLOSION_ENNEMI);
+    if(scene->evenements.joueur_degats_laser==1)
+        audioJoueSon(audio, RESS_SON_DEGAT_LASER_J);
 
 }
 

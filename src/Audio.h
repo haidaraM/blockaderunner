@@ -1,6 +1,6 @@
 /**
 * @file AudioSDL.h
-* @brief Fichier d'en tete du module Audio qui va gerer le son grace a la librairie fmod
+* @brief Fichier d'en tete du module Audio qui va gerer le son grace à la librairie FMOD Ex.
 * @author Mohamed El Mouctar HAIDARA - Yann Cortial
 */
 #ifndef _AUDIO_H
@@ -17,7 +17,7 @@
 
 /**
 * @struct AudioFMOD
-* @brief Structure qui nous permettra de gerer le système audio
+* @brief Structure qui nous permettra de gerer le système audio. On utilise FMOD d'une façon assez simple.
 */
 typedef struct
 {

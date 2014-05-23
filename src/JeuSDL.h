@@ -26,31 +26,32 @@
 * @struct JeuSDL
 * @brief Structure regroupant tous les elements necessaires a l'application
 */
-typedef struct {
+typedef struct
+{
 
-	/** Initialise et dispose la fenetre principale. */
-	GraphiqueSDL graphique;
+    /** Initialise et dispose la fenetre principale. */
+    GraphiqueSDL graphique;
 
-	/** Audio : sons joués durant le cours du jeu */
-	AudioFMOD audio;
-	/** Initialise et gère les évènements (clavier, souris ..). */
-	EntreeSDL entree;
+    /** Audio : sons joués durant le cours du jeu */
+    AudioFMOD audio;
+    /** Initialise et gère les évènements (clavier, souris ..). */
+    EntreeSDL entree;
 
-	/** Menu principal */
-	Menu menu;
-	/** Scène (ce qui est visible à l'écran et au-delà : instancie le contenu du Niveau). */
-	Scene scene;
-	/** Joueur courant (sélectionné par le Menu). */
-	Joueur *joueur;
-	/** Répertorie les ressources du jeu (images, sons, polices). */
-	Ressource ressource;
+    /** Menu principal */
+    Menu menu;
+    /** Scène (ce qui est visible à l'écran et au-delà : instancie le contenu du Niveau). */
+    Scene scene;
+    /** Joueur courant (sélectionné par le Menu). */
+    Joueur *joueur;
+    /** Répertorie les ressources du jeu (images, sons, polices). */
+    Ressource ressource;
 
-	/** Phase courante = JEU_ETAT_MENU ou JEU_ETAT_NIVEAU ou JEU_RETOUR_MENU ou JEU_ETAT_JEU. */
-	int etatCourantJeu;
-	/** Niveau en cours ou à charger */
-	int niveauCourant;
-	/** (interne) sert au chargement d'un niveau. */
-	int chargementOK;
+    /** Phase courante = JEU_ETAT_MENU ou JEU_ETAT_NIVEAU ou JEU_RETOUR_MENU ou JEU_ETAT_JEU. */
+    int etatCourantJeu;
+    /** Niveau en cours ou à charger */
+    int niveauCourant;
+    /** (interne) sert au chargement d'un niveau. */
+    int chargementOK;
 
 } JeuSDL;
 

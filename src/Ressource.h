@@ -16,7 +16,7 @@
 #define RESS_NUM_MEILLEURS_JOUEURS								5
 #define RESS_NUM_NIVEAUX										8
 #define RESS_NUM_IMAGES											64
-#define RESS_NUM_SONS_COURTS       								13
+#define RESS_NUM_SONS_COURTS       								15
 #define RESS_NUM_SONS_LONGS    	    							2
 #define RESS_NUM_POLICES										1
 
@@ -194,6 +194,12 @@
 
 #define RESS_SON_BONUS_MISSILE                                  14
 #define RESS_SON_FICHIER_BONUS_MISSILE                          "bonus_missile.flac"
+
+#define RESS_SON_FIN_NIVEAU                                     15
+#define RESS_SON_FICHIER_FIN_NIVEAU                             "fin_niveau.mp3"
+
+#define RESS_SON_DEGAT_LASER_J                                  16
+#define RESS_SON_FICHIER_DEGAT_LASER_J                          "degat_laser_joueurs.wav"
 
 
 

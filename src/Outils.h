@@ -36,20 +36,21 @@ float randomFloat();
 */
 typedef struct
 {
-	int x;
-	int y;
+    int x;
+    int y;
 } Point;
 
 /**
 * @struct Rectangle
 * @brief un Rectangle = une position (coin supérieur gauche) + une dimension (largeur, hauteur).
+* Utile pour le menu pour voir si la souris est sur du texte ou pas et pour sauvegarder les dimensions des images.
 */
 typedef struct
 {
-	int x;
-	int y;
-	int largeur;
-	int hauteur;
+    int x;
+    int y;
+    int largeur;
+    int hauteur;
 } Rectangle;
 
 /**
@@ -65,22 +66,22 @@ unsigned char rectangleContient(const Rectangle *rect, int x, int y);
 /*----------------------------------------------------------------------------	TABLEAU DYNAMIQUE ---------------------------------------------------------------------------------*/
 
 /**
-* @struct TadDyn
-* @brief Tableau dynamique
+* @struct TabDyn
+* @brief Represente un tableau dynamique qui peut stocker n'importe quoi.
 */
 typedef struct
 {
-	/** taille du tableau (note: le tableau est compact à gauche). */
-	int tailleUtilisee;
-	/** capacité du tableau. */
-	int capacite;
-	/** tableau de pointeurs génériques. */
-	void **tab;
+    /** taille du tableau (note: le tableau est compact à gauche). */
+    int tailleUtilisee;
+    /** capacité du tableau. */
+    int capacite;
+    /** tableau de pointeurs génériques. */
+    void **tab;
 } TabDyn;
 
 /**
 * @fn void tabDynInit(TabDyn *t)
-* @brief Initialise un tableau dynamique
+* @brief Initialise un tableau dynamique avec capacité 1 et tailleUtilisee 0
 * @param [in, out] t doit être non NULL.
 */
 void tabDynInit(TabDyn *t);
@@ -109,6 +110,7 @@ void tabDynAjoute(TabDyn *t, void* element);
 void* tabDynGetElement(const TabDyn *t, int index);
 
 /**
+* @fn void tabDynSupprimeElement(TabDyn *t, int position)
 * @brief supprime un element du tableau dynamique
 * @param [in, out] t (doit etre initialise)
 * @param [in] position (correspond à la position de l'element dans le tableau )
@@ -121,52 +123,4 @@ void tabDynSupprimeElement(TabDyn *t, int position);
 */
 void tabDynTestDeRegression();
 
-/*----------------------------------------------------------------------------	LISTE CHAINEE ---------------------------------------------------------------------------------*/
-
-/**
-* @struct CelluleListe
-* @brief Cellule de liste doublement chaînée.
-*/
-struct s_CelluleListe
-{
-    /** Pointeur vers la cellule suivante de la cellule**/
-	struct s_CelluleListe *suiv;
-	/** Pointeur vers la cellule precedente de la cellule**/
-	struct s_CelluleListe *prec;
-	/** Pointeur generique constituant la donnee qui sera sauvegardee dans la cellule */
-	void *donnee;
-};
-typedef struct s_CelluleListe CelluleListe;
-
-/**
-* @struct Liste
-* @brief Constitut la liste en elle meme
-*/
-typedef struct
-{
-    /** Pointeur vers le premier element de la liste **/
-	CelluleListe *premier;
-	/** Pointeur vers le dernier element de la liste **/
-	CelluleListe *dernier;
-} Liste;
-
-void listeInit(Liste *liste);
-
-void listeLibere(Liste *liste);
-
-Liste* listeCreer();
-
-void listeDetruire(Liste *liste);
-
-CelluleListe* celluleListeCreer(void *data);
-
-void listeAjouteTete(Liste *liste, void *data);
-
-void listeAjouteQueue(Liste *liste, void *data);
-
-void listeSupprime(Liste *liste, void *data);
-
-
-
 #endif
-

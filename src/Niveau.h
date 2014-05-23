@@ -37,6 +37,10 @@ typedef struct
 	int nombre;
 } GroupeNiveau;
 
+/**
+* @struct Niveau
+* @brief Cette structure les differentes informations qui caracterisent un niveau de jeu
+*/
 typedef struct
 {
 	/** entier : 0, 1, 2, 3... */
@@ -85,9 +89,9 @@ void niveauChargeFichier(Niveau * niveau, int numero);
 /**
 * @fn int niveauGetNumGroupes(Niveau * niveau)
 * @brief Renvoie le nombre de groupes qui composent le niveau (rappel : un groupe peut-etre un champ d'asteroides, une escadre de chasseurs ennemis, etc...)
-* @param [in, out] niveau : initialisé
+* @param [in] niveau : initialisé
 */
-int niveauGetNumGroupes(Niveau * niveau);
+int niveauGetNumGroupes(const Niveau * niveau);
 
 #endif
 

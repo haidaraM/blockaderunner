@@ -38,24 +38,24 @@
 */
 typedef struct
 {
-	char joueur_tir_laser;
-	char joueur_tir_missile;
-	char joueur_tir_erreur;
-	char ennemi_tir_laser;
-	char ennemi_tir_missile;
+    char joueur_tir_laser;
+    char joueur_tir_missile;
+    char joueur_tir_erreur;
+    char ennemi_tir_laser;
+    char ennemi_tir_missile;
 
-	char joueur_degats_collision;	/* un asteroide ou vaisseau collisionne avec le joueur */
-	char joueur_degats_laser; 		/* un laser touche le joueur */
-	char ennemi_degats_laser; 		/* un laser touche un ennemi */
-	char joueur_degats_missile;		/* un missile touche le joueur */
-	char ennemi_degats_missile;		/* un missile touche un ennemi */
+    char joueur_degats_collision;	/* un asteroide ou vaisseau collisionne avec le joueur */
+    char joueur_degats_laser; 		/* un laser touche le joueur */
+    char ennemi_degats_laser; 		/* un laser touche un ennemi */
+    char joueur_degats_missile;		/* un missile touche le joueur */
+    char ennemi_degats_missile;		/* un missile touche un ennemi */
 
-	char joueur_explosion;			/* le joueur explose */
-	char ennemi_explosion;			/* un ennemi explose */
-	char asteroide_explosion;		/* un asteroide explose */
+    char joueur_explosion;			/* le joueur explose */
+    char ennemi_explosion;			/* un ennemi explose */
+    char asteroide_explosion;		/* un asteroide explose */
 
-	char joueur_bonus_score;		/* le joueur vient d'acquerir un bonus de score */
-	char joueur_bonus_missile;		/* le joueur vient d'acquerir un bonus missile */
+    char joueur_bonus_score;		/* le joueur vient d'acquerir un bonus de score */
+    char joueur_bonus_missile;		/* le joueur vient d'acquerir un bonus missile */
 
 } EvenementScene;
 
@@ -65,34 +65,34 @@ typedef struct
 */
 typedef struct
 {
-	/** garde trace du temps écoulé (pour animations). */
-	float horlogePrecedente;
-	/** Portion visible de la scène. */
-	int largeurAffichage, hauteurAffichage;
-	/** Element constituant le vaisseau du joueur **/
-	ElementScene *elementVaisseauJoueur;
-	/** tableau dynamique qui regroupent tous les ennemis de la scène (vaisseaux et asteroides 'collisionables').*/
-	TabDyn acteurs;
-	/** tableau dynamique des tirs. */
-	TabDyn tirs;
-	/** tableau dynamique des bonus. */
-	TabDyn bonus;
-	/** tableau dynamique des éléments de décor. */
-	TabDyn decors;
-	/** index image fond (background du niveau). */
-	int indexImageFond;
-	/** position courante (et taille) du fond du niveau (background). */
-	Rectangle rectangleImageFond;
-	/** Tableau de points de defilement (FX).*/
-	Point *pointsDefilement;
-	/** structure encapsulant les évènements courant (rédéfinis à chaque frame) */
-	EvenementScene evenements;
-	/** pointeur vers l'instance en cours du module Niveau : décrit le niveau du jeu en cours.*/
-	Niveau *niveau;
-	/** pointeur vers  le joueur courant */
-	Joueur *joueur;
-	/** pointeur vers l'instance du module Ressource : utile pour créer des elements. */
-	Ressource *ressource;
+    /** garde trace du temps écoulé (pour animations). */
+    float horlogePrecedente;
+    /** Portion visible de la scène. */
+    int largeurAffichage, hauteurAffichage;
+    /** Element constituant le vaisseau du joueur **/
+    ElementScene *elementVaisseauJoueur;
+    /** tableau dynamique qui regroupent tous les ennemis de la scène (vaisseaux et asteroides 'collisionables').*/
+    TabDyn acteurs;
+    /** tableau dynamique des tirs. */
+    TabDyn tirs;
+    /** tableau dynamique des bonus. */
+    TabDyn bonus;
+    /** tableau dynamique des éléments de décor. */
+    TabDyn decors;
+    /** index image fond (background du niveau). */
+    int indexImageFond;
+    /** position courante (et taille) du fond du niveau (background). */
+    Rectangle rectangleImageFond;
+    /** Tableau de points de defilement (FX).*/
+    Point *pointsDefilement;
+    /** structure encapsulant les évènements courant (rédéfinis à chaque frame) */
+    EvenementScene evenements;
+    /** pointeur vers l'instance en cours du module Niveau : décrit le niveau du jeu en cours.*/
+    Niveau *niveau;
+    /** pointeur vers  le joueur courant */
+    Joueur *joueur;
+    /** pointeur vers l'instance du module Ressource : utile pour créer des elements. */
+    Ressource *ressource;
 
 } Scene;
 
@@ -196,6 +196,7 @@ void sceneDetruitElement(ElementScene *element);
 /**
 * @fn void sceneInitialiseFlags(Scene * scene)
 * @brief Met les flags associés aux sons à zero
+* @param [in, out] scene : non null
 */
 void sceneInitialiseFlags(Scene * scene);
 
@@ -235,6 +236,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 * @fn int sceneJoueurDeclencheTir(Scene * scene)
 * @brief Cree un element qui correspond au tir du joueur
 * @param [in, out] scene
+* @return Renvoie un si le joueur arrive à declencher un tir
 */
 int sceneJoueurDeclencheTir(Scene * scene);
 

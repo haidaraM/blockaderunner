@@ -38,30 +38,30 @@
 */
 typedef struct
 {
-	/** type d'entité. */
-	int type;
-	/** booléen : l'élement est dans la portion visible de la scène (ecran) ou pas. */
-	int visible;
-	/** position en X sur la scène. */
-	int x;
-	/** position en Y sur la scène. */
-	int y;
-	/** direction en X (nombre normalisé) */
-	float vecX;
-	/** direction en Y (nombre normalisé) */
-	float vecY;
-	/** largeur de l'élement. */
-	int largeur;
-	/** hauteur de l'élement. */
-	int hauteur;
-	/** handle référençable dans Ressource (associe une image). */
-	int indexImage;
-	/** Largeur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
-	int largeurSceneVisible;
-	/** Hauteur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
-	int hauteurSceneVisible;
-	/** pointeur generique */
-	void * data;
+    /** type d'entité. */
+    int type;
+    /** booléen : l'élement est dans la portion visible de la scène (ecran) ou pas. */
+    int visible;
+    /** position en X sur la scène. */
+    int x;
+    /** position en Y sur la scène. */
+    int y;
+    /** direction en X (nombre normalisé) */
+    float vecX;
+    /** direction en Y (nombre normalisé) */
+    float vecY;
+    /** largeur de l'élement. */
+    int largeur;
+    /** hauteur de l'élement. */
+    int hauteur;
+    /** handle référençable dans Ressource (associe une image). */
+    int indexImage;
+    /** Largeur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
+    int largeurSceneVisible;
+    /** Hauteur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
+    int hauteurSceneVisible;
+    /** pointeur generique */
+    void * data;
 
 } ElementScene;
 
@@ -104,7 +104,7 @@ int elementGetType(const ElementScene * element);
 /**
 * @fn int elementVisible(const ElementScene *element)
 * @brief renvoie 1 si l'element est visible (ie. dans la portion visible de la Scene), 0 sinon.
-* @param [in] element
+* @param [in] element : initialisé
 */
 int elementVisible(const ElementScene *element);
 

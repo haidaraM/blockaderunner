@@ -3,7 +3,7 @@
 * @brief Le module GraphiqueSDL gère l'affichage avec l'aide de SDL : fenêtre principale, double-buffering, bliting d'images.
 * Le module GraphiqueSDL interface avec SDL et SDL_image.
 * Résolution de la fenêtre principale : 1366 x 720 px.
-* @author Yann Cortial
+* @author Yann Cortial - Mohamed El Mouctar HAIDARA
 */
 #ifndef _GRAPHIQUE_SDL_H
 #define _GRAPHIQUE_SDL_H
@@ -34,34 +34,34 @@
 */
 typedef struct
 {
-	/** Dimension (largeur) de l'affichage en pixels. */
-	int largeur;
-	/** Dimension (hauteur) de l'affichage en pixels. */
-	int hauteur;
-	/** Mode d'affichage : fullscreen ou fenêtré (par défaut).*/
-	int mode;
-	/** Couleur de fond utilisée lors de l'effacement complet de l'affichage. */
-	Uint32 couleurFond;
-	/** Titre de la fenêtre */
-	char *titre;
-	/** Pointeur sur SDL_Surface (représente la surface d'affichage principale). */
-	SDL_Surface *surface;
+    /** Dimension (largeur) de l'affichage en pixels. */
+    int largeur;
+    /** Dimension (hauteur) de l'affichage en pixels. */
+    int hauteur;
+    /** Mode d'affichage : fullscreen ou fenêtré (par défaut).*/
+    int mode;
+    /** Couleur de fond utilisée lors de l'effacement complet de l'affichage. */
+    Uint32 couleurFond;
+    /** Titre de la fenêtre */
+    char *titre;
+    /** Pointeur sur SDL_Surface (représente la surface d'affichage principale). */
+    SDL_Surface *surface;
 
-	/** Tableau de pointeurs sur SDL_Surface (toutes les images chargées du jeu). */
-	SDL_Surface **images;
-	/** Tableau de pointeurs sur SDL_Surface (tous les rendus (par paires) de texte du Menu (couleur normale et surligné)). */
-	SDL_Surface **textesMenu;
-	/** Tableau de pointeurs sur SDL_Surface (tous les rendus de texte des noms des joueurs). */
-	SDL_Surface **textesNomsJoueurs;
-	/** Un tableau des petites surfaces pour l'affichage des niveaux d'Ecran, Coque du vaisseau du joueur, texte quand le joueur meurt, etc. */
-	SDL_Surface **elementsHUD;
-	/** police du Menu */
-	TTF_Font *policeMenu;
-	/** police pour la liste des joueurs */
-	TTF_Font *policeListeJoueurs;
+    /** Tableau de pointeurs sur SDL_Surface (toutes les images chargées du jeu). */
+    SDL_Surface **images;
+    /** Tableau de pointeurs sur SDL_Surface (tous les rendus (par paires) de texte du Menu (couleur normale et surligné)). */
+    SDL_Surface **textesMenu;
+    /** Tableau de pointeurs sur SDL_Surface (tous les rendus de texte des noms des joueurs). */
+    SDL_Surface **textesNomsJoueurs;
+    /** Un tableau des petites surfaces pour l'affichage des niveaux d'Ecran, Coque du vaisseau du joueur, texte quand le joueur meurt, etc. */
+    SDL_Surface **elementsHUD;
+    /** police du Menu */
+    TTF_Font *policeMenu;
+    /** police pour la liste des joueurs */
+    TTF_Font *policeListeJoueurs;
 
-	/* Utilisé en interne par SDL lors de la création de Surfaces. */
-	Uint32 rmask, gmask, bmask, amask;
+    /* Utilisé en interne par SDL lors de la création de Surfaces. */
+    Uint32 rmask, gmask, bmask, amask;
 
 } GraphiqueSDL;
 
@@ -159,7 +159,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu );
 void graphiqueAfficheScene(GraphiqueSDL *graphique,const Scene *scene );
 
 /**
-* @fn void void graphiqueAfficheMort(GraphiqueSDL * graphique)
+* @fn void graphiqueAfficheMort(GraphiqueSDL * graphique)
 * @brief affiche un texte quand le joueur meurt
 * @param [in,out] graphiqe : initialisé
 */
