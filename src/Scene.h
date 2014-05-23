@@ -193,6 +193,11 @@ ElementScene* sceneCreerElementScene(const Scene *scene, int type);
 */
 void sceneDetruitElement(ElementScene *element);
 
+/**
+* @fn void sceneInitialiseFlags(Scene * scene)
+* @brief Met les flags associés aux sons à zero
+*/
+void sceneInitialiseFlags(Scene * scene);
 
 /**
 * @fn void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)

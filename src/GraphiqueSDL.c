@@ -247,8 +247,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	#endif
 	chargePolices(graphique);
 
-	/* Creation des Elements Menu : 
-		MENU_NUM_ELEMENTS paires de rendus de texte (normal & surligné) 
+	/* Creation des Elements Menu :
+		MENU_NUM_ELEMENTS paires de rendus de texte (normal & surligné)
 	*/
 	graphique->textesMenu 	= (SDL_Surface**)malloc(2*MENU_NUM_ELEMENTS*sizeof(SDL_Surface*));
 	if (graphique->textesMenu == NULL)
@@ -306,8 +306,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 	assert(graphique->elementsHUD[3] != NULL);
 
 	/* fin de niveau ou mort du joueur */
-    graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMort);
-	graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteFinNiveau);
+    graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Oups!! Vous etes morts", couleurTexteMort);
+	graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Bravo!! Fin du niveau", couleurTexteFinNiveau);
 
 	/* nbre de missiles */
 	graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions);
@@ -486,18 +486,18 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 		for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
 		{
 			nomsMeilleursJoueurs[i] = NULL;
-			scoresMeilleursJoueurs[i] = NULL;	
+			scoresMeilleursJoueurs[i] = NULL;
 			if (menu->nomsMeilleursJoueurs[i] != NULL)
 			{
 				nomsMeilleursJoueurs[i] 	= TTF_RenderText_Blended(graphique->policeMenu, menu->nomsMeilleursJoueurs[i], couleurTexteMenuSurvol);
 				offset.x = MENU_ZONE_X + 5*MENU_PADDING_HORZ;
 				offset.y = MENU_ZONE_Y + (5+2*count)*MENU_PADDING_VERT;
 				SDL_BlitSurface( nomsMeilleursJoueurs[i], NULL, graphique->surface, &offset);
-		
+
 				scoresMeilleursJoueurs[i] 	= TTF_RenderText_Blended(graphique->policeMenu, menu->meilleursScores[i], couleurTexteMenuSurvol);
 				offset.x = MENU_ZONE_X + 25*MENU_PADDING_HORZ;
 				SDL_BlitSurface( scoresMeilleursJoueurs[i], NULL, graphique->surface, &offset);
-				count++;			
+				count++;
 			}
 		}
 		for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)

@@ -179,6 +179,9 @@ void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
     /* bonus score trouvé */
     if(scene->evenements.joueur_bonus_score==1)
         audioJoueSon(audio, RESS_SON_BONUS_SCORE);
+    /* bonus missile */
+    if(scene->evenements.joueur_bonus_missile==1)
+        audioJoueSon(audio, RESS_SON_BONUS_MISSILE);
     /* laser joueur */
     if(scene->evenements.joueur_tir_laser==1)
         audioJoueSon(audio, RESS_SON_TIR_LASER);

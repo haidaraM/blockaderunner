@@ -209,7 +209,7 @@ void menuLibere(Menu *menu)
 
 	for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
 		free(menu->meilleursScores[i]);
-	
+
 	free(menu->nomsMeilleursJoueurs);
 	free(menu->meilleursScores);
 	free(menu->elements);
@@ -361,23 +361,23 @@ void menuScores(void *m)
 {
 	int i;
 	Menu *menu = (Menu*)m;
+	Joueur ** joueursClasses=NULL;
 	assert(menu != NULL);
-
 	/* remise à zero */
 	for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
 		menu->nomsMeilleursJoueurs[i] = NULL;
 
 	/* On demande à ressource (qui maintient la liste des joueurs) de classer les meilleurs joueurs. */
 	ressourceTrieJoueurs(menu->ressource);
-	Joueur **joueursClasses = ressourceGetMeilleursJoueurs(menu->ressource);
+    joueursClasses = ressourceGetMeilleursJoueurs(menu->ressource);
 	for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
 		if (joueursClasses[i] != NULL)
 		{
 			menu->nomsMeilleursJoueurs[i] = joueursClasses[i]->nom;
 			sprintf(menu->meilleursScores[i], "%d", joueurGetScore(joueursClasses[i]));
 		}
-			
-		
+
+
 
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
 		menu->elements[i].visible = 0;

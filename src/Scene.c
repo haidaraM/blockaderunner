@@ -47,6 +47,9 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
     elementSetPosition(scene->elementVaisseauJoueur, 32, (hauteurGraphique - scene->elementVaisseauJoueur->hauteur)/2);
     scene->elementVaisseauJoueur->data = (void*)player->vaisseau;
 
+    /* mise des flags des evenements son à 0 */
+    sceneInitialiseFlags(scene);
+
 }
 
 void sceneLibere(Scene *scene)
@@ -205,22 +208,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     float dt 	= tempsSecondes - scene->horlogePrecedente;
     ElementScene * e=NULL;
 
-    /* Réinitialisation des evenements */
-    scene->evenements.asteroide_explosion   = 0;
-    scene->evenements.joueur_tir_laser 		= 0;
-    scene->evenements.joueur_tir_missile	= 0;
-    scene->evenements.joueur_tir_erreur     = 0;
-    scene->evenements.joueur_degats_laser	= 0;
-    scene->evenements.joueur_explosion		= 0;
-    scene->evenements.joueur_degats_collision = 0;
-    scene->evenements.joueur_bonus_missile	= 0;
-    scene->evenements.joueur_degats_missile	= 0;
-    scene->evenements.joueur_bonus_score	= 0;
-    scene->evenements.ennemi_tir_laser		= 0;
-    scene->evenements.ennemi_tir_missile	= 0;
-    scene->evenements.ennemi_degats_laser	= 0;
-    scene->evenements.ennemi_degats_missile	= 0;
-    scene->evenements.ennemi_explosion		= 0;
+    /* mise des flags des evenements son à 0 */
+    sceneInitialiseFlags(scene);
 
     /* Points de défilement */
     dx     = -(int)(dt * SCENE_VITESSE_DEFILEMENT_POINTS);
@@ -937,6 +926,28 @@ int sceneTestVaisseauMort(Scene * scene)
     }
     else
         return 0;
+}
+
+void sceneInitialiseFlags(Scene * scene)
+{
+    assert(scene!=NULL);
+    /* Réinitialisation des evenements */
+    scene->evenements.asteroide_explosion   = 0;
+    scene->evenements.joueur_tir_laser 		= 0;
+    scene->evenements.joueur_tir_missile	= 0;
+    scene->evenements.joueur_tir_erreur     = 0;
+    scene->evenements.joueur_degats_laser	= 0;
+    scene->evenements.joueur_explosion		= 0;
+    scene->evenements.joueur_degats_collision = 0;
+    scene->evenements.joueur_bonus_missile	= 0;
+    scene->evenements.joueur_degats_missile	= 0;
+    scene->evenements.joueur_bonus_score	= 0;
+    scene->evenements.ennemi_tir_laser		= 0;
+    scene->evenements.ennemi_tir_missile	= 0;
+    scene->evenements.ennemi_degats_laser	= 0;
+    scene->evenements.ennemi_degats_missile	= 0;
+    scene->evenements.ennemi_explosion		= 0;
+
 }
 
 void sceneDetruitElement(ElementScene *element)

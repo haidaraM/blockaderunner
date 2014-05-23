@@ -139,6 +139,7 @@ void jeuBoucle(JeuSDL *jeu)
             {
                 /*continueJeu	 		= 0;*/
                 jeu->etatCourantJeu 	= JEU_RETOUR_MENU;
+                audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
                 toucheDetectee=-1;
             }
 
@@ -329,6 +330,7 @@ void jeuBoucle(JeuSDL *jeu)
             if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE)
             {
                 toucheDetectee = -1;
+                audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
                 menuRetour((void*)menu);
             }
 

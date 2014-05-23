@@ -16,7 +16,7 @@
 #define RESS_NUM_MEILLEURS_JOUEURS								5
 #define RESS_NUM_NIVEAUX										8
 #define RESS_NUM_IMAGES											64
-#define RESS_NUM_SONS_COURTS       								11
+#define RESS_NUM_SONS_COURTS       								13
 #define RESS_NUM_SONS_LONGS    	    							2
 #define RESS_NUM_POLICES										1
 
@@ -188,6 +188,12 @@
 
 #define RESS_SON_CHANGE_ARME                                    12
 #define RESS_SON_FICHIER_CHANGE_ARME                            "change_arme.wav"
+
+#define RESS_SON_MENU_BACK                                      13
+#define RESS_SON_FICHIER_MENU_BACK                              "menu_back.wav"
+
+#define RESS_SON_BONUS_MISSILE                                  14
+#define RESS_SON_FICHIER_BONUS_MISSILE                          "bonus_missile.flac"
 
 
 
