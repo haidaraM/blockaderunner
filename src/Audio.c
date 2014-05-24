@@ -203,6 +203,10 @@ void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
     /* explosion ennemi*/
     if(scene->evenements.ennemi_explosion==1)
         audioJoueSon(audio, RESS_SON_EXPLOSION_ENNEMI);
+	/* collision avec le joueur */
+    if(scene->evenements.joueur_degats_collision==1)
+        audioJoueSon(audio, RESS_SON_EXPLOSION_ENNEMI);
+	/* Le joueur encaisse un tir de  laser */
     if(scene->evenements.joueur_degats_laser==1)
         audioJoueSon(audio, RESS_SON_DEGAT_LASER_J);
 
