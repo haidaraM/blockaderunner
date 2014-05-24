@@ -1,7 +1,7 @@
 /**
 * @file Joueur.h
 * @brief Fichier d'entete du module joueur
-* Un joueur a un nom, a atteint un certain niveau et a un score
+* Un joueur a un nom, a atteint un certain niveau et a un score.
 */
 #include "Vaisseau.h"
 
@@ -65,7 +65,7 @@ Vaisseau * joueurGetVaisseau(const Joueur * joueur);
 
 /**
 * @fn int joueurGetScore(const Joueur *joueur)
-* @brief renvoie le score du joueur
+* @brief Renvoie le score du joueur
 * @param [in] joueur
 */
 int joueurGetScore(const Joueur *joueur);

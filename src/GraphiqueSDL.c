@@ -1,6 +1,6 @@
 /**
 * @file GraphiqueSDL.c
-* @brief fichier d'implementation du module GraphiqueSDL
+* @brief Fichier d'implementation du module GraphiqueSDL
 */
 #include "GraphiqueSDL.h"
 #include "ElementScene.h"
@@ -224,7 +224,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
      	Chargement de toutes les images du Jeu : */
 
 	#ifdef JEU_VERBOSE
-    printf("    chargement des images.\n");	
+    printf("    chargement des images.\n");
 	#endif
     graphique->images 		= (SDL_Surface**)malloc(RESS_NUM_IMAGES*sizeof(SDL_Surface*));
     if (graphique->images == NULL)
@@ -321,7 +321,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMort);
     graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteFinNiveau);
 	graphique->elementsHUD[7] 	= TTF_RenderText_Blended(graphique->policeMenu, "Mission accomplie! Vous avez brise le blocus de Shantori!", couleurTexteVictoire);
-	
+
     /* nbre de missiles */
     graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions);
 
@@ -513,6 +513,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
                 count++;
             }
         }
+        /* liberation des surfaces */
         for (i=0; i< RESS_NUM_MEILLEURS_JOUEURS; i++)
         {
             if (nomsMeilleursJoueurs[i] != NULL)
@@ -521,6 +522,9 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
                 SDL_FreeSurface(scoresMeilleursJoueurs[i]);
             }
         }
+        /* liberation des tableaux de surfaces */
+        free(nomsMeilleursJoueurs);
+        free(scoresMeilleursJoueurs);
 
         for (i=0; i< MENU_NUM_ELEMENTS; i++)
         {
@@ -681,14 +685,14 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
     /* Affichage de l'interface */
 
     /* Affichage des points ecrans */
-    for (i=0; i<vaisseauGetPointStructure(scene->elementVaisseauJoueur->data)/50; i++) 
+    for (i=0; i<vaisseauGetPointStructure(scene->elementVaisseauJoueur->data)/50; i++)
     {
         dstBox.x = GFX_HUD_ELEMENT_LARGEUR;
         dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);
         SDL_BlitSurface( graphique->elementsHUD[0], NULL, graphique->surface, &dstBox);
     }
     /* Affichage des points structures */
-    for (i=0; i< vaisseauGetPointEcran(scene->elementVaisseauJoueur->data)/50; i++)	
+    for (i=0; i< vaisseauGetPointEcran(scene->elementVaisseauJoueur->data)/50; i++)
     {
         dstBox.x = 2* GFX_HUD_ELEMENT_LARGEUR + GFX_HUD_ELEMENT_OFFSET;
         dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);

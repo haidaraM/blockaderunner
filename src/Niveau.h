@@ -43,7 +43,7 @@ typedef struct
 
 /**
 * @struct Niveau
-* @brief Cette structure les differentes informations qui caracterisent un niveau de jeu
+* @brief Cette structure contient les differentes informations qui caracterisent un niveau de jeu
 */
 typedef struct
 {
