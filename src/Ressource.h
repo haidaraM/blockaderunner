@@ -130,6 +130,11 @@
 #define RESS_IMG_LARGEUR_MENU_CMD                               1366
 #define RESS_IMG_HAUTEUR_MENU_CMD                               720
 
+#define RESS_IMG_MENU_INFO                                      35
+#define RESS_IMG_FICHIER_MENU_INFO                              "menu_info.jpg"
+#define RESS_IMG_LARGEUR_MENU_INFO                              1366
+#define RESS_IMG_HAUTEUR_MENU_INFO                              720
+
 /* Images des niveaux */
 #define RESS_IMG_LARGEUR_FOND_NIVEAU							4098
 #define RESS_IMG_HAUTEUR_FOND_NIVEAU     						720

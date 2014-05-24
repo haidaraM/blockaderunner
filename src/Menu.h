@@ -51,7 +51,7 @@
 #define MENU_QUITTER						9
 #define MENU_NIVEAU							10
 
-#define MENU_TXT_JOUEUR_VIDE 				"**"
+#define MENU_TXT_JOUEUR_VIDE 				"___"
 #define MENU_TXT_JOUEURS					"Joueurs"
 #define MENU_TXT_NOUVEAU_JOUEUR				"Nouveau Joueur"
 #define MENU_TXT_ENTRER_NOM					"Entrez un nom : "
@@ -183,8 +183,8 @@ void menuPrincipal(void *m);
 void menuCommandes(void *m);
 
 /**
-* @fn void menuOptions(void *m)
-* @brief Callback appelée lorque l'utilisateur souhaite modifier les options de jeu.
+* @fn void menuChangerJoueur(void *m)
+* @brief Callback appelée depuis le menu principal, lorque l'utilisateur souhaite changer de joueur.
 * @param [in] m
 */
 void menuChangerJoueur(void *m);

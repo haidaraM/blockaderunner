@@ -88,6 +88,10 @@ void creeListeImages(Ressource *res)
     res->dimensionImages[RESS_IMG_MENU_CMD].largeur         		= RESS_IMG_LARGEUR_MENU_CMD;
     res->dimensionImages[RESS_IMG_MENU_CMD].hauteur         		= RESS_IMG_HAUTEUR_MENU_CMD;
 
+    res->images[RESS_IMG_MENU_INFO]                          		= RESS_IMG_FICHIER_MENU_INFO;
+    res->dimensionImages[RESS_IMG_MENU_INFO].largeur         		= RESS_IMG_LARGEUR_MENU_INFO;
+    res->dimensionImages[RESS_IMG_MENU_INFO].hauteur         		= RESS_IMG_HAUTEUR_MENU_INFO;
+
     /* Images des niveaux (backgrounds) */
     res->images[RESS_IMG_FOND_NIVEAU_0] 							= RESS_IMG_FICHIER_FOND_NIVEAU_0;
     res->dimensionImages[RESS_IMG_FOND_NIVEAU_0].largeur 			= RESS_IMG_LARGEUR_FOND_NIVEAU;
@@ -235,8 +239,10 @@ void creeNiveaux(Ressource *res)
     assert( res->niveaux != NULL);
 
     for (i=0; i< RESS_NUM_NIVEAUX; i++)
-    {
+    {	
+		#ifdef JEU_VERBOSE
         printf("Creation niveau %d\n", i);
+		#endif
         niveauInit(&(res->niveaux[i]), i);
         niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0 + i);
     }
@@ -264,9 +270,9 @@ void ressourceInit(Ressource *res)
     int i;
     assert( res != NULL);
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("Ressource :\n    initialisation ...\n");
-#endif
+	#endif
 
     /* --- */
     res->joueurs = (Joueur**)malloc(RESS_SAU_MAX_JOUEURS*sizeof(Joueur*));
@@ -279,9 +285,9 @@ void ressourceInit(Ressource *res)
         res->meilleursJoueurs[i] = NULL;/* initialisation à NULL */
 
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("	chargement des données joueurs.\n");
-#endif
+	#endif
 
     chargeJoueurs(res);
 
@@ -294,15 +300,15 @@ void ressourceInit(Ressource *res)
     /* --- */
     creeListePolices(res);
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("	creation des niveaux du jeu.\n");
-#endif
+	#endif
     /* --- */
     creeNiveaux(res);
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("	initialisation OK.\n");
-#endif
+	#endif
 }
 
 void ressourceLibere(Ressource *res)
@@ -460,7 +466,8 @@ void ressourceTrieJoueurs(Ressource * res)
 
     free(joueurs);
 
-    /* premier tri par niveau atteint */
+    /* DEPRECATED :*/
+	/*premier tri par niveau atteint */
     /*for(i=0; i<nbJoueurs-1; i++)
     {
         indmax=i;

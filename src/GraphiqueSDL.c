@@ -134,9 +134,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 
     assert( graphique != NULL && ressource != NULL && menu != NULL && largeur > 0 && hauteur > 0 );
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("GraphiqueSDL :\n    initialisation ...\n");
-#endif
+	#endif
 
     graphique->surface		= 0;
     graphique->largeur 		= 0;
@@ -145,7 +145,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->mode 		= GFX_MODE_FENETRE;
 
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     /*---------------------------------------------------------------------
     	 Evaluation des modes video disponibles */
 
@@ -170,7 +170,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
             printf("      %d x %d\n", modes[i]->w, modes[i]->h);
     }
     /*free(modes);*/
-#endif
+	#endif
 
 
     /*---------------------------------------------------------------------
@@ -196,17 +196,17 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 
     /* SDL interprète chaque pixel comme un entier 32 bits non signé :
     	on doit faire attention à l'architecture (BIG ENDIAN vs LITTLE ENDIAN) lors de la création de surfaces. */
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
     graphique->rmask = 0xff000000;
     graphique->gmask = 0x00ff0000;
     graphique->bmask = 0x0000ff00;
     graphique->amask = 0x000000ff;
-#else
+	#else
     graphique->rmask = 0x000000ff;
     graphique->gmask = 0x0000ff00;
     graphique->bmask = 0x00ff0000;
     graphique->amask = 0xff000000;
-#endif
+	#endif
 
     /*---------------------------------------------------------------------
     	 Initialisation de SDL_image */
@@ -223,9 +223,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     /*---------------------------------------------------------------------
      	Chargement de toutes les images du Jeu : */
 
-#ifdef JEU_VERBOSE
-    printf("    chargement des images.\n");
-#endif
+	#ifdef JEU_VERBOSE
+    printf("    chargement des images.\n");	
+	#endif
     graphique->images 		= (SDL_Surface**)malloc(RESS_NUM_IMAGES*sizeof(SDL_Surface*));
     if (graphique->images == NULL)
     {
@@ -238,25 +238,25 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
         graphique->images[i]	= 0;
         graphique->images[i] 	= chargeImage(fichiersImages[i]);
     }
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("    chargement des images OK.\n");
-#endif
+	#endif
 
     /*---------------------------------------------------------------------
     	 Initialisation de SDL_ttf : */
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("    initialisation SDL_ttf.\n");
-#endif
+	#endif
     if ( TTF_Init() == -1 )
     {
         printf("TTF_Init: %s\n", TTF_GetError());
         exit(2);
     }
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("    chargement des polices.\n");
-#endif
+	#endif
     chargePolices(graphique);
 
     /* Creation des Elements Menu :
@@ -268,9 +268,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
         printf("ERREUR : (GraphiqueSDL) : impossible d'allouer la memoire pour les rendus de texte (Menu).\n");
         assert( graphique->textesMenu != NULL);
     }
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("    rendu du texte (Menu).\n");
-#endif
+	#endif
     for (i=0; i< 2*MENU_NUM_ELEMENTS; i++)
     {
         graphique->textesMenu[i] = NULL;
@@ -328,9 +328,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     /*---------------------------------------------------------------------
     	FIN */
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("    initialisation OK.\n");
-#endif
+	#endif
 
 }
 
@@ -541,6 +541,24 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
         offset.x = 0;
         offset.y = 0;
         SDL_BlitSurface( graphique->images[RESS_IMG_MENU_CMD], NULL, graphique->surface, &offset);
+        for (i=0; i< MENU_NUM_ELEMENTS; i++)
+        {
+            if (menu->elements[i].visible == 1)
+            {
+                offset.x = menu->elements[i].rect.x;
+                offset.y = menu->elements[i].rect.y;
+                if (menu->elements[i].surligne == 0)
+                    SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
+                else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
+            }
+        }
+        break;
+
+	case MENU_ETAT_INFO:
+
+        offset.x = 0;
+        offset.y = 0;
+        SDL_BlitSurface( graphique->images[RESS_IMG_MENU_INFO], NULL, graphique->surface, &offset);
         for (i=0; i< MENU_NUM_ELEMENTS; i++)
         {
             if (menu->elements[i].visible == 1)
