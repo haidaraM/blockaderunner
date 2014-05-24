@@ -12,10 +12,10 @@
 
 
 
-#define SCENE_BONUS_SCORE					500		/* nombre de points de score ajoutés si le joueur acquiere un Bonus de score */
-#define SCENE_BONUS_MISSILE					3		/* nombre de missiles que le joueur acquière lorsqu'il touche un Bonus missile */
-#define SCENE_PROBA_BONUS_SCORE_ECLAIREUR 	5
-#define SCENE_PROBA_BONUS_SCORE_CHASSEUR	20		/* note: pourcentages */
+#define SCENE_BONUS_SCORE					3000		/* nombre de points de score ajoutés si le joueur acquiere un Bonus de score */
+#define SCENE_BONUS_MISSILE					4		/* nombre de missiles que le joueur acquière lorsqu'il touche un Bonus missile */
+#define SCENE_PROBA_BONUS_SCORE_ECLAIREUR 	10
+#define SCENE_PROBA_BONUS_SCORE_CHASSEUR	25		/* note: pourcentages */
 #define SCENE_PROBA_BONUS_SCORE_CROISEUR	70
 #define SCENE_PROBA_BONUS_MISSILE_CROISEUR  40
 

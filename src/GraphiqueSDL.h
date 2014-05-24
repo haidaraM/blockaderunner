@@ -19,7 +19,7 @@
 #define GFX_MODE_FENETRE	 				1
 #define GFX_FENETRE_TITRE_DEFAUT			"Blockade Runner"
 
-#define GFX_NUM_ELEMENTS_HUD				7
+#define GFX_NUM_ELEMENTS_HUD				8
 #define GFX_HUD_ELEMENT_LARGEUR				8
 #define GFX_HUD_ELEMENT_HAUTEUR				6
 #define GFX_HUD_ELEMENT_OFFSET				2
@@ -171,6 +171,13 @@ void graphiqueAfficheMort(GraphiqueSDL * graphique);
 * @param [in,out] graphique : initialisé
 */
 void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique);
+
+/**
+* @fn void graphiqueAfficheVictoire(const GraphiqueSDL * graphique)
+* @brief Affichage de fin de jeu : victoire du joueur!
+* @param [in,out] graphique : initialisé
+*/
+void graphiqueAfficheVictoire(GraphiqueSDL * graphique);
 
 #endif
 

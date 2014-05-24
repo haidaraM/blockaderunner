@@ -69,9 +69,27 @@ void niveauChargeFichier(Niveau * niveau, int numero)
         strcat(nomFichier, "niveau2");
         strcpy(niveau->description, NIVEAU_2_DESCRIPTION);
         break;
-    default:
+	case 3:
         strcat(nomFichier, "niveau3");
         strcpy(niveau->description, NIVEAU_3_DESCRIPTION);
+        break;
+	case 4:
+        strcat(nomFichier, "niveau4");
+        strcpy(niveau->description, NIVEAU_4_DESCRIPTION);
+        break;
+	case 5:
+        strcat(nomFichier, "niveau5");
+        strcpy(niveau->description, NIVEAU_5_DESCRIPTION);
+        break;
+	case 6:
+        strcat(nomFichier, "niveau6");
+        strcpy(niveau->description, NIVEAU_6_DESCRIPTION);
+        break;
+	case 7:
+        strcat(nomFichier, "niveau7");
+        strcpy(niveau->description, NIVEAU_7_DESCRIPTION);
+        break;
+    default:
         break;
     }
 

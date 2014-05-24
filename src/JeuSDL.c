@@ -22,6 +22,8 @@
 
 void jeuInit(JeuSDL *jeu)
 {
+    srand(time(NULL));
+
 #ifdef JEU_VERBOSE
     printf("BLOCKADE > Initialisation des modules :\n\n");
 #endif
@@ -48,7 +50,6 @@ void jeuInit(JeuSDL *jeu)
     jeu->etatCourantJeu 	= JEU_ETAT_MENU;
     jeu->joueur 			= NULL;
 
-    srand(time(NULL));
 #ifdef JEU_VERBOSE
     printf("\nBLOCKADE > initialisation OK.\n\n");
 #endif
@@ -210,14 +211,16 @@ void jeuBoucle(JeuSDL *jeu)
                     /* Eventuellement (si le joueur joue son niveau max) : on met à jour la progression du  joueur & on sauve sur disque la progression du joueur */
                     if(jeu->niveauCourant==joueurGetProgression(jeu->joueur))
                     {
-                        joueurSetProgression(jeu->joueur);
-                        joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));/* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder. */
+                        joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));/* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder (plus un Bonus). */
+                        joueurSetProgression(jeu->joueur);/* on avance la progression du joueur (acces au niveau suivant débloqué)*/
                         ressourceSauveJoueurs(&jeu->ressource);
                     }
                     /* on joue un son */
                     audioJoueSon(&jeu->audio, RESS_SON_FIN_NIVEAU);
                     /* on affiche le texte de fin de niveau */
-                    graphiqueAfficheFinNiveau(graphique);
+					if(jeu->niveauCourant < RESS_NUM_NIVEAUX -1)
+	                     graphiqueAfficheFinNiveau(graphique);
+					else graphiqueAfficheVictoire(graphique);
                 }
                 tempsDernierDefilementScene = getTempsSecondes();
             }

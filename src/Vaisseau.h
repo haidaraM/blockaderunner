@@ -15,8 +15,8 @@
 /* Caracteristiques du vaisseau joueur*/
 #define VAISSEAU_JOUEUR_TYPE                            1
 #define JOUEUR_NB_ARMES                                 2
-#define JOUEUR_POINTECRAN                               300
-#define JOUEUR_POINTSTRUCTURE                           300
+#define JOUEUR_POINTECRAN                               500
+#define JOUEUR_POINTSTRUCTURE                           500
 
 /* Caracteristiques éclaireurs ennemi*/
 #define VAISSEAU_ECLAIREUR_TYPE                         3
@@ -27,13 +27,13 @@
 /* Caracteristiques chasseurs ennemi*/
 #define VAISSEAU_CHASSEUR_TYPE   	                    4
 #define CHASSEUR_ARMES  								1
-#define CHASSEUR_POINTECRAN                            25
-#define CHASSEUR_POINTSTRUCTURE                        50
+#define CHASSEUR_POINTECRAN                            50
+#define CHASSEUR_POINTSTRUCTURE                        70
 
 /* Caracteristiques croiseurs ennemi*/
 #define VAISSEAU_CROISEUR_TYPE                         	5
 #define CROISEUR_ARMES  								2
-#define CROISEUR_POINTECRAN                            	100
+#define CROISEUR_POINTECRAN                            	200
 #define CROISEUR_POINTSTRUCTURE                         300
 
 /* Armes */

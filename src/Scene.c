@@ -295,8 +295,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
 	        }
             break;
         case ELEMENT_TYPE_DEBRIS_ASTEROIDE:
-            dx = (int)(dt * e->vecX * 1.25f*SCENE_VITESSE_ASTEROIDE);
-            dy = (int)(dt * e->vecY * 1.25f*SCENE_VITESSE_ASTEROIDE);
+            dx = (int)(dt * e->vecX * 1.5f*SCENE_VITESSE_ASTEROIDE);
+            dy = (int)(dt * e->vecY * 1.5f*SCENE_VITESSE_ASTEROIDE);
             elementSetPosition(e, x+dx, y+dy);
             /* on supprime le debris dès qu'il n'est plus visible */
             if (elementVisible(e) != 1)
@@ -477,8 +477,10 @@ void sceneTestDeCollision(Scene *scene)
             {
                 sceneDetruitElement(t);
                 tabDynSupprimeElement(&scene->tirs, i);
+				#ifdef MODE_NORMAL
                 /* Le vaisseau du joueur encaisse des dégats */
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, ARME_LASER);
+				#endif
                 /* on met le flag associé dans les évènements à 1 */
                 scene->evenements.joueur_degats_laser = 1;
             }
@@ -490,8 +492,10 @@ void sceneTestDeCollision(Scene *scene)
             {
                 sceneDetruitElement(t);
                 tabDynSupprimeElement(&scene->tirs, i);
+				#ifdef MODE_NORMAL
                 /* Le vaisseau du joueur encaisse des dégats */
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, ARME_MISSILE);
+				#endif
                 /* on met le flag associé dans les évènements à 1 */
                 scene->evenements.joueur_degats_missile = 1;
             }
@@ -654,6 +658,7 @@ void sceneTestDeCollision(Scene *scene)
             scene->evenements.joueur_degats_collision = 1;
             switch(elementGetType(e))
             {
+			#ifdef MODE_NORMAL
             case ELEMENT_TYPE_ASTEROIDE:
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
@@ -675,6 +680,7 @@ void sceneTestDeCollision(Scene *scene)
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 vaisseauSetDegats((Vaisseau*)scene->elementVaisseauJoueur->data, VAISSEAU_COLLISION);
                 break;
+			#endif
             default :
                 break;
             }
@@ -872,21 +878,26 @@ void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
     Vaisseau *vaisseau = (Vaisseau*)e->data;
     Arme *arme;
     int probaMissile;
+	float modCadence = 1.0f;
+	int ennemi = elementGetType(e);
 
     /* Le croiseur dispose de missiles .. */
-    if (elementGetType(e) == ELEMENT_TYPE_CROISEUR)
+    if (ennemi == ELEMENT_TYPE_CROISEUR)
     {
+		modCadence = 0.33f;
         probaMissile = randomInt(0, 101);
         if (probaMissile < 14)
             vaisseau->numArmeSelectionne = ARME_MISSILE;
         else vaisseau->numArmeSelectionne = ARME_LASER;
     }
+	if (ennemi == ELEMENT_TYPE_CHASSEUR)
+		modCadence = 0.66f;
 
     arme = vaisseauGetArmeSelectionnee(vaisseau);
 
     /* L'ennemi n'a pas eu le temps de recharger son arme OU il n'a plus de munitions : il ne tire pas. */
     /* (note: on ajoute un peu d'aléatoire pour ne pas avoir des tirs métronomiques!)*/
-    if (tempsCourant - arme->tempsDernierTir - 0.25f*randomFloat() < arme->cadence  ||  vaisseauGetMunitionsArme(vaisseau) <= 0)
+    if (tempsCourant - arme->tempsDernierTir - 0.25f*randomFloat() < modCadence * arme->cadence  ||  vaisseauGetMunitionsArme(vaisseau) <= 0)
         return;
 
     /* Sinon, il tire : */
@@ -909,6 +920,9 @@ void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
 
     /* positionne le tir en fonction de la position du vaisseau */
     elementSetPosition(tir, elementGetX(e), elementGetY(e));
+	if (ennemi == ELEMENT_TYPE_CROISEUR  &&  randomInt(0, 101) < 50)
+		elementSetPosition(tir, elementGetX(e) + 32, elementGetY(e) + 64);/* simple probabilité que le tir vienne d'une tourelle du bas (dans le cas d'un croiseur). */
+	
     tabDynAjoute(&scene->tirs, (void *) tir);
 }
 

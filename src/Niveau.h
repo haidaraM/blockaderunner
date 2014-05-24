@@ -11,9 +11,13 @@
 
 
 #define NIVEAU_0_DESCRIPTION									"Sortir du champ d'astéroïdes : attention aux éclaireurs!"
-#define NIVEAU_1_DESCRIPTION                                    "Ennemis!"
-#define NIVEAU_2_DESCRIPTION                                    "Ennemis!"
-#define NIVEAU_3_DESCRIPTION                                    "Ennemis!"
+#define NIVEAU_1_DESCRIPTION                                    "Sortir du champ d'astéroïdes : attention aux éclaireurs!"
+#define NIVEAU_2_DESCRIPTION                                    "Vagues de chasseurs ennemis détectées"
+#define NIVEAU_3_DESCRIPTION                                    "Vagues de chasseurs ennemis détectées"
+#define NIVEAU_4_DESCRIPTION                                    "Attention aux croiseurs ennemis!"
+#define NIVEAU_5_DESCRIPTION                                    "Approche de Shantori"
+#define NIVEAU_6_DESCRIPTION                                    "Orbite basse de Shantori"
+#define NIVEAU_7_DESCRIPTION                                    "Entrée atmosphérique sur Shantori!"
 
 #define NIVEAU_GROUPE_ASTEROIDES								0
 #define NIVEAU_GROUPE_ECLAIREURS								1

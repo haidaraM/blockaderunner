@@ -131,10 +131,11 @@
 #define RESS_IMG_HAUTEUR_MENU_CMD                               720
 
 /* Images des niveaux */
-#define RESS_IMG_FOND_NIVEAU_0				 					48
-#define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"
 #define RESS_IMG_LARGEUR_FOND_NIVEAU							4098
 #define RESS_IMG_HAUTEUR_FOND_NIVEAU     						720
+
+#define RESS_IMG_FOND_NIVEAU_0				 					48
+#define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"
 
 #define RESS_IMG_FOND_NIVEAU_1				 					49
 #define RESS_IMG_FICHIER_FOND_NIVEAU_1							"bg1.jpg"
@@ -147,6 +148,15 @@
 
 #define RESS_IMG_FOND_NIVEAU_4				 					52
 #define RESS_IMG_FICHIER_FOND_NIVEAU_4							"bg4.jpg"
+
+#define RESS_IMG_FOND_NIVEAU_5				 					53
+#define RESS_IMG_FICHIER_FOND_NIVEAU_5							"bg5.jpg"
+
+#define RESS_IMG_FOND_NIVEAU_6				 					54
+#define RESS_IMG_FICHIER_FOND_NIVEAU_6							"bg6.jpg"
+
+#define RESS_IMG_FOND_NIVEAU_7				 					55
+#define RESS_IMG_FICHIER_FOND_NIVEAU_7							"bg7.jpg"
 
 /* Sons longs */
 #define RESS_SON_MENU                                           0

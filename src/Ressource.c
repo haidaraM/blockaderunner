@@ -84,9 +84,9 @@ void creeListeImages(Ressource *res)
     res->dimensionImages[RESS_IMG_FOND_MENU].largeur 				= RESS_IMG_LARGEUR_FOND_MENU;
     res->dimensionImages[RESS_IMG_FOND_MENU].hauteur 				= RESS_IMG_HAUTEUR_FOND_MENU;
 
-    res->images[RESS_IMG_MENU_CMD]                          = RESS_IMG_FICHIER_MENU_CMD;
-    res->dimensionImages[RESS_IMG_MENU_CMD].largeur         = RESS_IMG_LARGEUR_MENU_CMD;
-    res->dimensionImages[RESS_IMG_MENU_CMD].hauteur         = RESS_IMG_HAUTEUR_MENU_CMD;
+    res->images[RESS_IMG_MENU_CMD]                          		= RESS_IMG_FICHIER_MENU_CMD;
+    res->dimensionImages[RESS_IMG_MENU_CMD].largeur         		= RESS_IMG_LARGEUR_MENU_CMD;
+    res->dimensionImages[RESS_IMG_MENU_CMD].hauteur         		= RESS_IMG_HAUTEUR_MENU_CMD;
 
     /* Images des niveaux (backgrounds) */
     res->images[RESS_IMG_FOND_NIVEAU_0] 							= RESS_IMG_FICHIER_FOND_NIVEAU_0;
@@ -108,6 +108,18 @@ void creeListeImages(Ressource *res)
     res->images[RESS_IMG_FOND_NIVEAU_4]                             = RESS_IMG_FICHIER_FOND_NIVEAU_4;
     res->dimensionImages[RESS_IMG_FOND_NIVEAU_4].largeur            = RESS_IMG_LARGEUR_FOND_NIVEAU;
     res->dimensionImages[RESS_IMG_FOND_NIVEAU_4].hauteur            = RESS_IMG_HAUTEUR_FOND_NIVEAU;
+
+    res->images[RESS_IMG_FOND_NIVEAU_5]                             = RESS_IMG_FICHIER_FOND_NIVEAU_5;
+    res->dimensionImages[RESS_IMG_FOND_NIVEAU_5].largeur            = RESS_IMG_LARGEUR_FOND_NIVEAU;
+    res->dimensionImages[RESS_IMG_FOND_NIVEAU_5].hauteur            = RESS_IMG_HAUTEUR_FOND_NIVEAU;
+
+    res->images[RESS_IMG_FOND_NIVEAU_6]                             = RESS_IMG_FICHIER_FOND_NIVEAU_6;
+    res->dimensionImages[RESS_IMG_FOND_NIVEAU_6].largeur            = RESS_IMG_LARGEUR_FOND_NIVEAU;
+    res->dimensionImages[RESS_IMG_FOND_NIVEAU_6].hauteur            = RESS_IMG_HAUTEUR_FOND_NIVEAU;
+
+    res->images[RESS_IMG_FOND_NIVEAU_7]                             = RESS_IMG_FICHIER_FOND_NIVEAU_7;
+    res->dimensionImages[RESS_IMG_FOND_NIVEAU_7].largeur            = RESS_IMG_LARGEUR_FOND_NIVEAU;
+    res->dimensionImages[RESS_IMG_FOND_NIVEAU_7].hauteur            = RESS_IMG_HAUTEUR_FOND_NIVEAU;
 
     /* Images asteroides */
     res->images[RESS_IMG_DEBRIS_ASTEROIDE]                          = RESS_IMG_FICHIER_DEBRIS_ASTEROIDE;

@@ -84,7 +84,7 @@ void menuInit(Menu *menu, Ressource *res)
 
 
 
-	/* Definition des Elements des Menus */
+	/* Definition des Elements du Menu */
 
 	index = MENU_RETOUR;
 	menu->elements[index].texte 				= MENU_TXT_RETOUR;
@@ -174,6 +174,7 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->elements[index].rect.y				= MENU_ZONE_Y + MENU_ZONE_HAUTEUR - 2*MENU_PADDING_VERT;
 	menu->elements[index].action				= menuQuitter;
 
+	/* les 8 niveaux */
 	for (i=MENU_NIVEAU; i< MENU_NUM_BASIC_ELEMENTS; i++)
 	{
 		strcpy(niv, MENU_TXT_NIVEAU);
@@ -399,8 +400,8 @@ void menuJouer(void *m)
 	menu->elements[MENU_RETOUR].visible = 1;
 
 	assert(menu->joueurCourant > -1);
-	progression = 1 + (int)joueurGetProgression(menu->ressource->joueurs[menu->joueurCourant]);
-	for (i=MENU_NIVEAU; i < (MENU_NIVEAU + progression); i++)
+	progression = (int)joueurGetProgression(menu->ressource->joueurs[menu->joueurCourant]);
+	for (i=MENU_NIVEAU; i < (MENU_NIVEAU + progression + 1); i++)
 		menu->elements[i].visible = 1;
 }
 

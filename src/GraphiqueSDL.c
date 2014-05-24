@@ -128,6 +128,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     SDL_Color couleurTexteMunitions     = { 0, 255, 253};
     SDL_Color couleurTexteMort          = { 255, 0, 0}; /* couleur rouge*/
     SDL_Color couleurTexteFinNiveau     = {33, 238, 47}; /* couleur verte*/
+    SDL_Color couleurTexteVictoire      = {255, 238, 47}; /* couleur jaunatre*/
     Uint32 couleurNiveauCoque			= 0x00B0FF;
     Uint32 couleurNiveauEcran			= 0xFFB000;
 
@@ -317,9 +318,10 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     assert(graphique->elementsHUD[3] != NULL);
 
     /* fin de niveau ou mort du joueur */
-    graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Oups!! Vous etes morts", couleurTexteMort);
-    graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Bravo!! Fin du niveau", couleurTexteFinNiveau);
-
+    graphique->elementsHUD[4] 	= TTF_RenderText_Blended(graphique->policeMenu, "Vous etes mort", couleurTexteMort);
+    graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteFinNiveau);
+	graphique->elementsHUD[7] 	= TTF_RenderText_Blended(graphique->policeMenu, "Mission accomplie! Vous avez brise le blocus de Shantori!", couleurTexteVictoire);
+	
     /* nbre de missiles */
     graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions);
 
@@ -661,14 +663,14 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
     /* Affichage de l'interface */
 
     /* Affichage des points ecrans */
-    for (i=0; i<vaisseauGetPointStructure(scene->elementVaisseauJoueur->data)/30; i++) /* note : on divise par 30 car les points structure vont de 0 à 300 et l'affichage va de 0 à 10 */
+    for (i=0; i<vaisseauGetPointStructure(scene->elementVaisseauJoueur->data)/50; i++) 
     {
         dstBox.x = GFX_HUD_ELEMENT_LARGEUR;
         dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);
         SDL_BlitSurface( graphique->elementsHUD[0], NULL, graphique->surface, &dstBox);
     }
     /* Affichage des points structures */
-    for (i=0; i< vaisseauGetPointEcran(scene->elementVaisseauJoueur->data)/30; i++)	/* note : on divise par 30 car les points ecran vont de 0 à 300 et l'affichage va de 0 à 10 */
+    for (i=0; i< vaisseauGetPointEcran(scene->elementVaisseauJoueur->data)/50; i++)	
     {
         dstBox.x = 2* GFX_HUD_ELEMENT_LARGEUR + GFX_HUD_ELEMENT_OFFSET;
         dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);
@@ -737,8 +739,8 @@ void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles)
 void graphiqueAfficheMort(GraphiqueSDL * graphique)
 {
     SDL_Rect positionText;
-    positionText.x=graphique->largeur/2-30;
-    positionText.y=graphique->hauteur/2;
+    positionText.x=graphique->largeur/2 - graphique->elementsHUD[4]->w/2;
+    positionText.y=graphique->hauteur/2 - graphique->elementsHUD[4]->h/2;
     assert(graphique!=NULL);
 
     /* On blit le texte au centre de l'ecran */
@@ -753,8 +755,8 @@ void graphiqueAfficheMort(GraphiqueSDL * graphique)
 void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique)
 {
     SDL_Rect positionText;
-    positionText.x=graphique->largeur/2-30;
-    positionText.y=graphique->hauteur/2;
+    positionText.x=graphique->largeur/2 - graphique->elementsHUD[5]->w/2;
+    positionText.y=graphique->hauteur/2 - graphique->elementsHUD[5]->h/2;
     assert(graphique!=NULL);
 
     /* On blit le texte au centre de l'ecran */
@@ -763,5 +765,20 @@ void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique)
     graphiqueRaffraichit(graphique);
     /* On met le jeu en pause pendant 3s */
     SDL_Delay(3000);
-
 }
+
+void graphiqueAfficheVictoire(GraphiqueSDL * graphique)
+{
+    SDL_Rect positionText;
+    positionText.x=graphique->largeur/2 - graphique->elementsHUD[7]->w/2;
+    positionText.y=graphique->hauteur/2 - graphique->elementsHUD[7]->h/2;
+    assert(graphique!=NULL);
+
+    /* On blit le texte au centre de l'ecran */
+    SDL_BlitSurface(graphique->elementsHUD[7], NULL, graphique->surface, &positionText);
+    /* On met à jour l'ecran */
+    graphiqueRaffraichit(graphique);
+    /* On met le jeu en pause pendant 10s */
+    SDL_Delay(10000);
+}
+

@@ -1,8 +1,11 @@
+#MODE_JEU		= MODE_NORMAL
+MODE_JEU 		= MODE_INVULNERABLE
+
 #OS				= WIN32
 OS				= LINUX
 VERBOSE 		= JEU_VERBOSE
 
-DEFINE 			= -D$(OS) -D$(VERBOSE)
+DEFINE 			= -D$(OS) -D$(VERBOSE) -D$(MODE_JEU)
 
 OBJ		 		= obj
 SRC		 		= src

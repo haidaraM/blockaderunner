@@ -42,7 +42,11 @@ unsigned int joueurGetProgression(const Joueur *joueur)
 void joueurSetProgression(Joueur * joueur)
 {
     assert(joueur!=NULL);
-    joueur->progression++;
+	if (joueur->progression < 7)
+	{
+	    joueur->progression++;
+		joueur->score += 10000; /* bonus de fin de niveau */
+	}
 }
 
 int joueurGetScore(const Joueur *joueur)
