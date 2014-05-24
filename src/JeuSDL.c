@@ -323,7 +323,7 @@ void jeuBoucle(JeuSDL *jeu)
                 {
                     toucheDetectee = -1;
                     menuSetFinLectureClavier(menu);
-                    /*graphiquePrepareRenduListeJoueurs(graphique, menu);*/
+                    graphiquePrepareRenduListeJoueurs(graphique, menu);
                     jeu->joueur = menuGetJoueurChoisi(menu);
                 }
             }

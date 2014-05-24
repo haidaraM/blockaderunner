@@ -44,7 +44,7 @@
 #define MENU_NOUVEAU_JOUEUR					2
 #define MENU_ENTRER_NOM						3
 #define MENU_INFO							4
-#define MENU_OPTION							5
+#define MENU_CHANGER_JOUEUR					5
 #define MENU_CMD							6
 #define MENU_JOUER							7
 #define MENU_SCORE							8
@@ -56,7 +56,7 @@
 #define MENU_TXT_NOUVEAU_JOUEUR				"Nouveau Joueur"
 #define MENU_TXT_ENTRER_NOM					"Entrez un nom : "
 #define MENU_TXT_INFO						"Info"
-#define MENU_TXT_OPTION						"Options"
+#define MENU_TXT_CHANGER_JOUEUR				"Changer de Joueur"
 #define MENU_TXT_CMD						"Commandes"
 #define MENU_TXT_JOUER						"Jouer"
 #define MENU_TXT_SCORE						"Meilleurs Scores"
@@ -187,7 +187,7 @@ void menuCommandes(void *m);
 * @brief Callback appelée lorque l'utilisateur souhaite modifier les options de jeu.
 * @param [in] m
 */
-void menuOptions(void *m);
+void menuChangerJoueur(void *m);
 
 /**
 * @fn void menuInfo(void *m

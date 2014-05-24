@@ -147,14 +147,14 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->elements[index].rect.y				= MENU_ZONE_Y + 7*MENU_PADDING_VERT;
 	menu->elements[index].action				= menuCommandes;
 
-	index = MENU_OPTION;
-	menu->elements[index].texte 				= MENU_TXT_OPTION;
+	index = MENU_CHANGER_JOUEUR;
+	menu->elements[index].texte 				= MENU_TXT_CHANGER_JOUEUR;
 	menu->elements[index].visible 				= 0;
 	menu->elements[index].actionable 			= 1;
 	menu->elements[index].surligne	 			= 0;
 	menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
 	menu->elements[index].rect.y				= MENU_ZONE_Y + 9*MENU_PADDING_VERT;
-	menu->elements[index].action				= menuOptions;
+	menu->elements[index].action				= menuChangerJoueur;
 
 	index = MENU_INFO;
 	menu->elements[index].texte 				= MENU_TXT_INFO;
@@ -245,9 +245,9 @@ void menuRetour(void *m)
 		case MENU_ETAT_ENTREE_JOUEUR:
 			menuChoixJoueur((void*)menu);
 			break;
-		case MENU_ETAT_PRINCIPAL:
+		/*case MENU_ETAT_PRINCIPAL:
 			menuChoixJoueur((void*)menu);
-			break;
+			break;*/
 		case MENU_ETAT_QUITTER:
 			break;
 		default:
@@ -318,7 +318,7 @@ void menuPrincipal(void *m)
 	menu->elements[MENU_JOUER].visible = 1;
 	menu->elements[MENU_SCORE].visible = 1;
 	menu->elements[MENU_CMD].visible = 1;
-	menu->elements[MENU_OPTION].visible = 1;
+	menu->elements[MENU_CHANGER_JOUEUR].visible = 1;
 	menu->elements[MENU_INFO].visible = 1;
 	menu->elements[MENU_QUITTER].visible = 1;
 }
@@ -334,17 +334,9 @@ void menuCommandes(void *m)
 	menu->etat 	= MENU_ETAT_CMD;
 	menu->elements[MENU_RETOUR].visible = 1;
 }
-void menuOptions(void *m)
+void menuChangerJoueur(void *m)
 {
-	int i;
-	Menu *menu = (Menu*)m;
-	assert(menu != NULL);
-
-	for (i=0; i< MENU_NUM_ELEMENTS; i++)
-		menu->elements[i].visible = 0;
-
-	menu->etat 	= MENU_ETAT_OPTION;
-	menu->elements[MENU_RETOUR].visible = 1;
+	menuChoixJoueur(m);
 }
 void menuInfo(void *m)
 {
