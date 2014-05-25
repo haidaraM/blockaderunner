@@ -11,12 +11,11 @@
 *
 *
 *	Blockade Runner :
-*	Un shoot'em up à défilement horizontal, développé en C avec la librairie SDL (libsdl.org).
+*	Un shoot'em up à défilement horizontal, développé en C avec les librairie SDL (libsdl.org), SDL_image, SDL_ttf, et FMOD.
 *
 *	Auteurs :
-*	Mohamed El Mouctar HAIDARA (p1212684)
 *	Yann Cortial (x7005186)
-*
+*	Mohamed El Mouctar HAIDARA (p1212684)
 */
 int main ()
 {

@@ -27,7 +27,7 @@
 
 /**
 * @struct GroupeNiveau
-* @brief Structure utilisée pour la composition d'un niveau
+* @brief Structure utilisée pour la composition d'un niveau : décrit un groupe d'éléments de même type.
 */
 typedef struct
 {

@@ -28,7 +28,7 @@
 
 /**
 * @struct GraphiqueSDL
-* @brief Structure de gestion de l'affichage video.
+* @brief Structure de gestion de l'affichage video. Interface avec SDL, SDL_image et SDL_ttf.
 *
 *
 */
@@ -152,7 +152,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu );
 
 /**
 * @fn void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
-* @brief Affiche la portion visible de la scène sur la surface d'affichage principale (fenêtre).
+* @brief Rend la portion visible de la scène et ses éléments (vaisseaux, asteroides, tirs, bonus,etc.) sur la surface d'affichage principale (fenêtre).
 * @param [in,out] graphique : initialisé
 * @param [in] scene: initialisé
 */

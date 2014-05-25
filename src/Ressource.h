@@ -1,6 +1,6 @@
 /**
 * @file Ressource.h
-* @brief Module dictionnaire de ressources : images, sons, polices, joueurs.
+* @brief Module dictionnaire de ressources : images, sons, polices, joueurs, niveaux.
 * @author Yann Cortial
 *
 */

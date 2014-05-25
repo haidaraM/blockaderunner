@@ -16,7 +16,6 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 {
     assert( element != NULL );
 
-    /* element->type			= type; */
     element->x 				= 0;
     element->y				= 0;
     element->vecX			= -1.0f;

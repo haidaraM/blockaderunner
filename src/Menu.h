@@ -68,7 +68,7 @@
 
 /**
 * @struct ElementMenu
-* @brief Element du Menu : un texte avec états (actionable, visible, surlignable) et position & dimension.
+* @brief Element du Menu : un texte avec états (actionable, visible, surlignable), position & dimension, et procédure associée.
 */
 typedef struct
 {

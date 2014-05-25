@@ -1,7 +1,7 @@
 /**
 * @file AudioSDL.h
 * @brief Fichier d'en tete du module Audio qui va gerer le son grace à la librairie FMOD Ex.
-* @author Mohamed El Mouctar HAIDARA - Yann Cortial
+* @author Mohamed El Mouctar HAIDARA
 */
 #ifndef _AUDIO_H
 #define _AUDIO_H

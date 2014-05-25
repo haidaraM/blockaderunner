@@ -14,6 +14,10 @@
 
 
 
+
+
+
+
 /* -----------Fonctions internes ----------------- */
 
 SDL_Surface* chargeImage(char* nomFichier)
@@ -169,7 +173,6 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
         for(i=0; modes[i]; ++i)
             printf("      %d x %d\n", modes[i]->w, modes[i]->h);
     }
-    /*free(modes);*/
 	#endif
 
 
@@ -322,8 +325,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->elementsHUD[5] 	= TTF_RenderText_Blended(graphique->policeMenu, "Fin du niveau", couleurTexteFinNiveau);
 	graphique->elementsHUD[7] 	= TTF_RenderText_Blended(graphique->policeMenu, "Mission accomplie! Vous avez brise le blocus de Shantori!", couleurTexteVictoire);
 
-    /* nbre de missiles */
-    graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions);
+    /* init nbre de missiles */
+    graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions); /* constant 4 is hard-coded no good */
 
     /*---------------------------------------------------------------------
     	FIN */

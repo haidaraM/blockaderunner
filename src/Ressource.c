@@ -465,37 +465,6 @@ void ressourceTrieJoueurs(Ressource * res)
     }
 
     free(joueurs);
-
-    /* DEPRECATED :*/
-	/*premier tri par niveau atteint */
-    /*for(i=0; i<nbJoueurs-1; i++)
-    {
-        indmax=i;
-        for(j=i+1; j<nbJoueurs; j++)
-        {
-            if(joueurGetProgression(joueurs[j]) > joueurGetProgression(joueurs[indmax]))
-                indmax=j;
-        }
-        joueurMax=joueurs[indmax];
-        joueurs[indmax]=joueurs[i];
-        joueurs[i]=joueurMax;
-    }*/
-
-    /* par score */
-    /*for(i=0; i<nbJoueurs-1; i++)
-    {
-        indmax=i;
-        for(j=i+1; j<nbJoueurs; j++)
-        {
-            if(joueurGetProgression(joueurs[j]) == joueurGetProgression(joueurs[indmax]))
-                if(joueurGetScore(joueurs[j]) > joueurGetScore(joueurs[indmax]))
-                    indmax=j;
-        }
-        joueurMax=joueurs[indmax];
-        joueurs[indmax]=joueurs[i];
-        joueurs[i]=joueurMax;
-    }*/
-
 }
 
 Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau)

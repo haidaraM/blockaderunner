@@ -1,7 +1,7 @@
 /**
 * @file Scene.c
 * @brief Fichier d'implementation du module
-* @author Mohamed El Mouctar HAIDARA - YANN COrtial
+* @author Yann CORTIAL - Mohamed El Mouctar HAIDARA
 */
 #include "Scene.h"
 #include <stdlib.h>

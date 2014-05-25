@@ -1,11 +1,15 @@
 #MODE_JEU		= MODE_NORMAL
 MODE_JEU 		= MODE_INVULNERABLE
 
+VERBOSE 		= JEU_VERBOSE
+#VERBOSE 		= NO_VERBOSE
+
 #OS				= WIN32
 OS				= LINUX
-VERBOSE 		= JEU_VERBOSE
 
 DEFINE 			= -D$(OS) -D$(VERBOSE) -D$(MODE_JEU)
+
+
 
 OBJ		 		= obj
 SRC		 		= src
@@ -48,3 +52,4 @@ $(OBJ)/%.o: $(SRC)/%.c
 
 clean:
 	rm -f $(OBJ)/*.o $(BIN)/$(EXEC) $(BIN)/$(MAIN_TEST)
+

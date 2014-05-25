@@ -12,10 +12,10 @@
 
 
 
-#define SCENE_BONUS_SCORE					3000		/* nombre de points de score ajoutés si le joueur acquiere un Bonus de score */
-#define SCENE_BONUS_MISSILE					4		/* nombre de missiles que le joueur acquière lorsqu'il touche un Bonus missile */
-#define SCENE_PROBA_BONUS_SCORE_ECLAIREUR 	10
-#define SCENE_PROBA_BONUS_SCORE_CHASSEUR	25		/* note: pourcentages */
+#define SCENE_BONUS_SCORE					3200		/* nombre de points de score ajoutés si le joueur acquiere un Bonus de score */
+#define SCENE_BONUS_MISSILE					4			/* nombre de missiles que le joueur acquière lorsqu'il touche un Bonus missile */
+#define SCENE_PROBA_BONUS_SCORE_ECLAIREUR 	10			/* note: pourcentages */
+#define SCENE_PROBA_BONUS_SCORE_CHASSEUR	25			
 #define SCENE_PROBA_BONUS_SCORE_CROISEUR	70
 #define SCENE_PROBA_BONUS_MISSILE_CROISEUR  40
 
@@ -34,7 +34,7 @@
 
 /**
 * @struct EvenementScene
-* @brief Structure qui represente les évènements de la scène (sert à faire jouer des sons associés par le module Audio)
+* @brief Structure qui représente les évènements survenants sur la scène.
 */
 typedef struct
 {
@@ -61,7 +61,7 @@ typedef struct
 
 /**
 * @struct Scene
-* @brief Structure qui represente tous les elements de la scene
+* @brief Structure qui représente tous les éléments de la scène : asteroides, debris, bonus, vaisseaux, tirs, decors,etc.
 */
 typedef struct
 {

@@ -24,9 +24,9 @@ void jeuInit(JeuSDL *jeu)
 {
     srand(time(NULL));
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("BLOCKADE > Initialisation des modules :\n\n");
-#endif
+	#endif
 
     assert( jeu != NULL );
     assert( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) != -1 );
@@ -50,9 +50,9 @@ void jeuInit(JeuSDL *jeu)
     jeu->etatCourantJeu 	= JEU_ETAT_MENU;
     jeu->joueur 			= NULL;
 
-#ifdef JEU_VERBOSE
+	#ifdef JEU_VERBOSE
     printf("\nBLOCKADE > initialisation OK.\n\n");
-#endif
+	#endif
 }
 
 
@@ -75,9 +75,9 @@ void jeuBoucle(JeuSDL *jeu)
     Menu *menu						= &jeu->menu;
 
     float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
-    /* Période de temps (secondes) entre deux raffraichissements écran */
+    /* Période de temps en secondes entre deux raffraichissements écran : Framerate. */
     float periodeAffichage 			= 1.0f/60.0f;
-    float periodeDefilementScene 	= 1.0f/24.0f;/*1.0f/12.0f;*/
+    float periodeDefilementScene 	= 1.0f/24.0f;
 
     graphiqueRaffraichit(graphique);
 
@@ -253,29 +253,31 @@ void jeuBoucle(JeuSDL *jeu)
             /* Pour chaque élément visible du Menu : on évalue la position souris (surlignage) et le click (activation). */
             for (i=0; i< MENU_NUM_ELEMENTS; i++)
 
+				/* on ne s'interesse qu'aux éléments-menu actionables (cliquables) */
                 if (menu->elements[i].visible == 1 && menu->elements[i].actionable == 1)
                 {
+					/* Si l'élément est déjà surligné */
                     if (menu->elements[i].surligne == 1)
                     {
-
+						/* Si la souris n'est pas sur l'élément alors on ne le rend plus surligné */
                         if (rectangleContient(&menu->elements[i].rect, sourisX, sourisY) == 0)
                         {
                             menu->elements[i].surligne = 0;
                             choixMenu = -1;
                         }
+						/* Sinon : si le bouton souris est enfoncé alors on repère le choix (clic) du joueur par la variable choixMenu. */
                         else if (sourisBoutonGauche == 1)
                         {
                             choixMenu = i;
                         }
-                        else if (choixMenu == i)
-                        {
+						/* Sinon (ie.le bouton souris n'est plus enfoncé)  ... */
+                        else if (choixMenu == i) 						/* ... ici le joueur vient de relacher le souris (donc a cliqué) sur l'élément */ 
+                        {	
                             if (menu->etat == MENU_ETAT_CHOIX_JOUEUR)
                             {
                                 menuSelectionneJoueur(menu, i);
                                 jeu->joueur = menuGetJoueurChoisi(menu);
-
                             }
-
                             if (menu->etat == MENU_ETAT_CHOIX_NIVEAU)
                             {
                                 menuSelectionneNiveau(menu, i);
@@ -289,12 +291,10 @@ void jeuBoucle(JeuSDL *jeu)
                             /* On appelle la callback associé à l'élément menu. */
                             (menu->elements[i].action)((void*)menu);
                             choixMenu = -1;
-
                             audioJoueSon(&jeu->audio, RESS_SON_MENU_VALIDATE);
-
                         }
-
                     }
+					/* sinon : l'élément n'est pas surligné mais la souris est dessus : on le surligne */
                     else if (rectangleContient(&menu->elements[i].rect, sourisX, sourisY) == 1)
                     {
                         menu->elements[i].surligne = 1;
@@ -365,10 +365,14 @@ void jeuBoucle(JeuSDL *jeu)
             if (jeu->chargementOK == 0)
             {
                 niveau 					= ressourceGetNiveau(&jeu->ressource, jeu->niveauCourant);
-                /* Initialisation de la scène */
+
+                /* Initialisation de la scène avec une copie du Joueur courant */
                 copieJoueur=joueurCopieJoueur(jeu->joueur);
                 sceneInit(&jeu->scene, &jeu->ressource, copieJoueur, jeu->graphique.largeur, jeu->graphique.hauteur);
+		
+				/* Chargement du niveau */
                 sceneChargeNiveau(&jeu->scene, &niveau, &jeu->ressource);
+
                 graphiqueSetMunitions(graphique, sceneGetMunitionMissileJoueur(&jeu->scene));
 
                 jeu->etatCourantJeu 	= JEU_ETAT_JEU;
@@ -388,7 +392,6 @@ void jeuBoucle(JeuSDL *jeu)
             /* On arrete le son du menu et on joue le son de la scene */
             audioStopSon(&jeu->audio, RESS_SON_MENU);
             audioJoueSon(&jeu->audio, RESS_SON_AMBIENCE);
-
             break;
 
         default:

@@ -60,7 +60,7 @@ void menuInit(Menu *menu, Ressource *res)
 	assert( res != NULL );
 
 	#ifdef JEU_VERBOSE
-		printf("Menu :\n    initialisation ...\n");
+	printf("Menu :\n    initialisation ...\n");
 	#endif
 
 
@@ -197,7 +197,7 @@ void menuInit(Menu *menu, Ressource *res)
 	creeListeJoueurs(menu);
 
 	#ifdef JEU_VERBOSE
-		printf("	initialisation OK.\n");
+	printf("	initialisation OK.\n");
 	#endif
 }
 
@@ -245,9 +245,6 @@ void menuRetour(void *m)
 		case MENU_ETAT_ENTREE_JOUEUR:
 			menuChoixJoueur((void*)menu);
 			break;
-		/*case MENU_ETAT_PRINCIPAL:
-			menuChoixJoueur((void*)menu);
-			break;*/
 		case MENU_ETAT_QUITTER:
 			break;
 		default:

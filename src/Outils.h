@@ -1,6 +1,6 @@
 /**
 * @file Outils.h
-* @brief Boîte à outils : listeChainee, tableaudynamique etc ...
+* @brief Boîte à outils : tableau dynamique, timer, nombres aléatoires, etc ...
 * @author Yann Cortial
 */
 #ifndef _OUTILS_H

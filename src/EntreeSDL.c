@@ -14,7 +14,7 @@ void entreeInit(EntreeSDL *entree)
 	assert( entree != NULL );
 
 	#ifdef JEU_VERBOSE
-		printf("Entrées (clavier, souris) :\n    initialisation ...\n");
+	printf("Entrées (clavier, souris) :\n    initialisation ...\n");
 	#endif
 
 	entree->fermetureJeu 		= 0;
@@ -40,7 +40,7 @@ void entreeInit(EntreeSDL *entree)
 	SDL_WarpMouse(0, 0);
 
 	#ifdef JEU_VERBOSE
-		printf("    initialisation OK.\n");
+	printf("    initialisation OK.\n");
 	#endif
 }
 
