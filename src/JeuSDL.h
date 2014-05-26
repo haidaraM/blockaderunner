@@ -4,11 +4,6 @@
 * Module principal du programme. Regroupe l'accès aux sous-systèmes essentiels (video, audio), les modules de gestion de haut-niveau (entrées, ressources), et la vue/état global du jeu (Scene).
 * @author Cortial Yann
 *
-* @bug Le rendu de texte dynamique a pas l'air très stable :
-* 		Program received signal SIGSEGV, Segmentation fault.
-* 		__strcpy_sse2_unaligned () at ../sysdeps/x86_64/multiarch/strcpy-sse2-unaligned.S:590
-* 		590	../sysdeps/x86_64/multiarch/strcpy-sse2-unaligned.S: Aucun fichier ou dossier de ce type.
-* 		(gdb)
 */
 #ifndef _JEU_SDL_H
 #define _JEU_SDL_H
@@ -16,8 +11,10 @@
 #include "GraphiqueSDL.h"
 #include "Audio.h"
 #include "EntreeSDL.h"
+#include "Menu.h"
 #include "Scene.h"
 #include "Ressource.h"
+#include "Joueur.h"
 
 
 

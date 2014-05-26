@@ -70,10 +70,13 @@ Introduction
 (3) Compilation :
 
 				Ouvrir le fichier Makefile avec un éditeur de texte,
-				décommenter les deux define selon les besoins : 
+				décommenter éventuellement les deux define selon les besoins : 
 
-						MODE_JEU 	= ...
-						VERBOSE 	= ...
+						MODE_JEU 	= MODE_NORMAL				#mode de jeu standard.
+						#MODE_JEU	= MODE_INVULNERABLE			#permet de jouer sans encaisser de dégâts : utile pour tester le jeu de A à Z.
+
+						VERBOSE 	= JEU_VERBOSE				#status d'initialisation affiché sur la sortie standard.
+						#VERBOSE	= NO_VERBOSE				#aucun message sur la sortie standard hormis les messages d'erreurs éventuels.
 					
 				Lancer la compilation avec :
 
@@ -109,7 +112,6 @@ Introduction
 (2)	Commandes pour jouer à Blockade Runner :
 
 			- Souris 							: pour naviguer dans le menu
-
 			- Flèches de direction 				: déplacer le vaisseau
 			- Barre espace 						: tirer
 			- F5								: choisir l'arme laser
@@ -127,7 +129,36 @@ Introduction
 
 
 
-(1) Format des fichiers :
+(1) Fonctionnalités du programme :
+
+
+			# Menu
+			
+				- Choisir un joueur existant
+				- Créer un nouveau joueur
+				- Navigation 
+				- Voir les 5 meilleurs joueurs (classement sur le score)
+				- Voir les commandes du jeu
+				- Avoir des infos sur le programme
+				- Choisir un niveau de jeu
+				- Lancer le jeu
+
+			# Jeu
+				
+				- Se déplacer
+				- Tirer au laser
+				- Tirer des missiles
+				- Récolter des bonus (score et missile)
+				- Eviter les astéroides : en les détruisant ou en se déplaçant
+				- Eviter de percuter des vaisseaux ennemis.
+				- Eviter les tirs ennemis (laser et missiles 'à tête chercheuse')
+				- Détruire un maximum d'ennemis afin de maximiser son score
+				- Compléter un niveau en survivant jusqu'au bout.
+						
+	
+
+
+(2) Format des fichiers :
 
 
 
@@ -169,6 +200,7 @@ Chaque paire de lignes définit un GroupeNiveau :
 
 			### Fichier JOUEURS
 
+
 (exemple fichier)
 
 6
@@ -191,6 +223,5 @@ Puis chaque paire de lignes définit un joueur :
 
 
 		
-
 							
 				  	

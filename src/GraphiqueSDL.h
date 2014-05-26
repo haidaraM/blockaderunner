@@ -14,6 +14,7 @@
 
 #include "Menu.h"
 #include "Scene.h"
+#include "Ressource.h"
 
 #define GFX_MODE_FULLSCREEN 				0
 #define GFX_MODE_FENETRE	 				1

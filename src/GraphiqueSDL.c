@@ -4,7 +4,6 @@
 */
 #include "GraphiqueSDL.h"
 #include "ElementScene.h"
-#include "Ressource.h" /* utile pour l'affichage HUD des nombres de missiles ... */
 
 #include <assert.h>
 #include <stdio.h>
