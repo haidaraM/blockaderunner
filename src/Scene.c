@@ -922,7 +922,7 @@ void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
     elementSetPosition(tir, elementGetX(e), elementGetY(e));
 	if (ennemi == ELEMENT_TYPE_CROISEUR  &&  randomInt(0, 101) < 50)
 		elementSetPosition(tir, elementGetX(e) + 32, elementGetY(e) + 64);/* simple probabilité que le tir vienne d'une tourelle du bas (dans le cas d'un croiseur). */
-	
+
     tabDynAjoute(&scene->tirs, (void *) tir);
 }
 
@@ -991,6 +991,7 @@ void sceneTestDeRegression()
     printf("=========> Resultat : OK \n");
     printf("\n");
 
+    /* Les tests de liberations sont à effecter avec valgrind de préferences */
     printf("--------Test de sceneLibere --------- \n");
     sceneLibere(&sc);
     printf("=========> Resultat : OK \n");

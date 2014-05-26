@@ -31,7 +31,7 @@ void vaisseauInit(Vaisseau *vaisseau, int type)
         /* laser est selectionnée par défaut */
         vaisseau->numArmeSelectionne=ARME_LASER;
         break;
-	case VAISSEAU_ECLAIREUR_TYPE:
+    case VAISSEAU_ECLAIREUR_TYPE:
         vaisseau->type = VAISSEAU_ECLAIREUR_TYPE;
         vaisseau->pointEcran = ECLAIREUR_POINTECRAN;
         vaisseau->pointStructure = ECLAIREUR_POINTSTRUCTURE;
@@ -44,7 +44,7 @@ void vaisseauInit(Vaisseau *vaisseau, int type)
         }
         vaisseau->numArmeSelectionne=ARME_LASER;
         break;
-	case VAISSEAU_CHASSEUR_TYPE:
+    case VAISSEAU_CHASSEUR_TYPE:
         vaisseau->type = VAISSEAU_CHASSEUR_TYPE;
         vaisseau->pointEcran = CHASSEUR_POINTECRAN;
         vaisseau->pointStructure = CHASSEUR_POINTSTRUCTURE;
@@ -57,7 +57,7 @@ void vaisseauInit(Vaisseau *vaisseau, int type)
         }
         vaisseau->numArmeSelectionne=ARME_LASER;
         break;
-	case VAISSEAU_CROISEUR_TYPE:
+    case VAISSEAU_CROISEUR_TYPE:
         vaisseau->type = VAISSEAU_CROISEUR_TYPE;
         vaisseau->pointEcran = CROISEUR_POINTECRAN;
         vaisseau->pointStructure = CROISEUR_POINTSTRUCTURE;
@@ -101,40 +101,33 @@ int vaisseauGetPointStructure(const Vaisseau * vaisseau)
     return vaisseau->pointStructure;
 }
 
-void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure)
-{
-	assert(vaisseau != NULL);
-	vaisseau->pointEcran = pEcran;
-	vaisseau->pointStructure = pStructure;
-}
-
 void vaisseauSetDegats(Vaisseau * vaisseau, int typeDegats)
 {
     assert(vaisseau!=NULL);
 
-	switch(typeDegats)
-	{
-	case ARME_LASER:
-		vaisseau->pointEcran -= ARME_LASER_DEGAT_E;
-		if (vaisseau->pointEcran < 0)
-		{
-			vaisseau->pointStructure -= ARME_LASER_DEGAT_S;
-			if (vaisseau->pointStructure < 0)
-				vaisseau->pointStructure = 0;
-			vaisseau->pointEcran = 0;
-		}
-		break;
-	case ARME_MISSILE:
-		vaisseau->pointStructure -= ARME_MISSILE_DEGAT_S;
-		if (vaisseau->pointStructure < 0)
-			vaisseau->pointStructure = 0;
-		break;
-	case VAISSEAU_COLLISION:
-		vaisseau->pointStructure -= VAISSEAU_COLLISION_DEGAT_S;
-		if (vaisseau->pointStructure < 0)
-			vaisseau->pointStructure = 0;
-		break;
-	}
+    switch(typeDegats)
+    {
+    case ARME_LASER:
+        vaisseau->pointEcran -= ARME_LASER_DEGAT_E;
+        if (vaisseau->pointEcran < 0)
+        {
+            vaisseau->pointStructure -= ARME_LASER_DEGAT_S;
+            if (vaisseau->pointStructure < 0)
+                vaisseau->pointStructure = 0;
+            vaisseau->pointEcran = 0;
+        }
+        break;
+    case ARME_MISSILE:
+        vaisseau->pointStructure -= ARME_MISSILE_DEGAT_S;
+        if (vaisseau->pointStructure < 0)
+            vaisseau->pointStructure = 0;
+        break;
+    case VAISSEAU_COLLISION:
+        vaisseau->pointStructure -= VAISSEAU_COLLISION_DEGAT_S;
+        if (vaisseau->pointStructure < 0)
+            vaisseau->pointStructure = 0;
+        break;
+    }
 
 }
 
@@ -149,7 +142,7 @@ void vaisseauArmeInit(Arme * a, int type)
         a->degatEcran=ARME_LASER_DEGAT_E;
         a->degatStructure=ARME_LASER_DEGAT_S;
         a->cadence=0.5f;
-		a->tempsDernierTir = getTempsSecondes();	/* note : défini dans Outils.h */
+        a->tempsDernierTir = getTempsSecondes();	/* note : défini dans Outils.h */
         break;
     case ARME_MISSILE:
         a->typeArme=ARME_MISSILE;
@@ -157,7 +150,7 @@ void vaisseauArmeInit(Arme * a, int type)
         a->degatEcran=ARME_MISSILE_DEGAT_E;
         a->degatStructure=ARME_MISSILE_DEGAT_S;
         a->cadence=1.5f;
-		a->tempsDernierTir = getTempsSecondes();
+        a->tempsDernierTir = getTempsSecondes();
     default:
         break;
     }
@@ -171,17 +164,19 @@ Arme* vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau)
 
 int vaisseauGetDegatEcranArme(const Vaisseau * vaisseau )
 {
-
+    assert(vaisseau!=NULL);
     return vaisseauGetArmeSelectionnee(vaisseau)->degatEcran;
 }
 
 int vaisseauGetDegatStructureArme(const Vaisseau * vaisseau )
 {
+    assert(vaisseau!=NULL);
     return vaisseauGetArmeSelectionnee(vaisseau)->degatStructure;
 }
 
 int vaisseauGetMunitionsArme(const Vaisseau * vaisseau)
 {
+    assert(vaisseau!=NULL);
     return vaisseauGetArmeSelectionnee(vaisseau)->munitions;
 }
 
@@ -203,23 +198,42 @@ void vaisseauTestDeregression()
 
     printf("--------- Test de vaisseauJoueurInit ---------\n" );
     vaisseauInit(&v,VAISSEAU_JOUEUR_TYPE);
-    assert(v.pointStructure==50 && v.pointEcran==50 && v.nbArmes==1);
+    assert(v.pointStructure==JOUEUR_POINTECRAN && v.pointEcran==JOUEUR_POINTSTRUCTURE && v.nbArmes==2);
     printf("=========> Resultat : OK \n");
     printf("\n");
 
     printf("--------- Test de vaisseauGetPointStructure ---------\n");
-    assert(vaisseauGetPointStructure(&v)== 50);
+    assert(vaisseauGetPointStructure(&v)== JOUEUR_POINTSTRUCTURE);
     printf("=========> Resultat : OK \n");
     printf("\n");
 
     printf("--------- Test de vaisseauGetPointEcran ---------\n");
-    assert(vaisseauGetPointEcran(&v)== 50);
+    assert(vaisseauGetPointEcran(&v)== JOUEUR_POINTECRAN);
     printf("=========> Resultat : OK \n");
     printf("\n");
 
     printf("--------- Test de vaisseauGetNbArmes ------------ \n");
-    assert(vaisseauGetNbArmes(&v)==1);
+    assert(vaisseauGetNbArmes(&v)==2);
     printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("--------- Test de vaisseauMajMunitions et vaisseauGetMunitionsArme -------------\n");
+    vaisseauMajMunitions(&v);
+    assert(vaisseauGetMunitionsArme(&v)==ARME_LASER_MUNITIONS-1);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("------------ Test de vaisseauSetDegats ------------\n");
+    vaisseauSetDegats(&v, ARME_MISSILE);
+    assert(v.pointStructure==JOUEUR_POINTSTRUCTURE-ARME_MISSILE_DEGAT_S);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    /* Les tests de liberations sont à effecter avec valgrind de préferences */
+    printf("---------- Test de vaisseauLibere---------------\n");
+    vaisseauLibere(&v);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
 }
 
 

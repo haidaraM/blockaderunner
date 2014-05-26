@@ -17,24 +17,24 @@ void niveauInit(Niveau *niveau, int numero)
 
     niveau->numero = numero;
     niveau->imageFond = 0; /* vide */
-	tabDynInit(&niveau->composition);
+    tabDynInit(&niveau->composition);
 
     niveauChargeFichier(niveau, numero);
 }
 
 void niveauLibere(Niveau *niveau)
 {
-	int i;
-	GroupeNiveau *g;
-	assert(niveau != NULL);
+    int i;
+    GroupeNiveau *g;
+    assert(niveau != NULL);
 
-	for (i=0; i< niveau->composition.tailleUtilisee; i++)
-	{
-		g=(GroupeNiveau *)tabDynGetElement(&niveau->composition, i);
+    for (i=0; i< niveau->composition.tailleUtilisee; i++)
+    {
+        g=(GroupeNiveau *)tabDynGetElement(&niveau->composition, i);
         if ( g!= NULL)
-        	free(g);
-	}
-	tabDynLibere(&niveau->composition);
+            free(g);
+    }
+    tabDynLibere(&niveau->composition);
 }
 
 void niveauSetImageFond(Niveau *niveau, int indexImage)
@@ -48,7 +48,7 @@ void niveauChargeFichier(Niveau * niveau, int numero)
     FILE *fic;
     char nomFichier[128], typeGroupe[32];
     int valRet=0;
-	GroupeNiveau *groupe;
+    GroupeNiveau *groupe;
 
     assert(niveau!=NULL);
     assert(numero>=0 && numero < RESS_NUM_NIVEAUX);
@@ -69,23 +69,23 @@ void niveauChargeFichier(Niveau * niveau, int numero)
         strcat(nomFichier, "niveau2");
         strcpy(niveau->description, NIVEAU_2_DESCRIPTION);
         break;
-	case 3:
+    case 3:
         strcat(nomFichier, "niveau3");
         strcpy(niveau->description, NIVEAU_3_DESCRIPTION);
         break;
-	case 4:
+    case 4:
         strcat(nomFichier, "niveau4");
         strcpy(niveau->description, NIVEAU_4_DESCRIPTION);
         break;
-	case 5:
+    case 5:
         strcat(nomFichier, "niveau5");
         strcpy(niveau->description, NIVEAU_5_DESCRIPTION);
         break;
-	case 6:
+    case 6:
         strcat(nomFichier, "niveau6");
         strcpy(niveau->description, NIVEAU_6_DESCRIPTION);
         break;
-	case 7:
+    case 7:
         strcat(nomFichier, "niveau7");
         strcpy(niveau->description, NIVEAU_7_DESCRIPTION);
         break;
@@ -103,47 +103,76 @@ void niveauChargeFichier(Niveau * niveau, int numero)
 
     /* Lecture de la composition du niveau : */
     while (fscanf(fic, "%s", typeGroupe) > 0)
-	{
-		groupe = (GroupeNiveau*)malloc(sizeof(GroupeNiveau));
-		assert(groupe != NULL);
+    {
+        groupe = (GroupeNiveau*)malloc(sizeof(GroupeNiveau));
+        assert(groupe != NULL);
 
-		if (strcmp(typeGroupe, "Asteroides") == 0)
-		{
-			groupe->type = NIVEAU_GROUPE_ASTEROIDES;
-			valRet = fscanf(fic, "%d %d %d", &groupe->xmin, &groupe->xmax, &groupe->nombre);
-			assert(valRet == 3);
-			tabDynAjoute(&niveau->composition, (void*) groupe);
-		}
-		if (strcmp(typeGroupe, "Eclaireurs") == 0)
-		{
-			groupe->type = NIVEAU_GROUPE_ECLAIREURS;
-			valRet = fscanf(fic, "%d %d %d", &groupe->xmin, &groupe->xmax, &groupe->nombre);
-			assert(valRet == 3);
-			tabDynAjoute(&niveau->composition, (void*) groupe);
-		}
-		if (strcmp(typeGroupe, "Chasseurs") == 0)
-		{
-			groupe->type = NIVEAU_GROUPE_CHASSEURS;
-			valRet = fscanf(fic, "%d %d %d", &groupe->xmin, &groupe->xmax, &groupe->nombre);
-			assert(valRet == 3);
-			tabDynAjoute(&niveau->composition, (void*) groupe);
-		}
-		if (strcmp(typeGroupe, "Croiseurs") == 0)
-		{
-			groupe->type = NIVEAU_GROUPE_CROISEURS;
-			valRet = fscanf(fic, "%d %d %d", &groupe->xmin, &groupe->xmax, &groupe->nombre);
-			assert(valRet == 3);
-			tabDynAjoute(&niveau->composition, (void*) groupe);
-		}
-	}
+        if (strcmp(typeGroupe, "Asteroides") == 0)
+        {
+            groupe->type = NIVEAU_GROUPE_ASTEROIDES;
+            valRet = fscanf(fic, "%d %d %d", &groupe->xmin, &groupe->xmax, &groupe->nombre);
+            assert(valRet == 3);
+            tabDynAjoute(&niveau->composition, (void*) groupe);
+        }
+        if (strcmp(typeGroupe, "Eclaireurs") == 0)
+        {
+            groupe->type = NIVEAU_GROUPE_ECLAIREURS;
+            valRet = fscanf(fic, "%d %d %d", &groupe->xmin, &groupe->xmax, &groupe->nombre);
+            assert(valRet == 3);
+            tabDynAjoute(&niveau->composition, (void*) groupe);
+        }
+        if (strcmp(typeGroupe, "Chasseurs") == 0)
+        {
+            groupe->type = NIVEAU_GROUPE_CHASSEURS;
+            valRet = fscanf(fic, "%d %d %d", &groupe->xmin, &groupe->xmax, &groupe->nombre);
+            assert(valRet == 3);
+            tabDynAjoute(&niveau->composition, (void*) groupe);
+        }
+        if (strcmp(typeGroupe, "Croiseurs") == 0)
+        {
+            groupe->type = NIVEAU_GROUPE_CROISEURS;
+            valRet = fscanf(fic, "%d %d %d", &groupe->xmin, &groupe->xmax, &groupe->nombre);
+            assert(valRet == 3);
+            tabDynAjoute(&niveau->composition, (void*) groupe);
+        }
+    }
 
     fclose(fic);
 }
 
 int niveauGetNumGroupes(const Niveau *niveau)
 {
-	assert(niveau != NULL);
-	return niveau->composition.tailleUtilisee;
+    assert(niveau != NULL);
+    return niveau->composition.tailleUtilisee;
 }
 
+
+void niveauTestDeRegression()
+{
+    Niveau  niveau;
+    printf("-----------------Test de niveauInit----------------\n");
+    niveauInit(&niveau, 7);
+    assert(niveau.numero==7);
+    assert(strcmp(niveau.description, NIVEAU_7_DESCRIPTION)==0);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("-------------- Test de niveauSetImageFond -------------\n");
+    niveauSetImageFond(&niveau, RESS_IMG_FOND_NIVEAU_7);
+    assert(niveau.imageFond==RESS_IMG_FOND_NIVEAU_7);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+    printf("--------------- Test de niveauGetNumGroupes---------------\n");
+    assert(niveauGetNumGroupes(&niveau)==4);
+    printf("=========> Resultat : OK \n");
+    printf("\n");
+
+
+       /* Les test de liberations sont à effecter avec valgrind de préferences */
+    printf("-----------------Test de niveauLibere----------------\n");
+    niveauLibere(&niveau);
+     printf("=========> Resultat : OK \n");
+    printf("\n");
+}
 

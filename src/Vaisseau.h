@@ -1,6 +1,7 @@
 /**
 * @file Vaisseau.h
 * @brief fichier d'entete du module Vaisseau qui regroupe les fonctions qui vont gerer les caractèristiques des vaisseaux
+* @author Mohamed El Mouctar HAIDARA
 */
 
 #ifndef _VAISSEAU_H
@@ -55,13 +56,13 @@
 
 /**
 * @struct Arme
-* @brief Represente l'arme du vaisseau
+* @brief Represente l'arme des vaisseaux du jeu avec differentes caracteristiques.
 */
 typedef struct
 {
     /** type de l'arme : laser, missile */
     int typeArme;
-
+    /** Degat infligé à la quantité d'ecran */
     int degatEcran;
     /** Degat infligé à la coque du vaisseau */
     int degatStructure;
@@ -76,17 +77,17 @@ typedef struct
 
 /**
 * @struct Vaisseau
-* @brief Represente le vaisseau du joueur soit de l'ennemi
+* @brief Represente les differents vaisseaux présents dans le jeu
 */
 typedef struct
 {
-    /** Type du vaisseau : 1 pour le joueur, 2 pour l'ennemi **/
+    /** Type du vaisseau : 1 pour le joueur, le reste pour les ennemi **/
     int type;
     /** Point ecran du vaisseau : quantité d'ecran anti laser, baisse avec les tirs laser. A 0, les pointStructures diminuent**/
     int pointEcran;
     /** Point structure du vaisseau : etat de la coque du vaisseau. A 0, le vaisseau est detruit*/
     int pointStructure;
-    /** Nombre d'arme du vaisseau. Une arme pour un debut **/
+    /** Nombre d'arme du vaisseau. Deux armes pour un debut **/
     int nbArmes;
     /** Tableau d'armes du vaisseau*/
     Arme *armes;
@@ -96,7 +97,7 @@ typedef struct
 
 /**
 * @fn void vaisseauJoueurInit(Vaisseau *vaisseauJ, int type)
-* @brief Initialise le vaisseau du joueur
+* @brief Initialise les differents vaisseaux avec les armes correspondants
 * @param [in, out] vaisseauJ
 * @param [in] type
 *
@@ -113,8 +114,8 @@ void vaisseauLibere(Vaisseau * vaisseau);
 /**
 * @fn void armeInit(Arme * a, int type);
 * @brief Initialise l'arme correspondant à 'type' passé en parametre
-* @param [in, out] arme
-* @param [in] type
+* @param [in, out] arme : non null
+* @param [in] type : 0<=type < au nombres d'arme du jeu
 */
 void vaisseauArmeInit(Arme *a, int type);
 
@@ -139,14 +140,6 @@ int vaisseauGetPointEcran(const Vaisseau * vaisseau);
 */
 int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 
-/**
-* @fn void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure);
-* @brief Affecte les points ecran &  les points structure du vaisseau
-* @param [in,out] vaisseau  : initialisé
-* @param [in] pEcran
-* @param [in] pStructure
-*/
-void vaisseauSetPointVie(Vaisseau * vaisseau, int pEcran, int pStructure);
 
 /**
 * @fn void vaisseauSetDegats(const Vaisseau * vaisseau, int arme);

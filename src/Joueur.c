@@ -153,6 +153,7 @@ void joueurTestDeRegression()
     printf("=========> Resultat : OK \n");
     printf("\n");
 
+     /* Les tests de liberations sont à effecter avec valgrind de préferences */
     printf("------- Test de joueurLibere ------------\n");
     joueurLibere(&j);
     assert(j.vaisseau==NULL);

@@ -289,11 +289,11 @@ Joueur** ressourceGetMeilleursJoueurs(const Ressource *res);
 void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur);
 
 /**
-* @fn void ressourceSauveJoueurs(Ressource *res)
+* @fn void ressourceSauveJoueurs(const Ressource *res)
 * @brief Sauve sur disque les données des joueurs.
 * @param [in] res : initialisé
 */
-void ressourceSauveJoueurs(Ressource *res);
+void ressourceSauveJoueurs(const Ressource *res);
 
 /**
 * @fn Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau)
@@ -323,11 +323,11 @@ int ressourceGetLargeurImage(const Ressource *res, int nomRessource);
 int ressourceGetHauteurImage(const Ressource *res, int nomRessource);
 
 /**
-* @fn void ressourceTrieJoueurs(Ressource * res)
+* @fn void ressourceTrieJoueurs(const Ressource * res)
 * @brief Classe les meilleurs joueurs par score. (Tri par selection).
 * @param [in, out] res: initialisé
 */
-void ressourceTrieJoueurs(Ressource * res);
+void ressourceTrieJoueurs(const Ressource * res);
 
 /**
 * @brief Test de regression du module Ressource

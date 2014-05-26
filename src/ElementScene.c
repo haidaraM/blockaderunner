@@ -163,6 +163,9 @@ void elementSceneTestDeRegression()
     elementSetPosition(&eS, 40, 50);
     assert(eS.x==40 && eS.y==50);
     printf("===========> Resultat : OK! \n");
+
+
+
     printf("\n");
 
     printf("--------- Test de elementLibere---------------\n");

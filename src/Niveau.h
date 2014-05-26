@@ -97,5 +97,11 @@ void niveauChargeFichier(Niveau * niveau, int numero);
 */
 int niveauGetNumGroupes(const Niveau * niveau);
 
+/**
+* @fn void niveauTestDeRegression()
+* @brief Test de regression du module Niveau
+*/
+void niveauTestDeRegression();
+
 #endif
 

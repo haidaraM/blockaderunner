@@ -239,7 +239,7 @@ void creeNiveaux(Ressource *res)
     assert( res->niveaux != NULL);
 
     for (i=0; i< RESS_NUM_NIVEAUX; i++)
-    {	
+    {
 		#ifdef JEU_VERBOSE
         printf("Creation niveau %d\n", i);
 		#endif
@@ -378,7 +378,7 @@ void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1],
     }
 }
 
-void ressourceSauveJoueurs(Ressource *res)
+void ressourceSauveJoueurs(const Ressource *res)
 {
     FILE *fic;
 
@@ -421,7 +421,7 @@ void ressourceSauveJoueurs(Ressource *res)
     fclose(fic);
 }
 
-void ressourceTrieJoueurs(Ressource * res)
+void ressourceTrieJoueurs(const Ressource * res)
 {
     int i, j, count, fini, indmax, nbJoueurs;
     Joueur ** joueurs = NULL, *joueurMax;
@@ -537,7 +537,7 @@ void ressourceTestDeRegression()
     printf("=========> Resultat : OK \n");
     printf("\n");
 
-
+/* Les test de liberations sont à effecter avec valgrind de préferences */
     printf("--------------Test de ressourceLibere-----------\n");
     ressourceLibere(&res);
     assert(res.joueurs==NULL);
