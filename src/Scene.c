@@ -835,6 +835,7 @@ int sceneJoueurDeclencheTir(Scene * scene)
 {
     int valret=-1;
     ElementScene * tir=NULL;
+    /* On regarde s'il lui reste des munitions */
     if(vaisseauGetMunitionsArme(scene->joueur->vaisseau) > 0)
     {
         /* mise à jours des munitions */
@@ -864,7 +865,7 @@ int sceneJoueurDeclencheTir(Scene * scene)
     return valret;
 }
 
-int sceneGetMunitionMissileJoueur(Scene *scene)
+int sceneGetMunitionMissileJoueur(const Scene *scene)
 {
     int mun = scene->joueur->vaisseau->armes[ARME_MISSILE].munitions;
     if (mun < 0)

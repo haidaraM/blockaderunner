@@ -17,7 +17,7 @@
 #define SCENE_BONUS_SCORE					3200		/* nombre de points de score ajoutés si le joueur acquiere un Bonus de score */
 #define SCENE_BONUS_MISSILE					4			/* nombre de missiles que le joueur acquière lorsqu'il touche un Bonus missile */
 #define SCENE_PROBA_BONUS_SCORE_ECLAIREUR 	10			/* note: pourcentages */
-#define SCENE_PROBA_BONUS_SCORE_CHASSEUR	25			
+#define SCENE_PROBA_BONUS_SCORE_CHASSEUR	25
 #define SCENE_PROBA_BONUS_SCORE_CROISEUR	70
 #define SCENE_PROBA_BONUS_MISSILE_CROISEUR  40
 
@@ -121,7 +121,7 @@ void sceneLibere(Scene *scene);
 /**
 * @fn void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res)
 * @brief Charge un Niveau du Jeu.
-* @param [in, out] scene
+* @param [in, out] scene : initialisé
 * @param [in] niveau
 * @param [in] res
 */
@@ -130,7 +130,7 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res);
 /**
 * @fn void sceneResetHorloge(Scene *scene, float horloge)
 * @brief Initialise l'horloge de la scene.
-* @param [in, out] scene
+* @param [in, out] scene : initialisé
 * @param [in] horloge
 */
 void sceneResetHorloge(Scene *scene, float horloge);
@@ -138,7 +138,7 @@ void sceneResetHorloge(Scene *scene, float horloge);
 /**
 * @fn void sceneDefileScene(Scene *scene)
 * @brief Fait defiler le fond d'ecran.
-* @param [in, out] scene
+* @param [in, out] scene : initialisé
 * @return Renvoie 1 si on arrive à la fin de la scene, 0 sinon
 */
 int sceneDefileScene(Scene *scene);
@@ -146,35 +146,35 @@ int sceneDefileScene(Scene *scene);
 /**
 * @fn int sceneGetNbActeurs(const Scene * scene)
 * @brief renvoie le nombre d'acteurs sur la scene
-* @param [in] scene
+* @param [in] scene : initialisé
 */
 int sceneGetNbActeurs(const Scene * scene);
 
 /**
 * @fn int sceneGetNbTirs(const Scene * scene)
 * @brief renvoie le nombre de tirs actifs.
-* @param [in] scene
+* @param [in] scene : initialisé
 */
 int sceneGetNbTirs(const Scene * scene);
 
 /**
 * @fn int sceneGetNbBonus(const Scene * scene)
 * @brief renvoie le nombre de bonus capturables.
-* @param [in] scene
+* @param [in] scene : initialisé
 */
 int sceneGetNbBonus(const Scene * scene);
 
 /**
 * @fn int sceneGetNbDecors(const Scene * scene)
 * @brief renvoie le nombre d'éléments de décor.
-* @param [in] scene
+* @param [in] scene : initialisé
 */
 int sceneGetNbDecors(const Scene * scene);
 
 /**
 * @fn void sceneAnime(Scene *scene, float tempsSecondes)
 * @brief Permet de passer le temps écoulé à la scène : fait évoluer les animations et les supprime s'il sortent de l'ecran.
-* @param [in, out] scene
+* @param [in, out] scene : initialisé
 * @param [in] tempsSecondes
 */
 void sceneAnime(Scene *scene, float tempsSecondes);
@@ -190,7 +190,7 @@ ElementScene* sceneCreerElementScene(const Scene *scene, int type);
 
 /**
 * @fn void sceneDetruitElement(ElementScene *element)
-* @brief Detruit complement un element : le libere et le met à null
+* @brief Detruit complement un element : le libere et le met à null. Doit etre appelé sur un element crée par la scene
 * @param [in, out] element : initialisé
 */
 void sceneDetruitElement(ElementScene *element);
@@ -243,11 +243,11 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 int sceneJoueurDeclencheTir(Scene * scene);
 
 /**
-* @fn int sceneGetMunitionMissileJoueur(Scene *scene)
+* @fn int sceneGetMunitionMissileJoueur(const Scene *scene)
 * @brief Renvoie le nombre de missiles restant au joueur.
-* @param [in, out] scene
+* @param [in] scene : initialisé
 */
-int sceneGetMunitionMissileJoueur(Scene *scene);
+int sceneGetMunitionMissileJoueur(const Scene *scene);
 
 /**
 * @fn void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
@@ -266,9 +266,9 @@ void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant)
 void sceneTestDeCollision(Scene *scene);
 
 /**
-* @fn int sceneTestVaisseauMort(const Scene * scene)
+* @fn int sceneTestVaisseauMort( Scene * scene)
 * @brief Test si le joueur est mort ou pas
-* @param [in] initialisé
+* @param [in,out] initialisé
 * @return Renvoie 1 si le joueur est mort, 0 sinon
 */
 int sceneTestVaisseauMort(Scene * scene);

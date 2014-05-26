@@ -1,7 +1,7 @@
 /**
 * @file Menu.h
 * @brief Le module Menu gère l'introduction au jeu et le menu principal.
-* @author Yann Cortial - Mohamed El Mouctar HAIDARA
+* @author Yann Cortial
 *
 */
 #ifndef _MENU_H

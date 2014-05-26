@@ -97,6 +97,11 @@ void tabDynSupprimeElement(TabDyn *t, int index)
     t->tailleUtilisee--;
 }
 
+void tabDynTestDeRegression()
+{
+
+}
+
 
 
 

@@ -169,6 +169,7 @@ FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index)
     FMOD_RESULT resultat;
     /* On verifie que l'index est bien correcte */
     assert(0<=index && index < RESS_NUM_SONS_COURTS + RESS_NUM_SONS_LONGS);
+    /* on recupere le canal */
     resultat=FMOD_System_GetChannel(audio->system, index, &channel);
     audioVerifieErreur(resultat);
     return channel;

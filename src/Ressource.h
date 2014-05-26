@@ -330,6 +330,7 @@ int ressourceGetHauteurImage(const Ressource *res, int nomRessource);
 void ressourceTrieJoueurs(const Ressource * res);
 
 /**
+* @fn ressourceTestDeRegression();
 * @brief Test de regression du module Ressource
 */
 void ressourceTestDeRegression();

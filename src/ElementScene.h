@@ -70,12 +70,12 @@ typedef struct
 * @fn void elementInit(ElementScene *element, int type, int indexImage, int largeur, int hauteur, int largeurEcran, int hauteurEcran);
 * @brief Initialise un element.
 * @param [in, out] element : l'element à initialiser, doit être non null.
-* @param type : type d'entité
-* @param indexImage : image associée au element (fournie par Ressource).
-* @param largeur : largeur du element.
-* @param hauteur : hauteur du element.
-* @param largeurEcran : largeur de l'ecran (portion visible de la scène).
-* @param hauteurEcran : hauteur de l'ecran (portion visible de la scène).
+* @param [in] type : type d'entité
+* @param [in] indexImage : image associée au element (fournie par Ressource).
+* @param [in] largeur : largeur du element.
+* @param [in] hauteur : hauteur du element.
+* @param [in] largeurEcran : largeur de l'ecran (portion visible de la scène).
+* @param [in] hauteurEcran : hauteur de l'ecran (portion visible de la scène).
 */
 void elementInit(ElementScene *element, int type, int indexImage, int largeur, int hauteur, int largeurEcran, int hauteurEcran);
 
