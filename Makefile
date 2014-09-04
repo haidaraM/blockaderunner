@@ -10,7 +10,6 @@ OS				= LINUX
 DEFINE 			= -D$(OS) -D$(VERBOSE) -D$(MODE_JEU)
 
 
-
 OBJ		 		= obj
 SRC		 		= src
 BIN		 		= bin
