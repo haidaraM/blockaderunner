@@ -6,7 +6,7 @@
 #ifndef _ENTREE_SDL_H
 #define _ENTREE_SDL_H
 
-#include "SDL/SDL.h"
+#include <SDL/SDL.h>
 
 /**
 * @struct EntreeSDL
