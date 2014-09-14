@@ -1,9 +1,9 @@
-/bin/
-/obj/
-/.*~$
-^.*~$
-/doc/html/
-/data/
+syntax: glob
+bin/
+obj/
+*~
+doc/
+data/
 
 
 
