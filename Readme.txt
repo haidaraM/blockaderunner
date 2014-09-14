@@ -43,13 +43,14 @@ Introduction
 	- FMOD :
 
 		Il faudra télécharger la librairie FMOD disponible sur : http://www.fmod.org/download/. 
-		Plus précisement la version FMOD Ex Programmer's API. 
+		Plus précisement la version FMOD Ex Programmer's API ou éventuellement vous le trouverez dans une archive que
+		je vous fournirai.
 		 -	Dans l'archive téléchargé, copiez le dossier api (en le rennomant en "lib") dans le dossier du projet.
 			Ce repertoire contient les fichiers nécessaires au bon fonctionnement de la librairie. 
 	 	 -	Ensuite il faudra copier  le fichier ./lib/lib/libfmodex64-4.44.33.so (le numero peut varier selon 
 	 	 	votre version) dans le repertoire /usr/lib/ en le rennomant en libfmodex64.so.
 	 		Ce n'est pas la meilleure façon de faire mais ça marche quand même sur un pc 64bits. 
-	 		 Si ces manips ne fonctionnent pas : http://sindev.blogspot.fr/2009/02/how-to-installer-la-fmod-ex-sur-linux.html
+	 		Si ces manips ne fonctionnent pas : http://sindev.blogspot.fr/2009/02/how-to-installer-la-fmod-ex-sur-linux.html
 	 
 	 - SDL 1.2 :
 		
