@@ -694,7 +694,8 @@ void sceneTestDeCollision(Scene *scene)
 
 void scenePause(Scene * scene)
 {
-
+    /* On suppose qu'il n'ya pas de temps qui s'est écoulé. Donc sur la scene il n'y aura pas d'animations */
+    sceneAnime(scene, 0.0);
 }
 
 int sceneGetNbActeurs(const Scene * scene)

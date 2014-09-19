@@ -173,7 +173,7 @@ int sceneGetNbDecors(const Scene * scene);
 
 /**
 * @fn void sceneAnime(Scene *scene, float tempsSecondes)
-* @brief Permet de passer le temps écoulé à la scène : fait évoluer les animations et les supprime s'il sortent de l'ecran.
+* @brief Permet de passer le temps écoulé à la scène : fait évoluer les animations et les supprime si elles sortent de l'ecran.
 * @param [in, out] scene : initialisé
 * @param [in] tempsSecondes
 */
@@ -181,7 +181,7 @@ void sceneAnime(Scene *scene, float tempsSecondes);
 
 /**
 * @fn void scenePause (Scene * scene)
-* @brief Permet de mettre le jeu en pause
+* @brief Permet de mettre le jeu en pause quand le joueur appuyera sur la touche adequate
 * @param [in, out] scene
 */
 void scenePause(Scene * scene);

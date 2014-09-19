@@ -18,10 +18,11 @@
 
 
 
-#define JEU_ETAT_MENU 				0
-#define JEU_ETAT_CHARGEMENT_NIVEAU	1
-#define JEU_ETAT_JEU				2
-#define JEU_RETOUR_MENU				3
+#define JEU_ETAT_MENU_PRINCIPAL 		0
+#define JEU_ETAT_CHARGEMENT_NIVEAU  	1
+#define JEU_ETAT_JEU				    2
+#define JEU_RETOUR_MENU_PRINCIPAL	    3
+#define JEU_ETAT_PAUSE                  4
 
 
 

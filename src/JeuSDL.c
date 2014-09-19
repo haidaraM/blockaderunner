@@ -47,7 +47,7 @@ void jeuInit(JeuSDL *jeu)
     entreeInit(&jeu->entree);
 
 
-    jeu->etatCourantJeu 	= JEU_ETAT_MENU;
+    jeu->etatCourantJeu 	= JEU_ETAT_MENU_PRINCIPAL;
     jeu->joueur 			= NULL;
 
 	#ifdef JEU_VERBOSE
@@ -101,144 +101,9 @@ void jeuBoucle(JeuSDL *jeu)
         switch( jeu->etatCourantJeu )
         {
 
-        case JEU_RETOUR_MENU:
 
-            sceneLibere( &jeu->scene );
-            free(copieJoueur);
-            jeu->etatCourantJeu 	= JEU_ETAT_MENU;
-            menuPrincipal((void*)menu);
-            /* on arrete le son de la scene */
-            audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
-            break;
-
-        case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
-
-            /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
-            if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
-            {
-                /* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran de sorte que les incréments soient suffisament significatifs en pixels). */
-                sceneAnime(&jeu->scene, getTempsSecondes());
-
-                graphiqueEfface( graphique );
-                /*
-                */
-                graphiqueAfficheScene( graphique, &jeu->scene );
-                /*
-                */
-                graphiqueRaffraichit( graphique );
-
-                tempsDernierAffichage 	= getTempsSecondes();
-
-                audioJoueScene(&jeu->audio, &jeu->scene);
-            }
-
-            /* L'utilisateur a appuyé sur ESC */
-            if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
-                toucheDetectee = SDLK_ESCAPE;
-            /* L'utilisateur vient de relâcher la touche ESC */
-            if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE)
-            {
-                /*continueJeu	 		= 0;*/
-                jeu->etatCourantJeu 	= JEU_RETOUR_MENU;
-                audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
-                toucheDetectee=-1;
-            }
-
-            /* Deplacemennt du joueur */
-            if (entreeToucheEnfoncee(entree, SDLK_UP) == 1)
-                sceneDeplaceVaisseauJoueurHaut( &jeu->scene, dureeBoucle );
-            if (entreeToucheEnfoncee(entree, SDLK_DOWN) == 1)
-                sceneDeplaceVaisseauJoueurBas( &jeu->scene, dureeBoucle );
-            if (entreeToucheEnfoncee(entree, SDLK_RIGHT)==1)
-                sceneDeplaceVaisseauJoueurDroite(&jeu->scene, dureeBoucle);
-            if (entreeToucheEnfoncee(entree, SDLK_LEFT)==1)
-                sceneDeplaceVaisseauJoueurGauche(&jeu->scene, dureeBoucle);
-
-            /* Declenchement des tirs */
-            if (entreeToucheEnfoncee(entree, SDLK_SPACE)==1)
-                toucheDetectee= SDLK_SPACE;
-            if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
-            {
-                sonTir=sceneJoueurDeclencheTir(&jeu->scene);
-                /* Je voulais faire pareil avec les tirs ennemis mais ça ne marche pas d'abord*/
-                switch(sonTir)
-                {
-                case 0:
-                    audioJoueSon(&jeu->audio, RESS_SON_TIR_LASER);
-                    break;
-                case 1:
-                    audioJoueSon(&jeu->audio, RESS_SON_MISSILE);
-                    break;
-                default :
-                    audioJoueSon(&jeu->audio, RESS_SON_ERREUR);
-                    break;
-                }
-
-                toucheDetectee=-1;
-            }
-
-            /* Choix de l'arme */
-            /* Laser */
-            if (entreeToucheEnfoncee(entree, SDLK_F5)==1)
-                toucheDetectee= SDLK_F5;
-            if(entreeToucheEnfoncee(entree, SDLK_F5)==0 && toucheDetectee == SDLK_F5)
-            {
-                joueurSetArmeSelectionne(copieJoueur, ARME_LASER);
-                audioJoueSon(&jeu->audio, RESS_SON_CHANGE_ARME);
-                toucheDetectee=-1;
-            }
-            /* Missile */
-            if (entreeToucheEnfoncee(entree, SDLK_F6)==1)
-                toucheDetectee= SDLK_F6;
-            if(entreeToucheEnfoncee(entree, SDLK_F6)==0 && toucheDetectee == SDLK_F6)
-            {
-                joueurSetArmeSelectionne(copieJoueur, ARME_MISSILE);
-                audioJoueSon(&jeu->audio, RESS_SON_CHANGE_ARME);
-                toucheDetectee=-1;
-            }
-
-            /* Si le joueur a gagné un bonus missile OU tiré un missile ==> mettre a jour l'affichage des munitions dans graphique */
-            if (jeu->scene.evenements.joueur_bonus_missile == 1  ||  jeu->scene.evenements.joueur_tir_missile == 1)
-                graphiqueSetMunitions(graphique, sceneGetMunitionMissileJoueur(&jeu->scene));
-
-            /* Défilement de l'image de fond. */
-            if ( (getTempsSecondes() - tempsDernierDefilementScene) >= periodeDefilementScene)
-            {
-                if(sceneDefileScene(&jeu->scene))
-                {
-                    /* si  on arrive à la fin du niveau, on retourne au menu */
-                    jeu->etatCourantJeu = JEU_RETOUR_MENU;
-                    /* Eventuellement (si le joueur joue son niveau max) : on met à jour la progression du  joueur & on sauve sur disque la progression du joueur */
-                    if(jeu->niveauCourant==joueurGetProgression(jeu->joueur))
-                    {
-                        joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));/* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder (plus un Bonus). */
-                        joueurSetProgression(jeu->joueur);/* on avance la progression du joueur (acces au niveau suivant débloqué)*/
-                        ressourceSauveJoueurs(&jeu->ressource);
-                    }
-                    /* on joue un son */
-                    audioJoueSon(&jeu->audio, RESS_SON_FIN_NIVEAU);
-                    /* on affiche le texte de fin de niveau */
-					if(jeu->niveauCourant < RESS_NUM_NIVEAUX -1)
-	                     graphiqueAfficheFinNiveau(graphique);
-					else graphiqueAfficheVictoire(graphique);
-                }
-                tempsDernierDefilementScene = getTempsSecondes();
-            }
-
-
-            if(sceneTestVaisseauMort(&jeu->scene))
-            {
-                /* arret du son de la scene */
-                audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
-                audioJoueSon(&jeu->audio, RESS_SON_MORT);
-                graphiqueAfficheMort(graphique);
-                jeu->etatCourantJeu=JEU_RETOUR_MENU;
-            }
-
-            break;
-
-
-        case JEU_ETAT_MENU:			/*-------------   M E N U   ---------------*/
+        /*-------------   M E N U   ---------------*/
+        case JEU_ETAT_MENU_PRINCIPAL:
 
             /* on joue le son du menu */
             audioJoueSon(&jeu->audio, RESS_SON_MENU);
@@ -359,8 +224,18 @@ void jeuBoucle(JeuSDL *jeu)
 
             break;
 
+        /* ----------------RETOUR MENU : quand le joueur appuie sur echap durant la partie ------------------ */
+        case JEU_RETOUR_MENU_PRINCIPAL:
+            sceneLibere( &jeu->scene );
+            free(copieJoueur);
+            jeu->etatCourantJeu 	= JEU_ETAT_MENU_PRINCIPAL;
+            menuPrincipal((void*)menu);
+            /* on arrete le son de la scene */
+            audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
+            break;
 
-        case JEU_ETAT_CHARGEMENT_NIVEAU :	/*--------------	CHARGEMENT D'UN NIVEAU 	-------------------*/
+        /*--------------	CHARGEMENT D'UN NIVEAU 	-------------------*/
+        case JEU_ETAT_CHARGEMENT_NIVEAU :
 
             if (jeu->chargementOK == 0)
             {
@@ -393,6 +268,150 @@ void jeuBoucle(JeuSDL *jeu)
             audioStopSon(&jeu->audio, RESS_SON_MENU);
             audioJoueSon(&jeu->audio, RESS_SON_AMBIENCE);
             break;
+
+
+        case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
+
+            /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
+            if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
+            {
+                /* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran de sorte que les incréments soient suffisament significatifs en pixels). */
+                sceneAnime(&jeu->scene, getTempsSecondes());
+
+                graphiqueEfface( graphique );
+                /*
+                */
+                graphiqueAfficheScene( graphique, &jeu->scene );
+                /*
+                */
+                graphiqueRaffraichit( graphique );
+
+                tempsDernierAffichage 	= getTempsSecondes();
+
+                audioJoueScene(&jeu->audio, &jeu->scene);
+            }
+
+            /* ----------- Partie pour le retour menu principal ------------------- */
+            /* L'utilisateur a appuyé sur ESC */
+            if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
+                toucheDetectee = SDLK_ESCAPE;
+            /* L'utilisateur vient de relâcher la touche ESC */
+            if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE)
+            {
+                jeu->etatCourantJeu 	= JEU_RETOUR_MENU_PRINCIPAL;
+                audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
+                toucheDetectee=-1;
+            }
+
+            /* ----------- Partie pour le retour menu principal ------------------- */
+            /* L'utilisateur a appuyé sur ESC */
+            if (entreeToucheEnfoncee(entree, SDLK_p)==1)
+                toucheDetectee = SDLK_p;
+            /* L'utilisateur vient de relâcher la touche ESC */
+            if (entreeToucheEnfoncee(entree, SDLK_p)==0 && toucheDetectee == SDLK_p)
+            {
+                jeu->etatCourantJeu 	= JEU_ETAT_PAUSE;
+                audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
+                toucheDetectee=-1;
+            }
+
+            /* Deplacemennt du joueur */
+            if (entreeToucheEnfoncee(entree, SDLK_UP) == 1)
+                sceneDeplaceVaisseauJoueurHaut( &jeu->scene, dureeBoucle );
+            if (entreeToucheEnfoncee(entree, SDLK_DOWN) == 1)
+                sceneDeplaceVaisseauJoueurBas( &jeu->scene, dureeBoucle );
+            if (entreeToucheEnfoncee(entree, SDLK_RIGHT)==1)
+                sceneDeplaceVaisseauJoueurDroite(&jeu->scene, dureeBoucle);
+            if (entreeToucheEnfoncee(entree, SDLK_LEFT)==1)
+                sceneDeplaceVaisseauJoueurGauche(&jeu->scene, dureeBoucle);
+
+            /* Declenchement des tirs */
+            if (entreeToucheEnfoncee(entree, SDLK_SPACE)==1)
+                toucheDetectee= SDLK_SPACE;
+            if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
+            {
+                sonTir=sceneJoueurDeclencheTir(&jeu->scene);
+                /* Je voulais faire pareil avec les tirs ennemis mais ça ne marche pas d'abord*/
+                switch(sonTir)
+                {
+                case 0:
+                    audioJoueSon(&jeu->audio, RESS_SON_TIR_LASER);
+                    break;
+                case 1:
+                    audioJoueSon(&jeu->audio, RESS_SON_MISSILE);
+                    break;
+                default :
+                    audioJoueSon(&jeu->audio, RESS_SON_ERREUR);
+                    break;
+                }
+
+                toucheDetectee=-1;
+            }
+
+            /* Choix de l'arme */
+            /* Laser */
+            if (entreeToucheEnfoncee(entree, SDLK_F5)==1)
+                toucheDetectee= SDLK_F5;
+            if(entreeToucheEnfoncee(entree, SDLK_F5)==0 && toucheDetectee == SDLK_F5)
+            {
+                joueurSetArmeSelectionne(copieJoueur, ARME_LASER);
+                audioJoueSon(&jeu->audio, RESS_SON_CHANGE_ARME);
+                toucheDetectee=-1;
+            }
+            /* Missile */
+            if (entreeToucheEnfoncee(entree, SDLK_F6)==1)
+                toucheDetectee= SDLK_F6;
+            if(entreeToucheEnfoncee(entree, SDLK_F6)==0 && toucheDetectee == SDLK_F6)
+            {
+                joueurSetArmeSelectionne(copieJoueur, ARME_MISSILE);
+                audioJoueSon(&jeu->audio, RESS_SON_CHANGE_ARME);
+                toucheDetectee=-1;
+            }
+
+            /* Si le joueur a gagné un bonus missile OU tiré un missile ==> mettre a jour l'affichage des munitions dans graphique */
+            if (jeu->scene.evenements.joueur_bonus_missile == 1  ||  jeu->scene.evenements.joueur_tir_missile == 1)
+                graphiqueSetMunitions(graphique, sceneGetMunitionMissileJoueur(&jeu->scene));
+
+            /* Défilement de l'image de fond. */
+            if ( (getTempsSecondes() - tempsDernierDefilementScene) >= periodeDefilementScene)
+            {
+                if(sceneDefileScene(&jeu->scene))
+                {
+                    /* si  on arrive à la fin du niveau, on retourne au menu */
+                    jeu->etatCourantJeu = JEU_RETOUR_MENU_PRINCIPAL;
+                    /* Eventuellement (si le joueur joue son niveau max) : on met à jour la progression du  joueur & on sauve sur disque la progression du joueur */
+                    if(jeu->niveauCourant==joueurGetProgression(jeu->joueur))
+                    {
+                        joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));/* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder (plus un Bonus). */
+                        joueurSetProgression(jeu->joueur);/* on avance la progression du joueur (acces au niveau suivant débloqué)*/
+                        ressourceSauveJoueurs(&jeu->ressource);
+                    }
+                    /* on joue un son */
+                    audioJoueSon(&jeu->audio, RESS_SON_FIN_NIVEAU);
+                    /* on affiche le texte de fin de niveau */
+					if(jeu->niveauCourant < RESS_NUM_NIVEAUX -1)
+	                     graphiqueAfficheFinNiveau(graphique);
+					else graphiqueAfficheVictoire(graphique);
+                }
+                tempsDernierDefilementScene = getTempsSecondes();
+            }
+
+
+            if(sceneTestVaisseauMort(&jeu->scene))
+            {
+                /* arret du son de la scene */
+                audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
+                audioJoueSon(&jeu->audio, RESS_SON_MORT);
+                graphiqueAfficheMort(graphique);
+                jeu->etatCourantJeu=JEU_RETOUR_MENU_PRINCIPAL;
+            }
+            break;
+
+        /* -------------------- PAUSE --------------------- */
+        case JEU_ETAT_PAUSE :
+                audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
+                scenePause(&jeu->scene);
+                break;
 
         default:
             break;
