@@ -180,6 +180,13 @@ int sceneGetNbDecors(const Scene * scene);
 void sceneAnime(Scene *scene, float tempsSecondes);
 
 /**
+* @fn void scenePause (Scene * scene)
+* @brief Permet de mettre le jeu en pause
+* @param [in, out] scene
+*/
+void scenePause(Scene * scene);
+
+/**
 * @fn ElementScene* sceneCreerElementScene(const Scene *scene, int type)
 * @brief Cree un element et l'initialise
 * @param [in] scene

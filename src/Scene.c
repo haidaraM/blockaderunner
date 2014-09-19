@@ -692,6 +692,11 @@ void sceneTestDeCollision(Scene *scene)
 
 }
 
+void scenePause(Scene * scene)
+{
+
+}
+
 int sceneGetNbActeurs(const Scene * scene)
 {
     assert(scene!=NULL);
