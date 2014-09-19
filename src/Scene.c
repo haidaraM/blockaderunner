@@ -114,7 +114,7 @@ void sceneLibere(Scene *scene)
 
 
 
-void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res )
+void sceneChargeNiveau(Scene *scene, Niveau *niveau )
 {
     int i, j, numGroupes;
     GroupeNiveau *groupe;
@@ -779,7 +779,7 @@ ElementScene* sceneCreerElementScene(const Scene *scene, int type)
 void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 {
     ElementScene *vaiss			=scene->elementVaisseauJoueur;
-    float vitesseDeplacement 	= 768.0f/0.88f;
+    float vitesseDeplacement 	= 768.0f/0.5f;
     int dy						= -(int)(tempsSecondes * vitesseDeplacement);
     int y 						= elementGetY( vaiss );
 
@@ -793,7 +793,7 @@ void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 {
     ElementScene *vaiss			= scene->elementVaisseauJoueur;
-    float vitesseDeplacement 	= 768.0f/0.88f;
+    float vitesseDeplacement 	= 768.0f/0.5f;
     int dy						= (int)(tempsSecondes * vitesseDeplacement);
     int y 						= elementGetY( vaiss );
 
@@ -807,7 +807,7 @@ void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
 void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 {
     ElementScene *vaiss			= scene->elementVaisseauJoueur;
-    float vitesseDeplacement 	= 768.0f/3.0f;
+    float vitesseDeplacement 	= 768.0f/1.5f;
     int dx						= (int)(tempsSecondes * vitesseDeplacement);
     int x                       = elementGetX(vaiss);
 
@@ -820,7 +820,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
 void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
 {
     ElementScene *vaiss			=scene->elementVaisseauJoueur;
-    float vitesseDeplacement 	= 768.0f/3.0f;
+    float vitesseDeplacement 	= 768.0f/1.5f;
     int dx						= -(int)(tempsSecondes * vitesseDeplacement);
     int x                       = elementGetX(vaiss);
 

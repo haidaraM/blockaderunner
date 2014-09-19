@@ -37,6 +37,7 @@
 /**
 * @struct EvenementScene
 * @brief Structure qui représente les évènements survenants sur la scène.
+* Utile pour jouer les sons
 */
 typedef struct
 {
@@ -119,13 +120,12 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
 void sceneLibere(Scene *scene);
 
 /**
-* @fn void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res)
+* @fn void sceneChargeNiveau(Scene *scene, Niveau *niveau)
 * @brief Charge un Niveau du Jeu.
 * @param [in, out] scene : initialisé
-* @param [in] niveau
-* @param [in] res
+* @param [in] niveau : initialisé
 */
-void sceneChargeNiveau(Scene *scene, Niveau *niveau, const Ressource *res);
+void sceneChargeNiveau(Scene *scene, Niveau *niveau);
 
 /**
 * @fn void sceneResetHorloge(Scene *scene, float horloge)

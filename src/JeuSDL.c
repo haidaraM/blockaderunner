@@ -271,8 +271,8 @@ void jeuBoucle(JeuSDL *jeu)
                             choixMenu = i;
                         }
 						/* Sinon (ie.le bouton souris n'est plus enfoncé)  ... */
-                        else if (choixMenu == i) 						/* ... ici le joueur vient de relacher le souris (donc a cliqué) sur l'élément */ 
-                        {	
+                        else if (choixMenu == i) 						/* ... ici le joueur vient de relacher le souris (donc a cliqué) sur l'élément */
+                        {
                             if (menu->etat == MENU_ETAT_CHOIX_JOUEUR)
                             {
                                 menuSelectionneJoueur(menu, i);
@@ -369,9 +369,9 @@ void jeuBoucle(JeuSDL *jeu)
                 /* Initialisation de la scène avec une copie du Joueur courant */
                 copieJoueur=joueurCopieJoueur(jeu->joueur);
                 sceneInit(&jeu->scene, &jeu->ressource, copieJoueur, jeu->graphique.largeur, jeu->graphique.hauteur);
-		
+
 				/* Chargement du niveau */
-                sceneChargeNiveau(&jeu->scene, &niveau, &jeu->ressource);
+                sceneChargeNiveau(&jeu->scene, &niveau);
 
                 graphiqueSetMunitions(graphique, sceneGetMunitionMissileJoueur(&jeu->scene));
 
