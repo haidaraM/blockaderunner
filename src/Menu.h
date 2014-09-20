@@ -37,7 +37,7 @@
 #define MENU_ZONE_HAUTEUR					678
 
 
-#define MENU_NUM_BASIC_ELEMENTS				(10 + RESS_NUM_NIVEAUX)
+#define MENU_NUM_BASIC_ELEMENTS				(12 + RESS_NUM_NIVEAUX)
 #define MENU_NUM_ELEMENTS					(MENU_NUM_BASIC_ELEMENTS + RESS_SAU_MAX_JOUEURS)
 
 #define MENU_RETOUR							0
@@ -50,7 +50,9 @@
 #define MENU_JOUER							7
 #define MENU_SCORE							8
 #define MENU_QUITTER						9
-#define MENU_NIVEAU							10
+#define MENU_REPRENDRE                      10
+#define MENU_REJOUER                        11
+#define MENU_NIVEAU							12
 
 #define MENU_TXT_JOUEUR_VIDE 				"___"
 #define MENU_TXT_JOUEURS					"Joueurs"
@@ -64,6 +66,8 @@
 #define MENU_TXT_RETOUR						"<<"
 #define MENU_TXT_QUITTER					"Quitter"
 #define MENU_TXT_NIVEAU						"Niveau "
+#define MENU_TXT_REPRENDRE                  "Reprendre"
+#define MENU_TXT_REJOUER                    "Rejouer"
 
 
 

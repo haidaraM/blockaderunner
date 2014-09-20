@@ -575,6 +575,18 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
         offset.x=MENU_ZONE_X;
         offset.y=MENU_ZONE_Y;
         SDL_BlitSurface(graphique->images[RESS_IMG_MENU_PAUSE], NULL, graphique->surface, &offset);
+
+          for (i=0; i< MENU_NUM_ELEMENTS; i++)
+        {
+            if (menu->elements[i].visible == 1)
+            {
+                offset.x = menu->elements[i].rect.x;
+                offset.y = menu->elements[i].rect.y;
+                if (menu->elements[i].surligne == 0)
+                    SDL_BlitSurface( graphique->textesMenu[2*i], NULL, graphique->surface, &offset);
+                else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
+            }
+        }
         break;
 
     default:

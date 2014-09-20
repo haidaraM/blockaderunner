@@ -174,6 +174,22 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->elements[index].rect.y				= MENU_ZONE_Y + MENU_ZONE_HAUTEUR - 2*MENU_PADDING_VERT;
 	menu->elements[index].action				= menuQuitter;
 
+	index = MENU_REPRENDRE;
+	menu->elements[index].texte                 = MENU_TXT_REPRENDRE;
+	menu->elements[index].visible 				= 0;
+	menu->elements[index].actionable 			= 1;
+	menu->elements[index].surligne	 			= 0;
+	menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
+	menu->elements[index].rect.y				= MENU_ZONE_Y + MENU_PADDING_VERT;
+
+	index = MENU_REJOUER;
+	menu->elements[index].texte                 = MENU_TXT_REJOUER;
+	menu->elements[index].visible 				= 0;
+	menu->elements[index].actionable 			= 1;
+	menu->elements[index].surligne	 			= 0;
+	menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
+	menu->elements[index].rect.y				= MENU_ZONE_Y + 9*MENU_PADDING_VERT;
+
 	/* les 8 niveaux */
 	for (i=MENU_NIVEAU; i< MENU_NUM_BASIC_ELEMENTS; i++)
 	{
@@ -385,6 +401,7 @@ void menuJouer(void *m)
 	Menu *menu = (Menu*)m;
 	assert(menu != NULL);
 
+    /* Reinitialisation des elements visibles a 0 */
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
 		menu->elements[i].visible = 0;
 
@@ -401,6 +418,20 @@ void menuPause(void *m)
 {
     int i;
     Menu *menu=(Menu *)m;
+
+    assert(menu != NULL);
+
+    for (i=0; i< MENU_NUM_ELEMENTS; i++)
+		menu->elements[i].visible = 0;
+
+    menu->etat=MENU_ETAT_PAUSE;
+    /* Defintions des éléments visibles */
+    menu->elements[MENU_REPRENDRE].visible = 1;
+    menu->elements[MENU_REJOUER].visible = 1;
+    menu->elements[MENU_QUITTER].visible = 1;
+    menu->elements[MENU_SCORE].visible = 1;
+    menu->elements[MENU_CMD].visible = 1;
+
 }
 
 void menuSelectionneJoueur(Menu *menu, int indexElement)
