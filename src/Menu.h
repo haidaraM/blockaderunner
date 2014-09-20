@@ -12,7 +12,7 @@
 
 
 
-#define MENU_DUREE_INTRO					5.0f		/* 5 secondes */
+#define MENU_DUREE_INTRO					3.0f		/* 3 secondes */
 
 
 #define MENU_ETAT_INTRO						0
@@ -24,6 +24,7 @@
 #define MENU_ETAT_INFO						11
 #define MENU_ETAT_CHOIX_NIVEAU				12
 #define MENU_ETAT_SCORE						13
+#define MENU_ETAT_PAUSE                     14
 #define MENU_ETAT_CHARGEMENT				64
 #define MENU_ETAT_QUITTER					128
 
@@ -128,13 +129,13 @@ void menuInit(Menu *menu, Ressource *res);
 /**
 * @fn void menuLibere(Menu *menu)
 * @brief Libère les ressources du module.
-* @param [in, out] menu
+* @param [in, out] menu : initialisé
 */
 void menuLibere(Menu *menu);
 
 /**
 * @fn void menuIntro(Menu *menu, float tempsBoucleEcoule)
-* @brief On affiche l'image d'intro (splashscreen).
+* @brief Affiche l'image d'intro (splashscreen).
 * @param [in, out] menu
 * @param [in] tempsBoucleEcoule
 */
@@ -211,13 +212,6 @@ void menuScores(void *m);
 void menuJouer(void *m);
 
 /**
-* @fn void menuCommencerNiveau(void* m)
-* @brief Callback (vide - inutilisée, JeuSDL appelle directement le chargement d'un niveau).
-* @param [in] m
-*/
-void menuCommencerNiveau(void* m);
-
-/**
 * @fn void menuSelectionneJoueur(Menu *menu, int indexElement)
 * @brief Appelée lorque l'utilisateur a sélectionné un joueur.
 * @param [in, out] menu
@@ -232,6 +226,14 @@ void menuSelectionneJoueur(Menu *menu, int indexElement);
 * @param [in] alphaNum
 */
 void menuSetCaractere(Menu *menu, char alphaNum);
+
+/**
+* @fn void menuCommencerNiveau(void* m)
+* @brief Callback (vide - inutilisée, JeuSDL appelle directement le chargement d'un niveau).
+* @param [in] m
+*/
+void menuCommencerNiveau(void* m);
+
 
 /**
 * @fn void menuEffaceCaractere(Menu *menu)
@@ -268,5 +270,13 @@ void menuSelectionneNiveau(Menu *menu, int indexElement);
 * @param [in] menu
 */
 int menuGetNiveauChoisi(const Menu *menu);
+
+/**
+* @fn void menuPause(void * m)
+* @brief Appelée lorsque le joueur appuie sur pause
+* @param [in] m
+*/
+void menuPause(void *m);
+
 #endif
 

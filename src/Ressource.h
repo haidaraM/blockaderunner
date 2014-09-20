@@ -22,7 +22,7 @@
 
 
 
-/* REPERTOIRES */
+/*------------------------------------- REPERTOIRES -----------------------------*/
 
 #define RESS_DIR_IMAGES											"data/images/"
 #define RESS_DIR_SONS											"data/sons/"
@@ -31,25 +31,25 @@
 #define RESS_DIR_NIVEAU                                         "data/niveau/"
 
 
-/* SAUVEGARDES */
+/*--------------------------------- SAUVEGARDES ---------------------------------*/
 
 #define RESS_SAU_MAX_JOUEURS									20
 #define RESS_SAU_FICHIER_JOUEURS								"joueurs"
 
 
 
-/* TEXTES */
+/*----------------------------------------- TEXTES ----------------------------------------------*/
 
 #define RESS_TXT_TITRE_JEU 	 									"Blockade Runner"
 
 
-/* POLICES */
+/*---------------------------------------- POLICES -------------------------------------------*/
 
 #define RESS_POL_FICHIER_MENU									"boombox2.ttf"
 #define RESS_POL_TAILLE_MENU									18
 #define RESS_POL_TAILLE_LISTE_JOUEURS							12
 
-/* IMAGES */
+/*---------------------------------------- IMAGES --------------------------------------*/
 
 #define RESS_IMG_NULL						 					0
 
@@ -113,8 +113,6 @@
 #define RESS_IMG_LARGEUR_VAISSEAU_CROISEUR						286
 #define RESS_IMG_HAUTEUR_VAISSEAU_CROISEUR						91
 
-
-
 #define RESS_IMG_SPLASH						 					32
 #define RESS_IMG_FICHIER_SPLASH									"splash0.jpg"
 #define RESS_IMG_LARGEUR_SPLASH									1366
@@ -135,7 +133,12 @@
 #define RESS_IMG_LARGEUR_MENU_INFO                              1366
 #define RESS_IMG_HAUTEUR_MENU_INFO                              720
 
-/* Images des niveaux */
+#define RESS_IMG_MENU_PAUSE                                     36
+#define RESS_IMG_FICHIER_MENU_PAUSE                             "menu_pause.jpg"
+#define RESS_IMG_LARGEUR_MENU_PAUSE                             685
+#define RESS_IMG_HAUTEUR_MENU_PAUSE                             693
+
+/*------------------------------ Images des niveaux ---------------------------------------*/
 #define RESS_IMG_LARGEUR_FOND_NIVEAU							4098
 #define RESS_IMG_HAUTEUR_FOND_NIVEAU     						720
 
@@ -163,14 +166,14 @@
 #define RESS_IMG_FOND_NIVEAU_7				 					55
 #define RESS_IMG_FICHIER_FOND_NIVEAU_7							"bg7.jpg"
 
-/* Sons longs */
+/*--------------------------------------- Sons longs ---------------------------------------------*/
 #define RESS_SON_MENU                                           0
 #define RESS_SON_FICHIER_MENU                                   "menu_fond.mp3"
 
 #define RESS_SON_AMBIENCE                                       1
 #define RESS_SON_FICHIER_AMBIENCE                               "ambience1.mp3"
 
-/* sons courts */
+/*-------------------------------------- sons courts ---------------------------------------*/
 #define RESS_SON_TIR_LASER                                      2
 #define RESS_SON_FICHIER_TIR_LASER                              "tir_laser.wav"
 

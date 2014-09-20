@@ -24,9 +24,9 @@ void jeuInit(JeuSDL *jeu)
 {
     srand(time(NULL));
 
-	#ifdef JEU_VERBOSE
+#ifdef JEU_VERBOSE
     printf("BLOCKADE > Initialisation des modules :\n\n");
-	#endif
+#endif
 
     assert( jeu != NULL );
     assert( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_TIMER ) != -1 );
@@ -50,9 +50,9 @@ void jeuInit(JeuSDL *jeu)
     jeu->etatCourantJeu 	= JEU_ETAT_MENU_PRINCIPAL;
     jeu->joueur 			= NULL;
 
-	#ifdef JEU_VERBOSE
+#ifdef JEU_VERBOSE
     printf("\nBLOCKADE > initialisation OK.\n\n");
-	#endif
+#endif
 }
 
 
@@ -101,7 +101,6 @@ void jeuBoucle(JeuSDL *jeu)
         switch( jeu->etatCourantJeu )
         {
 
-
         /*-------------   M E N U   ---------------*/
         case JEU_ETAT_MENU_PRINCIPAL:
 
@@ -118,24 +117,24 @@ void jeuBoucle(JeuSDL *jeu)
             /* Pour chaque élément visible du Menu : on évalue la position souris (surlignage) et le click (activation). */
             for (i=0; i< MENU_NUM_ELEMENTS; i++)
 
-				/* on ne s'interesse qu'aux éléments-menu actionables (cliquables) */
+                /* on ne s'interesse qu'aux éléments-menu actionables (cliquables) */
                 if (menu->elements[i].visible == 1 && menu->elements[i].actionable == 1)
                 {
-					/* Si l'élément est déjà surligné */
+                    /* Si l'élément est déjà surligné */
                     if (menu->elements[i].surligne == 1)
                     {
-						/* Si la souris n'est pas sur l'élément alors on ne le rend plus surligné */
+                        /* Si la souris n'est pas sur l'élément alors on ne le rend plus surligné */
                         if (rectangleContient(&menu->elements[i].rect, sourisX, sourisY) == 0)
                         {
                             menu->elements[i].surligne = 0;
                             choixMenu = -1;
                         }
-						/* Sinon : si le bouton souris est enfoncé alors on repère le choix (clic) du joueur par la variable choixMenu. */
+                        /* Sinon : si le bouton souris est enfoncé alors on repère le choix (clic) du joueur par la variable choixMenu. */
                         else if (sourisBoutonGauche == 1)
                         {
                             choixMenu = i;
                         }
-						/* Sinon (ie.le bouton souris n'est plus enfoncé)  ... */
+                        /* Sinon (ie.le bouton souris n'est plus enfoncé)  ... */
                         else if (choixMenu == i) 						/* ... ici le joueur vient de relacher le souris (donc a cliqué) sur l'élément */
                         {
                             if (menu->etat == MENU_ETAT_CHOIX_JOUEUR)
@@ -159,7 +158,7 @@ void jeuBoucle(JeuSDL *jeu)
                             audioJoueSon(&jeu->audio, RESS_SON_MENU_VALIDATE);
                         }
                     }
-					/* sinon : l'élément n'est pas surligné mais la souris est dessus : on le surligne */
+                    /* sinon : l'élément n'est pas surligné mais la souris est dessus : on le surligne */
                     else if (rectangleContient(&menu->elements[i].rect, sourisX, sourisY) == 1)
                     {
                         menu->elements[i].surligne = 1;
@@ -245,7 +244,7 @@ void jeuBoucle(JeuSDL *jeu)
                 copieJoueur=joueurCopieJoueur(jeu->joueur);
                 sceneInit(&jeu->scene, &jeu->ressource, copieJoueur, jeu->graphique.largeur, jeu->graphique.hauteur);
 
-				/* Chargement du niveau */
+                /* Chargement du niveau */
                 sceneChargeNiveau(&jeu->scene, &niveau);
 
                 graphiqueSetMunitions(graphique, sceneGetMunitionMissileJoueur(&jeu->scene));
@@ -304,10 +303,10 @@ void jeuBoucle(JeuSDL *jeu)
             }
 
             /* ----------- Partie pour le retour menu principal ------------------- */
-            /* L'utilisateur a appuyé sur ESC */
+            /* L'utilisateur a appuyé sur p */
             if (entreeToucheEnfoncee(entree, SDLK_p)==1)
                 toucheDetectee = SDLK_p;
-            /* L'utilisateur vient de relâcher la touche ESC */
+            /* L'utilisateur vient de relâcher la touche p */
             if (entreeToucheEnfoncee(entree, SDLK_p)==0 && toucheDetectee == SDLK_p)
             {
                 jeu->etatCourantJeu 	= JEU_ETAT_PAUSE;
@@ -389,9 +388,9 @@ void jeuBoucle(JeuSDL *jeu)
                     /* on joue un son */
                     audioJoueSon(&jeu->audio, RESS_SON_FIN_NIVEAU);
                     /* on affiche le texte de fin de niveau */
-					if(jeu->niveauCourant < RESS_NUM_NIVEAUX -1)
-	                     graphiqueAfficheFinNiveau(graphique);
-					else graphiqueAfficheVictoire(graphique);
+                    if(jeu->niveauCourant < RESS_NUM_NIVEAUX -1)
+                        graphiqueAfficheFinNiveau(graphique);
+                    else graphiqueAfficheVictoire(graphique);
                 }
                 tempsDernierDefilementScene = getTempsSecondes();
             }
@@ -409,9 +408,30 @@ void jeuBoucle(JeuSDL *jeu)
 
         /* -------------------- PAUSE --------------------- */
         case JEU_ETAT_PAUSE :
-                audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
-                scenePause(&jeu->scene);
-                break;
+            audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
+            /* Arret des animations */
+            scenePause(&jeu->scene);
+
+            /* On change l'etat du menu */
+            menu->etat=MENU_ETAT_PAUSE;
+
+            /* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
+            sourisX 	= entreeGetSourisX(entree);
+            sourisY		= entreeGetSourisY(entree);
+            sourisBoutonGauche = entreeBoutonSourisGauche(entree);
+
+            /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
+            if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
+            {
+                graphiqueAfficheMenu( graphique, menu );
+                /*
+                */
+                graphiqueRaffraichit( graphique );
+
+                tempsDernierAffichage 	= getTempsSecondes();
+            }
+
+            break;
 
         default:
             break;

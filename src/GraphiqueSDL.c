@@ -11,12 +11,6 @@
 #include <string.h>
 
 
-
-
-
-
-
-
 /* -----------Fonctions internes ----------------- */
 
 SDL_Surface* chargeImage(char* nomFichier)
@@ -576,6 +570,11 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
                 else 	SDL_BlitSurface( graphique->textesMenu[2*i+1], NULL, graphique->surface, &offset);
             }
         }
+        break;
+    case MENU_ETAT_PAUSE:
+        offset.x=MENU_ZONE_X;
+        offset.y=MENU_ZONE_Y;
+        SDL_BlitSurface(graphique->images[RESS_IMG_MENU_PAUSE], NULL, graphique->surface, &offset);
         break;
 
     default:

@@ -92,6 +92,10 @@ void creeListeImages(Ressource *res)
     res->dimensionImages[RESS_IMG_MENU_INFO].largeur         		= RESS_IMG_LARGEUR_MENU_INFO;
     res->dimensionImages[RESS_IMG_MENU_INFO].hauteur         		= RESS_IMG_HAUTEUR_MENU_INFO;
 
+    res->images[RESS_IMG_MENU_PAUSE]                                = RESS_IMG_FICHIER_MENU_PAUSE;
+    res->dimensionImages[RESS_IMG_MENU_PAUSE].largeur               = RESS_IMG_LARGEUR_MENU_PAUSE;
+    res->dimensionImages[RESS_IMG_MENU_PAUSE].hauteur               = RESS_IMG_HAUTEUR_MENU_PAUSE;
+
     /* Images des niveaux (backgrounds) */
     res->images[RESS_IMG_FOND_NIVEAU_0] 							= RESS_IMG_FICHIER_FOND_NIVEAU_0;
     res->dimensionImages[RESS_IMG_FOND_NIVEAU_0].largeur 			= RESS_IMG_LARGEUR_FOND_NIVEAU;
@@ -261,9 +265,7 @@ void creeNiveaux(Ressource *res)
 
 
 
-/*------------------------------------------------------------------------------------------------------------------
-	INTERFACE DU MODULE
-*/
+/*-------------------------------INTERFACE DU MODULE---------------------------*/
 
 void ressourceInit(Ressource *res)
 {

@@ -49,7 +49,7 @@ void creeListeJoueurs(Menu *menu)
 
 
 
-/* --------------------------------------------------------------------------	Interface du Module */
+/* -----------------	Interface du Module -------------------------- */
 
 void menuInit(Menu *menu, Ressource *res)
 {
@@ -215,6 +215,9 @@ void menuLibere(Menu *menu)
 	free(menu->meilleursScores);
 	free(menu->elements);
 }
+
+void menuCommencerNiveau(void* m)
+{}
 
 void menuIntro(Menu *menu, float tempsBoucleEcoule)
 {
@@ -394,8 +397,11 @@ void menuJouer(void *m)
 		menu->elements[i].visible = 1;
 }
 
-void menuCommencerNiveau(void* m)
-{}
+void menuPause(void *m)
+{
+    int i;
+    Menu *menu=(Menu *)m;
+}
 
 void menuSelectionneJoueur(Menu *menu, int indexElement)
 {
