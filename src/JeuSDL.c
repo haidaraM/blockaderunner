@@ -410,7 +410,7 @@ void jeuBoucle(JeuSDL *jeu)
         /* -------------------- PAUSE --------------------- */
         case JEU_ETAT_PAUSE :
             audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
-            /* Arret des animations */
+            /* Arret des animations : Non fonctionnel */
             scenePause(&jeu->scene);
 
             menuPause((void *)menu);
@@ -465,12 +465,26 @@ void jeuBoucle(JeuSDL *jeu)
             /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
             if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
             {
+
                 graphiqueAfficheMenu( graphique, menu );
                 /*
                 */
                 graphiqueRaffraichit( graphique );
 
                 tempsDernierAffichage 	= getTempsSecondes();
+            }
+
+
+            /* ----------- retour menu au jeu ------------------- */
+            /* L'utilisateur a appuyé sur p */
+            if (entreeToucheEnfoncee(entree, SDLK_p)==1)
+                toucheDetectee = SDLK_p;
+            /* L'utilisateur vient de relâcher la touche p */
+            if (entreeToucheEnfoncee(entree, SDLK_p)==0 && toucheDetectee == SDLK_p)
+            {
+                jeu->etatCourantJeu 	= JEU_ETAT_JEU;
+                audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
+                toucheDetectee=-1;
             }
 
             break;

@@ -211,6 +211,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     /* mise des flags des evenements son à 0 */
     sceneInitialiseFlags(scene);
 
+    printf("dt : %f \n", dt);
+
     /* Points de défilement */
     dx     = -(int)(dt * SCENE_VITESSE_DEFILEMENT_POINTS);
     for (i=0; i< SCENE_NUM_POINTS_DEFILEMENT; i++)
@@ -694,8 +696,9 @@ void sceneTestDeCollision(Scene *scene)
 
 void scenePause(Scene * scene)
 {
-    /* On suppose qu'il n'ya pas de temps qui s'est écoulé. Donc sur la scene il n'y aura pas d'animations */
-    sceneAnime(scene, 0.0);
+    /* Le temps precedent de la scene recupere le temps qui s'est écoulé depuis le lancement du programme.
+    Ainsi on decale l'intervalle de temps sans faire d'animations */
+    scene->horlogePrecedente=getTempsSecondes();
 }
 
 int sceneGetNbActeurs(const Scene * scene)

@@ -68,7 +68,7 @@ typedef struct
 */
 typedef struct
 {
-    /** garde trace du temps écoulé (pour animations). */
+    /** Garde une trace du temps écoulé (pour animations). */
     float horlogePrecedente;
     /** Portion visible de la scène. */
     int largeurAffichage, hauteurAffichage;
@@ -181,7 +181,7 @@ void sceneAnime(Scene *scene, float tempsSecondes);
 
 /**
 * @fn void scenePause (Scene * scene)
-* @brief Permet de mettre le jeu en pause quand le joueur appuyera sur la touche adequate
+* @brief Permet de mettre le jeu en pause c'est à dire pas d'animations sur la scene.
 * @param [in, out] scene
 */
 void scenePause(Scene * scene);
