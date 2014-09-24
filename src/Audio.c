@@ -152,6 +152,29 @@ void audioStopSon(const AudioFMOD * audio, int index)
 
 }
 
+void audioPauseSon(const AudioFMOD *audio, int index)
+{
+    FMOD_CHANNEL *canal;
+
+    canal=audioGetCanal(audio, index);
+
+    FMOD_Channel_SetPaused(canal, 1);
+}
+
+void audioReprendSon(const AudioFMOD *audio, int index)
+{
+    FMOD_CHANNEL *canal;
+    FMOD_BOOL etat;
+    canal=audioGetCanal(audio, index);
+
+
+    FMOD_Channel_GetPaused(canal, &etat);
+    if(etat)
+    {
+        FMOD_Channel_SetPaused(canal, 0);
+    }
+}
+
 FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index)
 {
     FMOD_BOOL etat;

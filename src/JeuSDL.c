@@ -291,24 +291,12 @@ void jeuBoucle(JeuSDL *jeu)
                 audioJoueScene(&jeu->audio, &jeu->scene);
             }
 
-            /* ----------- Partie pour le retour menu principal ------------------- */
-            /* L'utilisateur a appuyé sur ESC */
-            if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
-                toucheDetectee = SDLK_ESCAPE;
-            /* L'utilisateur vient de relâcher la touche ESC */
-            if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE)
-            {
-                jeu->etatCourantJeu 	= JEU_RETOUR_MENU_PRINCIPAL;
-                audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
-                toucheDetectee=-1;
-            }
-
             /* ----------- Partie pour le retour menu pause ------------------- */
             /* L'utilisateur a appuyé sur p */
-            if (entreeToucheEnfoncee(entree, SDLK_p)==1)
-                toucheDetectee = SDLK_p;
+            if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
+                toucheDetectee = SDLK_ESCAPE;
             /* L'utilisateur vient de relâcher la touche p */
-            if (entreeToucheEnfoncee(entree, SDLK_p)==0 && toucheDetectee == SDLK_p)
+            if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE)
             {
                 jeu->etatCourantJeu 	= JEU_ETAT_PAUSE;
                 audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
@@ -409,11 +397,11 @@ void jeuBoucle(JeuSDL *jeu)
 
         /* -------------------- PAUSE --------------------- */
         case JEU_ETAT_PAUSE :
-            audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
+            audioPauseSon(&jeu->audio, RESS_SON_AMBIENCE);
             /* Arret des animations : Non fonctionnel */
             scenePause(&jeu->scene);
 
-            menuPause((void *)menu);
+            menuPause(menu);
 
             /* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
             sourisX 	= entreeGetSourisX(entree);
@@ -434,19 +422,16 @@ void jeuBoucle(JeuSDL *jeu)
                             menu->elements[i].surligne = 0;
                             choixMenu = -1;
                         }
-                        /* Sinon : si le bouton souris est enfoncé alors on repère le choix (clic) du joueur par la variable choixMenu. */
+                        /* Sinon : si le bouton souris est enfoncé alors on repère le choix (clic) du joueur
+                          par la variable choixMenu. */
                         else if (sourisBoutonGauche == 1)
                         {
                             choixMenu = i;
                         }
                         /* Sinon (ie.le bouton souris n'est plus enfoncé)  ... */
-                        else if (choixMenu == i) 						/* ... ici le joueur vient de relacher le souris (donc a cliqué) sur l'élément */
+                        else if (choixMenu == i)
                         {
-                            if (menu->etat == MENU_ETAT_SCORE)
-                            {
-                                jeu->etatCourantJeu=JEU_ETAT_MENU_PRINCIPAL;
-                            }
-                             printf("Element menu : %d\n", menu->etat);
+                            /* ... ici le joueur vient de relacher le souris (donc a cliqué) sur l'élément */
                             /* On appelle la callback associé à l'élément menu. */
                             (menu->elements[i].action)((void*)menu);
                             choixMenu = -1;
@@ -462,27 +447,41 @@ void jeuBoucle(JeuSDL *jeu)
                 }
             }
 
+            if (menu->etat == MENU_ETAT_SCORE)
+                jeu->etatCourantJeu=JEU_ETAT_MENU_PRINCIPAL;
+
+            if (menu->etat == MENU_ETAT_QUITTER)
+                continueJeu=0;
+
+
+            if (menu->etat == MENU_ETAT_REJOUER)
+            {
+                jeu->etatCourantJeu= JEU_ETAT_CHARGEMENT_NIVEAU;
+                /* On enleve le son dans l'etat pause */
+                audioReprendSon(&jeu->audio, RESS_SON_AMBIENCE);
+                /* On l'arrete. L'etat JEU_ETAT_CHARGEMENT_NIVEAU se chargera de le lancer */
+                audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
+            }
+
             /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
             if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
             {
 
                 graphiqueAfficheMenu( graphique, menu );
-                /*
-                */
+
                 graphiqueRaffraichit( graphique );
 
                 tempsDernierAffichage 	= getTempsSecondes();
             }
-
-
             /* ----------- retour menu au jeu ------------------- */
             /* L'utilisateur a appuyé sur p */
-            if (entreeToucheEnfoncee(entree, SDLK_p)==1)
-                toucheDetectee = SDLK_p;
-            /* L'utilisateur vient de relâcher la touche p */
-            if (entreeToucheEnfoncee(entree, SDLK_p)==0 && toucheDetectee == SDLK_p)
+            if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
+                toucheDetectee = SDLK_ESCAPE;
+            /* L'utilisateur vient de relâcher la touche p ou a choisi l'option reprendre dans le menu*/
+            if ((entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE) || menu->etat == MENU_ETAT_REPRENDRE )
             {
                 jeu->etatCourantJeu 	= JEU_ETAT_JEU;
+                audioReprendSon(&jeu->audio, RESS_SON_AMBIENCE);
                 audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
                 toucheDetectee=-1;
             }

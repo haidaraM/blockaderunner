@@ -76,6 +76,22 @@ void audioVerifieErreur(const FMOD_RESULT resultat);
 void audioStopSon(const AudioFMOD * audio, int index);
 
 /**
+* @fn void audioPauseSon(const AudioFMOD *audio, int index)
+* @brief Met un son en pause
+* @param [in] audio
+* @param [in] index
+*/
+void audioPauseSon(const AudioFMOD *audio, int index);
+
+/**
+* @fn void audioReprendSon(const AudioFMOD *audio, int index)
+* @brief Reprend un son qui a été mis en pause
+* @param [in] audio
+* @param [in] index
+*/
+void audioReprendSon(const AudioFMOD *audio, int index);
+
+/**
 * @fn FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index)
 * @brief Recupere le canal sur lequel le son correspondant à index est joué
 * @param [in] audio : intialisé

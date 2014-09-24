@@ -27,6 +27,8 @@
 #define MENU_ETAT_PAUSE                     14
 #define MENU_ETAT_CHARGEMENT				64
 #define MENU_ETAT_QUITTER					128
+#define MENU_ETAT_REPRENDRE                 129
+#define MENU_ETAT_REJOUER                   130
 
 
 #define MENU_PADDING_HORZ					20
@@ -263,7 +265,7 @@ Joueur* menuGetJoueurChoisi(const Menu *menu);
 /**
 * @fn void menuSelectionneNiveau(Menu *menu, int indexElement)
 * @brief Appelée lorsque l'utilisateur a choisi un niveau de jeu.
-* @param [in, out] menue
+* @param [in, out] menu
 * @param [in] indexElement
 */
 void menuSelectionneNiveau(Menu *menu, int indexElement);
@@ -277,10 +279,26 @@ int menuGetNiveauChoisi(const Menu *menu);
 
 /**
 * @fn void menuPause(void * m)
-* @brief Appelée lorsque le joueur appuie sur pause
+* @brief Appelée lorsque le joueur appuie sur P.
+* Met a jour l'etat du menu et les elements visibles
 * @param [in] m
 */
-void menuPause(void *m);
+void menuPause(Menu *m);
+
+/**
+* @fn void menuReprendre(void *m)
+* @brief Callback appelé lorsque le joueur souhaite reprendre la partie après la pause
+* @param [in] m
+*/
+void menuReprendre(void *m);
+
+
+/**
+* @fn void menuReJouer(void *m)
+* @brief Callback appelé lorsque le joueur souhaite rejouer la partie après la pause
+* @param [in] m
+*/
+void menuReJouer(void *m);
 
 #endif
 

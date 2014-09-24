@@ -211,8 +211,6 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     /* mise des flags des evenements son à 0 */
     sceneInitialiseFlags(scene);
 
-    printf("dt : %f \n", dt);
-
     /* Points de défilement */
     dx     = -(int)(dt * SCENE_VITESSE_DEFILEMENT_POINTS);
     for (i=0; i< SCENE_NUM_POINTS_DEFILEMENT; i++)
@@ -703,22 +701,18 @@ void scenePause(Scene * scene)
 
 int sceneGetNbActeurs(const Scene * scene)
 {
-    assert(scene!=NULL);
     return scene->acteurs.tailleUtilisee;
 }
 int sceneGetNbTirs(const Scene * scene)
 {
-    assert(scene!=NULL);
     return scene->tirs.tailleUtilisee;
 }
 int sceneGetNbBonus(const Scene * scene)
 {
-    assert(scene!=NULL);
     return scene->bonus.tailleUtilisee;
 }
 int sceneGetNbDecors(const Scene * scene)
 {
-    assert(scene!=NULL);
     return scene->decors.tailleUtilisee;
 }
 
@@ -954,7 +948,6 @@ int sceneTestVaisseauMort(Scene * scene)
 
 void sceneInitialiseFlags(Scene * scene)
 {
-    assert(scene!=NULL);
     /* Réinitialisation des evenements */
     scene->evenements.asteroide_explosion   = 0;
     scene->evenements.joueur_tir_laser 		= 0;
