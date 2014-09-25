@@ -27,11 +27,12 @@
 #define MENU_ETAT_CHARGEMENT				14
 #define MENU_ETAT_QUITTER					15
 
-#define MENU_ETAT_PAUSE                     128
-#define MENU_ETAT_REPRENDRE                 129
-#define MENU_ETAT_REJOUER                   130
-#define MENU_ETAT_PAUSE_SCORE               131
-#define MENU_ETAT_PAUSE_COMMANDES           132
+#define MENU_ETAT_PAUSE                         128
+#define MENU_ETAT_REPRENDRE                     129
+#define MENU_ETAT_REJOUER                       130
+#define MENU_ETAT_PAUSE_SCORE                   131
+#define MENU_ETAT_PAUSE_COMMANDES               132
+#define MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL   133
 
 
 #define MENU_PADDING_HORZ					20
@@ -42,7 +43,7 @@
 #define MENU_ZONE_HAUTEUR					678
 
 
-#define MENU_NUM_BASIC_ELEMENTS				(12 + RESS_NUM_NIVEAUX)
+#define MENU_NUM_BASIC_ELEMENTS				(13 + RESS_NUM_NIVEAUX)
 #define MENU_NUM_ELEMENTS					(MENU_NUM_BASIC_ELEMENTS + RESS_SAU_MAX_JOUEURS)
 
 #define MENU_RETOUR							0
@@ -57,7 +58,9 @@
 #define MENU_QUITTER						9
 #define MENU_REPRENDRE                      10
 #define MENU_REJOUER                        11
-#define MENU_NIVEAU							12
+#define MENU_RETOUR_MENU_PRINCIPAL          12
+#define MENU_NIVEAU							13
+
 
 #define MENU_TXT_JOUEUR_VIDE 				"___"
 #define MENU_TXT_JOUEURS					"Joueurs"
@@ -73,6 +76,7 @@
 #define MENU_TXT_NIVEAU						"Niveau "
 #define MENU_TXT_REPRENDRE                  "Reprendre"
 #define MENU_TXT_REJOUER                    "Rejouer"
+#define MENU_TXT_RETOUR_MENU_PRINCIPAL      "Retour au menu principal"
 
 
 
@@ -302,6 +306,13 @@ void menuReprendre(void *m);
 * @param [in] m
 */
 void menuReJouer(void *m);
+
+/**
+* @fn void menuRetourPrincipal(void *m)
+* @brief Call back appelé lorsque le joueur souhaite retourner au menu principal dans le menu pause
+* @param [in]
+*/
+void menuRetourPrincipal(void *m);
 
 #endif
 

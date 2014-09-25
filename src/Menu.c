@@ -192,6 +192,17 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->elements[index].rect.y				= MENU_ZONE_Y + 9*MENU_PADDING_VERT;
 	menu->elements[index].action                = menuReJouer;
 
+    index = MENU_RETOUR_MENU_PRINCIPAL;
+    menu->elements[index].texte                 = MENU_TXT_RETOUR_MENU_PRINCIPAL;
+    menu->elements[index].visible 				= 0;
+	menu->elements[index].actionable 			= 1;
+	menu->elements[index].surligne	 			= 0;
+	menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
+	menu->elements[index].rect.y				= MENU_ZONE_Y + MENU_ZONE_HAUTEUR - 4*MENU_PADDING_VERT;
+	menu->elements[index].action                = menuRetourPrincipal;
+
+
+
 	/* les 8 niveaux */
 	for (i=MENU_NIVEAU; i< MENU_NUM_BASIC_ELEMENTS; i++)
 	{
@@ -442,6 +453,7 @@ void menuPause(Menu *m)
     menu->elements[MENU_QUITTER].visible = 1;
     menu->elements[MENU_SCORE].visible = 1;
     menu->elements[MENU_CMD].visible = 1;
+    menu->elements[MENU_RETOUR_MENU_PRINCIPAL].visible=1;
 
     menu->etat=MENU_ETAT_PAUSE;
 
@@ -547,4 +559,11 @@ void menuReJouer(void *m)
     Menu *menu=(Menu *)m;
     assert(menu!=NULL);
     menu->etat=MENU_ETAT_REJOUER;
+}
+
+void menuRetourPrincipal(void *m)
+{
+    Menu *menu=(Menu *)m;
+    assert(menu!=NULL);
+    menu->etat=MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL;
 }

@@ -459,6 +459,9 @@ void jeuBoucle(JeuSDL *jeu)
                 audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
             }
 
+            if (menu->etat == MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL)
+                jeu->etatCourantJeu = JEU_RETOUR_MENU_PRINCIPAL;
+
             /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
             if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
             {
