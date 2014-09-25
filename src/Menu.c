@@ -145,7 +145,7 @@ void menuInit(Menu *menu, Ressource *res)
 	menu->elements[index].surligne	 			= 0;
 	menu->elements[index].rect.x				= MENU_ZONE_X + MENU_PADDING_HORZ;
 	menu->elements[index].rect.y				= MENU_ZONE_Y + 7*MENU_PADDING_VERT;
-	menu->elements[index].action				= menuCommandes;
+	menu->elements[index].action		    	= menuCommandes;
 
 	index = MENU_CHANGER_JOUEUR;
 	menu->elements[index].texte 				= MENU_TXT_CHANGER_JOUEUR;
@@ -268,6 +268,12 @@ void menuRetour(void *m)
 			break;
 		case MENU_ETAT_QUITTER:
 			break;
+        case MENU_ETAT_PAUSE_COMMANDES:
+            menuPause(menu);
+            break;
+        case MENU_ETAT_PAUSE_SCORE:
+            menuPause(menu);
+            break;
 		default:
 			menuPrincipal((void*)menu);
 			break;
@@ -349,7 +355,10 @@ void menuCommandes(void *m)
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
 		menu->elements[i].visible = 0;
 
-	menu->etat 	= MENU_ETAT_CMD;
+    if(menu->etat==MENU_ETAT_PAUSE)
+        menu->etat=MENU_ETAT_PAUSE_COMMANDES;
+	else menu->etat 	= MENU_ETAT_CMD;
+
 	menu->elements[MENU_RETOUR].visible = 1;
 }
 void menuChangerJoueur(void *m)
@@ -392,8 +401,9 @@ void menuScores(void *m)
 
 	for (i=0; i< MENU_NUM_ELEMENTS; i++)
 		menu->elements[i].visible = 0;
-
-	menu->etat 	= MENU_ETAT_SCORE;
+    if (menu->etat==MENU_ETAT_PAUSE)
+        menu->etat=MENU_ETAT_PAUSE_SCORE;
+	else menu->etat 	= MENU_ETAT_SCORE;
 	menu->elements[MENU_RETOUR].visible = 1;
 }
 void menuJouer(void *m)
@@ -538,4 +548,3 @@ void menuReJouer(void *m)
     assert(menu!=NULL);
     menu->etat=MENU_ETAT_REJOUER;
 }
-

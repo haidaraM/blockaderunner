@@ -300,6 +300,7 @@ void jeuBoucle(JeuSDL *jeu)
             {
                 jeu->etatCourantJeu 	= JEU_ETAT_PAUSE;
                 audioJoueSon(&jeu->audio, RESS_SON_MENU_BACK);
+                menuPause(menu);
                 toucheDetectee=-1;
             }
 
@@ -401,8 +402,6 @@ void jeuBoucle(JeuSDL *jeu)
             /* Arret des animations : Non fonctionnel */
             scenePause(&jeu->scene);
 
-            menuPause(menu);
-
             /* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
             sourisX 	= entreeGetSourisX(entree);
             sourisY		= entreeGetSourisY(entree);
@@ -447,26 +446,22 @@ void jeuBoucle(JeuSDL *jeu)
                 }
             }
 
-            if (menu->etat == MENU_ETAT_SCORE)
-                jeu->etatCourantJeu=JEU_ETAT_MENU_PRINCIPAL;
 
             if (menu->etat == MENU_ETAT_QUITTER)
                 continueJeu=0;
-
 
             if (menu->etat == MENU_ETAT_REJOUER)
             {
                 jeu->etatCourantJeu= JEU_ETAT_CHARGEMENT_NIVEAU;
                 /* On enleve le son dans l'etat pause */
                 audioReprendSon(&jeu->audio, RESS_SON_AMBIENCE);
-                /* On l'arrete. L'etat JEU_ETAT_CHARGEMENT_NIVEAU se chargera de le lancer */
+                /* On l'arrete. JEU_ETAT_CHARGEMENT_NIVEAU se chargera de le lancer */
                 audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
             }
 
             /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
             if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
             {
-
                 graphiqueAfficheMenu( graphique, menu );
 
                 graphiqueRaffraichit( graphique );

@@ -24,11 +24,14 @@
 #define MENU_ETAT_INFO						11
 #define MENU_ETAT_CHOIX_NIVEAU				12
 #define MENU_ETAT_SCORE						13
-#define MENU_ETAT_PAUSE                     14
-#define MENU_ETAT_CHARGEMENT				64
-#define MENU_ETAT_QUITTER					128
+#define MENU_ETAT_CHARGEMENT				14
+#define MENU_ETAT_QUITTER					15
+
+#define MENU_ETAT_PAUSE                     128
 #define MENU_ETAT_REPRENDRE                 129
 #define MENU_ETAT_REJOUER                   130
+#define MENU_ETAT_PAUSE_SCORE               131
+#define MENU_ETAT_PAUSE_COMMANDES           132
 
 
 #define MENU_PADDING_HORZ					20
