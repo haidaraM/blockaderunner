@@ -245,7 +245,7 @@ void jeuBoucle(JeuSDL *jeu)
                 copieJoueur=joueurCopieJoueur(jeu->joueur);
                 sceneInit(&jeu->scene, &jeu->ressource, copieJoueur, jeu->graphique.largeur, jeu->graphique.hauteur);
 
-                /* Chargement du niveau */
+                /* Chargement du niveau dans la scene */
                 sceneChargeNiveau(&jeu->scene, &niveau);
 
                 graphiqueSetMunitions(graphique, sceneGetMunitionMissileJoueur(&jeu->scene));

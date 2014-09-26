@@ -105,12 +105,6 @@ void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 
 
 
-
-
-
-
-
-
 /* --------------------------------------------------------------------------------------------------			Interface du Module */
 
 void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode)
@@ -321,8 +315,12 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     /* init nbre de missiles */
     graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions); /* constant 4 is hard-coded no good */
 
-    /*---------------------------------------------------------------------
-    	FIN */
+    /* Barre de vie ennemis */
+    graphique->elementsHUD[8]   = SDL_CreateRGBSurface(SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR+5, GFX_HUD_ELEMENT_HAUTEUR,32, graphique->rmask, graphique->gmask, graphique->bmask, 0 );
+    SDL_FillRect(graphique->elementsHUD[8], NULL, couleurNiveauEcran);
+
+
+    /*------------------------------FIN------------------------------------ */
 
 #ifdef JEU_VERBOSE
     printf("    initialisation OK.\n");
@@ -690,7 +688,11 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
     ElementScene **tirs 	= (ElementScene **)scene->tirs.tab;
     ElementScene **bonus 	= (ElementScene **)scene->bonus.tab;
     ElementScene **decors 	= (ElementScene **)scene->decors.tab;
+    SDL_Surface * surf;
     Uint32 couleurPointsDefilement = SDL_MapRGB(graphique->surface->format, 0xd0, 0xff, 0xff);
+
+    Uint32 couleurNiveauCoque			= 0x00B0FF;
+    Uint32 couleurNiveauEcran			= 0xFFB000;
 
     /* affichage du fond */
     srcBox.x 		= scene->rectangleImageFond.x;
@@ -748,6 +750,18 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
             dstBox.x = elementGetX(acteurs[i]);
             dstBox.y = elementGetY(acteurs[i]);
             SDL_BlitSurface( graphique->images[elementGetImageIndex(acteurs[i])], NULL, graphique->surface, &dstBox);
+            /* Affichage barre de vie */
+            if(elementGetType(acteurs[i])==ELEMENT_TYPE_ECLAIREUR || elementGetType(acteurs[i])==ELEMENT_TYPE_CHASSEUR
+                    || elementGetType(acteurs[i])==ELEMENT_TYPE_CROISEUR)
+            {
+                    surf=SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), 2, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
+                    dstBox.x = dstBox.x + 6;
+                    dstBox.y = dstBox.y - 7;
+                    SDL_FillRect(surf, NULL, couleurNiveauEcran);
+                    SDL_BlitSurface(surf, NULL, graphique->surface,&dstBox );
+                    SDL_FreeSurface(surf);
+            }
+
         }
     }
 

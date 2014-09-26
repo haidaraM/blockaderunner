@@ -34,7 +34,7 @@
 
 /**
 * @struct ElementScene
-* @brief Element de la Scene : element affichable et jouable (audio).
+* @brief Element de la Scene : element affichable et jouable.
 */
 typedef struct
 {
@@ -60,7 +60,7 @@ typedef struct
     int largeurSceneVisible;
     /** Hauteur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
     int hauteurSceneVisible;
-    /** pointeur generique */
+    /** pointeur generique. Utilisé notament pour lié à un element d'autres caractéristique (pS et pE par ex) */
     void * data;
 
 } ElementScene;

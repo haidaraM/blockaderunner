@@ -696,7 +696,7 @@ void scenePause(Scene * scene)
 {
     /* Le temps precedent de la scene recupere le temps qui s'est écoulé depuis le lancement du programme.
     Ainsi on decale l'intervalle de temps sans faire d'animations */
-    scene->horlogePrecedente=getTempsSecondes();
+    sceneResetHorloge(scene, getTempsSecondes());
 }
 
 int sceneGetNbActeurs(const Scene * scene)
