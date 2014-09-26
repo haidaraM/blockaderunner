@@ -279,7 +279,7 @@ void menuRetour(void *m)
 			break;
 		case MENU_ETAT_QUITTER:
 			break;
-        case MENU_ETAT_PAUSE_COMMANDES:
+        case MENU_ETAT_PAUSE_CMD:
             menuPause(menu);
             break;
         case MENU_ETAT_PAUSE_SCORE:
@@ -367,7 +367,7 @@ void menuCommandes(void *m)
 		menu->elements[i].visible = 0;
 
     if(menu->etat==MENU_ETAT_PAUSE)
-        menu->etat=MENU_ETAT_PAUSE_COMMANDES;
+        menu->etat=MENU_ETAT_PAUSE_CMD;
 	else menu->etat 	= MENU_ETAT_CMD;
 
 	menu->elements[MENU_RETOUR].visible = 1;

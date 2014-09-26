@@ -591,7 +591,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
             }
         }
         break;
-    case MENU_ETAT_PAUSE_COMMANDES:
+    case MENU_ETAT_PAUSE_CMD:
         offset.x=MENU_ZONE_X;
         offset.y=MENU_ZONE_Y+2;
         SDL_BlitSurface( graphique->images[RESS_IMG_MENU_CMD], NULL, graphique->surface, &offset);

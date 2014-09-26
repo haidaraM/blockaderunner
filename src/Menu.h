@@ -31,7 +31,7 @@
 #define MENU_ETAT_REPRENDRE                     129
 #define MENU_ETAT_REJOUER                       130
 #define MENU_ETAT_PAUSE_SCORE                   131
-#define MENU_ETAT_PAUSE_COMMANDES               132
+#define MENU_ETAT_PAUSE_CMD                     132
 #define MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL   133
 
 
