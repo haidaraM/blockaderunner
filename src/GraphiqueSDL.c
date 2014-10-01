@@ -105,7 +105,7 @@ void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 
 
 
-/* --------------------------------------------------------------------------------------------------			Interface du Module */
+/* ---------------Interface du Module----------------------- */
 
 void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode)
 {
@@ -120,8 +120,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     SDL_Color couleurTexteMort          = { 255, 0, 0}; /* couleur rouge*/
     SDL_Color couleurTexteFinNiveau     = {33, 238, 47}; /* couleur verte*/
     SDL_Color couleurTexteVictoire      = {255, 238, 47}; /* couleur jaunatre*/
-    Uint32 couleurNiveauCoque			= 0x00B0FF;
-    Uint32 couleurNiveauEcran			= 0xFFB000;
+    Uint32 couleurNiveauStructure		= 0x00B0FF; /* jaunatre */
+    Uint32 couleurNiveauEcran			= 0xFFB000; /* bleu */
 
     assert( graphique != NULL && ressource != NULL && menu != NULL && largeur > 0 && hauteur > 0 );
 
@@ -163,8 +163,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 #endif
 
 
-    /*---------------------------------------------------------------------
-    	 Initialisation fenetre principale (SDL) */
+    /*---------- Initialisation fenetre principale (SDL)---------------- */
 
     graphique->surface 		= SDL_SetVideoMode( largeur, hauteur, 32, SDL_HWSURFACE | SDL_DOUBLEBUF );
     assert( graphique->surface != NULL );
@@ -298,7 +297,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
         printf("ERREUR : (GraphiqueSDL) : impossible de créer élément du HUD.  %s\n", SDL_GetError());
         exit(1);
     }
-    SDL_FillRect(graphique->elementsHUD[0], NULL, couleurNiveauCoque);
+    /* Application des couleurs */
+    SDL_FillRect(graphique->elementsHUD[0], NULL, couleurNiveauStructure);
     SDL_FillRect(graphique->elementsHUD[1], NULL, couleurNiveauEcran);
 
     /* score */
@@ -314,11 +314,6 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 
     /* init nbre de missiles */
     graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions); /* constant 4 is hard-coded no good */
-
-    /* Barre de vie ennemis */
-    graphique->elementsHUD[8]   = SDL_CreateRGBSurface(SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR+5, GFX_HUD_ELEMENT_HAUTEUR,32, graphique->rmask, graphique->gmask, graphique->bmask, 0 );
-    SDL_FillRect(graphique->elementsHUD[8], NULL, couleurNiveauEcran);
-
 
     /*------------------------------FIN------------------------------------ */
 
@@ -688,11 +683,10 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
     ElementScene **tirs 	= (ElementScene **)scene->tirs.tab;
     ElementScene **bonus 	= (ElementScene **)scene->bonus.tab;
     ElementScene **decors 	= (ElementScene **)scene->decors.tab;
-    SDL_Surface * surf;
+    SDL_Surface * surfacePointS;
     Uint32 couleurPointsDefilement = SDL_MapRGB(graphique->surface->format, 0xd0, 0xff, 0xff);
 
-    Uint32 couleurNiveauCoque			= 0x00B0FF;
-    Uint32 couleurNiveauEcran			= 0xFFB000;
+    Uint32 couleurNiveauStructure   	= 0x00B0FF; /* jaunatre */
 
     /* affichage du fond */
     srcBox.x 		= scene->rectangleImageFond.x;
@@ -754,12 +748,11 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
             if(elementGetType(acteurs[i])==ELEMENT_TYPE_ECLAIREUR || elementGetType(acteurs[i])==ELEMENT_TYPE_CHASSEUR
                     || elementGetType(acteurs[i])==ELEMENT_TYPE_CROISEUR)
             {
-                    surf=SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), 2, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
-                    dstBox.x = dstBox.x + 6;
-                    dstBox.y = dstBox.y - 7;
-                    SDL_FillRect(surf, NULL, couleurNiveauEcran);
-                    SDL_BlitSurface(surf, NULL, graphique->surface,&dstBox );
-                    SDL_FreeSurface(surf);
+                surfacePointS=SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), 2, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
+                SDL_FillRect(surfacePointS, NULL, couleurNiveauStructure);
+                dstBox.y = dstBox.y - 4;
+                SDL_BlitSurface(surfacePointS, NULL, graphique->surface,&dstBox );
+                SDL_FreeSurface(surfacePointS);
             }
 
         }

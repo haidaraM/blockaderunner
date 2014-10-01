@@ -20,7 +20,7 @@
 #define GFX_MODE_FENETRE	 				1
 #define GFX_FENETRE_TITRE_DEFAUT			"Blockade Runner"
 
-#define GFX_NUM_ELEMENTS_HUD				9
+#define GFX_NUM_ELEMENTS_HUD				8
 #define GFX_HUD_ELEMENT_LARGEUR				8
 #define GFX_HUD_ELEMENT_HAUTEUR				6
 #define GFX_HUD_ELEMENT_OFFSET				2
