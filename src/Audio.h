@@ -6,8 +6,6 @@
 #ifndef _AUDIO_H
 #define _AUDIO_H
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "Ressource.h"
 #include "Scene.h"
 
