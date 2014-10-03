@@ -1,6 +1,7 @@
 /**
 * @file AudioSDL.c
 * @brief Fichier d'implementation du module Audio
+* @author Mohamed El Mouctar HAIDARA
 */
 #include <assert.h>
 #include <stdlib.h>

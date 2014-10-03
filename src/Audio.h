@@ -68,7 +68,7 @@ void audioVerifieErreur(const FMOD_RESULT resultat);
 /**
 * @fn void audioStopSon(const Audio * audio, int index)
 * @brief Arrete un son en cours de lecture
-* @param [in] audio
+* @param [in] audio : initialisé
 * @param [in] index
 */
 void audioStopSon(const AudioFMOD * audio, int index);
@@ -76,7 +76,7 @@ void audioStopSon(const AudioFMOD * audio, int index);
 /**
 * @fn void audioPauseSon(const AudioFMOD *audio, int index)
 * @brief Met un son en pause
-* @param [in] audio
+* @param [in] audio : initialisé
 * @param [in] index
 */
 void audioPauseSon(const AudioFMOD *audio, int index);
@@ -84,7 +84,7 @@ void audioPauseSon(const AudioFMOD *audio, int index);
 /**
 * @fn void audioReprendSon(const AudioFMOD *audio, int index)
 * @brief Reprend un son qui a été mis en pause
-* @param [in] audio
+* @param [in] audio : initialisé
 * @param [in] index
 */
 void audioReprendSon(const AudioFMOD *audio, int index);

@@ -91,7 +91,7 @@ typedef struct
     int nbArmes;
     /** Tableau d'armes du vaisseau*/
     Arme *armes;
-    /** Entier qui represente l'arme selectionnée. Arme 0 selectionnée par defaut **/
+    /** Entier qui represente l'arme selectionnée. Laser selectionné par defaut **/
     int numArmeSelectionne;
 } Vaisseau;
 

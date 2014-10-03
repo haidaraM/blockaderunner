@@ -14,26 +14,25 @@
 
 #define MENU_DUREE_INTRO					3.0f		/* 3 secondes */
 
-
-#define MENU_ETAT_INTRO						0
-#define MENU_ETAT_CHOIX_JOUEUR				1
-#define MENU_ETAT_ENTREE_JOUEUR				2
-#define MENU_ETAT_PRINCIPAL					8
-#define MENU_ETAT_CMD						9
-#define MENU_ETAT_OPTION					10
-#define MENU_ETAT_INFO						11
-#define MENU_ETAT_CHOIX_NIVEAU				12
-#define MENU_ETAT_SCORE						13
-#define MENU_ETAT_CHARGEMENT				14
-#define MENU_ETAT_QUITTER					15
-
-#define MENU_ETAT_PAUSE                         128
-#define MENU_ETAT_REPRENDRE                     129
-#define MENU_ETAT_REJOUER                       130
-#define MENU_ETAT_PAUSE_SCORE                   131
-#define MENU_ETAT_PAUSE_CMD                     132
-#define MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL   133
-
+/* Definitions des differents etats du menu */
+enum { MENU_ETAT_INTRO,
+        MENU_ETAT_CHOIX_JOUEUR,
+        MENU_ETAT_ENTREE_JOUEUR,
+        MENU_ETAT_PRINCIPAL,
+        MENU_ETAT_CMD,
+        MENU_ETAT_OPTION,
+        MENU_ETAT_INFO,
+        MENU_ETAT_CHOIX_NIVEAU,
+        MENU_ETAT_SCORE,
+        MENU_ETAT_CHARGEMENT,
+        MENU_ETAT_QUITTER,
+        MENU_ETAT_PAUSE,
+        MENU_ETAT_REPRENDRE,
+        MENU_ETAT_REJOUER,
+        MENU_ETAT_PAUSE_SCORE,
+        MENU_ETAT_PAUSE_CMD,
+        MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL
+        };
 
 #define MENU_PADDING_HORZ					20
 #define MENU_PADDING_VERT					20
