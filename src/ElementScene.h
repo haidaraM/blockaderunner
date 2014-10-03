@@ -8,7 +8,7 @@
 #ifndef _ELEMENT_SCENE_H
 #define _ELEMENT_SCENE_H
 
-
+/* Definitions des differents types d'Elements */
 enum { ELEMENT_TYPE_NON_DEFINI,
         ELEMENT_TYPE_VAISSEAU_JOUEUR,
         ELEMENT_TYPE_ASTEROIDE,

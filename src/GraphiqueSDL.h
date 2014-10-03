@@ -47,7 +47,6 @@ typedef struct
     char *titre;
     /** Pointeur sur SDL_Surface (représente la surface d'affichage principale). */
     SDL_Surface *surface;
-
     /** Tableau de pointeurs sur SDL_Surface (toutes les images chargées du jeu). */
     SDL_Surface **images;
     /** Tableau de pointeurs sur SDL_Surface (tous les rendus (par paires) de texte du Menu (couleur normale et surligné)). */
