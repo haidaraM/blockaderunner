@@ -113,6 +113,23 @@
 #define RESS_IMG_LARGEUR_VAISSEAU_CROISEUR						286
 #define RESS_IMG_HAUTEUR_VAISSEAU_CROISEUR						91
 
+/* explosions */
+#define RESS_IMG_EXPLOSION_1                                    19
+#define RESS_IMG_FICHIER_EXPLOSION_1                            "explosion.png"
+#define RESS_IMG_LARGEUR_EXPLOSION_1                            5120
+#define RESS_IMG_HAUTEUR_EXPLOSION_1                            128
+
+#define RESS_IMG_EXPLOSION_2                                    20
+#define RESS_IMG_FICHIER_EXPLOSION_2                            "explosion2.png"
+#define RESS_IMG_LARGEUR_EXPLOSION_2                            12288
+#define RESS_IMG_HAUTEUR_EXPLOSION_2                            192
+
+#define RESS_IMG_EXPLOSION_3                                    21
+#define RESS_IMG_FICHIER_EXPLOSION_3                            "explosion3.png"
+#define RESS_IMG_LARGEUR_EXPLOSION_3                            12288
+#define RESS_IMG_HAUTEUR_EXPLOSION_3                            256
+
+
 #define RESS_IMG_SPLASH						 					32
 #define RESS_IMG_FICHIER_SPLASH									"splash0.jpg"
 #define RESS_IMG_LARGEUR_SPLASH									1366

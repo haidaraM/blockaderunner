@@ -8,19 +8,27 @@
 #ifndef _ANIMATION_H
 #define _ANIMATION_H
 
-#include "GraphiqueSDL.h"
+#include <SDL.h>
+
+#define DUREE_EXPLOSION                 1.0
+#define NB_FRAMES_EXPLOSION             42
+#define DELAI_FRAME_EXPLOSION           (DUREE_EXPLOSION / NB_FRAMES_EXPLOSION)
+#define LARGEUR_FRAME_EXPLOSION         122
+
 
 /**
-* @struct AnimationFrame
+* @struct Frame
 * @brief Constitue l'element de base d'une animation
 */
 typedef struct
 {
+    /** Partie de l'image qui sera affiché */
+    SDL_Rect decoupage;
     /** L'image à un instant t de l'animation */
     SDL_Surface * image;
-    /** Temps durant lequel l'animation sera affichée*/
-    Uint16 delai;
-} AnimationFrame;
+    /** Temps durant lequel la frame sera affichée*/
+    float delai;
+} Frame;
 
 /**
 * @struct Animation
@@ -31,7 +39,7 @@ typedef struct
     /** Nombre de frames comportant une animation */
     Uint16 nbFrames;
     /** Tableau de frames */
-    AnimationFrame * frames;
+    Frame * frames;
 } Animation;
 
 /**
@@ -51,22 +59,17 @@ typedef struct
 } Animateur;
 
 /**
-* @fn void animationInitFrame( AnimationFrame * frame, SDL_Surface * image, Uint16 delai);
+* @fn void animationInitFrame( AnimationFrame * frame, SDL_Surface * image, float delai);
 * @brief Initialise la frame
 * @param [in, out] frame
 * @param [in] image
 */
-void animationInitFrame( AnimationFrame * frame, SDL_Surface * image, Uint16 delai);
-
-/**
-* @brief Libere la frame
-*/
-void animationLibereFrame(AnimationFrame * frame);
+void animationInitFrame( Frame * frame, SDL_Surface * image, float delai);
 
 /**
 * @brief Affiche la frame
 */
-void animationAfficheFrame(AnimationFrame * frame, SDL_Surface * dest, SDL_Rect * pos);
+void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos, SDL_Rect * decoupage);
 /* ************************************************************************************************************ */
 
 /**
@@ -117,7 +120,7 @@ void animationMAJAnimateur(Animateur * ateur);
 /**
 * @brief Dessine la frame courante
 */
-void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos);
+void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos, SDL_Rect * decoupage);
 
 
 

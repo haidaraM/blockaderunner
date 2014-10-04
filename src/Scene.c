@@ -517,7 +517,7 @@ void sceneTestDeCollision(Scene *scene)
                     if(elementTestDeCollision(t, e))
                     {
                         collision = 1;
-                        /* Suppression du tir */
+                        /* Suppression du tir du joueur */
 						sceneDetruitElement(t);
                         tabDynSupprimeElement(&scene->tirs, i);
                         /* Creation des débris d'asteroide ! */

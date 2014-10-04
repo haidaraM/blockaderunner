@@ -74,6 +74,8 @@ void jeuBoucle(JeuSDL *jeu)
     EntreeSDL *entree				= &jeu->entree;
     Menu *menu						= &jeu->menu;
 
+/*    printf("delai : %f", DELAI_FRAME_EXPLOSION);*/
+
     float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
     /* Période de temps en secondes entre deux raffraichissements écran : Framerate. */
     float periodeAffichage 			= 1.0f/60.0f;
@@ -275,7 +277,8 @@ void jeuBoucle(JeuSDL *jeu)
             /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
             if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
             {
-                /* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran de sorte que les incréments soient suffisament significatifs en pixels). */
+                /* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran de sorte
+                que les incréments soient suffisament significatifs en pixels). */
                 sceneAnime(&jeu->scene, getTempsSecondes());
 
                 graphiqueEfface( graphique );
@@ -368,10 +371,12 @@ void jeuBoucle(JeuSDL *jeu)
                 {
                     /* si  on arrive à la fin du niveau, on retourne au menu */
                     jeu->etatCourantJeu = JEU_RETOUR_MENU_PRINCIPAL;
-                    /* Eventuellement (si le joueur joue son niveau max) : on met à jour la progression du  joueur & on sauve sur disque la progression du joueur */
+                    /* Eventuellement (si le joueur joue son niveau max) : on met à jour la progression du  joueur
+                    & on sauve sur disque la progression du joueur */
                     if(jeu->niveauCourant==joueurGetProgression(jeu->joueur))
                     {
-                        joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));/* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder (plus un Bonus). */
+                        /* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder (plus un Bonus). */
+                        joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));
                         joueurSetProgression(jeu->joueur);/* on avance la progression du joueur (acces au niveau suivant débloqué)*/
                         ressourceSauveJoueurs(&jeu->ressource);
                     }

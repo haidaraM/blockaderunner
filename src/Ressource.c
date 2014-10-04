@@ -137,6 +137,19 @@ void creeListeImages(Ressource *res)
     res->images[RESS_IMG_ASTEROIDE]                                 = RESS_IMG_FICHIER_ASTEROIDE;
     res->dimensionImages[RESS_IMG_ASTEROIDE].largeur                = RESS_IMG_LARGEUR_ASTEROIDE;
     res->dimensionImages[RESS_IMG_ASTEROIDE].hauteur                = RESS_IMG_HAUTEUR_ASTEROIDE;
+
+    /* images explosions */
+    res->images[RESS_IMG_EXPLOSION_1]                               = RESS_IMG_FICHIER_EXPLOSION_1;
+    res->dimensionImages[RESS_IMG_EXPLOSION_1].largeur              = RESS_IMG_LARGEUR_EXPLOSION_1;
+    res->dimensionImages[RESS_IMG_EXPLOSION_1].hauteur              = RESS_IMG_HAUTEUR_EXPLOSION_1;
+
+    res->images[RESS_IMG_EXPLOSION_2]                               = RESS_IMG_FICHIER_EXPLOSION_2;
+    res->dimensionImages[RESS_IMG_EXPLOSION_2].largeur              = RESS_IMG_LARGEUR_EXPLOSION_2;
+    res->dimensionImages[RESS_IMG_EXPLOSION_2].hauteur              = RESS_IMG_HAUTEUR_EXPLOSION_2;
+
+    res->images[RESS_IMG_EXPLOSION_3]                               = RESS_IMG_FICHIER_EXPLOSION_3;
+    res->dimensionImages[RESS_IMG_EXPLOSION_3].largeur              = RESS_IMG_LARGEUR_EXPLOSION_3;
+    res->dimensionImages[RESS_IMG_EXPLOSION_3].hauteur              = RESS_IMG_HAUTEUR_EXPLOSION_3;
 }
 
 void creeListeSons(Ressource *res)

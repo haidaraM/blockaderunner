@@ -8,47 +8,37 @@
 #include "Animation.h"
 
 
-void animationInitFrame( AnimationFrame * frame, SDL_Surface * image, Uint16 delai)
+void animationInitFrame( Frame * frame, SDL_Surface * image, float delai)
 {
     assert(frame!=NULL);
     frame->image=image;
     frame->delai=delai;
 }
 
-void animationLibereFrame(AnimationFrame * frame)
+void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos, SDL_Rect * decoupage)
 {
     assert(frame!=NULL);
-    SDL_FreeSurface(frame->image);
-}
-
-void animationAfficheFrame(AnimationFrame * frame, SDL_Surface * dest, SDL_Rect * pos)
-{
-    assert(frame!=NULL);
-    SDL_BlitSurface(frame->image, NULL, dest, pos);
+    SDL_BlitSurface(frame->image, decoupage, dest, pos);
 }
 /* *************************************************************************************** */
 
 void animationInitAnimation(Animation * anim, Uint16 nb)
 {
     assert(anim!=NULL);
-    anim->frames=(AnimationFrame *) malloc(sizeof(AnimationFrame)*nb);
+    anim->frames=(Frame *) malloc(sizeof(Frame)*nb);
     anim->nbFrames=nb;
 }
 
 void animationSetFrame(Animation * anim, Uint16 pos, SDL_Surface *surface, Uint16 delai)
 {
     assert(anim!=NULL);
-    animationLibereFrame(&anim->frames[pos]);
+    /* animationLibereFrame(&anim->frames[pos]);*/
     animationInitFrame(&anim->frames[pos], surface, delai);
 }
 
 void animationLibereAnimation(Animation * anim)
 {
-    int i;
     assert(anim!=NULL);
-    for(i=0; i<anim->nbFrames; i++)
-        animationLibereFrame(&anim->frames[i]);
-
     free(anim->frames);
 }
 
@@ -88,7 +78,7 @@ void animationNextFrame(Animateur * ateur)
 
 void animationMAJAnimateur(Animateur * ateur)
 {
-    const AnimationFrame * frame;
+    const Frame * frame;
     /* ne mettre à jour l'animation que si elle est jouée */
     if(ateur->statut == STOP)
         return ;
@@ -102,8 +92,8 @@ void animationMAJAnimateur(Animateur * ateur)
         animationNextFrame(ateur);
 }
 
-void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos)
+void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos, SDL_Rect * decoupage)
 {
-    animationAfficheFrame(&ateur->anim->frames[ateur->frameCourante], dest, pos);
+    animationAfficheFrame(&ateur->anim->frames[ateur->frameCourante], dest, pos, decoupage);
 }
 

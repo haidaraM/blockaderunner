@@ -278,6 +278,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     /* cree le rendu de la liste des noms de joueurs */
     graphiquePrepareRenduListeJoueurs(graphique, menu);
 
+    #ifdef JEU_VERBOSE
+         printf("    Elements du HUD.\n");
+    #endif
 
     /*------- Elements du HUD ---------------------------------------------*/
 
@@ -315,6 +318,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     /* init nbre de missiles */
     graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions); /* constant 4 is hard-coded no good */
 
+    /* Initialisation des explosions */
+    graphiqueInitFrameExplosion(graphique);
+
     /*------------------------------FIN------------------------------------ */
 
 #ifdef JEU_VERBOSE
@@ -327,6 +333,7 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 {
     int i;
 
+    /* Liberation des images */
     for (i=0; i< RESS_NUM_IMAGES; i++)
         if (graphique->images[i] != NULL)
             SDL_FreeSurface(graphique->images[i]);
@@ -341,6 +348,7 @@ void graphiqueLibere(GraphiqueSDL *graphique)
     }
     free(graphique->textesMenu);
 
+    /* Liberation des polices */
     TTF_CloseFont(graphique->policeMenu);
     TTF_CloseFont(graphique->policeListeJoueurs);
 
@@ -356,6 +364,9 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 
     /* SDL_image */
     IMG_Quit();
+
+    /* Animation */
+    animationLibereAnimation(&graphique->anim);
 }
 
 void graphiqueRaffraichit(GraphiqueSDL *graphique)
@@ -748,7 +759,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
             if(elementGetType(acteurs[i])==ELEMENT_TYPE_ECLAIREUR || elementGetType(acteurs[i])==ELEMENT_TYPE_CHASSEUR
                     || elementGetType(acteurs[i])==ELEMENT_TYPE_CROISEUR)
             {
-                surfacePointS=SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), 2, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
+                surfacePointS=SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), GFX_EPAISSEUR_BARRE_VIE, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
                 SDL_FillRect(surfacePointS, NULL, couleurNiveauStructure);
                 dstBox.y = dstBox.y - 4;
                 SDL_BlitSurface(surfacePointS, NULL, graphique->surface,&dstBox );
@@ -896,3 +907,31 @@ void graphiqueAfficheVictoire(GraphiqueSDL * graphique)
     SDL_Delay(10000);
 }
 
+void graphiqueInitFrameExplosion(GraphiqueSDL * graphique)
+{
+
+    int i;
+    SDL_Rect decoupage;
+
+     #ifdef JEU_VERBOSE
+         printf("    Initialisation des explosions (Animation) .\n");
+    #endif
+
+    /* creation du tableau de frames */
+    animationInitAnimation(&graphique->anim, NB_FRAMES_EXPLOSION);
+    /* parametres de decoupage */
+    decoupage.x=0;
+    decoupage.y=0;
+    decoupage.h=RESS_IMG_HAUTEUR_EXPLOSION_1;
+    decoupage.w=LARGEUR_FRAME_EXPLOSION;
+
+    for(i=0; i<NB_FRAMES_EXPLOSION; i++)
+    {
+        /*animationInitFrame(&graphique->anim.frames[i], graphique->images[RESS_IMG_EXPLOSION_1], DELAI_FRAME_EXPLOSION);*/
+        animationSetFrame(&graphique->anim, i, graphique->images[RESS_IMG_EXPLOSION_1],DELAI_FRAME_EXPLOSION );
+
+        decoupage.x = LARGEUR_FRAME_EXPLOSION*i;
+        graphique->anim.frames[i].decoupage=decoupage;
+    }
+
+}

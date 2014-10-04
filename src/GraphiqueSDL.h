@@ -15,6 +15,7 @@
 #include "Menu.h"
 #include "Scene.h"
 #include "Ressource.h"
+#include "Animation.h"
 
 #define GFX_MODE_FULLSCREEN 				0
 #define GFX_MODE_FENETRE	 				1
@@ -25,7 +26,7 @@
 #define GFX_HUD_ELEMENT_HAUTEUR				6
 #define GFX_HUD_ELEMENT_OFFSET				2
 
-
+#define GFX_EPAISSEUR_BARRE_VIE             2
 
 /**
 * @struct GraphiqueSDL
@@ -59,6 +60,8 @@ typedef struct
     TTF_Font *policeMenu;
     /** police pour la liste des joueurs */
     TTF_Font *policeListeJoueurs;
+    /** Animation : explosion */
+    Animation anim;
 
     /* Utilisé en interne par SDL lors de la création de Surfaces. */
     Uint32 rmask, gmask, bmask, amask;
@@ -178,6 +181,11 @@ void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique);
 * @param [in,out] graphique : initialisé
 */
 void graphiqueAfficheVictoire(GraphiqueSDL * graphique);
+
+/**
+* @brief Initialise les explosions
+*/
+void graphiqueInitFrameExplosion(GraphiqueSDL * graphique);
 
 #endif
 
