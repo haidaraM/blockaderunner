@@ -1,7 +1,7 @@
 /**
 * @file Outils.h
 * @brief Boîte à outils : tableau dynamique, timer, nombres aléatoires, etc ...
-* @author Yann Cortial
+* @author Yann Cortial - Mohamed El Mouctar HAIDARA
 */
 #ifndef _OUTILS_H
 #define _OUTILS_H

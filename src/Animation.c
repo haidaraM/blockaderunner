@@ -15,10 +15,10 @@ void animationInitFrame( Frame * frame, SDL_Surface * image, float delai)
     frame->delai=delai;
 }
 
-void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos, SDL_Rect * decoupage)
+void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos)
 {
     assert(frame!=NULL);
-    SDL_BlitSurface(frame->image, decoupage, dest, pos);
+    SDL_BlitSurface(frame->image, &frame->decoupage, dest, pos);
 }
 /* *************************************************************************************** */
 
@@ -29,10 +29,9 @@ void animationInitAnimation(Animation * anim, Uint16 nb)
     anim->nbFrames=nb;
 }
 
-void animationSetFrame(Animation * anim, Uint16 pos, SDL_Surface *surface, Uint16 delai)
+void animationSetFrame(Animation * anim, Uint16 pos, SDL_Surface *surface, float delai)
 {
     assert(anim!=NULL);
-    /* animationLibereFrame(&anim->frames[pos]);*/
     animationInitFrame(&anim->frames[pos], surface, delai);
 }
 
@@ -42,6 +41,7 @@ void animationLibereAnimation(Animation * anim)
     free(anim->frames);
 }
 
+/* ********************************************************************************** */
 void animationInitAnimateur(Animateur * ateur, Animation *anim)
 {
     assert(ateur!=NULL && anim!=NULL);
@@ -70,15 +70,16 @@ void animationRewindAnimation(Animateur * ateur)
 
 void animationNextFrame(Animateur * ateur)
 {
+    ateur->frameCourante++;
     /* Retour à la frame 0 si nous sommes à la dernière */
-   if (++ateur->frameCourante == ateur->anim->nbFrames)
+   if (ateur->frameCourante == ateur->anim->nbFrames)
         ateur->frameCourante = 0;
    ateur->compteur = 0;
 }
 
 void animationMAJAnimateur(Animateur * ateur)
 {
-    const Frame * frame;
+    Frame * frame;
     /* ne mettre à jour l'animation que si elle est jouée */
     if(ateur->statut == STOP)
         return ;
@@ -86,14 +87,14 @@ void animationMAJAnimateur(Animateur * ateur)
     frame = &ateur->anim->frames[ateur->frameCourante];
     if(frame->delai == 0)
         return;
-
+    ateur->compteur+=0.01;
     /* passage à la frame suivante */
-    if (++ateur->compteur == frame->delai)
+    if (ateur->compteur >= frame->delai)
         animationNextFrame(ateur);
 }
 
-void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos, SDL_Rect * decoupage)
+void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos)
 {
-    animationAfficheFrame(&ateur->anim->frames[ateur->frameCourante], dest, pos, decoupage);
+    animationAfficheFrame(&ateur->anim->frames[ateur->frameCourante], dest, pos);
 }
 

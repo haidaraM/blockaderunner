@@ -3,7 +3,7 @@
 * @brief Le module GraphiqueSDL gère l'affichage avec l'aide de SDL : fenêtre principale, double-buffering, bliting d'images.
 * Le module GraphiqueSDL interface avec SDL et SDL_image.
 * Résolution de la fenêtre principale : 1366 x 720 px.
-* @author Yann Cortial - Mohamed El Mouctar HAIDARA
+* @author Yann Cortial
 */
 #ifndef _GRAPHIQUE_SDL_H
 #define _GRAPHIQUE_SDL_H
@@ -60,8 +60,8 @@ typedef struct
     TTF_Font *policeMenu;
     /** police pour la liste des joueurs */
     TTF_Font *policeListeJoueurs;
-    /** Animation : explosion */
-    Animation anim;
+    /** Animateur : c'est lui qui se chargera de jouer les animations et les arreter si necessaires */
+    Animateur animateur;
 
     /* Utilisé en interne par SDL lors de la création de Surfaces. */
     Uint32 rmask, gmask, bmask, amask;
@@ -185,7 +185,7 @@ void graphiqueAfficheVictoire(GraphiqueSDL * graphique);
 /**
 * @brief Initialise les explosions
 */
-void graphiqueInitFrameExplosion(GraphiqueSDL * graphique);
+void graphiqueInitAnimation(GraphiqueSDL * graphique, Animation * monAnimation);
 
 #endif
 

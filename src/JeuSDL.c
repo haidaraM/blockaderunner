@@ -74,12 +74,12 @@ void jeuBoucle(JeuSDL *jeu)
     EntreeSDL *entree				= &jeu->entree;
     Menu *menu						= &jeu->menu;
 
-/*    printf("delai : %f", DELAI_FRAME_EXPLOSION);*/
 
     float tempsDernierAffichage, tempsDernierDefilementScene, dureeBoucle, debutBoucle;
     /* Période de temps en secondes entre deux raffraichissements écran : Framerate. */
     float periodeAffichage 			= 1.0f/60.0f;
     float periodeDefilementScene 	= 1.0f/24.0f;
+    float delaiFrame                = DELAI_FRAME_EXPLOSION;
 
     graphiqueRaffraichit(graphique);
 
@@ -274,7 +274,7 @@ void jeuBoucle(JeuSDL *jeu)
 
         case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
 
-            /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
+            /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche et anime. */
             if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
             {
                 /* On anime la scène à intervalles réguliers (correspondant au rafraichissement de l'ecran de sorte

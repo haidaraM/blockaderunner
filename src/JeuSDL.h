@@ -37,15 +37,15 @@ typedef struct
     AudioFMOD audio;
     /** Initialise et gère les évènements (clavier, souris ..). */
     EntreeSDL entree;
-    /** Menu principal */
+    /** Menu : menu principal, menu pause */
     Menu menu;
-    /** Scène (ce qui est visible à l'écran et au-delà : instancie le contenu du Niveau). */
+    /** Scène (ce qui est visible à l'écran et au-delà : sauvegarde le contenu du Niveau). */
     Scene scene;
     /** Joueur courant (sélectionné par le Menu). */
     Joueur *joueur;
     /** Répertorie les ressources du jeu (images, sons, polices). */
     Ressource ressource;
-    /** Phase courante = JEU_ETAT_MENU ou JEU_ETAT_NIVEAU ou JEU_RETOUR_MENU ou JEU_ETAT_JEU. */
+    /** Phase courante = JEU_ETAT_MENU_PRINCIPAL ou JEU_RETOUR_MENU_PRINCIPAL ou JEU_ETAT_JEU ... */
     int etatCourantJeu;
     /** Niveau en cours ou à charger */
     int niveauCourant;

@@ -122,6 +122,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     SDL_Color couleurTexteVictoire      = {255, 238, 47}; /* couleur jaunatre*/
     Uint32 couleurNiveauStructure		= 0x00B0FF; /* jaunatre */
     Uint32 couleurNiveauEcran			= 0xFFB000; /* bleu */
+    Animation * monAnimation            =NULL;
 
     assert( graphique != NULL && ressource != NULL && menu != NULL && largeur > 0 && hauteur > 0 );
 
@@ -318,8 +319,12 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     /* init nbre de missiles */
     graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions); /* constant 4 is hard-coded no good */
 
-    /* Initialisation des explosions */
-    graphiqueInitFrameExplosion(graphique);
+    /* Initialisation des animations */
+    monAnimation=(Animation *) malloc(sizeof(Animation));
+
+    graphiqueInitAnimation(graphique, monAnimation);
+
+    animationInitAnimateur(&graphique->animateur, monAnimation);
 
     /*------------------------------FIN------------------------------------ */
 
@@ -366,7 +371,8 @@ void graphiqueLibere(GraphiqueSDL *graphique)
     IMG_Quit();
 
     /* Animation */
-    animationLibereAnimation(&graphique->anim);
+    animationLibereAnimation(graphique->animateur.anim);
+    free(graphique->animateur.anim);
 }
 
 void graphiqueRaffraichit(GraphiqueSDL *graphique)
@@ -689,7 +695,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
 {
     int i;
-    SDL_Rect srcBox, dstBox, vBox;
+    SDL_Rect srcBox, dstBox, vBox, position;
     ElementScene **acteurs 	= (ElementScene **)scene->acteurs.tab;
     ElementScene **tirs 	= (ElementScene **)scene->tirs.tab;
     ElementScene **bonus 	= (ElementScene **)scene->bonus.tab;
@@ -705,7 +711,17 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
     srcBox.w		= scene->rectangleImageFond.largeur;
     srcBox.h		= scene->rectangleImageFond.hauteur;
     SDL_BlitSurface( graphique->images[scene->indexImageFond], &srcBox, graphique->surface, NULL);
-
+/*
+    for(i=0; i<NB_FRAMES_EXPLOSION; i++)
+    {
+        position.x=50;
+        position.y=50;
+        animationAfficheFrame(&graphique->animateur.anim->frames[i], graphique->surface, &position);
+        SDL_Flip(graphique->surface);
+        graphiqueEfface( graphique );
+        SDL_Delay(100);
+    }
+*/
 
     /* affichage des decors */
     for (i=0; i< sceneGetNbDecors(scene); i++)
@@ -907,7 +923,7 @@ void graphiqueAfficheVictoire(GraphiqueSDL * graphique)
     SDL_Delay(10000);
 }
 
-void graphiqueInitFrameExplosion(GraphiqueSDL * graphique)
+void graphiqueInitAnimation(GraphiqueSDL * graphique, Animation * monAnimation)
 {
 
     int i;
@@ -918,9 +934,8 @@ void graphiqueInitFrameExplosion(GraphiqueSDL * graphique)
     #endif
 
     /* creation du tableau de frames */
-    animationInitAnimation(&graphique->anim, NB_FRAMES_EXPLOSION);
+    animationInitAnimation(monAnimation, NB_FRAMES_EXPLOSION);
     /* parametres de decoupage */
-    decoupage.x=0;
     decoupage.y=0;
     decoupage.h=RESS_IMG_HAUTEUR_EXPLOSION_1;
     decoupage.w=LARGEUR_FRAME_EXPLOSION;
@@ -928,10 +943,9 @@ void graphiqueInitFrameExplosion(GraphiqueSDL * graphique)
     for(i=0; i<NB_FRAMES_EXPLOSION; i++)
     {
         /*animationInitFrame(&graphique->anim.frames[i], graphique->images[RESS_IMG_EXPLOSION_1], DELAI_FRAME_EXPLOSION);*/
-        animationSetFrame(&graphique->anim, i, graphique->images[RESS_IMG_EXPLOSION_1],DELAI_FRAME_EXPLOSION );
-
+        animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_1],DELAI_FRAME_EXPLOSION );
         decoupage.x = LARGEUR_FRAME_EXPLOSION*i;
-        graphique->anim.frames[i].decoupage=decoupage;
+        monAnimation->frames[i].decoupage=decoupage;
     }
 
 }

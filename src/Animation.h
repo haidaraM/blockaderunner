@@ -10,10 +10,10 @@
 
 #include <SDL.h>
 
-#define DUREE_EXPLOSION                 1.0
-#define NB_FRAMES_EXPLOSION             42
+#define DUREE_EXPLOSION                 1.02f
+#define NB_FRAMES_EXPLOSION             34
 #define DELAI_FRAME_EXPLOSION           (DUREE_EXPLOSION / NB_FRAMES_EXPLOSION)
-#define LARGEUR_FRAME_EXPLOSION         122
+#define LARGEUR_FRAME_EXPLOSION         128
 
 
 /**
@@ -32,7 +32,7 @@ typedef struct
 
 /**
 * @struct Animation
-* @brief Regroupement d'AnimationFrame pour former une animation
+* @brief Regroupement de Frame pour former une animation
 */
 typedef struct
 {
@@ -49,13 +49,13 @@ typedef struct
 typedef struct
 {
     /** Reference vers l'animation qui sera jouée*/
-    const Animation * anim;
+    Animation * anim;
     /** Etat de l'animation */
     enum {STOP, PLAY} statut;
     /** Indice de la frame courante de l'animation */
     Uint16 frameCourante;
     /** Temps ecoulé depuis l'apparition de la frame courante */
-    Uint16 compteur;
+    float compteur;
 } Animateur;
 
 /**
@@ -69,7 +69,7 @@ void animationInitFrame( Frame * frame, SDL_Surface * image, float delai);
 /**
 * @brief Affiche la frame
 */
-void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos, SDL_Rect * decoupage);
+void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos);
 /* ************************************************************************************************************ */
 
 /**
@@ -85,7 +85,7 @@ void animationLibereAnimation(Animation * anim);
 /**
 * @brief Affecte une surface et un délai à une frame donnée
 */
-void animationSetFrame(Animation * anim, Uint16 pos, SDL_Surface *surface, Uint16 delai);
+void animationSetFrame(Animation * anim, Uint16 pos, SDL_Surface *surface, float delai);
 /* ********************************************************************************************************* */
 /**
 * @brief Initialise l'animateur
@@ -120,7 +120,7 @@ void animationMAJAnimateur(Animateur * ateur);
 /**
 * @brief Dessine la frame courante
 */
-void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos, SDL_Rect * decoupage);
+void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos);
 
 
 

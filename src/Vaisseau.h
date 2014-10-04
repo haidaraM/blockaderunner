@@ -8,11 +8,6 @@
 #define _VAISSEAU_H
 
 
-
-
-
-
-
 /* Caracteristiques du vaisseau joueur*/
 #define VAISSEAU_JOUEUR_TYPE                            1
 #define JOUEUR_NB_ARMES                                 2
@@ -77,7 +72,7 @@ typedef struct
 
 /**
 * @struct Vaisseau
-* @brief Represente les differents vaisseaux présents dans le jeu
+* @brief Represente un des differents vaisseaux présents dans le jeu
 */
 typedef struct
 {
