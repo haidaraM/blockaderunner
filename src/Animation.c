@@ -65,16 +65,19 @@ void animationRewindAnimation(Animateur * ateur)
 {
     ateur->frameCourante = 0;
     ateur->compteur = 0;
-    animationStopAnimation(ateur);
+    /*animationStopAnimation(ateur);*/
 }
 
 void animationNextFrame(Animateur * ateur)
 {
     ateur->frameCourante++;
     /* Retour à la frame 0 si nous sommes à la dernière */
-   if (ateur->frameCourante == ateur->anim->nbFrames)
+    if (ateur->frameCourante == ateur->anim->nbFrames)
+    {
         ateur->frameCourante = 0;
-   ateur->compteur = 0;
+       /* ateur->statut=STOP; */
+    }
+    ateur->compteur = 0;
 }
 
 void animationMAJAnimateur(Animateur * ateur)

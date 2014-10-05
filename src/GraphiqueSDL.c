@@ -700,6 +700,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
     ElementScene **tirs 	= (ElementScene **)scene->tirs.tab;
     ElementScene **bonus 	= (ElementScene **)scene->bonus.tab;
     ElementScene **decors 	= (ElementScene **)scene->decors.tab;
+    PositionExplosion ** explosions = (PositionExplosion **) scene->explosions.tab;
     SDL_Surface * surfacePointS;
     Uint32 couleurPointsDefilement = SDL_MapRGB(graphique->surface->format, 0xd0, 0xff, 0xff);
 
@@ -777,12 +778,19 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
             {
                 surfacePointS=SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), GFX_EPAISSEUR_BARRE_VIE, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
                 SDL_FillRect(surfacePointS, NULL, couleurNiveauStructure);
-                dstBox.y = dstBox.y - 4;
+                dstBox.y -= 4;
                 SDL_BlitSurface(surfacePointS, NULL, graphique->surface,&dstBox );
                 SDL_FreeSurface(surfacePointS);
             }
-
         }
+    }
+    /* affichage des explosions */
+    for(i=0; i<sceneGetNbExplosions(scene); i++)
+    {
+        dstBox.x = explosions[i]->x;
+        dstBox.y = explosions[i]->y;
+        animationBlitFrame(&graphique->animateur, graphique->surface, &dstBox);
+        animationMAJAnimateur(&graphique->animateur);
     }
 
     /* affiche du vaisseau joueur */
@@ -939,8 +947,6 @@ void graphiqueInitAnimation(GraphiqueSDL * graphique, Animation * monAnimation)
     decoupage.y=0;
     decoupage.h=RESS_IMG_HAUTEUR_EXPLOSION_1;
     decoupage.w=HAUTEUR_FRAME_EXPLOSION;
-
-    printf("Hauteur : %d\n", decoupage.w);
 
     for(i=0; i<NB_FRAMES_EXPLOSION; i++)
     {

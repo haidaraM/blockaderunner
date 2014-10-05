@@ -36,7 +36,7 @@
 
 /**
 * @struct EvenementScene
-* @brief Structure qui représente les évènements survenants sur la scène.
+* @brief Structure utilisée en interne qui représente les évènements survenants sur la scène.
 * Utile pour jouer les sons
 */
 typedef struct
@@ -63,8 +63,24 @@ typedef struct
 } EvenementScene;
 
 /**
+* @struct PositionExplosion
+* @brief Structure utilisée en interne pour sauvegarder les positions des ennemis detruits.
+* Utile pour afficher les explosions après la destruction
+*/
+typedef struct
+{
+    /** type de l'element detruit **/
+    int type;
+    /** position x de l'element detruit */
+    int x;
+    /** position y de l'element detruit */
+    int y;
+
+} PositionExplosion;
+
+/**
 * @struct Scene
-* @brief Structure qui représente tous les éléments de la scène : asteroides, debris, bonus, vaisseaux, tirs, decors,etc.
+* @brief Structure principale qui représente tous les éléments de la scène : asteroides, debris, bonus, vaisseaux, tirs, decors,etc.
 */
 typedef struct
 {
@@ -96,6 +112,8 @@ typedef struct
     Joueur *joueur;
     /** pointeur vers l'instance du module Ressource : utile pour créer des elements. */
     Ressource *ressource;
+    /** Tableau des positions des elements detruits notamment les vaisseaux ennemis **/
+    TabDyn explosions;
 
 } Scene;
 
@@ -170,6 +188,19 @@ int sceneGetNbBonus(const Scene * scene);
 * @param [in] scene : initialisé
 */
 int sceneGetNbDecors(const Scene * scene);
+
+/**
+* @brief recupere les elements de l'elementScene pour PositionExplosion
+*/
+void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element);
+
+/**
+* @fn int sceneGetNbExplosions(const Scene * scene)
+* @brief renvoie le nombre d'explosions à effectuer c'est à dire le nombre de vaisseaux detruits.
+* @param [in] scene : initialisé
+*/
+int sceneGetNbExplosions(const Scene * scene);
+
 
 /**
 * @fn void sceneAnime(Scene *scene, float tempsSecondes)
