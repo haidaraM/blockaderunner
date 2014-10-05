@@ -122,7 +122,6 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     SDL_Color couleurTexteVictoire      = {255, 238, 47}; /* couleur jaunatre*/
     Uint32 couleurNiveauStructure		= 0x00B0FF; /* jaunatre */
     Uint32 couleurNiveauEcran			= 0xFFB000; /* bleu */
-    Animation * monAnimation            =NULL;
 
     assert( graphique != NULL && ressource != NULL && menu != NULL && largeur > 0 && hauteur > 0 );
 
@@ -320,11 +319,10 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions); /* constant 4 is hard-coded no good */
 
     /* Initialisation des animations */
-    monAnimation=(Animation *) malloc(sizeof(Animation));
+    graphique->lesExplosions=(Animation *) malloc(sizeof(Animation));
+    graphiqueInitAnimation(graphique, graphique->lesExplosions);
 
-    graphiqueInitAnimation(graphique, monAnimation);
-
-    animationInitAnimateur(&graphique->animateur, monAnimation);
+    animationInitAnimateur(&graphique->animateur, graphique->lesExplosions);
 
     /*------------------------------FIN------------------------------------ */
 
@@ -372,7 +370,9 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 
     /* Animation */
     animationLibereAnimation(graphique->animateur.anim);
-    free(graphique->animateur.anim);
+
+    free(graphique->lesExplosions);
+
 }
 
 void graphiqueRaffraichit(GraphiqueSDL *graphique)
@@ -700,7 +700,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
     ElementScene **tirs 	= (ElementScene **)scene->tirs.tab;
     ElementScene **bonus 	= (ElementScene **)scene->bonus.tab;
     ElementScene **decors 	= (ElementScene **)scene->decors.tab;
-    PositionExplosion ** explosions = (PositionExplosion **) scene->explosions.tab;
+    PositionExplosion ** explosions = (PositionExplosion **) scene->positionsExplosions.tab;
     SDL_Surface * surfacePointS;
     Uint32 couleurPointsDefilement = SDL_MapRGB(graphique->surface->format, 0xd0, 0xff, 0xff);
 
@@ -778,19 +778,22 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
             {
                 surfacePointS=SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), GFX_EPAISSEUR_BARRE_VIE, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
                 SDL_FillRect(surfacePointS, NULL, couleurNiveauStructure);
-                dstBox.y -= 4;
+                dstBox.y -= 4; /* decalage de la barre de vie */
                 SDL_BlitSurface(surfacePointS, NULL, graphique->surface,&dstBox );
                 SDL_FreeSurface(surfacePointS);
             }
         }
     }
+
+    graphiqueAlloueAnimateur(graphique, scene);
+
     /* affichage des explosions */
     for(i=0; i<sceneGetNbExplosions(scene); i++)
     {
-        dstBox.x = explosions[i]->x;
-        dstBox.y = explosions[i]->y;
-        animationBlitFrame(&graphique->animateur, graphique->surface, &dstBox);
-        animationMAJAnimateur(&graphique->animateur);
+        dstBox.x = explosions[i]->x-40;
+        dstBox.y = explosions[i]->y-40;
+        animationBlitFrame(explosions[i]->ateur, graphique->surface, &dstBox);
+        animationMAJAnimateur(explosions[i]->ateur);
     }
 
     /* affiche du vaisseau joueur */
@@ -942,18 +945,33 @@ void graphiqueInitAnimation(GraphiqueSDL * graphique, Animation * monAnimation)
     #endif
 
     /* creation du tableau de frames */
-    animationInitAnimation(monAnimation, NB_FRAMES_EXPLOSION);
+    animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_1);
     /* parametres de decoupage */
     decoupage.y=0;
     decoupage.h=RESS_IMG_HAUTEUR_EXPLOSION_1;
-    decoupage.w=HAUTEUR_FRAME_EXPLOSION;
+    decoupage.w=ANIMATION_HAUTEUR_FRAME_EXPLOSION_1;
 
-    for(i=0; i<NB_FRAMES_EXPLOSION; i++)
+    for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_1; i++)
     {
         /*animationInitFrame(&graphique->anim.frames[i], graphique->images[RESS_IMG_EXPLOSION_1], DELAI_FRAME_EXPLOSION);*/
-        animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_1],DELAI_FRAME_EXPLOSION );
-        decoupage.x = HAUTEUR_FRAME_EXPLOSION*i;
+        animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_1],ANIMATION_DELAI_FRAME_EXPLOSION_1 );
+        decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_1*i;
         monAnimation->frames[i].decoupage=decoupage;
     }
 
+}
+
+void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene)
+{
+    int i;
+    for(i=0; i<sceneGetNbExplosions(scene); i++)
+    {
+        PositionExplosion * e = (PositionExplosion *) tabDynGetElement(&scene->positionsExplosions,i );
+        /* s'il n'a pas eté encore cree on le cree */
+        if(e->ateur==NULL)
+        {
+            e->ateur = (Animateur *) malloc(sizeof(Animateur));
+            animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions);
+        }
+    }
 }

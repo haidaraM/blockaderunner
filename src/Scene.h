@@ -75,6 +75,8 @@ typedef struct
     int x;
     /** position y de l'element detruit */
     int y;
+    /** Pointeur generique qui contiendra l'animateur */
+    void *ateur;
 
 } PositionExplosion;
 
@@ -113,7 +115,7 @@ typedef struct
     /** pointeur vers l'instance du module Ressource : utile pour créer des elements. */
     Ressource *ressource;
     /** Tableau des positions des elements detruits notamment les vaisseaux ennemis **/
-    TabDyn explosions;
+    TabDyn positionsExplosions;
 
 } Scene;
 

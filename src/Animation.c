@@ -65,7 +65,7 @@ void animationRewindAnimation(Animateur * ateur)
 {
     ateur->frameCourante = 0;
     ateur->compteur = 0;
-    /*animationStopAnimation(ateur);*/
+    animationJoueAnimation(ateur);
 }
 
 void animationNextFrame(Animateur * ateur)
@@ -75,7 +75,7 @@ void animationNextFrame(Animateur * ateur)
     if (ateur->frameCourante == ateur->anim->nbFrames)
     {
         ateur->frameCourante = 0;
-       /* ateur->statut=STOP; */
+       ateur->statut=STOP;
     }
     ateur->compteur = 0;
 }
@@ -88,9 +88,9 @@ void animationMAJAnimateur(Animateur * ateur)
         return ;
 
     frame = &ateur->anim->frames[ateur->frameCourante];
-    if(frame->delai == 0)
-        return;
-    ateur->compteur += 0.01;
+  /*  if(frame->delai == 0)
+        return; */
+    ateur->compteur += VITESSE_AFFICHAGE_EXPLOSION;
     /* passage à la frame suivante */
     if (ateur->compteur >= frame->delai)
         animationNextFrame(ateur);
@@ -98,6 +98,7 @@ void animationMAJAnimateur(Animateur * ateur)
 
 void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos)
 {
-    animationAfficheFrame(&ateur->anim->frames[ateur->frameCourante], dest, pos);
+    if(ateur->statut == PLAY)
+        animationAfficheFrame(&ateur->anim->frames[ateur->frameCourante], dest, pos);
 }
 

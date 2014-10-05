@@ -60,7 +60,11 @@ typedef struct
     TTF_Font *policeMenu;
     /** police pour la liste des joueurs */
     TTF_Font *policeListeJoueurs;
-    /** Animateur : c'est lui qui se chargera de jouer les animations et les arreter si necessaires */
+
+    /** tableau des differentes animations */
+    Animation * lesExplosions;
+
+    /* usage interne pour les tests */
     Animateur animateur;
 
     /* Utilisé en interne par SDL lors de la création de Surfaces. */
@@ -186,6 +190,12 @@ void graphiqueAfficheVictoire(GraphiqueSDL * graphique);
 * @brief Initialise les explosions
 */
 void graphiqueInitAnimation(GraphiqueSDL * graphique, Animation * monAnimation);
+
+/**
+* @brief
+*/
+void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene);
+
 
 #endif
 

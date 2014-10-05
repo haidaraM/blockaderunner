@@ -29,9 +29,9 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
     tabDynInit(&scene->tirs);
     tabDynInit(&scene->bonus);
     tabDynInit(&scene->decors);
-    tabDynInit(&scene->explosions);
+    tabDynInit(&scene->positionsExplosions);
 
-    assert( scene->acteurs.tab != NULL && scene->tirs.tab != NULL && scene->bonus.tab != NULL && scene->decors.tab != NULL && scene->explosions.tab != NULL);
+    assert( scene->acteurs.tab != NULL && scene->tirs.tab != NULL && scene->bonus.tab != NULL && scene->decors.tab != NULL && scene->positionsExplosions.tab != NULL);
 
 
     /* Initialisation des points de défilement */
@@ -57,6 +57,7 @@ void sceneLibere(Scene *scene)
 {
     int i;
     ElementScene *e;
+    PositionExplosion *pos;
     assert( scene != NULL);
 
     /* lbération des points de défilement. */
@@ -106,11 +107,14 @@ void sceneLibere(Scene *scene)
     }
     tabDynLibere(&scene->decors);
 
+
     for(i=0; i<sceneGetNbExplosions(scene); i++)
     {
-        free(scene->explosions.tab[i]);
+        pos=(PositionExplosion *) tabDynGetElement(&scene->positionsExplosions, i);
+        free(pos->ateur);
+        free(pos);
     }
-    tabDynLibere(&scene->explosions);
+    tabDynLibere(&scene->positionsExplosions);
 
     /* Liberation du vaisseauJoueur */
     sceneDetruitElement(scene->elementVaisseauJoueur);
@@ -564,9 +568,11 @@ void sceneTestDeCollision(Scene *scene)
                         /* Cas où le vaisseau ennemi est détruit */
                         if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                         {
+                            /* sauvegarde de la position de la destruction */
                             PositionExplosion *posEx=(PositionExplosion *)malloc(sizeof(PositionExplosion));
+                            posEx->ateur=NULL;
                             sceneGetDataElement(posEx, e);
-                            tabDynAjoute(&scene->explosions, (void *) posEx);
+                            tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
 
                             sceneCreeBonusEventuel(scene, e);
 
@@ -639,9 +645,11 @@ void sceneTestDeCollision(Scene *scene)
                             /* Cas où le vaisseau ennemi est détruit */
                             if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                             {
+                                /* sauvegarde de la position de la destruction */
                                 PositionExplosion *posEx=(PositionExplosion *)malloc(sizeof(PositionExplosion));
+                                posEx->ateur=NULL;
                                 sceneGetDataElement(posEx, e);
-                                tabDynAjoute(&scene->explosions, (void *) posEx);
+                                tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
 
                                 sceneCreeBonusEventuel(scene, e);
 
@@ -735,7 +743,7 @@ int sceneGetNbDecors(const Scene * scene)
 }
 int sceneGetNbExplosions(const Scene * scene)
 {
-    return scene->explosions.tailleUtilisee;
+    return scene->positionsExplosions.tailleUtilisee;
 }
 
 
