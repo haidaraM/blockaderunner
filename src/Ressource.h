@@ -116,7 +116,7 @@
 /* explosions */
 #define RESS_IMG_EXPLOSION_1                                    19
 #define RESS_IMG_FICHIER_EXPLOSION_1                            "explosion.png"
-#define RESS_IMG_LARGEUR_EXPLOSION_1                            5120
+#define RESS_IMG_LARGEUR_EXPLOSION_1                            4386
 #define RESS_IMG_HAUTEUR_EXPLOSION_1                            128
 
 #define RESS_IMG_EXPLOSION_2                                    20

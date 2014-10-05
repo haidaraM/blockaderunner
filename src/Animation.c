@@ -87,7 +87,7 @@ void animationMAJAnimateur(Animateur * ateur)
     frame = &ateur->anim->frames[ateur->frameCourante];
     if(frame->delai == 0)
         return;
-    ateur->compteur+=0.01;
+    ateur->compteur += 0.01;
     /* passage à la frame suivante */
     if (ateur->compteur >= frame->delai)
         animationNextFrame(ateur);

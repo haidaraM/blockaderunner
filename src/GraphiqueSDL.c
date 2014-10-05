@@ -695,7 +695,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
 {
     int i;
-    SDL_Rect srcBox, dstBox, vBox, position;
+    SDL_Rect srcBox, dstBox, vBox;
     ElementScene **acteurs 	= (ElementScene **)scene->acteurs.tab;
     ElementScene **tirs 	= (ElementScene **)scene->tirs.tab;
     ElementScene **bonus 	= (ElementScene **)scene->bonus.tab;
@@ -938,13 +938,15 @@ void graphiqueInitAnimation(GraphiqueSDL * graphique, Animation * monAnimation)
     /* parametres de decoupage */
     decoupage.y=0;
     decoupage.h=RESS_IMG_HAUTEUR_EXPLOSION_1;
-    decoupage.w=LARGEUR_FRAME_EXPLOSION;
+    decoupage.w=HAUTEUR_FRAME_EXPLOSION;
+
+    printf("Hauteur : %d\n", decoupage.w);
 
     for(i=0; i<NB_FRAMES_EXPLOSION; i++)
     {
         /*animationInitFrame(&graphique->anim.frames[i], graphique->images[RESS_IMG_EXPLOSION_1], DELAI_FRAME_EXPLOSION);*/
         animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_1],DELAI_FRAME_EXPLOSION );
-        decoupage.x = LARGEUR_FRAME_EXPLOSION*i;
+        decoupage.x = HAUTEUR_FRAME_EXPLOSION*i;
         monAnimation->frames[i].decoupage=decoupage;
     }
 

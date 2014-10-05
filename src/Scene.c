@@ -204,7 +204,7 @@ int sceneDefileScene(Scene *scene)
 
 void sceneAnime(Scene *scene, float tempsSecondes)
 {
-    int i, dx, x, y, dy, deltaJoueurEnnemi, typeElement, test;
+    int i, dx, x, y, dy, deltaJoueurEnnemi, typeElement;
     float dt 	= tempsSecondes - scene->horlogePrecedente;
     ElementScene * e=NULL;
 
@@ -301,15 +301,12 @@ void sceneAnime(Scene *scene, float tempsSecondes)
             if(dx==0)
                 dx+=2;
             elementSetPosition(e, x+dx, y+dy);
-            printf("dx : %d\n", dx);
             /* on supprime le debris dès qu'il n'est plus visible */
             if (elementVisible(e) != 1)
             {
 				sceneDetruitElement(e);
                 tabDynSupprimeElement(&scene->acteurs, i);
             }
-           /* if(test==elementGetX(e))
-                printf("Debris n° %d. X : %d. Y : %d. VecX : %f. VecY : %f \n", i, elementGetX(e), elementGetY(e), e->vecX, e->vecY);*/
             break;
         case ELEMENT_TYPE_ECLAIREUR:
             dx = -(int)(dt * SCENE_VITESSE_ECLAIREUR);

@@ -69,6 +69,7 @@ void jeuBoucle(JeuSDL *jeu)
     Niveau niveau;
     int sonTir=-1; /* Variable utilisée pour jouer un son lors d'un tir */
     Joueur * copieJoueur=NULL;
+    SDL_Rect myPos;
 
     GraphiqueSDL *graphique	 		= &jeu->graphique;
     EntreeSDL *entree				= &jeu->entree;
@@ -79,13 +80,14 @@ void jeuBoucle(JeuSDL *jeu)
     /* Période de temps en secondes entre deux raffraichissements écran : Framerate. */
     float periodeAffichage 			= 1.0f/60.0f;
     float periodeDefilementScene 	= 1.0f/24.0f;
-    float delaiFrame                = DELAI_FRAME_EXPLOSION;
 
     graphiqueRaffraichit(graphique);
 
     tempsDernierAffichage			= getTempsSecondes();
     dureeBoucle	 					= 0.0f;
 
+    myPos.x=50;
+    myPos.y=50;
 
     /***************************************/
     /* Tant que ce n'est pas la fin du Jeu */
@@ -285,6 +287,10 @@ void jeuBoucle(JeuSDL *jeu)
                 /*
                 */
                 graphiqueAfficheScene( graphique, &jeu->scene );
+                 /* */
+                animationBlitFrame(&graphique->animateur, graphique->surface,&myPos);
+                animationMAJAnimateur(&graphique->animateur);
+                /* */
                 /*
                 */
                 graphiqueRaffraichit( graphique );
@@ -373,7 +379,7 @@ void jeuBoucle(JeuSDL *jeu)
                     jeu->etatCourantJeu = JEU_RETOUR_MENU_PRINCIPAL;
                     /* Eventuellement (si le joueur joue son niveau max) : on met à jour la progression du  joueur
                     & on sauve sur disque la progression du joueur */
-                    if(jeu->niveauCourant==joueurGetProgression(jeu->joueur))
+                    if(jeu->niveauCourant == joueurGetProgression(jeu->joueur))
                     {
                         /* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder (plus un Bonus). */
                         joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));
