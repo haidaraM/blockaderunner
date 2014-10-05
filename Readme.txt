@@ -80,6 +80,10 @@ Introduction
 
 						VERBOSE 	= JEU_VERBOSE				#status d'initialisation affiché sur la sortie standard.
 						#VERBOSE	= NO_VERBOSE				#aucun message sur la sortie standard hormis les messages d'erreurs éventuels.
+
+						EXPLOSION		= NO_REPETE_EXPLOSION 	#Permet de ne pas repeter les animations sur la scene
+						#EXPLOSION  	= REPETE_EXPLOSION 		#Perment de repeter les animations. Plus amusant
+
 					
 				Lancer la compilation avec :
 

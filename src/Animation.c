@@ -75,7 +75,10 @@ void animationNextFrame(Animateur * ateur)
     if (ateur->frameCourante == ateur->anim->nbFrames)
     {
         ateur->frameCourante = 0;
-       ateur->statut=STOP;
+        /* Definissez la macro REPETE_EXPLOSION pour desactiver les animations cycliques */
+        #ifdef NO_REPETE_EXPLOSION
+        ateur->statut=STOP;
+        #endif /* REPETE_EXPLOSION */
     }
     ateur->compteur = 0;
 }
@@ -88,8 +91,8 @@ void animationMAJAnimateur(Animateur * ateur)
         return ;
 
     frame = &ateur->anim->frames[ateur->frameCourante];
-  /*  if(frame->delai == 0)
-        return; */
+    /*  if(frame->delai == 0)
+          return; */
     ateur->compteur += VITESSE_AFFICHAGE_EXPLOSION;
     /* passage à la frame suivante */
     if (ateur->compteur >= frame->delai)

@@ -192,7 +192,10 @@ int sceneGetNbBonus(const Scene * scene);
 int sceneGetNbDecors(const Scene * scene);
 
 /**
+* @fn void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element)
 * @brief recupere les elements de l'elementScene pour PositionExplosion
+* @param [in,out] pos
+* @param [in] element : initialisé
 */
 void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element);
 

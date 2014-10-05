@@ -62,10 +62,7 @@ typedef struct
     TTF_Font *policeListeJoueurs;
 
     /** tableau des differentes animations */
-    Animation * lesExplosions;
-
-    /* usage interne pour les tests */
-    Animateur animateur;
+    Animation ** lesExplosions;
 
     /* Utilisé en interne par SDL lors de la création de Surfaces. */
     Uint32 rmask, gmask, bmask, amask;
@@ -187,12 +184,19 @@ void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique);
 void graphiqueAfficheVictoire(GraphiqueSDL * graphique);
 
 /**
-* @brief Initialise les explosions
+* @fn void graphiqueInitAnimation(const GraphiqueSDL * graphique, Animation * monAnimation, int typeEx)
+* @brief Initialise les animations : decoupe les images pour constituer les frames
+* @param [in] graphique
+* @param [in,out] monAnimation
+* @param [in] typeEx
 */
-void graphiqueInitAnimation(GraphiqueSDL * graphique, Animation * monAnimation);
+void graphiqueInitAnimation(const GraphiqueSDL * graphique, Animation * monAnimation, int typeEx);
 
 /**
-* @brief
+* @fn void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene)
+* @brief Se charge d'associer les images respectives des explosions
+* @param [in,out] graphique
+* @param [in] scene
 */
 void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene);
 

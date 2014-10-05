@@ -1,0 +1,44 @@
+{
+   <NCurses:initscr>
+   Memcheck:Leak
+   ...
+   fun:initscr
+}
+
+{
+   <NCurses:_nc_keypad>
+   Memcheck:Leak
+   ...
+   fun:_nc_keypad
+}
+
+{
+   <NCurses:wgetch>
+   Memcheck:Leak
+   ...
+   fun:wgetch
+}
+
+{
+   <NCurses:vwprintw>
+   Memcheck:Leak
+   ...
+   fun:vwprintw
+}
+
+{
+   <SDL_VideoInit>
+   Memcheck:Leak
+   ...
+   fun:SDL_Init
+}
+
+{
+   <PulseAudio:pa_mainloop_run>
+   Memcheck:Leak
+   ...
+   fun:pa_mainloop_run
+}
+
+
+

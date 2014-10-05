@@ -278,9 +278,9 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     /* cree le rendu de la liste des noms de joueurs */
     graphiquePrepareRenduListeJoueurs(graphique, menu);
 
-    #ifdef JEU_VERBOSE
-         printf("    Elements du HUD.\n");
-    #endif
+#ifdef JEU_VERBOSE
+    printf("    Elements du HUD.\n");
+#endif
 
     /*------- Elements du HUD ---------------------------------------------*/
 
@@ -319,11 +319,13 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->elementsHUD[6] 	= TTF_RenderText_Blended(graphique->policeListeJoueurs, "4", couleurTexteMunitions); /* constant 4 is hard-coded no good */
 
     /* Initialisation des animations */
-    graphique->lesExplosions=(Animation *) malloc(sizeof(Animation));
-    graphiqueInitAnimation(graphique, graphique->lesExplosions);
-
-    animationInitAnimateur(&graphique->animateur, graphique->lesExplosions);
-
+    graphique->lesExplosions=(Animation **) malloc(NB_ANIMATION * sizeof(Animation *));
+    for(i=0; i<NB_ANIMATION; i++)
+    {
+        Animation * anim = (Animation *) malloc(sizeof(Animation));
+        graphiqueInitAnimation(graphique, anim, i);
+        graphique->lesExplosions[i]=anim;
+    }
     /*------------------------------FIN------------------------------------ */
 
 #ifdef JEU_VERBOSE
@@ -368,9 +370,10 @@ void graphiqueLibere(GraphiqueSDL *graphique)
     /* SDL_image */
     IMG_Quit();
 
-    /* Animation */
-    animationLibereAnimation(graphique->animateur.anim);
-
+    for(i=0; i<NB_ANIMATION; i++)
+    {
+        animationLibereAnimation(graphique->lesExplosions[i]);
+    }
     free(graphique->lesExplosions);
 
 }
@@ -712,17 +715,17 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
     srcBox.w		= scene->rectangleImageFond.largeur;
     srcBox.h		= scene->rectangleImageFond.hauteur;
     SDL_BlitSurface( graphique->images[scene->indexImageFond], &srcBox, graphique->surface, NULL);
-/*
-    for(i=0; i<NB_FRAMES_EXPLOSION; i++)
-    {
-        position.x=50;
-        position.y=50;
-        animationAfficheFrame(&graphique->animateur.anim->frames[i], graphique->surface, &position);
-        SDL_Flip(graphique->surface);
-        graphiqueEfface( graphique );
-        SDL_Delay(100);
-    }
-*/
+    /*
+        for(i=0; i<NB_FRAMES_EXPLOSION; i++)
+        {
+            position.x=50;
+            position.y=50;
+            animationAfficheFrame(&graphique->animateur.anim->frames[i], graphique->surface, &position);
+            SDL_Flip(graphique->surface);
+            graphiqueEfface( graphique );
+            SDL_Delay(100);
+        }
+    */
 
     /* affichage des decors */
     for (i=0; i< sceneGetNbDecors(scene); i++)
@@ -934,29 +937,59 @@ void graphiqueAfficheVictoire(GraphiqueSDL * graphique)
     SDL_Delay(10000);
 }
 
-void graphiqueInitAnimation(GraphiqueSDL * graphique, Animation * monAnimation)
+void graphiqueInitAnimation(const GraphiqueSDL * graphique, Animation * monAnimation, int typeEx)
 {
 
     int i;
     SDL_Rect decoupage;
 
-     #ifdef JEU_VERBOSE
-         printf("    Initialisation des explosions (Animation) .\n");
-    #endif
+#ifdef JEU_VERBOSE
+    printf("    Initialisation des explosions (Animation) : %d .\n", typeEx);
+#endif
 
-    /* creation du tableau de frames */
-    animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_1);
     /* parametres de decoupage */
     decoupage.y=0;
-    decoupage.h=RESS_IMG_HAUTEUR_EXPLOSION_1;
-    decoupage.w=ANIMATION_HAUTEUR_FRAME_EXPLOSION_1;
-
-    for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_1; i++)
+    switch(typeEx)
     {
-        /*animationInitFrame(&graphique->anim.frames[i], graphique->images[RESS_IMG_EXPLOSION_1], DELAI_FRAME_EXPLOSION);*/
-        animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_1],ANIMATION_DELAI_FRAME_EXPLOSION_1 );
-        decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_1*i;
-        monAnimation->frames[i].decoupage=decoupage;
+
+    case ANIMATION_EXPLOSION_0:
+        /* creation du tableau de frames */
+        animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_0);
+        decoupage.h = RESS_IMG_HAUTEUR_EXPLOSION_0;
+        decoupage.w = ANIMATION_HAUTEUR_FRAME_EXPLOSION_0;
+        for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_0; i++)
+        {
+            animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_0],ANIMATION_DELAI_FRAME_EXPLOSION_0 );
+            decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_0*i;
+            monAnimation->frames[i].decoupage=decoupage;
+        }
+        break;
+    case ANIMATION_EXPLOSION_1:
+        /* creation du tableau de frames */
+        animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_1);
+        decoupage.h = RESS_IMG_HAUTEUR_EXPLOSION_1;
+        decoupage.w = ANIMATION_HAUTEUR_FRAME_EXPLOSION_1;
+        for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_1; i++)
+        {
+            animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_1],ANIMATION_DELAI_FRAME_EXPLOSION_1);
+            decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_1*i;
+            monAnimation->frames[i].decoupage=decoupage;
+        }
+        break;
+    case ANIMATION_EXPLOSION_2:
+        /* creation du tableau de frames */
+        animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_2);
+        decoupage.h = RESS_IMG_HAUTEUR_EXPLOSION_2;
+        decoupage.w = ANIMATION_HAUTEUR_FRAME_EXPLOSION_2;
+        for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_2; i++)
+        {
+            animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_2], ANIMATION_DELAI_FRAME_EXPLOSION_2);
+            decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_2*i;
+            monAnimation->frames[i].decoupage=decoupage;
+        }
+        break;
+    default:
+        break;
     }
 
 }
@@ -971,7 +1004,12 @@ void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene)
         if(e->ateur==NULL)
         {
             e->ateur = (Animateur *) malloc(sizeof(Animateur));
-            animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions);
+            if(e->type == ELEMENT_TYPE_ECLAIREUR )
+                animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_0]);
+            else if(e->type == ELEMENT_TYPE_CROISEUR )
+                animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_2]);
+                else if(e->type == ELEMENT_TYPE_CHASSEUR)
+                animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_1]);
         }
     }
 }

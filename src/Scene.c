@@ -107,7 +107,7 @@ void sceneLibere(Scene *scene)
     }
     tabDynLibere(&scene->decors);
 
-
+    /* liberation des animations */
     for(i=0; i<sceneGetNbExplosions(scene); i++)
     {
         pos=(PositionExplosion *) tabDynGetElement(&scene->positionsExplosions, i);
@@ -441,6 +441,7 @@ void sceneTestDeCollision(Scene *scene)
 {
     int i, j, d, numDebris, typeElement, collision;
     ElementScene * t=NULL, *e=NULL, *b=NULL;
+    PositionExplosion *posEx;
     assert(scene!=NULL);
 
     /* On itère sur tous les BONUS du jeu */
@@ -569,8 +570,7 @@ void sceneTestDeCollision(Scene *scene)
                         if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                         {
                             /* sauvegarde de la position de la destruction */
-                            PositionExplosion *posEx=(PositionExplosion *)malloc(sizeof(PositionExplosion));
-                            posEx->ateur=NULL;
+                            posEx=(PositionExplosion *)malloc(sizeof(PositionExplosion));
                             sceneGetDataElement(posEx, e);
                             tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
 
@@ -646,8 +646,7 @@ void sceneTestDeCollision(Scene *scene)
                             if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                             {
                                 /* sauvegarde de la position de la destruction */
-                                PositionExplosion *posEx=(PositionExplosion *)malloc(sizeof(PositionExplosion));
-                                posEx->ateur=NULL;
+                                posEx=(PositionExplosion *)malloc(sizeof(PositionExplosion));
                                 sceneGetDataElement(posEx, e);
                                 tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
 
@@ -709,6 +708,13 @@ void sceneTestDeCollision(Scene *scene)
 #endif
             default :
                 break;
+            }
+            if(elementGetType(e) != ELEMENT_TYPE_ASTEROIDE && elementGetType(e) != ELEMENT_TYPE_DEBRIS_ASTEROIDE)
+            {
+                /* creation explosion */
+                posEx=(PositionExplosion *)malloc(sizeof(PositionExplosion));
+                sceneGetDataElement(posEx, e);
+                tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
             }
             /* Suppression de l'acteur */
             sceneDetruitElement(e);
@@ -1011,6 +1017,7 @@ void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element)
     pos->x = elementGetX(element);
     pos->y = elementGetY(element);
     pos->type = elementGetType(element);
+    pos->ateur=NULL;
 }
 
 void sceneTestDeRegression()

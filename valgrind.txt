@@ -1,0 +1,11 @@
+Pour ignorer SDL et autres, il faut donner le fichier de suppression à valgrind.
+
+Cette commande ne prends pas en compte les fuites de memoire SDL et produit un fichier error.txt qui contiendra les erreurs.
+Il faudra copier le fichier .supp dans le dossier du projet.
+
+valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind_lif7.supp --show-reachable=yes -v --log-file=error.txt bin/blockade
+
+Pour les autres paramètres, lire la doc.
+
+Il y'a aussi un tuto ici : 
+http://fr.openclassrooms.com/informatique/cours/debuguer-facilement-avec-valgrind
