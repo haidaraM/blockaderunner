@@ -322,9 +322,8 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->lesExplosions=(Animation **) malloc(NB_ANIMATION * sizeof(Animation *));
     for(i=0; i<NB_ANIMATION; i++)
     {
-        Animation * anim = (Animation *) malloc(sizeof(Animation));
-        graphiqueInitAnimation(graphique, anim, i);
-        graphique->lesExplosions[i]=anim;
+        graphique->lesExplosions[i] = (Animation *) malloc(sizeof(Animation));
+        graphiqueInitAnimation(graphique, graphique->lesExplosions[i], i);
     }
     /*------------------------------FIN------------------------------------ */
 
@@ -373,6 +372,7 @@ void graphiqueLibere(GraphiqueSDL *graphique)
     for(i=0; i<NB_ANIMATION; i++)
     {
         animationLibereAnimation(graphique->lesExplosions[i]);
+        free(graphique->lesExplosions[i]);
     }
     free(graphique->lesExplosions);
 

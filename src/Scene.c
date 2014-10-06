@@ -309,7 +309,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
             dx = 1+(int)(dt * e->vecX * 1.5f*SCENE_VITESSE_ASTEROIDE);
             dy = 1+(int)(dt * e->vecY * 1.5f*SCENE_VITESSE_ASTEROIDE);
             /* corrige le probleme des debris qui stagnent */
-            if(dx==0)
+            if(dx == 0)
                 dx+=2;
             elementSetPosition(e, x+dx, y+dy);
             /* on supprime le debris dès qu'il n'est plus visible */
@@ -328,7 +328,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
                 /* L'ennemi  tente de tirer. Il ne tire pas s'il se trouve derriere le vaisseau du joueur */
                 if (abs(deltaJoueurEnnemi) < 64 && elementGetX(scene->elementVaisseauJoueur) <= elementGetX(e))
                     sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
-                dy =  (int)(dt * 0.4f * (float)deltaJoueurEnnemi);/* Les ennemis tentent de s'aligner sur le joueur */
+                /* Les ennemis tentent de s'aligner sur le joueur */
+                dy =  (int)(dt * 0.95f * (float)deltaJoueurEnnemi);
             }
             elementSetPosition(e, x+dx, y+dy);
             if(x+dx < - (e->largeur))
@@ -347,7 +348,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
                 /* L'ennemi  tente de tirer.Il ne tire pas s'il se trouve derriere le vaisseau du joueur */
                 if (abs(deltaJoueurEnnemi) < 64 && elementGetX(scene->elementVaisseauJoueur) <= elementGetX(e))
                     sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
-                dy =  (int)(dt * 0.6f * (float)deltaJoueurEnnemi);/* Les ennemis tentent de s'aligner sur le joueur */
+                /* Les ennemis tentent de s'aligner sur le joueur */
+                dy =  (int)(dt * 0.95f * (float)deltaJoueurEnnemi);
             }
             elementSetPosition(e, x+dx, y+dy);
             if(x+dx < - (e->largeur))
@@ -366,7 +368,8 @@ void sceneAnime(Scene *scene, float tempsSecondes)
                 /* L'ennemi  tente de tirer.Il ne tire pas s'il se trouve derriere le vaisseau du joueur */
                 if (abs(deltaJoueurEnnemi) < 128 && elementGetX(scene->elementVaisseauJoueur) <= elementGetX(e))
                     sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
-                dy =  (int)(dt * 0.25f * (float)deltaJoueurEnnemi);/* Les ennemis tentent de s'aligner sur le joueur */
+                /* Les ennemis tentent de s'aligner sur le joueur */
+                dy =  (int)(dt * 0.6f * (float)deltaJoueurEnnemi);
             }
             elementSetPosition(e, x+dx, y+dy);
             if(x+dx < - (e->largeur))
