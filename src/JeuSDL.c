@@ -67,7 +67,6 @@ void jeuBoucle(JeuSDL *jeu)
     unsigned char sourisBoutonGauche;
     char alphaNum;
     Niveau niveau;
-    int sonTir=-1; /* Variable utilisée pour jouer un son lors d'un tir */
     Joueur * copieJoueur=NULL;
 
     GraphiqueSDL *graphique	 		= &jeu->graphique;
@@ -287,9 +286,10 @@ void jeuBoucle(JeuSDL *jeu)
                 graphiqueRaffraichit( graphique );
 
                 tempsDernierAffichage 	= getTempsSecondes();
-
-                audioJoueScene(&jeu->audio, &jeu->scene);
             }
+
+            /* Joue les sons dont le flag est à un */
+            audioJoueScene(&jeu->audio, &jeu->scene);
 
             /* ----------- Partie pour le retour menu pause ------------------- */
             /* L'utilisateur a appuyé sur p */
@@ -319,21 +319,7 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee= SDLK_SPACE;
             if (entreeToucheEnfoncee(entree, SDLK_SPACE)==0 && toucheDetectee == SDLK_SPACE)
             {
-                sonTir=sceneJoueurDeclencheTir(&jeu->scene);
-                /* Je voulais faire pareil avec les tirs ennemis mais ça ne marche pas d'abord*/
-                switch(sonTir)
-                {
-                case 0:
-                    audioJoueSon(&jeu->audio, RESS_SON_TIR_LASER);
-                    break;
-                case 1:
-                    audioJoueSon(&jeu->audio, RESS_SON_MISSILE);
-                    break;
-                default :
-                    audioJoueSon(&jeu->audio, RESS_SON_ERREUR);
-                    break;
-                }
-
+                sceneJoueurDeclencheTir(&jeu->scene);
                 toucheDetectee=-1;
             }
 

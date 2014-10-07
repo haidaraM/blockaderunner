@@ -27,7 +27,7 @@
 
 
 #define ANIMATION_EXPLOSION_2                       2
-#define ANIMATION_DUREE_EXPLOSION_2                 1.02f
+#define ANIMATION_DUREE_EXPLOSION_2                 1.0f
 #define ANIMATION_NB_FRAMES_EXPLOSION_2             48
 #define ANIMATION_DELAI_FRAME_EXPLOSION_2           (ANIMATION_DUREE_EXPLOSION_2 / ANIMATION_NB_FRAMES_EXPLOSION_2)
 #define ANIMATION_HAUTEUR_FRAME_EXPLOSION_2         RESS_IMG_HAUTEUR_EXPLOSION_2
@@ -53,7 +53,7 @@ typedef struct
 */
 typedef struct
 {
-    /** Nombre de frames comportant une animation */
+    /** Nombre de frames comportant l'animation */
     Uint16 nbFrames;
     /** Tableau de frames */
     Frame * frames;

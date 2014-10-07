@@ -25,16 +25,11 @@ FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon)
     strcpy(file, nomFichier);
     strcpy(dir, RESS_DIR_SONS);
 
-    if(typeSon == 0)
-    {
-        /* Chargement son court */
+    if(typeSon == 0) /* Chargement son court */
         resultat=FMOD_System_CreateSound(audio->system, strcat(dir, file), FMOD_CREATESAMPLE, NULL, &son);
-    }
-    else
-    {
-        /* chargement son long*/
+    else /* chargement son long*/
         resultat=FMOD_System_CreateSound(audio->system, strcat(dir, file),FMOD_SOFTWARE|FMOD_CREATESTREAM | FMOD_LOOP_NORMAL | FMOD_2D, NULL, &son);
-    }
+
     /* On verifie qu'il n'y a pas eu d'erreur */
     if(resultat==FMOD_ERR_FILE_NOTFOUND)
     {
@@ -209,6 +204,9 @@ void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
     /* laser ennemi */
     if(scene->evenements.ennemi_tir_laser==1)
         audioJoueSon(audio, RESS_SON_TIR_LASER_ENNEMI);
+    /* missile ennemi */
+    if(scene->evenements.ennemi_tir_missile == 1)
+        audioJoueSon(audio, RESS_SON_MISSILE);
     /* bonus score trouvé */
     if(scene->evenements.joueur_bonus_score==1)
         audioJoueSon(audio, RESS_SON_BONUS_SCORE);

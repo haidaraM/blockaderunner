@@ -10,6 +10,31 @@
 #include <math.h>
 
 
+/**
+* @fn void sceneInitialiseFlags(Scene * scene)
+* @brief Met les flags associés aux sons à zero
+* @param [in, out] scene : non null
+*/
+void sceneInitialiseFlags(Scene * scene)
+{
+    /* Réinitialisation des evenements */
+    scene->evenements.asteroide_explosion   = 0;
+    scene->evenements.joueur_tir_laser 		= 0;
+    scene->evenements.joueur_tir_missile	= 0;
+    scene->evenements.joueur_tir_erreur     = 0;
+    scene->evenements.joueur_degats_laser	= 0;
+    scene->evenements.joueur_explosion		= 0;
+    scene->evenements.joueur_degats_collision = 0;
+    scene->evenements.joueur_bonus_missile	= 0;
+    scene->evenements.joueur_degats_missile	= 0;
+    scene->evenements.joueur_bonus_score	= 0;
+    scene->evenements.ennemi_tir_laser		= 0;
+    scene->evenements.ennemi_tir_missile	= 0;
+    scene->evenements.ennemi_degats_laser	= 0;
+    scene->evenements.ennemi_degats_missile	= 0;
+    scene->evenements.ennemi_explosion		= 0;
+
+}
 
 
 void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphique, int hauteurGraphique)
@@ -572,7 +597,7 @@ void sceneTestDeCollision(Scene *scene)
                         /* Cas où le vaisseau ennemi est détruit */
                         if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                         {
-                            /* sauvegarde de la position de la destruction */
+                            /* sauvegarde de la position de la destruction et creation explosion*/
                             posEx=(PositionExplosion *)malloc(sizeof(PositionExplosion));
                             sceneGetDataElement(posEx, e);
                             tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
@@ -648,7 +673,7 @@ void sceneTestDeCollision(Scene *scene)
                             /* Cas où le vaisseau ennemi est détruit */
                             if (vaisseauGetPointStructure((Vaisseau*)e->data) == 0)
                             {
-                                /* sauvegarde de la position de la destruction */
+                                /* sauvegarde de la position de la destruction et creation explosion*/
                                 posEx=(PositionExplosion *)malloc(sizeof(PositionExplosion));
                                 sceneGetDataElement(posEx, e);
                                 tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
@@ -873,9 +898,8 @@ void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
     elementSetPosition(vaiss, x+dx, elementGetY(vaiss));
 }
 
-int sceneJoueurDeclencheTir(Scene * scene)
+void sceneJoueurDeclencheTir(Scene * scene)
 {
-    int valret=-1;
     ElementScene * tir=NULL;
     /* On regarde s'il lui reste des munitions */
     if(vaisseauGetMunitionsArme(scene->joueur->vaisseau) > 0)
@@ -886,13 +910,11 @@ int sceneJoueurDeclencheTir(Scene * scene)
         {
         case ARME_LASER:
             tir=sceneCreerElementScene(scene, ELEMENT_TYPE_LASER_JOUEUR);
-            valret=0;
             /* on met le flag associé dans les évènements à 1 */
             scene->evenements.joueur_tir_laser = 1;
             break;
         case ARME_MISSILE:
             tir=sceneCreerElementScene(scene, ELEMENT_TYPE_MISSILE_JOUEUR);
-            valret=1;
             /* on met le flag associé dans les évènements à 1 */
             scene->evenements.joueur_tir_missile = 1;
             break;
@@ -904,7 +926,6 @@ int sceneJoueurDeclencheTir(Scene * scene)
 
         tabDynAjoute(&scene->tirs, (void *) tir);
     }
-    return valret;
 }
 
 int sceneGetMunitionMissileJoueur(const Scene *scene)
@@ -985,26 +1006,6 @@ int sceneTestVaisseauMort(Scene * scene)
         return 0;
 }
 
-void sceneInitialiseFlags(Scene * scene)
-{
-    /* Réinitialisation des evenements */
-    scene->evenements.asteroide_explosion   = 0;
-    scene->evenements.joueur_tir_laser 		= 0;
-    scene->evenements.joueur_tir_missile	= 0;
-    scene->evenements.joueur_tir_erreur     = 0;
-    scene->evenements.joueur_degats_laser	= 0;
-    scene->evenements.joueur_explosion		= 0;
-    scene->evenements.joueur_degats_collision = 0;
-    scene->evenements.joueur_bonus_missile	= 0;
-    scene->evenements.joueur_degats_missile	= 0;
-    scene->evenements.joueur_bonus_score	= 0;
-    scene->evenements.ennemi_tir_laser		= 0;
-    scene->evenements.ennemi_tir_missile	= 0;
-    scene->evenements.ennemi_degats_laser	= 0;
-    scene->evenements.ennemi_degats_missile	= 0;
-    scene->evenements.ennemi_explosion		= 0;
-
-}
 
 void sceneDetruitElement(ElementScene *element)
 {
@@ -1013,6 +1014,7 @@ void sceneDetruitElement(ElementScene *element)
     free(element);
     element=NULL;
 }
+
 
 void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element)
 {

@@ -150,6 +150,7 @@ void creeListeImages(Ressource *res)
     res->images[RESS_IMG_EXPLOSION_2]                               = RESS_IMG_FICHIER_EXPLOSION_2;
     res->dimensionImages[RESS_IMG_EXPLOSION_2].largeur              = RESS_IMG_LARGEUR_EXPLOSION_2;
     res->dimensionImages[RESS_IMG_EXPLOSION_2].hauteur              = RESS_IMG_HAUTEUR_EXPLOSION_2;
+
 }
 
 void creeListeSons(Ressource *res)

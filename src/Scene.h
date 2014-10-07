@@ -64,8 +64,8 @@ typedef struct
 
 /**
 * @struct PositionExplosion
-* @brief Structure utilisée en interne pour sauvegarder les positions des ennemis detruits.
-* Utile pour afficher les explosions après la destruction
+* @brief Structure utilisée pour sauvegarder les positions des ennemis detruits.
+* Utile pour afficher les explosions après la destruction des ennemis
 */
 typedef struct
 {
@@ -75,7 +75,7 @@ typedef struct
     int x;
     /** position y de l'element detruit */
     int y;
-    /** Pointeur generique qui contiendra l'animateur */
+    /** Lien vers l'animateur associé à l'explosion */
     void *ateur;
 
 } PositionExplosion;
@@ -238,12 +238,6 @@ ElementScene* sceneCreerElementScene(const Scene *scene, int type);
 */
 void sceneDetruitElement(ElementScene *element);
 
-/**
-* @fn void sceneInitialiseFlags(Scene * scene)
-* @brief Met les flags associés aux sons à zero
-* @param [in, out] scene : non null
-*/
-void sceneInitialiseFlags(Scene * scene);
 
 /**
 * @fn void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
@@ -279,11 +273,10 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 
 /**
 * @fn int sceneJoueurDeclencheTir(Scene * scene)
-* @brief Cree un element qui correspond au tir du joueur
+* @brief Cree le tir du joueur et l'ajoute au tableaux des tirs
 * @param [in, out] scene
-* @return Renvoie un si le joueur arrive à declencher un tir
 */
-int sceneJoueurDeclencheTir(Scene * scene);
+void sceneJoueurDeclencheTir(Scene * scene);
 
 /**
 * @fn int sceneGetMunitionMissileJoueur(const Scene *scene)
