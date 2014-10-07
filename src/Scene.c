@@ -43,6 +43,11 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
 
     assert( scene != NULL && res != NULL && player != NULL);
 
+    #ifdef JEU_VERBOSE
+    printf("Scene :\n    initialisation ...\n");
+    #endif
+
+
     scene->horlogePrecedente= 0.0f;
     scene->largeurAffichage = largeurGraphique;
     scene->hauteurAffichage = hauteurGraphique;
@@ -75,6 +80,10 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
 
     /* mise des flags des evenements son à 0 */
     sceneInitialiseFlags(scene);
+
+    #ifdef JEU_VERBOSE
+    printf("    initialisation OK.\n");
+    #endif
 
 }
 
@@ -737,6 +746,7 @@ void sceneTestDeCollision(Scene *scene)
             default :
                 break;
             }
+            /* creation de l'explosion pour les Vaisseaux ennemis seulement */
             if(elementGetType(e) != ELEMENT_TYPE_ASTEROIDE && elementGetType(e) != ELEMENT_TYPE_DEBRIS_ASTEROIDE)
             {
                 /* creation explosion */

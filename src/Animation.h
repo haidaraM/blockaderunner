@@ -1,7 +1,7 @@
 /**
 * @file Animation.h
-* @brief Module utilisé pour réaliser des animations : explosions etc...
-* Il sera utilisé avec SDL et combiné à GraphiqueSDL.
+* @brief Module utilisé pour réaliser des animations : explosions, rotations etc...
+* Il sera utilisé avec SDL, SDL_gfx et combiné à GraphiqueSDL.
 * @author Mohamed El Mouctar HAIDARA
 */
 

@@ -223,8 +223,9 @@ void jeuBoucle(JeuSDL *jeu)
 
             break;
 
-        /* ----------------RETOUR MENU : quand le joueur appuie sur echap durant la partie ------------------ */
+        /* --------- RETOUR au MENU PRINCIPAL : quand le joueur selectionne cette option lors de la pause -------------- */
         case JEU_RETOUR_MENU_PRINCIPAL:
+            /* liberation des differents elements initialisés */
             sceneLibere( &jeu->scene );
             free(copieJoueur);
             jeu->etatCourantJeu 	= JEU_ETAT_MENU_PRINCIPAL;
@@ -292,10 +293,10 @@ void jeuBoucle(JeuSDL *jeu)
             audioJoueScene(&jeu->audio, &jeu->scene);
 
             /* ----------- Partie pour le retour menu pause ------------------- */
-            /* L'utilisateur a appuyé sur p */
+            /* L'utilisateur a appuyé sur ESC */
             if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
                 toucheDetectee = SDLK_ESCAPE;
-            /* L'utilisateur vient de relâcher la touche p */
+            /* L'utilisateur vient de relâcher la touche ESC */
             if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE)
             {
                 jeu->etatCourantJeu 	= JEU_ETAT_PAUSE;
@@ -379,6 +380,7 @@ void jeuBoucle(JeuSDL *jeu)
                 /* arret du son de la scene */
                 audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
                 audioJoueSon(&jeu->audio, RESS_SON_MORT);
+                /* affichage du msg */
                 graphiqueAfficheMort(graphique);
                 jeu->etatCourantJeu=JEU_RETOUR_MENU_PRINCIPAL;
             }
@@ -387,7 +389,7 @@ void jeuBoucle(JeuSDL *jeu)
         /* -------------------- PAUSE --------------------- */
         case JEU_ETAT_PAUSE :
             audioPauseSon(&jeu->audio, RESS_SON_AMBIENCE);
-            /* Arret des animations : Non fonctionnel */
+            /* Arret des deplacements et des animations */
             scenePause(&jeu->scene);
 
             /* on passe au menu les entrées souris et la durée de la boucle (en secondes) */
@@ -440,6 +442,10 @@ void jeuBoucle(JeuSDL *jeu)
 
             if (menu->etat == MENU_ETAT_REJOUER)
             {
+                /* liberation de la scene : elle sera reinitialiser dans JEU_ETAT_CHARGEMENT_NIVEAU*/
+                sceneLibere(&jeu->scene);
+                free(copieJoueur);
+                /* changement de l'etat du jeu */
                 jeu->etatCourantJeu= JEU_ETAT_CHARGEMENT_NIVEAU;
                 /* On enleve le son dans l'etat pause */
                 audioReprendSon(&jeu->audio, RESS_SON_AMBIENCE);
@@ -459,11 +465,11 @@ void jeuBoucle(JeuSDL *jeu)
 
                 tempsDernierAffichage 	= getTempsSecondes();
             }
-            /* ----------- retour menu au jeu ------------------- */
-            /* L'utilisateur a appuyé sur p */
+            /* ----------- retour au jeu ------------------- */
+            /* L'utilisateur a appuyé sur echap */
             if (entreeToucheEnfoncee(entree, SDLK_ESCAPE)==1)
                 toucheDetectee = SDLK_ESCAPE;
-            /* L'utilisateur vient de relâcher la touche p ou a choisi l'option reprendre dans le menu*/
+            /* L'utilisateur vient de relâcher la touche echap ou a choisi l'option reprendre dans le menu*/
             if ((entreeToucheEnfoncee(entree, SDLK_ESCAPE)==0 && toucheDetectee == SDLK_ESCAPE) || menu->etat == MENU_ETAT_REPRENDRE )
             {
                 jeu->etatCourantJeu 	= JEU_ETAT_JEU;
