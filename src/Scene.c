@@ -363,7 +363,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
                 if (abs(deltaJoueurEnnemi) < 64 && elementGetX(scene->elementVaisseauJoueur) <= elementGetX(e))
                     sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
                 /* Les ennemis tentent de s'aligner sur le joueur */
-                dy =  (int)(dt * 0.95f * (float)deltaJoueurEnnemi);
+                dy =  (int)(dt * 0.70f * (float)deltaJoueurEnnemi);
             }
             elementSetPosition(e, x+dx, y+dy);
             if(x+dx < - (e->largeur))
@@ -383,7 +383,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
                 if (abs(deltaJoueurEnnemi) < 64 && elementGetX(scene->elementVaisseauJoueur) <= elementGetX(e))
                     sceneEnnemiDeclencheTir(scene, e, tempsSecondes);
                 /* Les ennemis tentent de s'aligner sur le joueur */
-                dy =  (int)(dt * 0.95f * (float)deltaJoueurEnnemi);
+                dy =  (int)(dt * 0.85f * (float)deltaJoueurEnnemi);
             }
             elementSetPosition(e, x+dx, y+dy);
             if(x+dx < - (e->largeur))
@@ -419,10 +419,10 @@ void sceneAnime(Scene *scene, float tempsSecondes)
             break;
         }
 
-    }
+    } /* fin du for deplacement des acteurs */
 
 
-    /* RESOLUTION DES COLLISIONS : */
+    /* gestion des collisions : */
     sceneTestDeCollision(scene);
 
     scene->horlogePrecedente = tempsSecondes;
@@ -513,7 +513,7 @@ void sceneTestDeCollision(Scene *scene)
             }
             break;
         }
-    }
+    } /* Fin du for pour les bonus */
 
     /* On itère sur tous les TIRS du jeu */
     for(i=0; i<sceneGetNbTirs(scene); i++)
@@ -625,7 +625,7 @@ void sceneTestDeCollision(Scene *scene)
                 }
 
                 j++;
-            }
+            } /* fin du while collision laser joueur */
             break;
 
         case ELEMENT_TYPE_MISSILE_JOUEUR:
@@ -700,14 +700,13 @@ void sceneTestDeCollision(Scene *scene)
                     }
 
                 j++;
-            }
+            } /* fin du while colision missile joueur */
             break;
+
         default :
             break;
-
-
         }
-    }
+    } /* Fin du for pour les tirs */
 
     /* collision vaisseauJoueur - acteurs */
     for(i=0; i<sceneGetNbActeurs(scene); i++)

@@ -15,14 +15,15 @@
 #*******************************************************************************#
   
   
-Auteurs : 	Yann Cortial - Mohamed El Mouctar HAIDARA
+Auteurs : 	Yann Cortial - Mohamed El Mouctar HAIDARA <elmhaidara@gmail.com>
 
 
 
 Introduction
 
 	Jeu de type shoot'em up à defilement horizontal réalisé en C avec 
-	SDL et FMOD dans le cadre de l'UE LIF7 de l'université Lyon 1 Claude Bernard.
+	SDL et FMOD Ex dans le cadre de l'UE LIF7 de l'université Lyon 1 Claude Bernard.
+	Resolution minimale : 1366 * 720
 	---------------------------------------------------------------
 	Le jeu n'est pas destiné à être commercialisé ni à être diffusé.
 	Certaines ressources présentes dans le jeu notamment les images
@@ -40,7 +41,7 @@ Introduction
 
 (1) Dépendances :
 
-	- FMOD :
+	- FMOD Ex:
 
 		Il faudra télécharger la librairie FMOD disponible sur : http://www.fmod.org/download/. 
 		Plus précisement la version FMOD Ex Programmer's API ou éventuellement vous le trouverez dans une archive que
@@ -50,23 +51,24 @@ Introduction
 	 	 -	Ensuite il faudra copier  le fichier ./lib/lib/libfmodex64-4.44.33.so (le numero peut varier selon 
 	 	 	votre version) dans le repertoire /usr/lib/ en le rennomant en libfmodex64.so.
 	 		Ce n'est pas la meilleure façon de faire mais ça marche quand même sur un pc 64bits. 
+	 		Pour un systeme 32 bits, copier le fichier 	libfmodex-4.44.33.so  en le rennomant aussi en libfmodex64.so 
 	 		Si ces manips ne fonctionnent pas : http://sindev.blogspot.fr/2009/02/how-to-installer-la-fmod-ex-sur-linux.html
 	 
-	 - SDL 1.2 :
+	 - SDL 1.2 : SDL_ttf, SDL_image, SDL_gfx
 		
-		Il suffit juste d'installer SDL 1.2 avec ses deux librairies associées (SDL_image et SDL_ttf), pas de manipulation particulière à effectuer.
+		Il suffit juste d'installer SDL 1.2 avec ses librairies associées (SDL_image, SDL_ttf et SDL_gfx), pas de manipulation particulière à effectuer.
 
-		(linux) 		$ sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-ttf2.0-dev
+		(linux) 		$ sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-ttf2.0-dev libsdl-gfx1.2-dev
 		(documentation : http://www.libsdl.org/release/SDL-1.2.15/docs/html/)
 
-	 	En cas de problemes 	  :  http://doc.ubuntu-fr.org/sdl
+	 	En cas de problemes :  http://doc.ubuntu-fr.org/sdl
 	 				     http://fr.openclassrooms.com/informatique/cours/apprenez-a-programmer-en-c/installation-de-la-sdl 
 	 				     http://loka.developpez.com/tutoriel/sdl/installation/
 	
 	- Fichiers Data : En recuperant le projet sur le depot, il manquera les fichiers de données nécessaire pour faire marcher le jeu
 
 
-(2) Télécharger l'archive compressée : blockade.tar.gz
+(2) Télécharger l'archive compressée : blockade.tar.gz dans lequel vous trouverez les fichiers manquants
 
 				(decompresser)	$ tar -xvzf blockade.tar.gz
 
@@ -109,11 +111,11 @@ Introduction
 
 (2) Commandes pour jouer à Blockade Runner :
 
-		- Souris 					: pour naviguer dans le menu
+		- Souris 							: pour naviguer dans le menu
 		- Flèches directionnelles			: déplacer le vaisseau
-		- Barre espace 					: tirer
-		- F5						: choisir l'arme laser
-		- F6						: choisir l'arme missiles
+		- Barre espace 						: tirer
+		- F5								: choisir l'arme laser
+		- F6								: choisir l'arme missiles
 
 
 #############################################################################################

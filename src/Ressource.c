@@ -258,9 +258,9 @@ void creeNiveaux(Ressource *res)
 
     for (i=0; i< RESS_NUM_NIVEAUX; i++)
     {
-		#ifdef JEU_VERBOSE
+#ifdef JEU_VERBOSE
         printf("Creation niveau %d\n", i);
-		#endif
+#endif
         niveauInit(&(res->niveaux[i]), i);
         niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0 + i);
     }
@@ -286,9 +286,9 @@ void ressourceInit(Ressource *res)
     int i;
     assert( res != NULL);
 
-	#ifdef JEU_VERBOSE
+#ifdef JEU_VERBOSE
     printf("Ressource :\n    initialisation ...\n");
-	#endif
+#endif
 
     /* --- */
     res->joueurs = (Joueur**)malloc(RESS_SAU_MAX_JOUEURS*sizeof(Joueur*));
@@ -301,9 +301,9 @@ void ressourceInit(Ressource *res)
         res->meilleursJoueurs[i] = NULL;/* initialisation à NULL */
 
 
-	#ifdef JEU_VERBOSE
+#ifdef JEU_VERBOSE
     printf("	chargement des données joueurs.\n");
-	#endif
+#endif
 
     chargeJoueurs(res);
 
@@ -316,15 +316,15 @@ void ressourceInit(Ressource *res)
     /* --- */
     creeListePolices(res);
 
-	#ifdef JEU_VERBOSE
+#ifdef JEU_VERBOSE
     printf("	creation des niveaux du jeu.\n");
-	#endif
+#endif
     /* --- */
     creeNiveaux(res);
 
-	#ifdef JEU_VERBOSE
+#ifdef JEU_VERBOSE
     printf("	initialisation OK.\n");
-	#endif
+#endif
 }
 
 void ressourceLibere(Ressource *res)
@@ -350,10 +350,12 @@ void ressourceLibere(Ressource *res)
     free(res->niveaux);
     res->niveaux=NULL;
 
+    /* liberation des images */
     free(res->images);
     res->images=NULL;
     free(res->dimensionImages);
     res->dimensionImages=NULL;
+    /* liberation des sons */
     free(res->sons);
     res->sons=NULL;
 }
@@ -553,7 +555,7 @@ void ressourceTestDeRegression()
     printf("=========> Resultat : OK \n");
     printf("\n");
 
-/* Les test de liberations sont à effecter avec valgrind de préferences */
+    /* Les test de liberations sont à effecter avec valgrind de préferences */
     printf("--------------Test de ressourceLibere-----------\n");
     ressourceLibere(&res);
     assert(res.joueurs==NULL);

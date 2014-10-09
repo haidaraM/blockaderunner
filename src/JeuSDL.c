@@ -221,7 +221,7 @@ void jeuBoucle(JeuSDL *jeu)
             if (menu->etat == MENU_ETAT_QUITTER)
                 continueJeu = 0;
 
-            break;
+            break; /* JEU_ETAT_MENU_PRINCIPAL */
 
         /* --------- RETOUR au MENU PRINCIPAL : quand le joueur selectionne cette option lors de la pause -------------- */
         case JEU_RETOUR_MENU_PRINCIPAL:
@@ -232,7 +232,7 @@ void jeuBoucle(JeuSDL *jeu)
             menuPrincipal((void*)menu);
             /* on arrete le son de la scene */
             audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
-            break;
+            break; /* break JEU_RETOUR_MENU_PRINCIPAL */
 
         /*--------------	CHARGEMENT D'UN NIVEAU 	-------------------*/
         case JEU_ETAT_CHARGEMENT_NIVEAU :
@@ -267,7 +267,7 @@ void jeuBoucle(JeuSDL *jeu)
             /* On arrete le son du menu et on joue le son de la scene */
             audioStopSon(&jeu->audio, RESS_SON_MENU);
             audioJoueSon(&jeu->audio, RESS_SON_AMBIENCE);
-            break;
+            break; /* break JEU_ETAT_CHARGEMENT_NIVEAU */
 
 
         case JEU_ETAT_JEU:		/*-------------   J E U   ---------------*/
@@ -384,7 +384,7 @@ void jeuBoucle(JeuSDL *jeu)
                 graphiqueAfficheMort(graphique);
                 jeu->etatCourantJeu=JEU_RETOUR_MENU_PRINCIPAL;
             }
-            break;
+            break; /* break JEU_ETAT_JEU */
 
         /* -------------------- PAUSE --------------------- */
         case JEU_ETAT_PAUSE :
@@ -478,14 +478,14 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee=-1;
             }
 
-            break;
+            break; /* break JEU_ETAT_PAUSE */
 
         default:
             break;
         }
 
         dureeBoucle 		= getTempsSecondes() - debutBoucle;
-    }
+    } /* FIn du while ( continueJeu == 1 ) */
 }
 
 

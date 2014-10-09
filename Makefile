@@ -10,12 +10,15 @@ EXPLOSION		= NO_REPETE_EXPLOSION
 #OS				= WIN32
 OS				= LINUX
 
+#Definitions des macros pour le prépocesseur 
 DEFINE 			= -D$(OS) -D$(VERBOSE) -D$(MODE_JEU) -D$(EXPLOSION)
 
-
+#Repertoires des fichiers sources, obj et des executables
 OBJ		 		= obj
 SRC		 		= src
 BIN		 		= bin
+
+#Executable du jeu
 EXEC 			= blockade
 
 #Executable du Test de regression

@@ -197,8 +197,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->amask = 0xff000000;
 #endif
 
-    /*---------------------------------------------------------------------
-    	 Initialisation de SDL_image */
+    /*------------------Initialisation de SDL_image ------------------- */
 
     imgFlags			= IMG_INIT_JPG | IMG_INIT_PNG;
     imgRes				= IMG_Init(imgFlags);
@@ -209,8 +208,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     }
 
 
-    /*---------------------------------------------------------------------
-     	Chargement de toutes les images du Jeu : */
+    /*--------------Chargement de toutes les images du Jeu : ------------------- */
 
 #ifdef JEU_VERBOSE
     printf("    chargement des images.\n");
@@ -231,8 +229,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     printf("    chargement des images OK.\n");
 #endif
 
-    /*---------------------------------------------------------------------
-    	 Initialisation de SDL_ttf : */
+    /*--------------------- Initialisation de SDL_ttf : -------------------------*/
 
 #ifdef JEU_VERBOSE
     printf("    initialisation SDL_ttf.\n");
@@ -282,7 +279,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     printf("    Elements du HUD.\n");
 #endif
 
-    /*------- Elements du HUD ---------------------------------------------*/
+    /*------------------ Elements du HUD ---------------------------*/
 
     graphique->elementsHUD 		= (SDL_Surface**)malloc( GFX_NUM_ELEMENTS_HUD * sizeof(SDL_Surface*) );
     assert(graphique->elementsHUD != NULL);
@@ -700,10 +697,10 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
 {
     int i;
     SDL_Rect srcBox, dstBox, vBox;
-    ElementScene **acteurs 	= (ElementScene **)scene->acteurs.tab;
-    ElementScene **tirs 	= (ElementScene **)scene->tirs.tab;
-    ElementScene **bonus 	= (ElementScene **)scene->bonus.tab;
-    ElementScene **decors 	= (ElementScene **)scene->decors.tab;
+    ElementScene **acteurs 	        = (ElementScene **)scene->acteurs.tab;
+    ElementScene **tirs 	        = (ElementScene **)scene->tirs.tab;
+    ElementScene **bonus 	        = (ElementScene **)scene->bonus.tab;
+    ElementScene **decors 	        = (ElementScene **)scene->decors.tab;
     PositionExplosion ** explosions = (PositionExplosion **) scene->positionsExplosions.tab;
     SDL_Surface * surfacePointS;
     Uint32 couleurPointsDefilement = SDL_MapRGB(graphique->surface->format, 0xd0, 0xff, 0xff);
@@ -757,7 +754,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
         }
     }
 
-    /* affichage des acteurs */
+    /* affichage des acteurs : asteroides, ennemis */
     for (i=0; i< sceneGetNbActeurs(scene); i++)
     {
         if (acteurs[i] != NULL && elementVisible(acteurs[i]) == 1)
@@ -766,8 +763,8 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
             dstBox.y = elementGetY(acteurs[i]);
             SDL_BlitSurface( graphique->images[elementGetImageIndex(acteurs[i])], NULL, graphique->surface, &dstBox);
             /* Affichage barre de vie */
-            if(elementGetType(acteurs[i])==ELEMENT_TYPE_ECLAIREUR || elementGetType(acteurs[i])==ELEMENT_TYPE_CHASSEUR
-                    || elementGetType(acteurs[i])==ELEMENT_TYPE_CROISEUR)
+            if(elementGetType(acteurs[i])==ELEMENT_TYPE_ECLAIREUR || elementGetType(acteurs[i])==ELEMENT_TYPE_CHASSEUR ||
+                    elementGetType(acteurs[i])==ELEMENT_TYPE_CROISEUR)
             {
                 surfacePointS=SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), GFX_EPAISSEUR_BARRE_VIE, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
                 SDL_FillRect(surfacePointS, NULL, couleurNiveauStructure);
