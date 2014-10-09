@@ -2,13 +2,12 @@
 * @file ElementScene.c
 * @brief Fichier d'implementation du module ElementScene
 */
-#include "ElementScene.h"
-#include "Vaisseau.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 
-
+#include "ElementScene.h"
+#include "Vaisseau.h"
 
 
 

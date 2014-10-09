@@ -9,8 +9,8 @@
 #include "ElementScene.h"
 #include "Ressource.h"
 #include "Outils.h"
-#include "Niveau.h"
-#include "Joueur.h"
+
+
 
 
 

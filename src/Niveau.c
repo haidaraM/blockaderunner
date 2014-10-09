@@ -2,13 +2,13 @@
 * @file Niveau.c
 * @brief Fichier d'implementation du module Niveau
 */
-#include "Niveau.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
-#include "Ressource.h"
 
+#include "Ressource.h"
+#include "Niveau.h"
 
 
 void niveauInit(Niveau *niveau, int numero)

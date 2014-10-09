@@ -2,10 +2,10 @@
 * @file EntreeSDL.c
 * @brief fichier d'implementation du module EntreeSDL
 */
-#include "EntreeSDL.h"
 #include <assert.h>
 #include <stdlib.h>
 
+#include "EntreeSDL.h"
 
 
 void entreeInit(EntreeSDL *entree)

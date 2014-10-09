@@ -33,7 +33,7 @@ ifeq ($(OS),WIN32)
 	INCLUDE		 	= -I$(SRC) -I"C:\code\lib\SDL\include\SDL"
 endif
 ifeq ($(OS),LINUX)
-	LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64
+	LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx
 	INCLUDE		 	= -I/usr/include -I/usr/include/SDL -I$(SRC)
 endif
 
@@ -52,7 +52,7 @@ $(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Outils.o $(OBJ)/Ressource.o
 $(BIN)/$(MAIN_TEST): $(OBJ)/MainTest.o $(OBJ)/Joueur.o $(OBJ)/Vaisseau.o $(OBJ)/ElementScene.o $(OBJ)/Outils.o $(OBJ)/Scene.o $(OBJ)/Ressource.o $(OBJ)/Niveau.o 
 	$(LD) $(CFLAGS) $^ -o $@ 
 
-$(OBJ)/%.o: $(SRC)/%.c
+$(OBJ)/%.o: $(SRC)/%.c 
 	$(CC) -c $(CFLAGS) $(INCLUDE) $< -o $@
 
 clean:

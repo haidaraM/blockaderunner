@@ -14,7 +14,7 @@
 #include "Menu.h"
 #include "Scene.h"
 #include "Ressource.h"
-#include "Joueur.h"
+
 
 
 enum {
@@ -26,7 +26,7 @@ enum {
 
 /**
 * @struct JeuSDL
-* @brief Structure regroupant tous les elements necessaires a l'application.
+* @brief Structure regroupant tous les elements necessaires à l'application.
 */
 typedef struct
 {

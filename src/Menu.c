@@ -2,14 +2,13 @@
 * @file Menu.c
 * @brief fichier d'implementation du Menu
 */
-#include "Menu.h"
-#include "Joueur.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
 
-
+#include "Menu.h"
+#include "Joueur.h"
 
 /* --------------------------------------------------------------------------	Fonctions Internes */
 

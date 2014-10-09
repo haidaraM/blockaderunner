@@ -2,13 +2,16 @@
 * @file GraphiqueSDL.c
 * @brief Fichier d'implementation du module GraphiqueSDL
 */
-#include "GraphiqueSDL.h"
-#include "ElementScene.h"
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <SDL_rotozoom.h>
+#include <SDL/SDL_image.h>
+
+#include "GraphiqueSDL.h"
+#include "ElementScene.h"
 
 
 /* -----------Fonctions internes ----------------- */

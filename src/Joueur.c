@@ -3,15 +3,12 @@
 * @brief fichier d'implementation du module Joueur
 * @author Yann Cortial - Mohamed El Mouctar HAIDARA
 */
-
-#include "Joueur.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
 
-
+#include "Joueur.h"
 
 void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
 {

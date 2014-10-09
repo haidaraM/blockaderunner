@@ -3,15 +3,12 @@
 * @brief Fichier d'implémentation du module JeuSDL.
 * @author Yann Cortial - Mohamed El Mouctar HAIDARA.
 */
-#include "JeuSDL.h"
-
-#include <SDL/SDL.h>
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 
-
+#include "JeuSDL.h"
 
 
 
