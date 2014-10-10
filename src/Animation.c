@@ -22,14 +22,14 @@ void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos)
 }
 /* *************************************************************************************** */
 
-void animationInitAnimation(Animation * anim, Uint16 nb)
+void animationInitAnimation(Animation * anim, int nb)
 {
     assert(anim!=NULL);
     anim->frames=(Frame *) malloc(sizeof(Frame)*nb);
     anim->nbFrames=nb;
 }
 
-void animationSetFrame(Animation * anim, Uint16 pos, SDL_Surface *surface, float delai)
+void animationSetFrame(Animation * anim, int pos, SDL_Surface *surface, float delai)
 {
     assert(anim!=NULL);
     animationInitFrame(&anim->frames[pos], surface, delai);
@@ -75,7 +75,6 @@ void animationNextFrame(Animateur * ateur)
     if (ateur->frameCourante == ateur->anim->nbFrames)
     {
         ateur->frameCourante = 0;
-        /* Definissez la macro REPETE_EXPLOSION pour desactiver les animations cycliques */
         #ifdef NO_REPETE_EXPLOSION
         ateur->statut=STOP;
         #endif /* REPETE_EXPLOSION */
@@ -93,7 +92,7 @@ void animationMAJAnimateur(Animateur * ateur)
     frame = &ateur->anim->frames[ateur->frameCourante];
     /*  if(frame->delai == 0)
           return; */
-    ateur->compteur += VITESSE_AFFICHAGE_EXPLOSION;
+    ateur->compteur += VITESSE_GLOBALE_EXPLOSIONS;
     /* passage à la frame suivante */
     if (ateur->compteur >= frame->delai)
         animationNextFrame(ateur);

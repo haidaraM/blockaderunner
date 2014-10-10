@@ -10,7 +10,7 @@
 #include <SDL.h>
 
 #define NB_ANIMATION                                3
-#define VITESSE_AFFICHAGE_EXPLOSION                 0.02
+#define VITESSE_GLOBALE_EXPLOSIONS                 0.02
 
 #define ANIMATION_EXPLOSION_0                       0
 #define ANIMATION_DUREE_EXPLOSION_0                 1.02f
@@ -34,7 +34,7 @@
 
 /**
 * @struct Frame
-* @brief Constitue l'element de base d'une animation
+* @brief Constitue l'element de base d'une animation : capture de l'animation à un instant t
 */
 typedef struct
 {
@@ -53,7 +53,7 @@ typedef struct
 typedef struct
 {
     /** Nombre de frames comportant l'animation */
-    Uint16 nbFrames;
+    int nbFrames;
     /** Tableau de frames */
     Frame * frames;
 } Animation;
@@ -93,12 +93,12 @@ void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos);
 /* ************************************************************************************************************ */
 
 /**
-* @fn void animationInitAnimation(Animation * anim, Uint16 nb);
+* @fn void animationInitAnimation(Animation * anim, int nb);
 * @brief initialise une animation
 * @param [in,out] anim
 * @param [in] nb : nombre de frames de l'animation
 */
-void animationInitAnimation(Animation * anim, Uint16 nb);
+void animationInitAnimation(Animation * anim, int nb);
 
 /**
 * @fn void animationLibereAnimation(Animation * anim);
@@ -108,14 +108,14 @@ void animationInitAnimation(Animation * anim, Uint16 nb);
 void animationLibereAnimation(Animation * anim);
 
 /**
-* @fn void animationSetFrame(Animation * anim, Uint16 pos, SDL_Surface *surface, float delai);
+* @fn void animationSetFrame(Animation * anim, int pos, SDL_Surface *surface, float delai);
 * @brief Affecte une surface et un délai à une frame donnée
 * @param [in, out] anim
 * @param [in] pos
 * @param [in, out] surface
 * @param [in] delai
 */
-void animationSetFrame(Animation * anim, Uint16 pos, SDL_Surface *surface, float delai);
+void animationSetFrame(Animation * anim, int pos, SDL_Surface *surface, float delai);
 /* ********************************************************************************************************* */
 /**
 * @fn void animationInitAnimateur(Animateur * ateur, Animation *anim)

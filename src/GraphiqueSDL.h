@@ -59,7 +59,6 @@ typedef struct
     TTF_Font *policeMenu;
     /** police pour la liste des joueurs */
     TTF_Font *policeListeJoueurs;
-
     /** tableau des differentes animations */
     Animation ** lesExplosions;
 

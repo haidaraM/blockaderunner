@@ -33,7 +33,7 @@ ifeq ($(OS),WIN32)
 	INCLUDE		 	= -I$(SRC) -I"C:\code\lib\SDL\include\SDL"
 endif
 ifeq ($(OS),LINUX)
-	LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx
+	LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx -lm
 	INCLUDE		 	= -I/usr/include -I/usr/include/SDL -I$(SRC)
 endif
 

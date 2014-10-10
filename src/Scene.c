@@ -81,6 +81,9 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
     /* mise des flags des evenements son à 0 */
     sceneInitialiseFlags(scene);
 
+    /* angle de rotation */
+    scene->angleRotation = SCENE_VITESSE_ROTATION;
+
     #ifdef JEU_VERBOSE
     printf("    initialisation OK.\n");
     #endif
@@ -757,7 +760,7 @@ void sceneTestDeCollision(Scene *scene)
             sceneDetruitElement(e);
             tabDynSupprimeElement(&scene->acteurs, i);
         }
-    }
+    } /* Fin du for collision vaisseauJoueur - acteurs */
 
 }
 
@@ -1032,6 +1035,16 @@ void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element)
     pos->y = elementGetY(element);
     pos->type = elementGetType(element);
     pos->ateur=NULL;
+}
+
+double sceneGetAngleRotation(const Scene * scene )
+{
+    return scene->angleRotation;
+}
+
+void sceneMAJAngleRotation (Scene * scene)
+{
+    scene->angleRotation += SCENE_VITESSE_ROTATION;
 }
 
 void sceneTestDeRegression()

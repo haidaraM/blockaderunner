@@ -276,10 +276,12 @@ void jeuBoucle(JeuSDL *jeu)
                 que les incréments soient suffisament significatifs en pixels). */
                 sceneAnime(&jeu->scene, getTempsSecondes());
 
+                sceneMAJAngleRotation(&jeu->scene);
+
                 graphiqueEfface( graphique );
                 /*
                 */
-                graphiqueAfficheScene( graphique, &jeu->scene );
+                graphiqueAfficheScene( graphique, &jeu->scene);
                  /* */
                 graphiqueRaffraichit( graphique );
 

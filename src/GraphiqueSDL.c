@@ -6,9 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
-#include <SDL_rotozoom.h>
 #include <SDL/SDL_image.h>
+#include <SDL_rotozoom.h>
 
 #include "GraphiqueSDL.h"
 #include "ElementScene.h"
@@ -103,8 +104,36 @@ void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
     }
 }
 
+SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position)
+{
+    double pi = M_PI ; /* 3.1415926...*/
 
+    angle %= 360 ; /* l'angle est ajusté entre 0 et 359° (360° correspondant à un tour complet)*/
 
+    if(angle<=90)
+    {
+        /* cos et sin prennent des valeurs en radian, d'où la conversion angle[rad] = angle[deg]/180.*pi*/
+        position.x += dimension_image/2*(1-sin(angle/180.*pi)-cos(angle/180.*pi)) ;
+        position.y += dimension_image/2*(1-sin(angle/180.*pi)-cos(angle/180.*pi)) ;
+    }
+    else if(angle<=180)
+    {
+        position.x += dimension_image/2*(1-sin(angle/180.*pi)+cos(angle/180.*pi)) ;
+        position.y += dimension_image/2*(1-sin(angle/180.*pi)+cos(angle/180.*pi)) ;
+    }
+    else if(angle<=270)
+    {
+        position.x += dimension_image/2*(1+sin(angle/180.*pi)+cos(angle/180.*pi)) ;
+        position.y += dimension_image/2*(1+sin(angle/180.*pi)+cos(angle/180.*pi)) ;
+    }
+    else if(angle<=360)
+    {
+        position.x += dimension_image/2*(1+sin(angle/180.*pi)-cos(angle/180.*pi)) ;
+        position.y += dimension_image/2*(1+sin(angle/180.*pi)-cos(angle/180.*pi)) ;
+    }
+
+    return position ;
+}
 
 
 
@@ -696,7 +725,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 }
 
 
-void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
+void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
 {
     int i;
     SDL_Rect srcBox, dstBox, vBox;
@@ -705,8 +734,9 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
     ElementScene **bonus 	        = (ElementScene **)scene->bonus.tab;
     ElementScene **decors 	        = (ElementScene **)scene->decors.tab;
     PositionExplosion ** explosions = (PositionExplosion **) scene->positionsExplosions.tab;
-    SDL_Surface * surfacePointS;
+    SDL_Surface * surfacePointS=NULL, *surfaceRotation;
     Uint32 couleurPointsDefilement = SDL_MapRGB(graphique->surface->format, 0xd0, 0xff, 0xff);
+
 
     Uint32 couleurNiveauStructure   	= 0x00B0FF; /* jaunatre */
 
@@ -764,17 +794,31 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene )
         {
             dstBox.x = elementGetX(acteurs[i]);
             dstBox.y = elementGetY(acteurs[i]);
-            SDL_BlitSurface( graphique->images[elementGetImageIndex(acteurs[i])], NULL, graphique->surface, &dstBox);
-            /* Affichage barre de vie */
+            /* Affichage vaisseau ennemmis + barre de vie */
             if(elementGetType(acteurs[i])==ELEMENT_TYPE_ECLAIREUR || elementGetType(acteurs[i])==ELEMENT_TYPE_CHASSEUR ||
                     elementGetType(acteurs[i])==ELEMENT_TYPE_CROISEUR)
             {
-                surfacePointS=SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), GFX_EPAISSEUR_BARRE_VIE, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
+                /* affichage vaisseau */
+                SDL_BlitSurface( graphique->images[elementGetImageIndex(acteurs[i])], NULL, graphique->surface, &dstBox);
+                /* barre de vie */
+                surfacePointS = SDL_CreateRGBSurface(SDL_HWSURFACE, vaisseauGetPointStructure((Vaisseau *)acteurs[i]->data), GFX_EPAISSEUR_BARRE_VIE, 32,graphique->rmask, graphique->gmask, graphique->bmask, 0);
+                /* coloration */
                 SDL_FillRect(surfacePointS, NULL, couleurNiveauStructure);
                 dstBox.y -= 4; /* decalage de la barre de vie */
                 SDL_BlitSurface(surfacePointS, NULL, graphique->surface,&dstBox );
                 SDL_FreeSurface(surfacePointS);
             }
+            /* Mise en place de la rotation pour les debris asteroides */
+            else if(elementGetType(acteurs[i]) == ELEMENT_TYPE_DEBRIS_ASTEROIDE)
+            {
+                surfaceRotation = rotozoomSurface(graphique->images[elementGetImageIndex(acteurs[i])], sceneGetAngleRotation(scene), 1.0, 1);
+                /* calcul approximatif de la position après rotation */
+                dstBox = positionPivot(RESS_IMG_LARGEUR_DEBRIS_ASTEROIDE, sceneGetAngleRotation(scene), dstBox);
+                SDL_BlitSurface( surfaceRotation, NULL, graphique->surface, &dstBox);
+                SDL_FreeSurface(surfaceRotation);
+            }
+            else /* affichage normale */
+                SDL_BlitSurface( graphique->images[elementGetImageIndex(acteurs[i])], NULL, graphique->surface, &dstBox);
         }
     }
 

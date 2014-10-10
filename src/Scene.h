@@ -30,6 +30,7 @@
 #define SCENE_VITESSE_ECLAIREUR				180.0f
 #define SCENE_VITESSE_CHASSEUR				224.0f
 #define SCENE_VITESSE_CROISEUR				64.0f
+#define SCENE_VITESSE_ROTATION              18.0f
 
 
 
@@ -98,7 +99,7 @@ typedef struct
     TabDyn tirs;
     /** tableau dynamique des bonus. */
     TabDyn bonus;
-    /** tableau dynamique des éléments de décor. */
+    /** tableau dynamique des éléments de décor : INUTILISEE POUR LE MOMENT. */
     TabDyn decors;
     /** index image fond (background du niveau). */
     int indexImageFond;
@@ -116,6 +117,8 @@ typedef struct
     Ressource *ressource;
     /** Tableau des positions des elements detruits notamment les vaisseaux ennemis **/
     TabDyn positionsExplosions;
+    /* Utilisé en interne pour la rotation des asteroides */
+    double angleRotation;
 
 } Scene;
 
@@ -308,6 +311,19 @@ void sceneTestDeCollision(Scene *scene);
 * @return Renvoie 1 si le joueur est mort, 0 sinon
 */
 int sceneTestVaisseauMort(Scene * scene);
+
+/**
+* @fn double sceneGetAngleRotation(const Scene * scene )
+* @brief Recupère l'angle de rotation des debris d'asteroides
+* @param [in] scene : initialisé
+*/
+double sceneGetAngleRotation(const Scene * scene );
+
+/**
+* @fn void sceneMAJAngleRotation (Scene * scene)
+* @brief Met à jour l'angle de rotation
+*/
+void sceneMAJAngleRotation (Scene * scene);
 
 /**
 * @fn void sceneTestDeRegression()
