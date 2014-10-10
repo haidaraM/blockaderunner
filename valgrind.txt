@@ -1,12 +1,13 @@
-Pour ignorer SDL et autres, il faut donner le fichier de suppression à valgrind.
+Valgrind permet de deceler les fuites de memoires et plein d'autres choses (conditionnal jump etc...).
+Par défaut il detecte les allocations faite par des bibliothèques tierces comme une fuite.
 
-Cette commande ne prends pas en compte les fuites de memoire SDL et produit un fichier error.txt qui contiendra les erreurs.
-Il faudra copier le fichier .supp dans le dossier du projet.
+Pour éviter celà pour la bibliothèque SDL (pas encore pour FMOD), il faut ajouter un fichier de suppression qui se trouve dans le repertoire courant : "valgrind_lif7.supp".
+
+Executer cette commande pour effectuer les tests de memoires. Les erreurs seront repertoriés dans un fichier error.txt :
 
 valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind_lif7.supp --show-reachable=yes -v --log-file=error.txt bin/blockade
 
-Pour les autres paramètres, lire la doc.
-
-Il y'a aussi un tuto ici : 
-http://fr.openclassrooms.com/informatique/cours/debuguer-facilement-avec-valgrind
+Pour les autres paramètres, RTFM.
+Doc officiel : http://valgrind.org/docs/
+Tuto : http://fr.openclassrooms.com/informatique/cours/debuguer-facilement-avec-valgrind
 
