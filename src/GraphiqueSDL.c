@@ -9,7 +9,7 @@
 #include <math.h>
 
 #include <SDL/SDL_image.h>
-#include <SDL_rotozoom.h>
+#include <SDL/SDL_rotozoom.h>
 
 #include "GraphiqueSDL.h"
 #include "ElementScene.h"
@@ -103,7 +103,9 @@ void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
         break;
     }
 }
-
+/**
+* @brief calcule la position de la nouvelle surface après rotation
+*/
 SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position)
 {
     double pi = M_PI ; /* 3.1415926...*/
@@ -113,28 +115,27 @@ SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position)
     if(angle<=90)
     {
         /* cos et sin prennent des valeurs en radian, d'où la conversion angle[rad] = angle[deg]/180.*pi*/
-        position.x += dimension_image/2*(1-sin(angle/180.*pi)-cos(angle/180.*pi)) ;
-        position.y += dimension_image/2*(1-sin(angle/180.*pi)-cos(angle/180.*pi)) ;
+        position.x += (int) dimension_image/2*(1-sin(angle/180.*pi)-cos(angle/180.*pi)) ;
+        position.y += (int)dimension_image/2*(1-sin(angle/180.*pi)-cos(angle/180.*pi)) ;
     }
     else if(angle<=180)
     {
-        position.x += dimension_image/2*(1-sin(angle/180.*pi)+cos(angle/180.*pi)) ;
-        position.y += dimension_image/2*(1-sin(angle/180.*pi)+cos(angle/180.*pi)) ;
+        position.x += (int)dimension_image/2*(1-sin(angle/180.*pi)+cos(angle/180.*pi)) ;
+        position.y += (int)dimension_image/2*(1-sin(angle/180.*pi)+cos(angle/180.*pi)) ;
     }
     else if(angle<=270)
     {
-        position.x += dimension_image/2*(1+sin(angle/180.*pi)+cos(angle/180.*pi)) ;
-        position.y += dimension_image/2*(1+sin(angle/180.*pi)+cos(angle/180.*pi)) ;
+        position.x += (int)dimension_image/2*(1+sin(angle/180.*pi)+cos(angle/180.*pi)) ;
+        position.y += (int)dimension_image/2*(1+sin(angle/180.*pi)+cos(angle/180.*pi)) ;
     }
     else if(angle<=360)
     {
-        position.x += dimension_image/2*(1+sin(angle/180.*pi)-cos(angle/180.*pi)) ;
-        position.y += dimension_image/2*(1+sin(angle/180.*pi)-cos(angle/180.*pi)) ;
+        position.x += (int)dimension_image/2*(1+sin(angle/180.*pi)-cos(angle/180.*pi)) ;
+        position.y += (int)dimension_image/2*(1+sin(angle/180.*pi)-cos(angle/180.*pi)) ;
     }
 
     return position ;
 }
-
 
 
 /* ---------------Interface du Module----------------------- */
@@ -727,7 +728,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu)
 
 void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
 {
-    int i;
+    int i, typeElement, pointS, pointE;
     SDL_Rect srcBox, dstBox, vBox;
     ElementScene **acteurs 	        = (ElementScene **)scene->acteurs.tab;
     ElementScene **tirs 	        = (ElementScene **)scene->tirs.tab;
@@ -792,11 +793,11 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
     {
         if (acteurs[i] != NULL && elementVisible(acteurs[i]) == 1)
         {
+            typeElement = elementGetType(acteurs[i]);
             dstBox.x = elementGetX(acteurs[i]);
             dstBox.y = elementGetY(acteurs[i]);
             /* Affichage vaisseau ennemmis + barre de vie */
-            if(elementGetType(acteurs[i])==ELEMENT_TYPE_ECLAIREUR || elementGetType(acteurs[i])==ELEMENT_TYPE_CHASSEUR ||
-                    elementGetType(acteurs[i])==ELEMENT_TYPE_CROISEUR)
+            if(typeElement == ELEMENT_TYPE_ECLAIREUR || typeElement == ELEMENT_TYPE_CHASSEUR || typeElement == ELEMENT_TYPE_CROISEUR)
             {
                 /* affichage vaisseau */
                 SDL_BlitSurface( graphique->images[elementGetImageIndex(acteurs[i])], NULL, graphique->surface, &dstBox);
@@ -809,9 +810,10 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
                 SDL_FreeSurface(surfacePointS);
             }
             /* Mise en place de la rotation pour les debris asteroides */
-            else if(elementGetType(acteurs[i]) == ELEMENT_TYPE_DEBRIS_ASTEROIDE)
+            else if(typeElement == ELEMENT_TYPE_DEBRIS_ASTEROIDE)
             {
-                surfaceRotation = rotozoomSurface(graphique->images[elementGetImageIndex(acteurs[i])], sceneGetAngleRotation(scene), 1.0, 1);
+                /* rotation avec un petit dezoomage : 0.9 */
+                surfaceRotation = rotozoomSurface(graphique->images[elementGetImageIndex(acteurs[i])], sceneGetAngleRotation(scene), 0.9, 1);
                 /* calcul approximatif de la position après rotation */
                 dstBox = positionPivot(RESS_IMG_LARGEUR_DEBRIS_ASTEROIDE, sceneGetAngleRotation(scene), dstBox);
                 SDL_BlitSurface( surfaceRotation, NULL, graphique->surface, &dstBox);
@@ -854,15 +856,17 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
 
     /* Affichage de l'interface */
 
-    /* Affichage des points ecrans */
-    for (i=0; i<vaisseauGetPointStructure(scene->elementVaisseauJoueur->data)/50; i++)
+    /* Affichage des points structures */
+    pointS = vaisseauGetPointStructure(scene->elementVaisseauJoueur->data);
+    for (i=0; i<pointS/50; i++)
     {
         dstBox.x = GFX_HUD_ELEMENT_LARGEUR;
         dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);
         SDL_BlitSurface( graphique->elementsHUD[0], NULL, graphique->surface, &dstBox);
     }
-    /* Affichage des points structures */
-    for (i=0; i< vaisseauGetPointEcran(scene->elementVaisseauJoueur->data)/50; i++)
+    /* Affichage des points ecran */
+    pointE = vaisseauGetPointEcran(scene->elementVaisseauJoueur->data);
+    for (i=0; i<pointE/50; i++)
     {
         dstBox.x = 2* GFX_HUD_ELEMENT_LARGEUR + GFX_HUD_ELEMENT_OFFSET;
         dstBox.y = graphique->hauteur - GFX_HUD_ELEMENT_HAUTEUR - (i+1)*(GFX_HUD_ELEMENT_HAUTEUR + GFX_HUD_ELEMENT_OFFSET);

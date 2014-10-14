@@ -7,7 +7,7 @@
 #ifndef _ANIMATION_H
 #define _ANIMATION_H
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 #define NB_ANIMATION                                3
 #define VITESSE_GLOBALE_EXPLOSIONS                 0.02

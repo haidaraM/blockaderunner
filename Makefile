@@ -1,3 +1,7 @@
+#Makefile du projet BlockadeRunner
+#Realise par Yoan Cortial et Mohamed El Mouctar HAIDARA. Lire le readme pour plus d'informations
+#Partie windows non fonctionnel
+
 MODE_JEU		= MODE_NORMAL
 #MODE_JEU 		= MODE_INVULNERABLE
 
@@ -10,13 +14,14 @@ EXPLOSION		= NO_REPETE_EXPLOSION
 #OS				= WIN32
 OS				= LINUX
 
-#Definitions des macros pour le prépocesseur 
+#Definitions des macros pour le préprocesseur 
 DEFINE 			= -D$(OS) -D$(VERBOSE) -D$(MODE_JEU) -D$(EXPLOSION)
 
 #Repertoires des fichiers sources, obj et des executables
 OBJ		 		= obj
 SRC		 		= src
 BIN		 		= bin
+
 
 #Executable du jeu
 EXEC 			= blockade
@@ -37,7 +42,7 @@ ifeq ($(OS),LINUX)
 	INCLUDE		 	= -I/usr/include -I/usr/include/SDL -I$(SRC)
 endif
 
-
+#Options de compilation
 LDFLAGS  		= 
 CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2   # pour optimiser
 
@@ -45,16 +50,19 @@ CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2   # pour optimiser
 all: $(BIN)/$(EXEC) $(BIN)/$(MAIN_TEST)
 
 
-
+#Creation de l'executable principale
 $(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Outils.o $(OBJ)/Ressource.o $(OBJ)/Joueur.o $(OBJ)/Niveau.o $(OBJ)/GraphiqueSDL.o $(OBJ)/EntreeSDL.o $(OBJ)/Menu.o $(OBJ)/Scene.o $(OBJ)/ElementScene.o $(OBJ)/Vaisseau.o $(OBJ)/Audio.o $(OBJ)/Animation.o
-	$(LD)  $^ $(LDFLAGS) $(LIBS) -o $@
+	$(LD)  $^ $(CFLAGS) $(LIBS) -o $@
 
+# Creation de l'executable pour les tests
 $(BIN)/$(MAIN_TEST): $(OBJ)/MainTest.o $(OBJ)/Joueur.o $(OBJ)/Vaisseau.o $(OBJ)/ElementScene.o $(OBJ)/Outils.o $(OBJ)/Scene.o $(OBJ)/Ressource.o $(OBJ)/Niveau.o 
 	$(LD) $(CFLAGS) $^ -o $@ 
 
+# Creation des dependances
 $(OBJ)/%.o: $(SRC)/%.c 
 	$(CC) -c $(CFLAGS) $(INCLUDE) $< -o $@
 
+# Suppression de tous les fichiers obj et executables pour forcer la recompilation complète
 clean:
 	rm -f $(OBJ)/*.o $(BIN)/$(EXEC) $(BIN)/$(MAIN_TEST)
 

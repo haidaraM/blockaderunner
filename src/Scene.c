@@ -82,7 +82,7 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
     sceneInitialiseFlags(scene);
 
     /* angle de rotation */
-    scene->angleRotation = SCENE_VITESSE_ROTATION;
+    scene->angleRotation = 0;
 
     #ifdef JEU_VERBOSE
     printf("    initialisation OK.\n");
@@ -1045,6 +1045,8 @@ double sceneGetAngleRotation(const Scene * scene )
 void sceneMAJAngleRotation (Scene * scene)
 {
     scene->angleRotation += SCENE_VITESSE_ROTATION;
+    if(scene->angleRotation >= 360)
+        scene->angleRotation = 0;
 }
 
 void sceneTestDeRegression()
