@@ -9,7 +9,38 @@
 #include "ElementScene.h"
 #include "Vaisseau.h"
 
+/**
+* @fn void elementSetType(ElementScene *element, int type)
+* @brief Affecte le type d'element.
+* @param [in, out] element : initialisé
+* @param [in] type
+*/
 
+static void elementSetType(ElementScene *element, int type)
+{
+    assert(element != NULL);
+    element->type = type;
+    switch (type)
+    {
+    case ELEMENT_TYPE_ECLAIREUR:
+        element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
+        vaisseauInit(element->data, VAISSEAU_ECLAIREUR_TYPE);
+        break;
+    case ELEMENT_TYPE_CHASSEUR:
+        element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
+        vaisseauInit(element->data, VAISSEAU_CHASSEUR_TYPE);
+        break;
+    case ELEMENT_TYPE_CROISEUR:
+        element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
+        vaisseauInit(element->data, VAISSEAU_CROISEUR_TYPE);
+        break;
+
+    default:
+        break;
+    }
+}
+
+/* -------------------- Interface du module ----------------------- */
 
 void elementInit(ElementScene *element, int type, int indexImage, int largeur, int hauteur, int largeurEcran, int hauteurEcran)
 {
@@ -42,29 +73,6 @@ void elementLibere(ElementScene *element)
     }
 }
 
-void elementSetType(ElementScene *element, int type)
-{
-    assert(element != NULL);
-    element->type = type;
-    switch (type)
-    {
-    case ELEMENT_TYPE_ECLAIREUR:
-        element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
-        vaisseauInit(element->data, VAISSEAU_ECLAIREUR_TYPE);
-        break;
-    case ELEMENT_TYPE_CHASSEUR:
-        element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
-        vaisseauInit(element->data, VAISSEAU_CHASSEUR_TYPE);
-        break;
-    case ELEMENT_TYPE_CROISEUR:
-        element->data=(Vaisseau *) malloc(sizeof(Vaisseau));
-        vaisseauInit(element->data, VAISSEAU_CROISEUR_TYPE);
-        break;
-
-    default:
-        break;
-    }
-}
 
 int elementVisible(const ElementScene *element)
 {

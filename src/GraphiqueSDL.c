@@ -1,12 +1,11 @@
 /**
 * @file GraphiqueSDL.c
-* @brief Fichier d'implementation du module GraphiqueSDL
+* @brief Fichier d'implementation du module GraphiqueSDL : SDL_image, SDL_ttf, SDL_gfx
 */
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_rotozoom.h>
@@ -17,7 +16,7 @@
 
 /* -----------Fonctions internes ----------------- */
 
-SDL_Surface* chargeImage(char* nomFichier)
+static SDL_Surface* chargeImage(char* nomFichier)
 {
     SDL_Surface *image = NULL;
     char file[64], dir[64];
@@ -38,7 +37,7 @@ SDL_Surface* chargeImage(char* nomFichier)
     return image;
 }
 
-void chargePolices(GraphiqueSDL *graphique)
+static void chargePolices(GraphiqueSDL *graphique)
 {
     char file[64], dir[64];
     char *nomFic;
@@ -67,7 +66,7 @@ void chargePolices(GraphiqueSDL *graphique)
 /**
 * @brief Affecte à un pixel de la Surface une couleur.
 */
-void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
+static void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 {
     int bpp = surface->format->BytesPerPixel;
     /* p est l'adresse du pixel ciblé: */
@@ -106,7 +105,7 @@ void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 /**
 * @brief calcule la position de la nouvelle surface après rotation
 */
-SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position)
+static SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position)
 {
     double pi = M_PI ; /* 3.1415926...*/
 
@@ -136,6 +135,99 @@ SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position)
 
     return position ;
 }
+
+/**
+* @fn void graphiqueInitAnimation(const GraphiqueSDL * graphique, Animation * monAnimation, int typeEx)
+* @brief Initialise les animations : decoupe les images pour constituer les frames
+* @param [in] graphique
+* @param [in,out] monAnimation
+* @param [in] typeEx
+*/
+static void graphiqueInitAnimation(const GraphiqueSDL * graphique, Animation * monAnimation, int typeEx)
+{
+
+    int i;
+    SDL_Rect decoupage;
+
+#ifdef JEU_VERBOSE
+    printf("    Initialisation des explosions (Animation) : %d .\n", typeEx);
+#endif
+
+    decoupage.y=0;
+    switch(typeEx)
+    {
+
+    case ANIMATION_EXPLOSION_0:
+        /* creation du tableau de frames */
+        animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_0);
+        /* parametres de decoupage */
+        decoupage.h = RESS_IMG_HAUTEUR_EXPLOSION_0;
+        decoupage.w = ANIMATION_HAUTEUR_FRAME_EXPLOSION_0;
+        for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_0; i++)
+        {
+            animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_0],ANIMATION_DELAI_FRAME_EXPLOSION_0 );
+            decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_0*i;
+            monAnimation->frames[i].decoupage=decoupage;
+        }
+        break;
+    case ANIMATION_EXPLOSION_1:
+        /* creation du tableau de frames */
+        animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_1);
+        /* parametres de decoupage suite */
+        decoupage.h = RESS_IMG_HAUTEUR_EXPLOSION_1;
+        decoupage.w = ANIMATION_HAUTEUR_FRAME_EXPLOSION_1;
+        for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_1; i++)
+        {
+            animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_1],ANIMATION_DELAI_FRAME_EXPLOSION_1);
+            decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_1*i;
+            monAnimation->frames[i].decoupage=decoupage;
+        }
+        break;
+    case ANIMATION_EXPLOSION_2:
+        /* creation du tableau de frames */
+        animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_2);
+        /* parametres de decoupage suite */
+        decoupage.h = RESS_IMG_HAUTEUR_EXPLOSION_2;
+        decoupage.w = ANIMATION_HAUTEUR_FRAME_EXPLOSION_2;
+        for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_2; i++)
+        {
+            animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_2], ANIMATION_DELAI_FRAME_EXPLOSION_2);
+            decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_2*i;
+            monAnimation->frames[i].decoupage=decoupage;
+        }
+        break;
+    default:
+        break;
+    }
+
+}
+
+/**
+* @fn static void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene)
+* @brief Se charge d'associer les images respectives des explosions
+* @param [in,out] graphique
+* @param [in] scene
+*/
+static void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene)
+{
+    int i;
+    for(i=0; i<sceneGetNbExplosions(scene); i++)
+    {
+        PositionExplosion * e = (PositionExplosion *) tabDynGetElement(&scene->positionsExplosions,i );
+        /* s'il n'a pas eté encore cree on le cree */
+        if(e->ateur== NULL)
+        {
+            e->ateur = (Animateur *) malloc(sizeof(Animateur));
+            if(e->type == ELEMENT_TYPE_ECLAIREUR )
+                animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_0]);
+            else if(e->type == ELEMENT_TYPE_CROISEUR )
+                animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_2]);
+            else if(e->type == ELEMENT_TYPE_CHASSEUR)
+                animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_1]);
+        }
+    }
+}
+
 
 
 /* ---------------Interface du Module----------------------- */
@@ -976,84 +1068,4 @@ void graphiqueAfficheVictoire(GraphiqueSDL * graphique)
     graphiqueRaffraichit(graphique);
     /* On met le jeu en pause pendant 10s */
     SDL_Delay(10000);
-}
-
-void graphiqueInitAnimation(const GraphiqueSDL * graphique, Animation * monAnimation, int typeEx)
-{
-
-    int i;
-    SDL_Rect decoupage;
-
-#ifdef JEU_VERBOSE
-    printf("    Initialisation des explosions (Animation) : %d .\n", typeEx);
-#endif
-
-    /* parametres de decoupage */
-    decoupage.y=0;
-    switch(typeEx)
-    {
-
-    case ANIMATION_EXPLOSION_0:
-        /* creation du tableau de frames */
-        animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_0);
-        /* parametres de decoupage suite */
-        decoupage.h = RESS_IMG_HAUTEUR_EXPLOSION_0;
-        decoupage.w = ANIMATION_HAUTEUR_FRAME_EXPLOSION_0;
-        for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_0; i++)
-        {
-            animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_0],ANIMATION_DELAI_FRAME_EXPLOSION_0 );
-            decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_0*i;
-            monAnimation->frames[i].decoupage=decoupage;
-        }
-        break;
-    case ANIMATION_EXPLOSION_1:
-        /* creation du tableau de frames */
-        animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_1);
-        /* parametres de decoupage suite */
-        decoupage.h = RESS_IMG_HAUTEUR_EXPLOSION_1;
-        decoupage.w = ANIMATION_HAUTEUR_FRAME_EXPLOSION_1;
-        for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_1; i++)
-        {
-            animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_1],ANIMATION_DELAI_FRAME_EXPLOSION_1);
-            decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_1*i;
-            monAnimation->frames[i].decoupage=decoupage;
-        }
-        break;
-    case ANIMATION_EXPLOSION_2:
-        /* creation du tableau de frames */
-        animationInitAnimation(monAnimation, ANIMATION_NB_FRAMES_EXPLOSION_2);
-        /* parametres de decoupage suite */
-        decoupage.h = RESS_IMG_HAUTEUR_EXPLOSION_2;
-        decoupage.w = ANIMATION_HAUTEUR_FRAME_EXPLOSION_2;
-        for(i=0; i<ANIMATION_NB_FRAMES_EXPLOSION_2; i++)
-        {
-            animationSetFrame(monAnimation, i, graphique->images[RESS_IMG_EXPLOSION_2], ANIMATION_DELAI_FRAME_EXPLOSION_2);
-            decoupage.x = ANIMATION_HAUTEUR_FRAME_EXPLOSION_2*i;
-            monAnimation->frames[i].decoupage=decoupage;
-        }
-        break;
-    default:
-        break;
-    }
-
-}
-
-void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene)
-{
-    int i;
-    for(i=0; i<sceneGetNbExplosions(scene); i++)
-    {
-        PositionExplosion * e = (PositionExplosion *) tabDynGetElement(&scene->positionsExplosions,i );
-        /* s'il n'a pas eté encore cree on le cree */
-        if(e->ateur== NULL)
-        {
-            e->ateur = (Animateur *) malloc(sizeof(Animateur));
-            if(e->type == ELEMENT_TYPE_ECLAIREUR )
-                animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_0]);
-            else if(e->type == ELEMENT_TYPE_CROISEUR )
-                animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_2]);
-            else if(e->type == ELEMENT_TYPE_CHASSEUR)
-                animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_1]);
-        }
-    }
 }

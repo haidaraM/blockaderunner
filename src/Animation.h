@@ -34,11 +34,11 @@
 
 /**
 * @struct Frame
-* @brief Constitue l'element de base d'une animation : capture de l'animation à un instant t
+* @brief Element de base d'une animation : "capture" de l'animation à un instant t
 */
 typedef struct
 {
-    /** Partie de l'image qui sera affiché */
+    /** Partie de l'image qui correspondra à une frame donnée */
     SDL_Rect decoupage;
     /** L'image à un instant t de l'animation */
     SDL_Surface * image;
@@ -69,28 +69,11 @@ typedef struct
     /** Etat de l'animation */
     enum {STOP, PLAY} statut;
     /** Indice de la frame courante de l'animation */
-    Uint16 frameCourante;
+    int frameCourante;
     /** Temps ecoulé depuis l'apparition de la frame courante */
     float compteur;
 } Animateur;
 
-/**
-* @fn void animationInitFrame( AnimationFrame * frame, SDL_Surface * image, float delai);
-* @brief Initialise la frame
-* @param [in, out] frame
-* @param [in] image
-*/
-void animationInitFrame( Frame * frame, SDL_Surface * image, float delai);
-
-/**
-* @fn void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos);
-* @brief Affiche la frame
-* @param [in,out] frame : frame a affiché, initialisée
-* @param [in,out] surface : surface principale sur laquelle le blit sera fait
-* @param [in, out] pos : position de la frame
-*/
-void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos);
-/* ************************************************************************************************************ */
 
 /**
 * @fn void animationInitAnimation(Animation * anim, int nb);
@@ -116,6 +99,7 @@ void animationLibereAnimation(Animation * anim);
 * @param [in] delai
 */
 void animationSetFrame(Animation * anim, int pos, SDL_Surface *surface, float delai);
+
 /* ********************************************************************************************************* */
 /**
 * @fn void animationInitAnimateur(Animateur * ateur, Animation *anim)
@@ -138,19 +122,6 @@ void animationJoueAnimation(Animateur * ateur);
 */
 void animationStopAnimation(Animateur * ateur);
 
-/**
-* @fn void animationRewindAnimation(Animateur * ateur)
-* @brief Remet à zero l'animation
-* @param [in,out] ateur : initialisé
-*/
-void animationRewindAnimation(Animateur * ateur);
-
-/**
-* @fn void animationNextFrame(Animateur * ateur)
-* @brief Passe à la frame suivant
-* @param [in,out] ateur : initialisé
-*/
-void animationNextFrame(Animateur * ateur);
 
 /**
 * @fn void animationMAJAnimateur(Animateur * ateur)

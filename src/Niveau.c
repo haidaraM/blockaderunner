@@ -10,40 +10,14 @@
 #include "Ressource.h"
 #include "Niveau.h"
 
+/**
+* @fn static void niveauChargeFichier(Niveau * niveau, int numero)
+* @brief Charge les caractéristiques du niveau a partir d'un fichier
+* @param [in, out] niveau : initialisé
+* @param [in] numero : correspond au numero du niveau
+*/
 
-void niveauInit(Niveau *niveau, int numero)
-{
-    assert(niveau != NULL);
-
-    niveau->numero = numero;
-    niveau->imageFond = 0; /* vide */
-    tabDynInit(&niveau->composition);
-
-    niveauChargeFichier(niveau, numero);
-}
-
-void niveauLibere(Niveau *niveau)
-{
-    int i;
-    GroupeNiveau *g;
-    assert(niveau != NULL);
-
-    for (i=0; i< niveau->composition.tailleUtilisee; i++)
-    {
-        g=(GroupeNiveau *)tabDynGetElement(&niveau->composition, i);
-        if ( g!= NULL)
-            free(g);
-    }
-    tabDynLibere(&niveau->composition);
-}
-
-void niveauSetImageFond(Niveau *niveau, int indexImage)
-{
-    assert(niveau != NULL);
-    niveau->imageFond = indexImage;
-}
-
-void niveauChargeFichier(Niveau * niveau, int numero)
+static void niveauChargeFichier(Niveau * niveau, int numero)
 {
     FILE *fic;
     char nomFichier[128], typeGroupe[32];
@@ -138,6 +112,40 @@ void niveauChargeFichier(Niveau * niveau, int numero)
     }
 
     fclose(fic);
+}
+
+/* -------------------------- Interface du module ------------------------------ */
+
+void niveauInit(Niveau *niveau, int numero)
+{
+    assert(niveau != NULL);
+
+    niveau->numero = numero;
+    niveau->imageFond = 0; /* vide */
+    tabDynInit(&niveau->composition);
+
+    niveauChargeFichier(niveau, numero);
+}
+
+void niveauLibere(Niveau *niveau)
+{
+    int i;
+    GroupeNiveau *g;
+    assert(niveau != NULL);
+
+    for (i=0; i< niveau->composition.tailleUtilisee; i++)
+    {
+        g=(GroupeNiveau *)tabDynGetElement(&niveau->composition, i);
+        if ( g!= NULL)
+            free(g);
+    }
+    tabDynLibere(&niveau->composition);
+}
+
+void niveauSetImageFond(Niveau *niveau, int indexImage)
+{
+    assert(niveau != NULL);
+    niveau->imageFond = indexImage;
 }
 
 int niveauGetNumGroupes(const Niveau *niveau)

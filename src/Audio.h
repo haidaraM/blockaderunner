@@ -1,5 +1,5 @@
 /**
-* @file AudioSDL.h
+* @file Audio.h
 * @brief Fichier d'en tete du module Audio qui va gerer le son grace à la librairie FMOD Ex.
 * @author Mohamed El Mouctar HAIDARA
 */
@@ -15,7 +15,7 @@
 
 /**
 * @struct AudioFMOD
-* @brief Structure qui nous permettra de gerer le système audio. On utilise FMOD d'une façon assez simple.
+* @brief Permettra de gerer le système audio.
 */
 typedef struct
 {
@@ -50,22 +50,6 @@ void audioLibere(AudioFMOD *audio);
 void audioJoueSon(const AudioFMOD * audio, int index);
 
 /**
-* @fn FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon)
-* @brief Charge en memoire un son dont le nom est passé à paramètre
-* @param [in audio : utile pour la fonction qui charge le son
-* @param [in] nomFichier : correspond au nom du fichier, pas le chemin
-* @param [in] typeSon : 0 pour un son court et 1 pour un son long. Utile car fmod ne les charge pas de la meme manière
-*/
-FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon);
-
-/**
-* @fn void audioVerifieErreur(const FMOD_RESULT resultat)
-* @brief Verifie s'il y'a eu une erreur lors de l'appel de certaines fonction et quitte le programme si necessaire
-* @param [in] resultat
-*/
-void audioVerifieErreur(const FMOD_RESULT resultat);
-
-/**
 * @fn void audioStopSon(const Audio * audio, int index)
 * @brief Arrete un son en cours de lecture
 * @param [in] audio : initialisé
@@ -90,25 +74,8 @@ void audioPauseSon(const AudioFMOD *audio, int index);
 void audioReprendSon(const AudioFMOD *audio, int index);
 
 /**
-* @fn FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index)
-* @brief Recupere le canal sur lequel le son correspondant à index est joué
-* @param [in] audio : intialisé
-* @param [in] index
-* @return Pointeur vers un canal
-*/
-FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index);
-
-/**
-* @fn FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index)
-* @brief Test si le son est en lecture
-* @param [in] audio
-* @return Renvoie vrai si le son est en lecture, faux sinon
-*/
-FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index);
-
-/**
 * @fn void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
-* @brief Joue les sons qui correspondent au evenemnts de la scene
+* @brief Joue les sons qui correspondent au evenements survenus sur la scene
 * @param [in] audio : initialisé
 * @param [in] scene : initialisé
 */

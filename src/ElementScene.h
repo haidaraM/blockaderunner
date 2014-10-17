@@ -1,6 +1,6 @@
 /**
 * @file ElementScene.h
-* @brief Une instance d'un type donné (élément du Jeu) : vaisseau, asteroide, etc. Caractérisé par des liens sur des ressources prédéfinies (images, sons).
+* @brief Une instance d'un type donné (élément du Jeu) : vaisseau, asteroide, etc. Caractérisé par des liens sur des ressources prédéfinies (images).
 *  Tous les ElementScenes sont gérés par la Scene, qui décident notamment lesquels sont visibles, créés, détruits.
 * @author Yann Cortial
 *
@@ -53,7 +53,7 @@ typedef struct
     int largeurSceneVisible;
     /** Hauteur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
     int hauteurSceneVisible;
-    /** pointeur generique. Utilisé notament pour lié à un element d'autres caractéristique (pS et pE par ex) */
+    /** pointeur generique. Utilisé notament pour lié à un element d'autres caractéristique (vaisseau par exemple) */
     void * data;
 
 } ElementScene;
@@ -78,14 +78,6 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 * @param [in, out] element : initialisé
 */
 void elementLibere(ElementScene *element);
-
-/**
-* @fn void elementSetType(ElementScene *element, int type)
-* @brief Affecte le type d'element.
-* @param [in, out] element : initialisé
-* @param [in] type
-*/
-void elementSetType(ElementScene *element, int type);
 
 /**
 * @fn elementGetType(const ElementScene * element)

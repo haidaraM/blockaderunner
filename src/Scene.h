@@ -226,23 +226,6 @@ void sceneAnime(Scene *scene, float tempsSecondes);
 void scenePause(Scene * scene);
 
 /**
-* @fn ElementScene* sceneCreerElementScene(const Scene *scene, int type)
-* @brief Cree un element et l'initialise
-* @param [in] scene
-* @return Renvoie un pointeur vers l'element initialisé
-*/
-ElementScene* sceneCreerElementScene(const Scene *scene, int type);
-
-
-/**
-* @fn void sceneDetruitElement(ElementScene *element)
-* @brief Detruit complement un element : le libere et le met à null. Doit etre appelé sur un element crée par la scene
-* @param [in, out] element : initialisé
-*/
-void sceneDetruitElement(ElementScene *element);
-
-
-/**
 * @fn void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 * @brief Deplace le vaisseau du joueur vers le haut.
 * @param [in, out]scene : instance de la Scene.
@@ -322,6 +305,7 @@ double sceneGetAngleRotation(const Scene * scene );
 /**
 * @fn void sceneMAJAngleRotation (Scene * scene)
 * @brief Met à jour l'angle de rotation
+* @param [in,out] scene : initialisé
 */
 void sceneMAJAngleRotation (Scene * scene);
 

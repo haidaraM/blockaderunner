@@ -10,9 +10,9 @@
 #include "Menu.h"
 #include "Joueur.h"
 
-/* --------------------------------------------------------------------------	Fonctions Internes */
+/* ------------	Fonctions Internes --------------------------------- */
 
-void creeListeJoueurs(Menu *menu)
+static void creeListeJoueurs(Menu *menu)
 {
 	int i;
 	int index, numJoueurs;

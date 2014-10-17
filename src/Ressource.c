@@ -1,20 +1,16 @@
 /**
 * @file Ressource.c
-* @brief
+* @brief Fichier d'implemantation du module ressource : images, sons, sauvegardes
 */
-#include "Ressource.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
 
-
-/*------------------------------------------------------------------------------------------------------------------
-	FONCTIONS INTERNES
-*/
+#include "Ressource.h"
 
 
-void creeListeImages(Ressource *res)
+static void creeListeImages(Ressource *res)
 {
     int i;
 
@@ -153,7 +149,7 @@ void creeListeImages(Ressource *res)
 
 }
 
-void creeListeSons(Ressource *res)
+static void creeListeSons(Ressource *res)
 {
     int i, nbSons;
     /* Initialisation des tableaux */
@@ -196,7 +192,12 @@ void creeListeSons(Ressource *res)
 void creeListePolices(Ressource *res)
 {}
 
-void chargeJoueurs(Ressource *res)
+/**
+* @fn static void chargeJoueurs(Ressource *res)
+* @brief Charge à partir du fichier de sauvegarde la liste des joueurs
+* @param [in,out] ressource
+*/
+static void chargeJoueurs(Ressource *res)
 {
     FILE *fic;
 
@@ -248,7 +249,7 @@ void chargeJoueurs(Ressource *res)
     fclose(fic);
 }
 
-void creeNiveaux(Ressource *res)
+static void creeNiveaux(Ressource *res)
 {
     int i;
     assert(res != NULL);
@@ -265,18 +266,6 @@ void creeNiveaux(Ressource *res)
         niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0 + i);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*-------------------------------INTERFACE DU MODULE---------------------------*/

@@ -10,6 +10,19 @@
 
 #include "Joueur.h"
 
+/**
+* @fn static Vaisseau * joueurGetVaisseau(const Joueur * joueur)
+* @brief Renvoie le vaisseau du joueur
+* @param [in] joueur : initialisé
+* @return Pointeur sur vaisseau
+*/
+static Vaisseau * joueurGetVaisseau(const Joueur * joueur)
+{
+    assert(joueur!=NULL);
+    return joueur->vaisseau;
+}
+
+
 void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
 {
     assert(joueur!=NULL && nom != NULL);
@@ -58,11 +71,6 @@ void joueurSetScore(Joueur *joueur, int score)
     joueur->score = score;
 }
 
-Vaisseau * joueurGetVaisseau(const Joueur * joueur)
-{
-    assert(joueur!=NULL);
-    return joueur->vaisseau;
-}
 
 int joueurGetNumArmeSelectionne(const Joueur * joueur)
 {

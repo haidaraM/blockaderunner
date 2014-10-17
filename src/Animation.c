@@ -7,18 +7,43 @@
 
 #include "Animation.h"
 
-
-void animationInitFrame( Frame * frame, SDL_Surface * image, float delai)
+/**
+* @fn static void animationInitFrame( Frame * frame, SDL_Surface * image, float delai)
+* @brief Initialise une frame donnée
+* @param [in,out] frame
+* @param [in,out] image
+* @param [in] delai
+*/
+static void animationInitFrame( Frame * frame, SDL_Surface * image, float delai)
 {
     assert(frame!=NULL);
     frame->image=image;
     frame->delai=delai;
 }
 
-void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos)
+static void animationAfficheFrame(Frame * frame, SDL_Surface * dest, SDL_Rect * pos)
 {
     assert(frame!=NULL);
     SDL_BlitSurface(frame->image, &frame->decoupage, dest, pos);
+}
+
+/**
+* @fn static void animationNextFrame(Animateur * ateur)
+* @brief Passe à la frame suivant
+* @param [in,out] ateur : initialisé
+*/
+static void animationNextFrame(Animateur * ateur)
+{
+    ateur->frameCourante++;
+    /* Retour à la frame 0 si nous sommes à la dernière */
+    if (ateur->frameCourante == ateur->anim->nbFrames)
+    {
+        ateur->frameCourante = 0;
+        #ifdef NO_REPETE_EXPLOSION
+        ateur->statut=STOP;
+        #endif /* REPETE_EXPLOSION */
+    }
+    ateur->compteur = 0;
 }
 /* *************************************************************************************** */
 
@@ -46,7 +71,9 @@ void animationInitAnimateur(Animateur * ateur, Animation *anim)
 {
     assert(ateur!=NULL && anim!=NULL);
     ateur->anim=anim;
-    animationRewindAnimation(ateur);
+    ateur->frameCourante = 0;
+    ateur->compteur = 0;
+    animationJoueAnimation(ateur);
 }
 
 void animationJoueAnimation(Animateur * ateur)
@@ -61,26 +88,7 @@ void animationStopAnimation(Animateur * ateur)
     ateur->statut=STOP;
 }
 
-void animationRewindAnimation(Animateur * ateur)
-{
-    ateur->frameCourante = 0;
-    ateur->compteur = 0;
-    animationJoueAnimation(ateur);
-}
 
-void animationNextFrame(Animateur * ateur)
-{
-    ateur->frameCourante++;
-    /* Retour à la frame 0 si nous sommes à la dernière */
-    if (ateur->frameCourante == ateur->anim->nbFrames)
-    {
-        ateur->frameCourante = 0;
-        #ifdef NO_REPETE_EXPLOSION
-        ateur->statut=STOP;
-        #endif /* REPETE_EXPLOSION */
-    }
-    ateur->compteur = 0;
-}
 
 void animationMAJAnimateur(Animateur * ateur)
 {

@@ -181,22 +181,6 @@ void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique);
 */
 void graphiqueAfficheVictoire(GraphiqueSDL * graphique);
 
-/**
-* @fn void graphiqueInitAnimation(const GraphiqueSDL * graphique, Animation * monAnimation, int typeEx)
-* @brief Initialise les animations : decoupe les images pour constituer les frames
-* @param [in] graphique
-* @param [in,out] monAnimation
-* @param [in] typeEx
-*/
-void graphiqueInitAnimation(const GraphiqueSDL * graphique, Animation * monAnimation, int typeEx);
-
-/**
-* @fn void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene)
-* @brief Se charge d'associer les images respectives des explosions
-* @param [in,out] graphique
-* @param [in] scene
-*/
-void graphiqueAlloueAnimateur(GraphiqueSDL * graphique, const Scene * scene);
 
 
 #endif

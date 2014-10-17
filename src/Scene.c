@@ -3,19 +3,19 @@
 * @brief Fichier d'implementation du module
 * @author Yann CORTIAL - Mohamed El Mouctar HAIDARA
 */
-#include "Scene.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
 #include <math.h>
 
+#include "Scene.h"
 
 /**
-* @fn void sceneInitialiseFlags(Scene * scene)
+* @fn static void sceneInitialiseFlags(Scene * scene)
 * @brief Met les flags associés aux sons à zero
 * @param [in, out] scene : non null
 */
-void sceneInitialiseFlags(Scene * scene)
+static void sceneInitialiseFlags(Scene * scene)
 {
     /* Réinitialisation des evenements */
     scene->evenements.asteroide_explosion   = 0;
@@ -35,6 +35,90 @@ void sceneInitialiseFlags(Scene * scene)
     scene->evenements.ennemi_explosion		= 0;
 
 }
+
+/**
+* @fn static ElementScene* sceneCreerElementScene(const Scene *scene, int type)
+* @brief Cree un element et l'initialise
+* @param [in] scene
+* @return Renvoie un pointeur vers l'element initialisé
+*/
+static ElementScene* sceneCreerElementScene(const Scene *scene, int type)
+{
+    ElementScene *e=NULL;
+    e=(ElementScene*)malloc(sizeof(ElementScene));
+    assert(scene!=NULL);
+    assert(e!=NULL);
+    switch(type)
+    {
+    case ELEMENT_TYPE_DEBRIS_ASTEROIDE:
+        elementInit(e, ELEMENT_TYPE_DEBRIS_ASTEROIDE, RESS_IMG_DEBRIS_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_BONUS_SCORE:
+        elementInit(e, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
+        break;
+    case ELEMENT_TYPE_BONUS_MISSILE:
+        elementInit(e, ELEMENT_TYPE_BONUS_MISSILE, RESS_IMG_BONUS_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_MISSILE),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_MISSILE), scene->largeurAffichage, scene->hauteurAffichage);
+        break;
+    case ELEMENT_TYPE_CROISEUR:
+        elementInit(e, ELEMENT_TYPE_CROISEUR, RESS_IMG_VAISSEAU_CROISEUR, ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_CROISEUR),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_CROISEUR), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_VAISSEAU_JOUEUR:
+        elementInit(e, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_JOUEUR), ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_JOUEUR),
+                    scene->largeurAffichage, scene->hauteurAffichage);
+        break;
+    case ELEMENT_TYPE_ECLAIREUR:
+        elementInit(e, ELEMENT_TYPE_ECLAIREUR, RESS_IMG_VAISSEAU_ECLAIREUR, ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_ECLAIREUR),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_ECLAIREUR), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_ASTEROIDE:
+        elementInit(e, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_ASTEROIDE),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_CHASSEUR:
+        elementInit(e, ELEMENT_TYPE_CHASSEUR, RESS_IMG_VAISSEAU_CHASSEUR, ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_CHASSEUR),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_CHASSEUR), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_LASER_ENNEMI:
+        elementInit(e, ELEMENT_TYPE_LASER_ENNEMI, RESS_IMG_TIR_ENNEMI_LASER, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_MISSILE_ENNEMI:
+        elementInit(e, ELEMENT_TYPE_MISSILE_ENNEMI, RESS_IMG_TIR_ENNEMI_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_MISSILE),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_MISSILE), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_LASER_JOUEUR :
+        elementInit(e, ELEMENT_TYPE_LASER_JOUEUR, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(scene->ressource,RESS_IMG_TIR_JOUEUR_LASER),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
+        break;
+    case ELEMENT_TYPE_MISSILE_JOUEUR:
+        elementInit(e, ELEMENT_TYPE_MISSILE_JOUEUR, RESS_IMG_MISSILE_JOUEUR, ressourceGetLargeurImage(scene->ressource    , RESS_IMG_MISSILE_JOUEUR),
+                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_MISSILE_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
+        break;
+    default :
+        break;
+    }
+    return e;
+}
+
+
+/**
+* @fn static void sceneDetruitElement(ElementScene *element)
+* @brief Detruit complement un element : le libere et le met à null. Doit etre appelé sur un element crée par la scene
+* @param [in, out] element : initialisé
+*/
+static void sceneDetruitElement(ElementScene *element)
+{
+    assert(element!=NULL);
+    elementLibere(element);
+    free(element);
+    element=NULL;
+}
+
+/* ----------------------------- Inteface du module ---------------------- */
 
 
 void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphique, int hauteurGraphique)
@@ -793,68 +877,6 @@ int sceneGetNbExplosions(const Scene * scene)
 }
 
 
-ElementScene* sceneCreerElementScene(const Scene *scene, int type)
-{
-    ElementScene *e=NULL;
-    e=(ElementScene*)malloc(sizeof(ElementScene));
-    assert(scene!=NULL);
-    assert(e!=NULL);
-    switch(type)
-    {
-    case ELEMENT_TYPE_DEBRIS_ASTEROIDE:
-        elementInit(e, ELEMENT_TYPE_DEBRIS_ASTEROIDE, RESS_IMG_DEBRIS_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_DEBRIS_ASTEROIDE ), scene->largeurAffichage, scene->hauteurAffichage );
-        break;
-    case ELEMENT_TYPE_BONUS_SCORE:
-        elementInit(e, ELEMENT_TYPE_BONUS_SCORE, RESS_IMG_BONUS_SCORE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_SCORE),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_SCORE), scene->largeurAffichage, scene->hauteurAffichage);
-        break;
-    case ELEMENT_TYPE_BONUS_MISSILE:
-        elementInit(e, ELEMENT_TYPE_BONUS_MISSILE, RESS_IMG_BONUS_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_BONUS_MISSILE),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_BONUS_MISSILE), scene->largeurAffichage, scene->hauteurAffichage);
-        break;
-    case ELEMENT_TYPE_CROISEUR:
-        elementInit(e, ELEMENT_TYPE_CROISEUR, RESS_IMG_VAISSEAU_CROISEUR, ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_CROISEUR),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_CROISEUR), scene->largeurAffichage, scene->hauteurAffichage );
-        break;
-    case ELEMENT_TYPE_VAISSEAU_JOUEUR:
-        elementInit(e, ELEMENT_TYPE_VAISSEAU_JOUEUR, RESS_IMG_VAISSEAU_JOUEUR,ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_JOUEUR), ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_JOUEUR),
-                    scene->largeurAffichage, scene->hauteurAffichage);
-        break;
-    case ELEMENT_TYPE_ECLAIREUR:
-        elementInit(e, ELEMENT_TYPE_ECLAIREUR, RESS_IMG_VAISSEAU_ECLAIREUR, ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_ECLAIREUR),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_ECLAIREUR), scene->largeurAffichage, scene->hauteurAffichage );
-        break;
-    case ELEMENT_TYPE_ASTEROIDE:
-        elementInit(e, ELEMENT_TYPE_ASTEROIDE, RESS_IMG_ASTEROIDE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_ASTEROIDE),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_ASTEROIDE), scene->largeurAffichage, scene->hauteurAffichage );
-        break;
-    case ELEMENT_TYPE_CHASSEUR:
-        elementInit(e, ELEMENT_TYPE_CHASSEUR, RESS_IMG_VAISSEAU_CHASSEUR, ressourceGetLargeurImage(scene->ressource, RESS_IMG_VAISSEAU_CHASSEUR),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_VAISSEAU_CHASSEUR), scene->largeurAffichage, scene->hauteurAffichage );
-        break;
-    case ELEMENT_TYPE_LASER_ENNEMI:
-        elementInit(e, ELEMENT_TYPE_LASER_ENNEMI, RESS_IMG_TIR_ENNEMI_LASER, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_LASER), scene->largeurAffichage, scene->hauteurAffichage );
-        break;
-    case ELEMENT_TYPE_MISSILE_ENNEMI:
-        elementInit(e, ELEMENT_TYPE_MISSILE_ENNEMI, RESS_IMG_TIR_ENNEMI_MISSILE, ressourceGetLargeurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_MISSILE),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_ENNEMI_MISSILE), scene->largeurAffichage, scene->hauteurAffichage );
-        break;
-    case ELEMENT_TYPE_LASER_JOUEUR :
-        elementInit(e, ELEMENT_TYPE_LASER_JOUEUR, RESS_IMG_TIR_JOUEUR_LASER, ressourceGetLargeurImage(scene->ressource,RESS_IMG_TIR_JOUEUR_LASER),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_TIR_JOUEUR_LASER), scene->largeurAffichage, scene->hauteurAffichage );
-        break;
-    case ELEMENT_TYPE_MISSILE_JOUEUR:
-        elementInit(e, ELEMENT_TYPE_MISSILE_JOUEUR, RESS_IMG_MISSILE_JOUEUR, ressourceGetLargeurImage(scene->ressource    , RESS_IMG_MISSILE_JOUEUR),
-                    ressourceGetHauteurImage(scene->ressource, RESS_IMG_MISSILE_JOUEUR), scene->largeurAffichage, scene->hauteurAffichage);
-        break;
-    default :
-        break;
-    }
-    return e;
-}
-
 void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
 {
     ElementScene *vaiss			=scene->elementVaisseauJoueur;
@@ -1017,16 +1039,6 @@ int sceneTestVaisseauMort(Scene * scene)
     else
         return 0;
 }
-
-
-void sceneDetruitElement(ElementScene *element)
-{
-    assert(element!=NULL);
-    elementLibere(element);
-    free(element);
-    element=NULL;
-}
-
 
 void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element)
 {

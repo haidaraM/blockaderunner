@@ -1,8 +1,8 @@
-#include "Outils.h"
 #include <assert.h>
 #include <stdlib.h>
 #include <time.h>
 
+#include "Outils.h"
 
 float getTempsSecondes()
 {

@@ -83,14 +83,6 @@ void niveauLibere(Niveau *niveau);
 void niveauSetImageFond(Niveau *niveau, int indexImage);
 
 /**
-* @fn void niveauChargeFichier(Niveau * niveau, int numero)
-* @brief Charge les caractéristiques du niveau a partir d'un fichier
-* @param [in, out] niveau : initialisé
-* @param [in] numero : correspond au numero du niveau
-*/
-void niveauChargeFichier(Niveau * niveau, int numero);
-
-/**
 * @fn int niveauGetNumGroupes(Niveau * niveau)
 * @brief Renvoie le nombre de groupes qui composent le niveau (rappel : un groupe peut-etre un champ d'asteroides, une escadre de chasseurs ennemis, etc...)
 * @param [in] niveau : initialisé

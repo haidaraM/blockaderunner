@@ -57,14 +57,6 @@ void joueurLibere(Joueur * joueur);
 void joueurSetScore(Joueur * joueur, int score);
 
 /**
-* @fn Vaisseau * joueurGetVaisseau(const Joueur * joueur)
-* @brief Renvoie le vaisseau du joueur
-* @param [in] joueur : initialisé
-* @return Pointeur sur vaisseau
-*/
-Vaisseau * joueurGetVaisseau(const Joueur * joueur);
-
-/**
 * @fn int joueurGetScore(const Joueur *joueur)
 * @brief Renvoie le score du joueur
 * @param [in] joueur

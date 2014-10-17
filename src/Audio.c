@@ -1,5 +1,5 @@
 /**
-* @file AudioSDL.c
+* @file Audio.c
 * @brief Fichier d'implementation du module Audio
 * @author Mohamed El Mouctar HAIDARA
 */
@@ -12,7 +12,29 @@
 
 /* Fonctions internes  */
 
-FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon)
+/**
+* @fn static void audioVerifieErreur(const FMOD_RESULT resultat)
+* @brief Verifie s'il y'a eu une erreur lors de l'appel de certaines fonction et quitte le programme si necessaire
+* @param [in] resultat
+*/
+static void audioVerifieErreur(const FMOD_RESULT resultat)
+{
+    if (resultat != FMOD_OK)
+    {
+        printf("Erreur FMOD (%d)! %s\n",resultat, FMOD_ErrorString(resultat));
+        exit(-1);
+    }
+}
+
+
+/**
+* @fn static FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon)
+* @brief Charge en memoire un son dont le nom est passé à paramètre
+* @param [in audio : utile pour la fonction qui charge le son
+* @param [in] nomFichier : correspond au nom du fichier, pas le chemin
+* @param [in] typeSon : 0 pour un son court et 1 pour un son long. Utile car fmod ne les charge pas de la meme manière
+*/
+static FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon)
 {
     FMOD_SOUND * son=NULL;
     FMOD_RESULT resultat;
@@ -40,6 +62,46 @@ FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typeSon)
 
     return son;
 }
+
+/**
+* @fn static FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index)
+* @brief Recupere le canal sur lequel le son correspondant à index est joué
+* @param [in] audio : intialisé
+* @param [in] index
+* @return Pointeur vers un canal
+*/
+static FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index)
+{
+    FMOD_CHANNEL * channel;
+    FMOD_RESULT resultat;
+    /* On verifie que l'index est bien correcte */
+    assert(0<=index && index < RESS_NUM_SONS_COURTS + RESS_NUM_SONS_LONGS);
+    /* on recupere le canal */
+    resultat=FMOD_System_GetChannel(audio->system, index, &channel);
+    audioVerifieErreur(resultat);
+    return channel;
+}
+
+
+/**
+* @fn static FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index)
+* @brief Test si le son est en lecture
+* @param [in] audio
+* @return Renvoie vrai si le son est en lecture, faux sinon
+*/
+static FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index)
+{
+    FMOD_BOOL etat;
+    FMOD_CHANNEL *canal;
+    /* on recupere le canal sur lequel le son est sensé etre jouer */
+    canal=audioGetCanal(audio, index);
+    /* on recupere l'etat du canal pour voir si le son est en lecture */
+    FMOD_Channel_IsPlaying(canal, &etat);
+    return etat;
+}
+
+
+/* ---------------- Interface du module ---------------------- */
 
 void audioInit(AudioFMOD *audio, const Ressource *res)
 {
@@ -103,15 +165,6 @@ void audioLibere(AudioFMOD *audio)
     audioVerifieErreur(resultat);
 }
 
-void audioVerifieErreur(const FMOD_RESULT resultat)
-{
-    if (resultat != FMOD_OK)
-    {
-        printf("Erreur FMOD (%d)! %s\n",resultat, FMOD_ErrorString(resultat));
-        exit(-1);
-    }
-}
-
 void audioJoueSon(const AudioFMOD * audio, int index)
 {
     FMOD_RESULT resultat;
@@ -173,28 +226,6 @@ void audioReprendSon(const AudioFMOD *audio, int index)
     }
 }
 
-FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index)
-{
-    FMOD_BOOL etat;
-    FMOD_CHANNEL *canal;
-    /* on recupere le canal sur lequel le son est sensé etre jouer */
-    canal=audioGetCanal(audio, index);
-    /* on recupere l'etat du canal pour voir si le son est en lecture */
-    FMOD_Channel_IsPlaying(canal, &etat);
-    return etat;
-}
-
-FMOD_CHANNEL * audioGetCanal(const AudioFMOD * audio, int index)
-{
-    FMOD_CHANNEL * channel;
-    FMOD_RESULT resultat;
-    /* On verifie que l'index est bien correcte */
-    assert(0<=index && index < RESS_NUM_SONS_COURTS + RESS_NUM_SONS_LONGS);
-    /* on recupere le canal */
-    resultat=FMOD_System_GetChannel(audio->system, index, &channel);
-    audioVerifieErreur(resultat);
-    return channel;
-}
 
 void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
 {
