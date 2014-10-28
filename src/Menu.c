@@ -206,6 +206,7 @@ void menuInit(Menu *menu, Ressource *res)
 	for (i=MENU_NIVEAU; i< MENU_NUM_BASIC_ELEMENTS; i++)
 	{
 		strcpy(niv, MENU_TXT_NIVEAU);
+		/* conversion du numero du niveau en caractere */
 		sprintf(indexNiv, "%d", i-MENU_NIVEAU);
 		strcat(niv, indexNiv);
 		index = i;

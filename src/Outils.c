@@ -78,6 +78,7 @@ void tabDynSupprimeElement(TabDyn *t, int index)
     void ** temp=NULL;
     assert(index>=0);
 
+    /* Diminution de la taille allouée si nécessaire */
     if(t->tailleUtilisee < t->capacite/3)
     {
         temp=t->tab;
@@ -89,11 +90,16 @@ void tabDynSupprimeElement(TabDyn *t, int index)
         }
         free(temp);
     }
-
+    /* Decalage des elements du tableau */
     for(i=index; i<t->tailleUtilisee-1; i++)
     {
         t->tab[i]=t->tab[i+1];
     }
+
+
+    /* ecrasement de l'element */
+    /*t->tab[index]=t->tab[t->tailleUtilisee-1];*/
+
     t->tailleUtilisee--;
 }
 

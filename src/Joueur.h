@@ -1,7 +1,6 @@
 /**
 * @file Joueur.h
 * @brief Fichier d'entete du module joueur
-* Un joueur a un nom, a atteint un certain niveau et a un score.
 * @author Mohamed El Mouctar HAIDARA
 */
 #include "Vaisseau.h"

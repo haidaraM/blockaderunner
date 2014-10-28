@@ -1,7 +1,8 @@
 /**
 * @file JeuSDL.h
 * @brief Fichier d'en-tête du module JeuSDL
-* Module principal du programme. Regroupe l'accès aux sous-systèmes essentiels (video, audio), les modules de gestion de haut-niveau (entrées, ressources), et la vue/état global du jeu (Scene).
+* Module principal du programme. Regroupe l'accès aux sous-systèmes essentiels (video, audio),
+* les modules de gestion de haut-niveau (entrées, ressources), et la vue/état global du jeu (Scene).
 * @author Cortial Yann
 *
 */

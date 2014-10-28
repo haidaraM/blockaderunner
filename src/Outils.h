@@ -110,12 +110,12 @@ void tabDynAjoute(TabDyn *t, void* element);
 void* tabDynGetElement(const TabDyn *t, int index);
 
 /**
-* @fn void tabDynSupprimeElement(TabDyn *t, int position)
+* @fn void tabDynSupprimeElement(TabDyn *t, int index)
 * @brief supprime un element du tableau dynamique
 * @param [in, out] t (doit etre initialise)
-* @param [in] position (correspond à la position de l'element dans le tableau )
+* @param [in] index (position de l'element dans le tableau )
 */
-void tabDynSupprimeElement(TabDyn *t, int position);
+void tabDynSupprimeElement(TabDyn *t, int index);
 
 /**
 * @fn void tabDynTestDeRegression();

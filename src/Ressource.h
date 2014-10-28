@@ -241,7 +241,8 @@
 
 /**
 * @struct Ressource
-* @brief Cette structure contient tous les elements dont le jeu aura besoin : les joueurs sauvegardés, la liste des fichiers sons et images, les niveaux etc...
+* @brief Cette structure contient tous les elements dont le jeu aura besoin : les joueurs sauvegardés,
+* la liste des fichiers sons et images, les niveaux etc...
 */
 typedef struct
 {
