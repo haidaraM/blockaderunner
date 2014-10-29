@@ -13,7 +13,7 @@
 			+   +	+++++	+   +	+   +	+++++	+   +
 
 #*******************************************************************************#
-  
+# BlockadeRunner #
   
 Auteurs : 	Yann Cortial - Mohamed El Mouctar HAIDARA <elmhaidara@gmail.com>
 
@@ -195,5 +195,4 @@ Puis chaque paire de lignes définit un joueur :
 		- nom du joueur
 		- deux entiers représentant dans l'ordre :
 			* la progression du joueur (quel niveau max il a atteint)
-			* le score du joueur			
-				  	
+			* le score du joueur
