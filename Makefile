@@ -54,7 +54,7 @@ all: $(BIN)/$(EXEC) $(BIN)/$(MAIN_TEST)
 #Creation de l'executable principale
 $(BIN)/$(EXEC): $(OBJ)/main.o $(OBJ)/JeuSDL.o $(OBJ)/Outils.o $(OBJ)/Ressource.o $(OBJ)/Joueur.o $(OBJ)/Niveau.o $(OBJ)/GraphiqueSDL.o $(OBJ)/EntreeSDL.o $(OBJ)/Menu.o $(OBJ)/Scene.o $(OBJ)/ElementScene.o $(OBJ)/Vaisseau.o $(OBJ)/Audio.o $(OBJ)/Animation.o
 	$(LD)  $^ $(CFLAGS) $(LIBS) -o $@
-	@echo "Je suis trop fort! Compilation réussi"
+	@echo "Je suis trop fort! Compilation réussie"
 
 # Creation de l'executable pour les tests de regression
 $(BIN)/$(MAIN_TEST): $(OBJ)/MainTest.o $(OBJ)/Joueur.o $(OBJ)/Vaisseau.o $(OBJ)/ElementScene.o $(OBJ)/Outils.o $(OBJ)/Scene.o $(OBJ)/Ressource.o $(OBJ)/Niveau.o 
