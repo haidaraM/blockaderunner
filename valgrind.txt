@@ -5,7 +5,7 @@ Pour éviter celà pour la bibliothèque SDL (pas encore pour FMOD), il faut ajo
 
 Executer cette commande pour effectuer les tests de memoires. Les erreurs seront repertoriés dans un fichier error.txt :
 
-valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind_lif7.supp --show-reachable=yes -v --log-file=error.txt bin/blockade
+valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind.supp --show-reachable=yes -v --log-file=error.txt bin/blockade
 
 Pour les autres paramètres, RTFM...
 Doc officiel : http://valgrind.org/docs/
