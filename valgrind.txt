@@ -7,6 +7,7 @@ Executer cette commande pour effectuer les tests de memoires. Les erreurs seront
 
 valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind_lif7.supp --show-reachable=yes -v --log-file=error.txt bin/blockade
 
+
 Pour les autres paramètres, RTFM...
 Doc officiel : http://valgrind.org/docs/
 Tuto : http://fr.openclassrooms.com/informatique/cours/debuguer-facilement-avec-valgrind
