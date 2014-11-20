@@ -42,8 +42,7 @@ static FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typ
     assert(typeSon == 0 || typeSon == 1);
     assert(audio!=NULL);
 
-    if (nomFichier == NULL)
-        return NULL;
+
     strcpy(file, nomFichier);
     strcpy(dir, RESS_DIR_SONS);
 
@@ -55,7 +54,7 @@ static FMOD_SOUND * chargeSon(const AudioFMOD *audio, char * nomFichier, int typ
     /* On verifie qu'il n'y a pas eu d'erreur */
     if(resultat==FMOD_ERR_FILE_NOTFOUND)
     {
-        printf("Impossible de trouvez le fichier %s", file);
+        fprintf(stderr, "Impossible de trouvez le fichier (Audio %d) %s",__LINE__, file);
         exit(-1);
     }
     else audioVerifieErreur(resultat);

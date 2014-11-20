@@ -24,11 +24,11 @@
 
 /*------------------------------------- REPERTOIRES -----------------------------*/
 
-#define RESS_DIR_IMAGES											"data/images/"
-#define RESS_DIR_SONS											"data/sons/"
-#define RESS_DIR_POLICES										"data/polices/"
-#define RESS_DIR_SAUVEGARDES									"data/sauvegardes/"
-#define RESS_DIR_NIVEAU                                         "data/niveau/"
+#define RESS_DIR_IMAGES											"../data/images/"
+#define RESS_DIR_SONS											"../data/sons/"
+#define RESS_DIR_POLICES										"../data/polices/"
+#define RESS_DIR_SAUVEGARDES									"../data/sauvegardes/"
+#define RESS_DIR_NIVEAU                                         "../data/niveau/"
 
 
 /*--------------------------------- SAUVEGARDES ---------------------------------*/

@@ -9,9 +9,9 @@
 #include "Ressource.h"
 #include "Scene.h"
 
-#include "../lib/inc/fmod.h"
-#include "../lib/inc/fmodlinux.h"
-#include "../lib/inc/fmod_errors.h"
+#include "lib/inc/fmod.h"
+#include "lib/inc/fmodlinux.h"
+#include "lib/inc/fmod_errors.h"
 
 /**
 * @struct AudioFMOD

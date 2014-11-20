@@ -21,9 +21,11 @@ int main ()
 {
 	JeuSDL jeu;
 
+
 	jeuInit( &jeu );
 	jeuBoucle( &jeu );
-	jeuLibere( &jeu );
+    jeuLibere( &jeu );
+
 
 	#ifdef JEU_VERBOSE
 	printf("Blockade - status de fin d'execution : OK.\n");

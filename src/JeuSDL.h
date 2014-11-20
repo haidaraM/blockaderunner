@@ -29,6 +29,7 @@ enum {
 * @struct JeuSDL
 * @brief Structure regroupant tous les elements necessaires à l'application.
 */
+
 typedef struct
 {
 

@@ -216,7 +216,7 @@ static void chargeJoueurs(Ressource *res)
     fic 		= fopen(nomFic, "r");
     if(fic == NULL)
     {
-        printf("Erreur : (Ressource) : Impossible d'ouvrir le fichier %s.\n", nomFic);
+        fprintf(stderr, "Erreur : (Ressource) %d : Impossible d'ouvrir le fichier %s.\n",__LINE__, nomFic);
         exit(EXIT_FAILURE);
     }
 
@@ -231,13 +231,13 @@ static void chargeJoueurs(Ressource *res)
         valret = fscanf(fic, "%s", nom);
         if (valret < 1)
         {
-            printf("Erreur de lecture du fichier %s : nom joueur illisible.\n", nomFic);
+            fprintf(stderr, "Erreur (Ressource) %d de lecture du fichier %s : nom joueur illisible.\n",__LINE__, nomFic);
             exit(EXIT_FAILURE);
         }
         valret = fscanf(fic, "%d %d", &progression, &score);
         if (valret != 2)
         {
-            printf("Erreur de lecture du fichier %s : progression et score illisibles.\n", nomFic);
+            fprintf(stderr, "Erreur (Ressource) %d de lecture du fichier %s : progression et score illisibles.\n",__LINE__, nomFic);
             exit(EXIT_FAILURE);
         }
 
@@ -402,7 +402,7 @@ void ressourceSauveJoueurs(const Ressource *res)
     fic 		= fopen(nomFic, "w");
     if(fic == NULL)
     {
-        printf("Erreur : (Ressource) : Impossible d'ouvrir le fichier %s.\n", nomFic);
+        fprintf(stderr, "Erreur : (Ressource) %d : Impossible d'ouvrir le fichier %s.\n",__LINE__, nomFic);
         exit(EXIT_FAILURE);
     }
 
@@ -414,13 +414,13 @@ void ressourceSauveJoueurs(const Ressource *res)
         valret = fprintf(fic, "%s\n", res->joueurs[i]->nom);
         if (valret < 1)
         {
-            printf("Erreur d'ecriture du fichier %s.\n", nomFic);
+            fprintf(stderr, "Erreur (Ressource) %d d'ecriture du fichier %s.\n",__LINE__, nomFic);
             exit(EXIT_FAILURE);
         }
         valret = fprintf(fic, "%d %d\n", (int)res->joueurs[i]->progression, res->joueurs[i]->score);
         if (valret <= 0)
         {
-            printf("Erreur d'ecriture du fichier %s.\n", nomFic);
+            fprintf(stderr,"Erreur (Ressource) %d d'ecriture du fichier %s.\n",__LINE__, nomFic);
             exit(EXIT_FAILURE);
         }
     }
