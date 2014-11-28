@@ -40,7 +40,7 @@ ifeq ($(OS),WIN32)
 endif
 ifeq ($(OS),LINUX)
 	LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx -lm
-	INCLUDE		 	= -I/usr/include -I/usr/include/SDL -I$(SRC)
+	INCLUDE		 	= -I/usr/include -I/usr/include/SDL -I.
 endif
 
 #Options de compilation

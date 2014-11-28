@@ -24,11 +24,11 @@
 
 /*------------------------------------- REPERTOIRES -----------------------------*/
 
-#define RESS_DIR_IMAGES											"../data/images/"
-#define RESS_DIR_SONS											"../data/sons/"
-#define RESS_DIR_POLICES										"../data/polices/"
-#define RESS_DIR_SAUVEGARDES									"../data/sauvegardes/"
-#define RESS_DIR_NIVEAU                                         "../data/niveau/"
+#define RESS_DIR_IMAGES											"data/images/"
+#define RESS_DIR_SONS											"data/sons/"
+#define RESS_DIR_POLICES										"data/polices/"
+#define RESS_DIR_SAUVEGARDES									"data/sauvegardes/"
+#define RESS_DIR_NIVEAU                                         "data/niveau/"
 
 
 /*--------------------------------- SAUVEGARDES ---------------------------------*/
@@ -249,8 +249,8 @@ typedef struct
     int numJoueurs;
     /** Tableau de pointeurs sur Joueur : tous les joueurs sauvegardés. */
     Joueur **joueurs;
-	/** Tableau de pointeurs sur Joueur : les 5 meilleurs joueurs (classement sur le score) */
-	Joueur **meilleursJoueurs;
+    /** Tableau de pointeurs sur Joueur : les 5 meilleurs joueurs (classement sur le score) */
+    Joueur **meilleursJoueurs;
     /** Tableau de chaines de caractères (noms des fichiers images) */
     char **images;
     /** Tableau de Rectangles stockant les dimensions de chaque image */

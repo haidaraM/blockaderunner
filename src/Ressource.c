@@ -216,7 +216,7 @@ static void chargeJoueurs(Ressource *res)
     fic 		= fopen(nomFic, "r");
     if(fic == NULL)
     {
-        fprintf(stderr, "Erreur : (Ressource) %d : Impossible d'ouvrir le fichier %s.\n",__LINE__, nomFic);
+        fprintf(stderr, "Erreur : (Ressource.c) %d : Impossible d'ouvrir le fichier %s.\n",__LINE__, nomFic);
         exit(EXIT_FAILURE);
     }
 
