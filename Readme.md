@@ -1,4 +1,4 @@
-BlockadeRunner <i class="icon-rocket"></i>
+BlockadeRunner
 ===================
 
 
@@ -12,15 +12,14 @@ Auteurs :
 - Yann Cortial
 - Mohamed El Mouctar HAIDARA <elmhaidara@gmail.com>
 
-[TOC]
 
 
-## <i class="icon-cog"></i> Configuration requise
+##Configuration requise
 Le jeu a été testé essentiellement sur un système **Linux (Ubuntu) 64 bits.**
 Résolution minimale :  **1366*720**
 Espace mémoire : **40 Mo** d'espace libre
 
-##<i class="icon-plus"> </i> Installation
+##Installation
 ###Dépendances
 
 * **SDL 1.2** : SDL_ttf,  SDL_image,  SDL_gfx
@@ -30,7 +29,7 @@ En cas de problèmes :
 	* [Doc ubuntu](http://doc.ubuntu-fr.org/sdl) 
 	* [OpenClassroom](http://fr.openclassrooms.com/informatique/cours/apprenez-a-programmer-en-c/installation-de-la-sdl )
 	* [Autres](http://loka.developpez.com/tutoriel/sdl/installation/)
-* **FMOD EX** <i class="icon-music"></i> : Elle se trouve dans le repository. 
+* **FMOD EX** : Elle se trouve dans le repository. 
 Il faudra copier  le fichier `./lib/lib/libfmodex64-4.44.33.so` (le numero peut varier selon votre version) dans le repertoire `/usr/lib/` en le rennomant  en `libfmodex64.so.` Ce n'est pas la meilleure façon de faire mais ça marche quand même.	Pour un systeme 32 bits, copier le fichier `libfmodex-4.44.33.so`  en le rennomant aussi en `libfmodex64.so`
 En cas de problèmes : [Installation FMOD Ex](http://sindev.blogspot.fr/2009/02/how-to-installer-la-fmod-ex-sur-linux.html)
 
@@ -43,7 +42,7 @@ Ouvrez le fichier Makefile_2 avec un éditeur de texte, dé-commenter éventuell
 	#MODE_JEU = MODE_INVULNERABLE	 #permet de jouer sans encaisser de dégâts : utile pour tester le jeu de A à Z.
 	
 	VERBOSE = JEU_VERBOSE    #status d'initialisation affichés sur la sortie
-	\#VERBOSE = NO_VERBOSE    #aucun message sur la sortie standard hormis les messages d'erreurs éventuels. 
+	#VERBOSE = NO_VERBOSE    #aucun message sur la sortie standard hormis les messages d'erreurs éventuels. 
 	
 		EXPLOSION = NO_REPETE_EXPLOSION 	#Permet de ne pas répéter les animations sur la scène
 	#EXPLOSION = REPETE_EXPLOSION 		#Permet de répéter les animations. Plus amusant.
@@ -52,11 +51,11 @@ Ensuite pour lancer la compilation, tapez en étant dans le répertoire principa
 `$ make -f Makefile_2`
 En cas d'erreurs avec les bibliothèques externes, reportez vous aux dépendances.
 
-##<i class="icon-play"> Lancement du jeu
+##Lancement du jeu
 En étant dans le répertoire principale, tapez la commande:
 `$ bin/blockade`
 
-## <i class="icon-file">  Format de fichier 
+##Format de fichier 
 Les fichiers de description d'un niveau et le fichier de sauvegarde se présentent ainsi.
 ###Fichier niveau
 Chaque paire de lignes définit un GroupeNiveau : 
