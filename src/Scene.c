@@ -2,6 +2,9 @@
 * @file Scene.c
 * @brief Fichier d'implementation du module
 * @author Yann CORTIAL - Mohamed El Mouctar HAIDARA
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <stdlib.h>
 #include <assert.h>

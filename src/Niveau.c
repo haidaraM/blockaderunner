@@ -1,6 +1,10 @@
 /**
 * @file Niveau.c
 * @brief Fichier d'implementation du module Niveau
+* @author Mohamed Haidara
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <stdlib.h>
 #include <assert.h>
@@ -70,7 +74,7 @@ static void niveauChargeFichier(Niveau * niveau, int numero)
     fic=fopen(nomFichier, "r");
     if(fic == NULL)
     {
-        printf("Erreur :(Niveau) Impossible d'ouvrir le fichier %s.\n", nomFichier);
+        fprintf(stderr, "Erreur :%s (%d) Impossible d'ouvrir le fichier %s.\n",__FILE__, __LINE__, nomFichier);
         exit(EXIT_FAILURE);
     }
 

@@ -2,6 +2,9 @@
 * @file Joueur.h
 * @brief Fichier d'entete du module joueur
 * @author Mohamed El Mouctar HAIDARA
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include "Vaisseau.h"
 

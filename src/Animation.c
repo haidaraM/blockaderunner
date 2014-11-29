@@ -2,6 +2,9 @@
 * @file Animation.c
 * @brief Fichier d'implémentation du module animation
 * @author Mohamed El Mouctar HAIDARA
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <assert.h>
 

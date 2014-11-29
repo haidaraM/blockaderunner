@@ -1,6 +1,9 @@
 /**
 * @file Vaisseau.c
 * @brief Fichier d'implementation du module Vaisseau
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <stdlib.h>
 #include <stdio.h>

@@ -2,6 +2,9 @@
 * @file GraphiqueSDL.h
 * @brief Le module GraphiqueSDL gère l'affichage avec l'aide de SDL : fenêtre principale, double-buffering, bliting d'images.
 * Le module GraphiqueSDL interface avec SDL et SDL_image.
+*
+* Sous licence LGPL.
+*
 * Résolution de la fenêtre principale : 1366 x 720 px.
 * @author Yann Cortial
 */

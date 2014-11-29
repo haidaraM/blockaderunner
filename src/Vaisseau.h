@@ -2,6 +2,9 @@
 * @file Vaisseau.h
 * @brief fichier d'entete du module Vaisseau qui regroupe les fonctions qui vont gerer les caractèristiques des vaisseaux
 * @author Mohamed El Mouctar HAIDARA
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 
 #ifndef _VAISSEAU_H

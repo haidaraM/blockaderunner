@@ -6,7 +6,10 @@ BlockadeRunner
 
 Jeu de type **shoot'em up** à defilement horizontal réalisé en **C avec SDL et FMOD Ex** dans le cadre de l'UE LIF7 de [l'Université Lyon 1 Claude Bernard.](http://www.univ-lyon1.fr/)
 
-**Le jeu n'est pas destiné à être commercialisé ni à être diffusé. Certaines ressources présentes dans le jeu notamment les images	et les sons sont soumises à des droits.**
+**Le jeu n'est pas destiné à être commercialisé ni à être diffusé. Certaines ressources présentes dans le jeu notamment les images	et les sons sont soumises à des droits et ne nous appartiennent pas. Pour les bibliothèques, réferez vous à leur licence respectives.
+Vous pouvez l'utilisez à titre personnel.
+Copyright 2014, Yann Cortial, Mohamed Haidara.
+Tous droits reservés**
 
 Auteurs : 
 - Yann Cortial

@@ -2,6 +2,9 @@
 * @file Niveau.h
 * @brief Le module Niveau décrit le contenu d'un Niveau du jeu : nombre d'ennemis, image de fond etc.
 * @author Yann Cortial - Mohamed El Mouctar
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #ifndef _NIVEAU_H
 #define _NIVEAU_H

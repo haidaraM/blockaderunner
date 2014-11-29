@@ -1,3 +1,9 @@
+/**
+  *@file Outils.c
+  *@brief Fichier d'implémantation du module outils
+  * @author Yann Cortial
+  */
+
 #include <assert.h>
 #include <stdlib.h>
 #include <time.h>

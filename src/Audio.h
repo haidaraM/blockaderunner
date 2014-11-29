@@ -1,7 +1,13 @@
 /**
 * @file Audio.h
 * @brief Fichier d'en tete du module Audio qui va gerer le son grace à la librairie FMOD Ex.
-* @author Mohamed El Mouctar HAIDARA
+*
+*  FMOD Sound System, copyright © Firelight Technologies Pty, Ltd., 1994-2014.
+*
+*  @author Mohamed El Mouctar HAIDARA
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #ifndef _AUDIO_H
 #define _AUDIO_H
@@ -9,9 +15,8 @@
 #include "Ressource.h"
 #include "Scene.h"
 
-#include "lib/inc/fmod.h"
-#include "lib/inc/fmodlinux.h"
-#include "lib/inc/fmod_errors.h"
+#include <lib/inc/fmod.h>
+
 
 /**
 * @struct AudioFMOD

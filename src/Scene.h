@@ -2,6 +2,9 @@
 * @file Scene.h
 * @brief Gère la scène : positions des elements, collisions, statuts de toutes les instances, potentiellement 'affichables' (visuel et audio).
 * @author Yann Cortial - Mohamed El Mouctar HAIDARA
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #ifndef _SCENE_H
 #define _SCENE_H

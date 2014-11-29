@@ -1,6 +1,9 @@
 /**
 * @file ElementScene.c
 * @brief Fichier d'implementation du module ElementScene
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <stdio.h>
 #include <stdlib.h>

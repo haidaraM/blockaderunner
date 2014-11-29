@@ -3,6 +3,8 @@
 * @brief Module dictionnaire de ressources : images, sons, polices, joueurs, niveaux.
 * @author Yann Cortial
 *
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #ifndef _RESSOURCE_H
 #define _RESSOURCE_H

@@ -2,6 +2,9 @@
 * @file EntreeSDL.h
 * @brief Module de gestion des entrées (couplé avec SDL) : clavier, souris et évènements divers.
 * @author Yann Cortial
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #ifndef _ENTREE_SDL_H
 #define _ENTREE_SDL_H

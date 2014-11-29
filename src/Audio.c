@@ -1,12 +1,20 @@
 /**
 * @file Audio.c
-* @brief Fichier d'implementation du module Audio
+* @brief Fichier d'implementation du module Audio.
+*
+* FMOD Sound System, copyright © Firelight Technologies Pty, Ltd., 1994-2014.
+*
 * @author Mohamed El Mouctar HAIDARA
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <lib/inc/fmod_errors.h>
+#include <lib/inc/fmodlinux.h>
 
 #include "Audio.h"
 

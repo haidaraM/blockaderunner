@@ -1,6 +1,9 @@
 /**
 * @file EntreeSDL.c
 * @brief fichier d'implementation du module EntreeSDL
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <assert.h>
 #include <stdlib.h>

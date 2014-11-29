@@ -1,6 +1,9 @@
 /**
 * @file Menu.c
 * @brief fichier d'implementation du Menu
+* @author Yann Cortial
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <stdlib.h>
 #include <stdio.h>

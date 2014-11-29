@@ -2,6 +2,9 @@
 * @file Animation.h
 * @brief Module utilisé pour réaliser des animations : explosions, rotations etc...
 * @author Mohamed El Mouctar HAIDARA
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 
 #ifndef _ANIMATION_H

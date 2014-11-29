@@ -1,6 +1,9 @@
 /**
 * @file Ressource.c
 * @brief Fichier d'implemantation du module ressource : images, sons, sauvegardes
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,8 +20,17 @@ static void creeListeImages(Ressource *res)
     /* initialisation des tableaux */
 
     res->images 			= (char**)malloc(RESS_NUM_IMAGES * sizeof(char*));
+    if(res->images == NULL)
+    {
+        fprintf(stderr, "ERREUR: %s (%d): Impossible d'alouer la mémoire pour stocker le nom des images",  __FILE__, __LINE__);
+        assert( res->images != NULL);
+    }
     res->dimensionImages 	= (Rectangle*)malloc(RESS_NUM_IMAGES * sizeof(Rectangle));
-    assert( res->images != NULL  &&  res->dimensionImages != NULL );
+    if (res->dimensionImages == NULL)
+    {
+        fprintf(stderr, "ERREUR: %s (%d): Impossible d'alouer la mémoire pour les dimensions des images",  __FILE__, __LINE__);
+        assert( res->dimensionImages != NULL );
+    }
 
     for (i=0; i< RESS_NUM_IMAGES; i++)
     {
@@ -216,7 +228,7 @@ static void chargeJoueurs(Ressource *res)
     fic 		= fopen(nomFic, "r");
     if(fic == NULL)
     {
-        fprintf(stderr, "Erreur : (Ressource.c) %d : Impossible d'ouvrir le fichier %s.\n",__LINE__, nomFic);
+        fprintf(stderr, "Erreur : %s (%d) : Impossible d'ouvrir le fichier %s.\n",__FILE__,__LINE__, nomFic);
         exit(EXIT_FAILURE);
     }
 
@@ -231,13 +243,13 @@ static void chargeJoueurs(Ressource *res)
         valret = fscanf(fic, "%s", nom);
         if (valret < 1)
         {
-            fprintf(stderr, "Erreur (Ressource) %d de lecture du fichier %s : nom joueur illisible.\n",__LINE__, nomFic);
+            fprintf(stderr, "Erreur %s (%d) de lecture du fichier %s : nom joueur illisible.\n",__FILE__,__LINE__, nomFic);
             exit(EXIT_FAILURE);
         }
         valret = fscanf(fic, "%d %d", &progression, &score);
         if (valret != 2)
         {
-            fprintf(stderr, "Erreur (Ressource) %d de lecture du fichier %s : progression et score illisibles.\n",__LINE__, nomFic);
+            fprintf(stderr, "Erreur %s (%d) de lecture du fichier %s : progression et score illisibles.\n",__FILE__,__LINE__, nomFic);
             exit(EXIT_FAILURE);
         }
 
@@ -402,7 +414,7 @@ void ressourceSauveJoueurs(const Ressource *res)
     fic 		= fopen(nomFic, "w");
     if(fic == NULL)
     {
-        fprintf(stderr, "Erreur : (Ressource) %d : Impossible d'ouvrir le fichier %s.\n",__LINE__, nomFic);
+        fprintf(stderr, "Erreur : %s (%d) : Impossible d'ouvrir le fichier %s.\n",__FILE__,__LINE__, nomFic);
         exit(EXIT_FAILURE);
     }
 
@@ -414,13 +426,13 @@ void ressourceSauveJoueurs(const Ressource *res)
         valret = fprintf(fic, "%s\n", res->joueurs[i]->nom);
         if (valret < 1)
         {
-            fprintf(stderr, "Erreur (Ressource) %d d'ecriture du fichier %s.\n",__LINE__, nomFic);
+            fprintf(stderr, "Erreur %s (%d) d'ecriture du fichier %s.\n",__FILE__,__LINE__, nomFic);
             exit(EXIT_FAILURE);
         }
         valret = fprintf(fic, "%d %d\n", (int)res->joueurs[i]->progression, res->joueurs[i]->score);
         if (valret <= 0)
         {
-            fprintf(stderr,"Erreur (Ressource) %d d'ecriture du fichier %s.\n",__LINE__, nomFic);
+            fprintf(stderr,"Erreur %s (%d) d'ecriture du fichier %s.\n",__FILE__,__LINE__, nomFic);
             exit(EXIT_FAILURE);
         }
     }

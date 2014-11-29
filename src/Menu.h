@@ -3,6 +3,9 @@
 * @brief Le module Menu gère l'introduction au jeu et le menu principal.
 * @author Yann Cortial
 *
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
+*
 */
 #ifndef _MENU_H
 #define _MENU_H

@@ -1,6 +1,9 @@
 /**
 * @file GraphiqueSDL.c
 * @brief Fichier d'implementation du module GraphiqueSDL : SDL_image, SDL_ttf, SDL_gfx
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
 */
 #include <assert.h>
 #include <stdio.h>
@@ -30,7 +33,7 @@ static SDL_Surface* chargeImage(char* nomFichier)
     image 					= IMG_Load(strcat(dir, file));
     if (image == NULL)
     {
-        printf("ERREUR : Ressources : impossible de charger l'image %s dans %s.\n   %s\n", nomFichier, RESS_DIR_IMAGES, IMG_GetError());
+        fprintf(stderr, "ERREUR : %s (%d) : impossible de charger l'image %s dans %s.\n   %s\n",__FILE__,__LINE__, nomFichier, RESS_DIR_IMAGES, IMG_GetError());
     }
 
     assert( image != NULL );
@@ -50,14 +53,14 @@ static void chargePolices(GraphiqueSDL *graphique)
     graphique->policeMenu 	= TTF_OpenFont(nomFic, RESS_POL_TAILLE_MENU);
     if(!graphique->policeMenu)
     {
-        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        fprintf(stderr, "ERREUR: %s (%d) TTF_OpenFont: %s\n",__FILE__,__LINE__, TTF_GetError());
         exit(2);
     }
 
     graphique->policeListeJoueurs 	= TTF_OpenFont(nomFic, RESS_POL_TAILLE_LISTE_JOUEURS);
     if(!graphique->policeListeJoueurs)
     {
-        printf("TTF_OpenFont: %s\n", TTF_GetError());
+        fprintf(stderr, "ERREUR: %s (%d) TTF_OpenFont: %s\n",__FILE__,__LINE__, TTF_GetError());
         exit(2);
     }
 
@@ -269,7 +272,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     /* verifie s'il ya plusieurs modes disponibles */
     if(modes == (SDL_Rect **)0)
     {
-        printf("    No VIDEO modes available!\n");
+        fprintf(stderr, "       %s %d No VIDEO modes available!\n", __FILE__, __LINE__);
         exit(-1);
     }
 
@@ -341,7 +344,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->images 		= (SDL_Surface**)malloc(RESS_NUM_IMAGES*sizeof(SDL_Surface*));
     if (graphique->images == NULL)
     {
-        printf("ERREUR : Ressources (GraphiqueSDL) : impossible d'allouer la memoire pour les images.\n");
+        fprintf(stderr, "ERREUR : Ressources (%s %d) : impossible d'allouer la memoire pour les images.\n", __FILE__, __LINE__);
         assert( graphique->images != NULL);
     }
     fichiersImages = ressource->images;
@@ -361,7 +364,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 #endif
     if ( TTF_Init() == -1 )
     {
-        printf("TTF_Init: %s\n", TTF_GetError());
+        fprintf(stderr, "TTF_Init: %s(%d) %s\n",__FILE__, __LINE__, TTF_GetError());
         exit(2);
     }
 
@@ -376,7 +379,7 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
     graphique->textesMenu 	= (SDL_Surface**)malloc(2*MENU_NUM_ELEMENTS*sizeof(SDL_Surface*));
     if (graphique->textesMenu == NULL)
     {
-        printf("ERREUR : (GraphiqueSDL) : impossible d'allouer la memoire pour les rendus de texte (Menu).\n");
+        fprintf(stderr, "ERREUR : %s (%d) : impossible d'allouer la memoire pour les rendus de texte (Menu).\n", __FILE__, __LINE__);
         assert( graphique->textesMenu != NULL);
     }
 #ifdef JEU_VERBOSE
@@ -412,14 +415,14 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
                                   graphique->rmask, graphique->gmask, graphique->bmask, 0 );
     if(graphique->elementsHUD[0] == NULL)
     {
-        printf("ERREUR : (GraphiqueSDL) : impossible de créer élément du HUD.  %s\n", SDL_GetError());
+        fprintf(stderr, "ERREUR : %s (%d): impossible de créer élément du HUD.  %s\n",__FILE__, __LINE__, SDL_GetError());
         exit(1);
     }
     graphique->elementsHUD[1] 	= SDL_CreateRGBSurface(	SDL_HWSURFACE, GFX_HUD_ELEMENT_LARGEUR, GFX_HUD_ELEMENT_HAUTEUR, 32,
                                   graphique->rmask, graphique->gmask, graphique->bmask, 0 );
     if(graphique->elementsHUD[1] == NULL)
     {
-        printf("ERREUR : (GraphiqueSDL) : impossible de créer élément du HUD.  %s\n", SDL_GetError());
+        fprintf(stderr, "ERREUR : %s (%d): impossible de créer élément du HUD.  %s\n",__FILE__, __LINE__, SDL_GetError());
         exit(1);
     }
     /* Application des couleurs */
@@ -442,6 +445,11 @@ void graphiqueInit(GraphiqueSDL *graphique,const Ressource *ressource, Menu *men
 
     /* Initialisation des animations */
     graphique->lesExplosions=(Animation **) malloc(NB_ANIMATION * sizeof(Animation *));
+    if(graphique->lesExplosions == NULL)
+    {
+        fprintf(stderr, "ERREUR : %s (%d) : Impossible d'allouer de la mémoire pour les animations", __FILE__, __LINE__);
+        exit(3);
+    }
     for(i=0; i<NB_ANIMATION; i++)
     {
         graphique->lesExplosions[i] = (Animation *) malloc(sizeof(Animation));

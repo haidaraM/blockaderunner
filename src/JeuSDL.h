@@ -5,6 +5,9 @@
 * les modules de gestion de haut-niveau (entrées, ressources), et la vue/état global du jeu (Scene).
 * @author Cortial Yann
 *
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
+*
 */
 #ifndef _JEU_SDL_H
 #define _JEU_SDL_H

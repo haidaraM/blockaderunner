@@ -4,6 +4,10 @@
 *  Tous les ElementScenes sont gérés par la Scene, qui décident notamment lesquels sont visibles, créés, détruits.
 * @author Yann Cortial
 *
+*
+* Copyright 2014, Yann Cortial, Mohamed Haidara.
+* Tous droits reservés
+*
 */
 #ifndef _ELEMENT_SCENE_H
 #define _ELEMENT_SCENE_H
