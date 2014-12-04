@@ -17,14 +17,23 @@ Auteurs :
 - Yann Cortial
 - Mohamed El Mouctar HAIDARA <elmhaidara@gmail.com>
 
+##I. Capture
+![Démarrage](/capture/1.png)
+![Accueil](/capture/2.png)
+![Score](/capture/3.png)
+![Niveaux](/capture/4.png)
+![Jeu](/capture/5.png)
+![Jeu](/capture/6.png)
+![Jeu](/capture/7.png)
 
 
-##Configuration requise
+
+##II. Configuration requise
 Le jeu a été testé essentiellement sur un système **Linux (Ubuntu) 64 bits.**  
 Résolution minimale :  **1366*720**.  
 Espace mémoire : **40 Mo** d'espace libre.  
 
-##Installation
+##III. Installation
 ###Dépendances
 
 * **SDL 1.2** : SDL_ttf,  SDL_image,  SDL_gfx  
@@ -39,8 +48,7 @@ Il faudra copier  le fichier `./lib/lib/libfmodex64-4.44.33.so` (le numero peut 
 En cas de problèmes : [Installation FMOD Ex](http://sindev.blogspot.fr/2009/02/how-to-installer-la-fmod-ex-sur-linux.html)
 
 ###Compilation
-Vous trouverez deux makefile dans le projet : un généré par QT Creator `Makefile` et un autre fais manuellement `Makefile_2`. Nous allons utiliser le deuxième.  
-Il faudra rajouter deux dossiers vides dans le répertoire principale du projet: `$ mkdir bin` et `$ mkdir obj`.
+Rajoutez deux dossiers vides dans le répertoire principale du projet: `$ mkdir bin` et `$ mkdir obj`.
 Ouvrez le fichier Makefile_2 avec un éditeur de texte, dé-commenter éventuellement les macros selon les besoins : 
 
 	MODE_JEU = MODE_NORMAL   #mode de jeu standard.
@@ -52,15 +60,15 @@ Ouvrez le fichier Makefile_2 avec un éditeur de texte, dé-commenter éventuell
 	EXPLOSION = NO_REPETE_EXPLOSION 	#Permet de ne pas répéter les animations sur la scène
 	#EXPLOSION = REPETE_EXPLOSION 		#Permet de répéter les animations. Plus amusant.
 
-Ensuite pour lancer la compilation, tapez en étant dans le répertoire principale : 
-`$ make -f Makefile_2`
+Ensuite pour lancer la compilation, tapez en étant dans le répertoire principale :   
+`$ make -f Makefile_2`  
 En cas d'erreurs avec les bibliothèques externes, reportez vous aux dépendances.
 
-##Lancement du jeu
-En étant dans le répertoire principale, tapez la commande:
+##IV. Lancement du jeu
+En étant dans le répertoire principale, tapez la commande :  
 `$ bin/blockade`
 
-##Format de fichier
+##V. Format de fichier
 Chaque niveau est décrit par un fichier dans le repertoire data ainsi que les sauvegardes.
 Les fichiers de description d'un niveau et le fichier de sauvegarde se présentent ainsi.
 ###Fichier niveau
@@ -73,9 +81,6 @@ Le premier chiffre représente le nombre de joueurs puis chaque paire de lignes 
 - **Nom du joueur**
 - Deux entiers représentant dans l'ordre : **la progréssion du joueur et son score** 
 
-
-
-
-
-
-
+##VI. Documentation
+Pour générer la documentation, installez doxygen si ce n'est pas le cas et tapez la commande suivant en étant dans le repertoire principal :  
+`$ doxygen doc/blockade.doxy`
