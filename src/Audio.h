@@ -15,7 +15,7 @@
 #include "Ressource.h"
 #include "Scene.h"
 
-#include <lib/inc/fmod.h>
+#include <lib/inc/fmodlinux.h>
 
 
 /**
