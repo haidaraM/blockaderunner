@@ -1,5 +1,4 @@
 bin/*
-data/
 obj/
 *.o
 *.cbp
@@ -9,4 +8,4 @@ NouvellesFonctionnalites.txt
 error.txt
 blockadeRunner.pro
 blockadeRunner.pro.user
-
+Makefile
