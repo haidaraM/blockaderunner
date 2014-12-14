@@ -11,7 +11,7 @@
 #ifndef _JOUEUR_H
 #define _JOUEUR_H
 
-#define JOUEUR_NOM_MAXCHAR				47
+#define JOUEUR_NOM_MAXCHAR				35
 #define JOUEUR_MAX_SCORE				10000000
 #define JOUEUR_MAX_MISSILES				8
 
