@@ -84,3 +84,12 @@ Le premier chiffre représente le nombre de joueurs puis chaque paire de lignes 
 ##VI. Documentation
 Pour générer la documentation, installez doxygen si ce n'est pas le cas et tapez la commande suivant en étant dans le repertoire principal :  
 `$ doxygen doc/blockade.doxy`
+
+##VII. TODO
+* Afficher un message après le chargement du niveau
+* Amélioration de la gestion de l'audio (ajout volume, options etc...)
+* Ajouter un temps d'invulnérabilité 
+* Ajouter une direction pour les missiles
+* Amélioration des animations (rotation astéroïdes, explosions)
+* Améliorer l'intelligence des ennemis
+* Ajouter de nouveaux bonus
