@@ -15,8 +15,7 @@
 #include "Ressource.h"
 #include "Scene.h"
 
-#include <lib/inc/fmodlinux.h>
-
+#include "../lib/inc/fmod.h"
 
 /**
 * @struct AudioFMOD

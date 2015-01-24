@@ -65,12 +65,14 @@ typedef struct
 * @param [in, out]jeu : doit être non NULL.
 */
 void jeuInit(JeuSDL *jeu);
+
 /**
 * @fn void jeuBoucle(JeuSDL *)
 * @brief Boucle principale du programme.
 * Gestion du temps écoulé, lecture des entrées, mise à jour de l'état du jeu et affichage final.
 * @param [in, out] jeu : initialisé
 */
+
 void jeuBoucle(JeuSDL *jeu);
 /**
 * @fn void jeuLibere(JeuSDL *)

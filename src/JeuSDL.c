@@ -18,7 +18,7 @@
 
 void jeuInit(JeuSDL *jeu)
 {
-    srand(time(NULL));
+    srand((unsigned int) time(NULL));
 
 #ifdef JEU_VERBOSE
     printf("BLOCKADE > Initialisation des modules :\n\n");
@@ -171,14 +171,18 @@ void jeuBoucle(JeuSDL *jeu)
                     menuSetCaractere(menu, alphaNum);
                 }
                 if (entreeToucheEnfoncee(entree, SDLK_BACKSPACE) == 1)
+                {
                     toucheDetectee = SDLK_BACKSPACE;
+                }
                 if (entreeToucheEnfoncee(entree, SDLK_BACKSPACE) == 0 && toucheDetectee == SDLK_BACKSPACE)
                 {
                     toucheDetectee = -1;
                     menuEffaceCaractere(menu);
                 }
                 if (entreeToucheEnfoncee(entree, SDLK_RETURN) == 1)
+                {
                     toucheDetectee = SDLK_RETURN;
+                }
                 if (entreeToucheEnfoncee(entree, SDLK_RETURN) == 0 && toucheDetectee == SDLK_RETURN)
                 {
                     toucheDetectee = -1;
@@ -303,7 +307,8 @@ void jeuBoucle(JeuSDL *jeu)
                 toucheDetectee=-1;
             }
 
-            /* Deplacemennt du joueur */
+            /* Deplacemennt du joueur
+             Déplacement en diagonale possible */
             if (entreeToucheEnfoncee(entree, SDLK_UP) == 1)
                 sceneDeplaceVaisseauJoueurHaut( &jeu->scene, dureeBoucle );
             if (entreeToucheEnfoncee(entree, SDLK_DOWN) == 1)
@@ -437,8 +442,7 @@ void jeuBoucle(JeuSDL *jeu)
 
             if (menu->etat == MENU_ETAT_QUITTER)
                 continueJeu=0;
-
-            if (menu->etat == MENU_ETAT_REJOUER)
+            else if (menu->etat == MENU_ETAT_REJOUER)
             {
                 /* liberation de la scene : elle sera reinitialiser dans JEU_ETAT_CHARGEMENT_NIVEAU*/
                 sceneLibere(&jeu->scene);
@@ -450,9 +454,10 @@ void jeuBoucle(JeuSDL *jeu)
                 /* On l'arrete. JEU_ETAT_CHARGEMENT_NIVEAU se chargera de le lancer */
                 audioStopSon(&jeu->audio, RESS_SON_AMBIENCE);
             }
-
-            if (menu->etat == MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL)
+            else if (menu->etat == MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL)
+            {
                 jeu->etatCourantJeu = JEU_RETOUR_MENU_PRINCIPAL;
+            }
 
             /* Si suffisamment de temps s'est écoulé depuis la dernière prise d'horloge : on affiche. */
             if ( (getTempsSecondes() - tempsDernierAffichage) >= periodeAffichage)
