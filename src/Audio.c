@@ -16,7 +16,7 @@
 
 
 #include "Audio.h"
-#include "../lib/inc/fmod_errors.h"
+#include "fmod_errors.h"
 /* Fonctions internes  */
 
 /**

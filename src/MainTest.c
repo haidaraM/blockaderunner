@@ -6,6 +6,9 @@
 #include "ElementScene.h"
 #include "Scene.h"
 #include "Ressource.h"
+#include "Animation.h"
+#include "GraphiqueSDL.h"
+#include "Audio.h"
 
 
 int main(int argc, char const *argv[])
