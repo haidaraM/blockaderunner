@@ -9,7 +9,6 @@ error.txt
 blockadeRunner.pro
 blockadeRunner.pro.user
 blockadeRunner.pro.user.3.2-pre1
-Makefile
 explosion/
 valgrind.txt
 .idea/
