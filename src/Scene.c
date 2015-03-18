@@ -853,8 +853,9 @@ void sceneTestDeCollision(Scene *scene)
 
 void scenePause(Scene * scene)
 {
-    /* Le temps precedent de la scene recupere le temps qui s'est écoulé depuis le lancement du programme.
-    Ainsi on decale l'intervalle de temps sans faire d'animations */
+    /* decalage de l'intervalle de temps sans faire d'animations
+    * Comme les deplacements (animations et autres) sont calculés en fonction du temps, on fait de telle sorte
+    * que le temps ne bouge pas. */
     sceneResetHorloge(scene, getTempsSecondes());
 }
 

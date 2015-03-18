@@ -444,7 +444,7 @@ void jeuBoucle(JeuSDL *jeu)
                 continueJeu=0;
             else if (menu->etat == MENU_ETAT_REJOUER)
             {
-                /* liberation de la scene : elle sera reinitialiser dans JEU_ETAT_CHARGEMENT_NIVEAU*/
+                /* liberation de la scene : elle sera reinitialisée dans JEU_ETAT_CHARGEMENT_NIVEAU*/
                 sceneLibere(&jeu->scene);
                 free(copieJoueur);
                 /* changement de l'etat du jeu */
