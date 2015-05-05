@@ -7,7 +7,6 @@
 * Tous droits reservés
 */
 #include <assert.h>
-
 #include "Animation.h"
 
 /**

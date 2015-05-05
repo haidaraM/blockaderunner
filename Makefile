@@ -35,13 +35,13 @@ OBJ			            = $(addprefix $(OBJ_DIR)/, $(INTERFACES_FILES:.h=.o))			# Gén
 CC 				= @gcc
 LD 				= @gcc
 
-LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx -lm
+LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx  -lm
 INCLUDE		 	= -I./libs/fmod/inc
 
 
 ########## Options de compilation ##########
-LDFLAGS  		= -L./libs/fmod/lib $(LIBS)
-CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2   # pour optimiser
+LDFLAGS  		= -L./libs/fmod/lib `xml2-config --libs` $(LIBS)
+CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2  `xml2-config --cflags` # pour optimiser
 
 #Autres commandes et message
 ECHO			= @echo

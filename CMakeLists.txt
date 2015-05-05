@@ -42,6 +42,6 @@ set(SOURCE_FILES
     src/Vaisseau.c
     src/Vaisseau.h)
 
-add_executable(blockaderunner ${SOURCE_FILES})
+add_executable(blockaderunner ${SOURCE_FILES} src/NiveauXML.cpp)
 
-target_link_libraries(blockaderunner -lSDL -lm -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx)
+target_link_libraries(blockaderunner -lSDL -lm -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx -lxml2)

@@ -45,6 +45,7 @@ En cas de problèmes :
 	* [Autres](http://loka.developpez.com/tutoriel/sdl/installation/)
 * **FMOD EX** : Elle se trouve dans le repository.   
 En cas de problèmes : [Installation FMOD Ex](http://sindev.blogspot.fr/2009/02/how-to-installer-la-fmod-ex-sur-linux.html)
+* **Libxml2** : `sudo apt-get install libxml2 libxml2-dev libxml2-doc libxml2-dbg`
 
 ###Compilation
 Rajoutez deux dossiers vides dans le répertoire principale du projet: `$ mkdir bin` et `$ mkdir obj`.
