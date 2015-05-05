@@ -44,7 +44,6 @@ En cas de problèmes :
 	* [OpenClassroom](http://fr.openclassrooms.com/informatique/cours/apprenez-a-programmer-en-c/installation-de-la-sdl )
 	* [Autres](http://loka.developpez.com/tutoriel/sdl/installation/)
 * **FMOD EX** : Elle se trouve dans le repository.   
-Il faudra copier  le fichier `./lib/lib/libfmodex64-4.44.33.so` dans le repertoire `/usr/lib/` en le rennomant  en `libfmodex64.so.` Ce n'est pas la meilleure façon de faire mais ça marche quand même.	Pour un systeme 32 bits, copier le fichier `libfmodex-4.44.33.so`  en le rennomant aussi en `libfmodex64.so`.  
 En cas de problèmes : [Installation FMOD Ex](http://sindev.blogspot.fr/2009/02/how-to-installer-la-fmod-ex-sur-linux.html)
 
 ###Compilation
