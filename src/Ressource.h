@@ -10,62 +10,61 @@
 #define _RESSOURCE_H
 
 
-
 #include "Joueur.h"
 #include "Niveau.h"
 
 
-#define RESS_NUM_MEILLEURS_JOUEURS								5
-#define RESS_NUM_NIVEAUX										8
-#define RESS_NUM_IMAGES											64
-#define RESS_NUM_SONS_COURTS       								15
-#define RESS_NUM_SONS_LONGS    	    							2
-#define RESS_NUM_POLICES										1
+#define RESS_NUM_MEILLEURS_JOUEURS                                5
+#define RESS_NUM_NIVEAUX                                        8
+#define RESS_NUM_IMAGES                                            64
+#define RESS_NUM_SONS_COURTS                                    15
+#define RESS_NUM_SONS_LONGS                                        2
+#define RESS_NUM_POLICES                                        1
 
 
 
 /*------------------------------------- REPERTOIRES -----------------------------*/
 
-#define RESS_DIR_IMAGES											"data/images/"
-#define RESS_DIR_SONS											"data/sons/"
-#define RESS_DIR_POLICES										"data/polices/"
-#define RESS_DIR_SAUVEGARDES									"data/sauvegardes/"
+#define RESS_DIR_IMAGES                                            "data/images/"
+#define RESS_DIR_SONS                                            "data/sons/"
+#define RESS_DIR_POLICES                                        "data/polices/"
+#define RESS_DIR_SAUVEGARDES                                    "data/sauvegardes/"
 #define RESS_DIR_NIVEAU                                         "data/niveau/"
 
 
 /*--------------------------------- SAUVEGARDES ---------------------------------*/
 
-#define RESS_SAU_MAX_JOUEURS									20
-#define RESS_SAU_FICHIER_JOUEURS								"joueurs"
+#define RESS_SAU_MAX_JOUEURS                                    20
+#define RESS_SAU_FICHIER_JOUEURS                                "joueurs"
 
 
 
 /*----------------------------------------- TEXTES ----------------------------------------------*/
 
-#define RESS_TXT_TITRE_JEU 	 									"Blockade Runner"
+#define RESS_TXT_TITRE_JEU                                        "Blockade Runner"
 
 
 /*---------------------------------------- POLICES -------------------------------------------*/
 
-#define RESS_POL_FICHIER_MENU									"boombox2.ttf"
-#define RESS_POL_TAILLE_MENU									18
-#define RESS_POL_TAILLE_LISTE_JOUEURS							12
+#define RESS_POL_FICHIER_MENU                                    "boombox2.ttf"
+#define RESS_POL_TAILLE_MENU                                    18
+#define RESS_POL_TAILLE_LISTE_JOUEURS                            12
 
 /*---------------------------------------- IMAGES --------------------------------------*/
 
-#define RESS_IMG_NULL						 					0
+#define RESS_IMG_NULL                                            0
 
-#define RESS_IMG_VAISSEAU_JOUEUR			 					1
-#define RESS_IMG_FICHIER_VAISSEAU_JOUEUR						"playership2.png"
-#define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR						128
-#define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR 						45
+#define RESS_IMG_VAISSEAU_JOUEUR                                1
+#define RESS_IMG_FICHIER_VAISSEAU_JOUEUR                        "playership2.png"
+#define RESS_IMG_LARGEUR_VAISSEAU_JOUEUR                        128
+#define RESS_IMG_HAUTEUR_VAISSEAU_JOUEUR                        45
 
 #define RESS_IMG_DEBRIS_ASTEROIDE                               2
 #define RESS_IMG_FICHIER_DEBRIS_ASTEROIDE                       "debris_asteroide.png"
 #define RESS_IMG_LARGEUR_DEBRIS_ASTEROIDE                       24
 #define RESS_IMG_HAUTEUR_DEBRIS_ASTEROIDE                       24
 
-#define RESS_IMG_ASTEROIDE      		                        3
+#define RESS_IMG_ASTEROIDE                                    3
 #define RESS_IMG_FICHIER_ASTEROIDE                              "asteroide_00.png"
 #define RESS_IMG_LARGEUR_ASTEROIDE                              88
 #define RESS_IMG_HAUTEUR_ASTEROIDE                              70
@@ -90,30 +89,30 @@
 #define RESS_IMG_LARGEUR_TIR_ENNEMI_MISSILE                     32
 #define RESS_IMG_HAUTEUR_TIR_ENNEMI_MISSILE                     4
 
-#define RESS_IMG_BONUS_SCORE		                            14
-#define RESS_IMG_FICHIER_BONUS_SCORE        	              	"bonus_score.png"
-#define RESS_IMG_LARGEUR_BONUS_SCORE    	        	        40
-#define RESS_IMG_HAUTEUR_BONUS_SCORE 	             	        40
+#define RESS_IMG_BONUS_SCORE                                    14
+#define RESS_IMG_FICHIER_BONUS_SCORE                            "bonus_score.png"
+#define RESS_IMG_LARGEUR_BONUS_SCORE                            40
+#define RESS_IMG_HAUTEUR_BONUS_SCORE                            40
 
-#define RESS_IMG_BONUS_MISSILE		                            15
-#define RESS_IMG_FICHIER_BONUS_MISSILE        	              	"bonus_missile.png"
-#define RESS_IMG_LARGEUR_BONUS_MISSILE    		                40
-#define RESS_IMG_HAUTEUR_BONUS_MISSILE	  		                40
+#define RESS_IMG_BONUS_MISSILE                                    15
+#define RESS_IMG_FICHIER_BONUS_MISSILE                            "bonus_missile.png"
+#define RESS_IMG_LARGEUR_BONUS_MISSILE                            40
+#define RESS_IMG_HAUTEUR_BONUS_MISSILE                            40
 
-#define RESS_IMG_VAISSEAU_ECLAIREUR			 					16
-#define RESS_IMG_FICHIER_VAISSEAU_ECLAIREUR						"ennemi_eclaireur.png"
-#define RESS_IMG_LARGEUR_VAISSEAU_ECLAIREUR						48
-#define RESS_IMG_HAUTEUR_VAISSEAU_ECLAIREUR						46
+#define RESS_IMG_VAISSEAU_ECLAIREUR                                16
+#define RESS_IMG_FICHIER_VAISSEAU_ECLAIREUR                        "ennemi_eclaireur.png"
+#define RESS_IMG_LARGEUR_VAISSEAU_ECLAIREUR                        48
+#define RESS_IMG_HAUTEUR_VAISSEAU_ECLAIREUR                        46
 
-#define RESS_IMG_VAISSEAU_CHASSEUR			 					17
-#define RESS_IMG_FICHIER_VAISSEAU_CHASSEUR						"ennemi_chasseur.png"
-#define RESS_IMG_LARGEUR_VAISSEAU_CHASSEUR						128
-#define RESS_IMG_HAUTEUR_VAISSEAU_CHASSEUR						53
+#define RESS_IMG_VAISSEAU_CHASSEUR                                17
+#define RESS_IMG_FICHIER_VAISSEAU_CHASSEUR                        "ennemi_chasseur.png"
+#define RESS_IMG_LARGEUR_VAISSEAU_CHASSEUR                        128
+#define RESS_IMG_HAUTEUR_VAISSEAU_CHASSEUR                        53
 
-#define RESS_IMG_VAISSEAU_CROISEUR			 					18
-#define RESS_IMG_FICHIER_VAISSEAU_CROISEUR						"ennemi_croiseur.png"
-#define RESS_IMG_LARGEUR_VAISSEAU_CROISEUR						286
-#define RESS_IMG_HAUTEUR_VAISSEAU_CROISEUR						91
+#define RESS_IMG_VAISSEAU_CROISEUR                                18
+#define RESS_IMG_FICHIER_VAISSEAU_CROISEUR                        "ennemi_croiseur.png"
+#define RESS_IMG_LARGEUR_VAISSEAU_CROISEUR                        286
+#define RESS_IMG_HAUTEUR_VAISSEAU_CROISEUR                        91
 
 /* explosions */
 #define RESS_IMG_EXPLOSION_0                                    19
@@ -132,15 +131,15 @@
 #define RESS_IMG_HAUTEUR_EXPLOSION_2                            256
 
 
-#define RESS_IMG_SPLASH						 					32
-#define RESS_IMG_FICHIER_SPLASH									"splash0.jpg"
-#define RESS_IMG_LARGEUR_SPLASH									1366
-#define RESS_IMG_HAUTEUR_SPLASH			 						720
+#define RESS_IMG_SPLASH                                            32
+#define RESS_IMG_FICHIER_SPLASH                                    "splash0.jpg"
+#define RESS_IMG_LARGEUR_SPLASH                                    1366
+#define RESS_IMG_HAUTEUR_SPLASH                                    720
 
-#define RESS_IMG_FOND_MENU					 					33
-#define RESS_IMG_FICHIER_FOND_MENU								"menu.jpg"
-#define RESS_IMG_LARGEUR_FOND_MENU								1366
-#define RESS_IMG_HAUTEUR_FOND_MENU		 						720
+#define RESS_IMG_FOND_MENU                                        33
+#define RESS_IMG_FICHIER_FOND_MENU                                "menu.jpg"
+#define RESS_IMG_LARGEUR_FOND_MENU                                1366
+#define RESS_IMG_HAUTEUR_FOND_MENU                                720
 
 #define RESS_IMG_MENU_CMD                                       34
 #define RESS_IMG_FICHIER_MENU_CMD                               "menu_commandes.jpg"
@@ -158,32 +157,32 @@
 #define RESS_IMG_HAUTEUR_MENU_PAUSE                             693
 
 /*------------------------------ Images des niveaux ---------------------------------------*/
-#define RESS_IMG_LARGEUR_FOND_NIVEAU							4098
-#define RESS_IMG_HAUTEUR_FOND_NIVEAU     						720
+#define RESS_IMG_LARGEUR_FOND_NIVEAU                            4098
+#define RESS_IMG_HAUTEUR_FOND_NIVEAU                            720
 
-#define RESS_IMG_FOND_NIVEAU_0				 					48
-#define RESS_IMG_FICHIER_FOND_NIVEAU_0							"bg0.jpg"
+#define RESS_IMG_FOND_NIVEAU_0                                    48
+#define RESS_IMG_FICHIER_FOND_NIVEAU_0                            "bg0.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_1				 					49
-#define RESS_IMG_FICHIER_FOND_NIVEAU_1							"bg1.jpg"
+#define RESS_IMG_FOND_NIVEAU_1                                    49
+#define RESS_IMG_FICHIER_FOND_NIVEAU_1                            "bg1.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_2				 					50
-#define RESS_IMG_FICHIER_FOND_NIVEAU_2							"bg2.jpg"
+#define RESS_IMG_FOND_NIVEAU_2                                    50
+#define RESS_IMG_FICHIER_FOND_NIVEAU_2                            "bg2.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_3				 					51
-#define RESS_IMG_FICHIER_FOND_NIVEAU_3							"bg3.jpg"
+#define RESS_IMG_FOND_NIVEAU_3                                    51
+#define RESS_IMG_FICHIER_FOND_NIVEAU_3                            "bg3.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_4				 					52
-#define RESS_IMG_FICHIER_FOND_NIVEAU_4							"bg4.jpg"
+#define RESS_IMG_FOND_NIVEAU_4                                    52
+#define RESS_IMG_FICHIER_FOND_NIVEAU_4                            "bg4.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_5				 					53
-#define RESS_IMG_FICHIER_FOND_NIVEAU_5							"bg5.jpg"
+#define RESS_IMG_FOND_NIVEAU_5                                    53
+#define RESS_IMG_FICHIER_FOND_NIVEAU_5                            "bg5.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_6				 					54
-#define RESS_IMG_FICHIER_FOND_NIVEAU_6							"bg6.jpg"
+#define RESS_IMG_FOND_NIVEAU_6                                    54
+#define RESS_IMG_FICHIER_FOND_NIVEAU_6                            "bg6.jpg"
 
-#define RESS_IMG_FOND_NIVEAU_7				 					55
-#define RESS_IMG_FICHIER_FOND_NIVEAU_7							"bg7.jpg"
+#define RESS_IMG_FOND_NIVEAU_7                                    55
+#define RESS_IMG_FICHIER_FOND_NIVEAU_7                            "bg7.jpg"
 
 /*--------------------------------------- Sons longs ---------------------------------------------*/
 #define RESS_SON_MENU                                           0
@@ -239,15 +238,12 @@
 #define RESS_SON_FICHIER_DEGAT_LASER_J                          "degat_laser_joueurs.wav"
 
 
-
-
 /**
 * @struct Ressource
 * @brief Cette structure contient tous les elements dont le jeu aura besoin : les joueurs sauvegardés,
 * la liste des fichiers sons et images, les niveaux etc...
 */
-typedef struct
-{
+typedef struct {
     int numJoueurs;
     /** Tableau de pointeurs sur Joueur : tous les joueurs sauvegardés. */
     Joueur **joueurs;
@@ -293,14 +289,14 @@ int ressourceGetNumJoueurs(const Ressource *res);
 * @brief Renvoie le tableau de pointeurs sur Joueur (ie tous les joueurs connus).
 * @param [in] res : initialisé
 */
-Joueur** ressourceGetJoueurs(const Ressource *res);
+Joueur **ressourceGetJoueurs(const Ressource *res);
 
 /**
 * @fn Joueur** ressourceGetMeilleursJoueurs(const Ressource *res)
 * @brief Renvoie le tableau de pointeurs sur Joueur (= tous les RESS_NUM_MEILLEURS_JOUEURS meilleurs joueurs).
 * @param [in] res : initialisé
 */
-Joueur** ressourceGetMeilleursJoueurs(const Ressource *res);
+Joueur **ressourceGetMeilleursJoueurs(const Ressource *res);
 
 /**
 * @fn void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur)
@@ -309,7 +305,7 @@ Joueur** ressourceGetMeilleursJoueurs(const Ressource *res);
 * @param [in] nomJoueur
 * @param [in] indexJoueur
 */
-void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR+1], int indexJoueur);
+void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR + 1], int indexJoueur);
 
 /**
 * @fn void ressourceSauveJoueurs(const Ressource *res)
@@ -350,7 +346,7 @@ int ressourceGetHauteurImage(const Ressource *res, int nomRessource);
 * @brief Classe les meilleurs joueurs par score. (Tri par selection).
 * @param [in, out] res: initialisé
 */
-void ressourceTrieJoueurs(const Ressource * res);
+void ressourceTrieJoueurs(const Ressource *res);
 
 /**
 * @fn ressourceTestDeRegression();

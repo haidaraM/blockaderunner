@@ -25,6 +25,7 @@ float getTempsSecondes();
 * @param [in] borneSup
 */
 int randomInt(int borneInf, int borneSup);
+
 /**
 * @fn int randomFloat()
 * @brief Renvoie un float entre 0.0 et 1.0
@@ -37,8 +38,7 @@ float randomFloat();
 * @struct Point
 * @brief un Point 2D.
 */
-typedef struct
-{
+typedef struct {
     int x;
     int y;
 } Point;
@@ -48,8 +48,7 @@ typedef struct
 * @brief un Rectangle = une position (coin supérieur gauche) + une dimension (largeur, hauteur).
 * Utile pour le menu pour voir si la souris est sur du texte ou pas et pour sauvegarder les dimensions des images.
 */
-typedef struct
-{
+typedef struct {
     int x;
     int y;
     int largeur;
@@ -72,8 +71,7 @@ unsigned char rectangleContient(const Rectangle *rect, int x, int y);
 * @struct TabDyn
 * @brief Represente un tableau dynamique qui peut stocker n'importe quoi.
 */
-typedef struct
-{
+typedef struct {
     /** taille du tableau (note: le tableau est compact à gauche). */
     int tailleUtilisee;
     /** capacité du tableau. */
@@ -102,7 +100,7 @@ void tabDynLibere(TabDyn *t);
 * @param [in, out] t : initialisé
 * @param [in] element
 */
-void tabDynAjoute(TabDyn *t, void* element);
+void tabDynAjoute(TabDyn *t, void *element);
 
 /**
 * @fn void* tabDynGetElement(const TabDyn *t, int index)
@@ -110,7 +108,7 @@ void tabDynAjoute(TabDyn *t, void* element);
 * @param [in] t : initialisé
 * @param [in] index
 */
-void* tabDynGetElement(const TabDyn *t, int index);
+void *tabDynGetElement(const TabDyn *t, int index);
 
 /**
 * @fn void tabDynSupprimeElement(TabDyn *t, int index)

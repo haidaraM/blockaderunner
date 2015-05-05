@@ -14,92 +14,91 @@
 #include "Ressource.h"
 
 
-
-#define MENU_DUREE_INTRO					3.0f		/* 3 secondes */
+#define MENU_DUREE_INTRO                    3.0f        /* 3 secondes */
 
 /* Definitions des differents etats du menu */
-enum { MENU_ETAT_INTRO,
-        MENU_ETAT_CHOIX_JOUEUR,
-        MENU_ETAT_ENTREE_JOUEUR,
-        MENU_ETAT_PRINCIPAL,
-        MENU_ETAT_CMD,
-        MENU_ETAT_OPTION,
-        MENU_ETAT_INFO,
-        MENU_ETAT_CHOIX_NIVEAU,
-        MENU_ETAT_SCORE,
-        MENU_ETAT_CHARGEMENT,
-        MENU_ETAT_QUITTER,
-        MENU_ETAT_PAUSE,
-        MENU_ETAT_REPRENDRE,
-        MENU_ETAT_REJOUER,
-        MENU_ETAT_PAUSE_SCORE,
-        MENU_ETAT_PAUSE_CMD,
-        MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL
-        };
+enum {
+    MENU_ETAT_INTRO,
+    MENU_ETAT_CHOIX_JOUEUR,
+    MENU_ETAT_ENTREE_JOUEUR,
+    MENU_ETAT_PRINCIPAL,
+    MENU_ETAT_CMD,
+    MENU_ETAT_OPTION,
+    MENU_ETAT_INFO,
+    MENU_ETAT_CHOIX_NIVEAU,
+    MENU_ETAT_SCORE,
+    MENU_ETAT_CHARGEMENT,
+    MENU_ETAT_QUITTER,
+    MENU_ETAT_PAUSE,
+    MENU_ETAT_REPRENDRE,
+    MENU_ETAT_REJOUER,
+    MENU_ETAT_PAUSE_SCORE,
+    MENU_ETAT_PAUSE_CMD,
+    MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL
+};
 
-#define MENU_PADDING_HORZ					20
-#define MENU_PADDING_VERT					20
-#define MENU_ZONE_X							364
-#define MENU_ZONE_Y							22
-#define MENU_ZONE_LARGEUR					672
-#define MENU_ZONE_HAUTEUR					678
+#define MENU_PADDING_HORZ                    20
+#define MENU_PADDING_VERT                    20
+#define MENU_ZONE_X                            364
+#define MENU_ZONE_Y                            22
+#define MENU_ZONE_LARGEUR                    672
+#define MENU_ZONE_HAUTEUR                    678
 
 
-#define MENU_NUM_BASIC_ELEMENTS				(13 + RESS_NUM_NIVEAUX)
-#define MENU_NUM_ELEMENTS					(MENU_NUM_BASIC_ELEMENTS + RESS_SAU_MAX_JOUEURS)
+#define MENU_NUM_BASIC_ELEMENTS                (13 + RESS_NUM_NIVEAUX)
+#define MENU_NUM_ELEMENTS                    (MENU_NUM_BASIC_ELEMENTS + RESS_SAU_MAX_JOUEURS)
 
-#define MENU_RETOUR							0
-#define MENU_JOUEURS						1
-#define MENU_NOUVEAU_JOUEUR					2
-#define MENU_ENTRER_NOM						3
-#define MENU_INFO							4
-#define MENU_CHANGER_JOUEUR					5
-#define MENU_CMD							6
-#define MENU_JOUER							7
-#define MENU_SCORE							8
-#define MENU_QUITTER						9
+#define MENU_RETOUR                            0
+#define MENU_JOUEURS                        1
+#define MENU_NOUVEAU_JOUEUR                    2
+#define MENU_ENTRER_NOM                        3
+#define MENU_INFO                            4
+#define MENU_CHANGER_JOUEUR                    5
+#define MENU_CMD                            6
+#define MENU_JOUER                            7
+#define MENU_SCORE                            8
+#define MENU_QUITTER                        9
 #define MENU_REPRENDRE                      10
 #define MENU_REJOUER                        11
 #define MENU_RETOUR_MENU_PRINCIPAL          12
-#define MENU_NIVEAU							13
+#define MENU_NIVEAU                            13
 
 
-#define MENU_TXT_JOUEUR_VIDE 				"___"
-#define MENU_TXT_JOUEURS					"Joueurs"
-#define MENU_TXT_NOUVEAU_JOUEUR				"Nouveau Joueur"
-#define MENU_TXT_ENTRER_NOM					"Entrez un nom : "
-#define MENU_TXT_INFO						"Info"
-#define MENU_TXT_CHANGER_JOUEUR				"Changer de Joueur"
-#define MENU_TXT_CMD						"Commandes"
-#define MENU_TXT_JOUER						"Jouer"
-#define MENU_TXT_SCORE						"Meilleurs Scores"
-#define MENU_TXT_RETOUR						"<<"
-#define MENU_TXT_QUITTER					"Quitter"
-#define MENU_TXT_NIVEAU						"Niveau "
+#define MENU_TXT_JOUEUR_VIDE                "___"
+#define MENU_TXT_JOUEURS                    "Joueurs"
+#define MENU_TXT_NOUVEAU_JOUEUR                "Nouveau Joueur"
+#define MENU_TXT_ENTRER_NOM                    "Entrez un nom : "
+#define MENU_TXT_INFO                        "Info"
+#define MENU_TXT_CHANGER_JOUEUR                "Changer de Joueur"
+#define MENU_TXT_CMD                        "Commandes"
+#define MENU_TXT_JOUER                        "Jouer"
+#define MENU_TXT_SCORE                        "Meilleurs Scores"
+#define MENU_TXT_RETOUR                        "<<"
+#define MENU_TXT_QUITTER                    "Quitter"
+#define MENU_TXT_NIVEAU                        "Niveau "
 #define MENU_TXT_REPRENDRE                  "Reprendre"
 #define MENU_TXT_REJOUER                    "Rejouer"
 #define MENU_TXT_RETOUR_MENU_PRINCIPAL      "Retour au menu principal"
-
 
 
 /**
 * @struct ElementMenu
 * @brief Element du Menu : un texte avec états (actionable, visible, surlignable), position & dimension, et procédure associée.
 */
-typedef struct
-{
-	/** texte affichable de l'element menu */
-	char *texte;
-	/** booléen */
-	int visible;
-	/** booléen */
-	int actionable;
-	/** booléen */
-	int surligne;
-	/** position */
-	Rectangle rect;
-	/** procédure à exécuter si l'élément est actionable. */
-	void (*action)(void*);
+typedef struct {
+    /** texte affichable de l'element menu */
+    char *texte;
+    /** booléen */
+    int visible;
+    /** booléen */
+    int actionable;
+    /** booléen */
+    int surligne;
+    /** position */
+    Rectangle rect;
+
+    /** procédure à exécuter si l'élément est actionable. */
+    void (*action)(void *);
 
 } ElementMenu;
 
@@ -108,29 +107,27 @@ typedef struct
 * @struct Menu
 * @brief Structure principale du module Menu.
 */
-typedef struct
-{
-	/** Etat courant du Menu : intro, choix du joueur, menu principal, chargement d'un niveau, etc.... */
-	int etat;
-	/** Temps écoulé depuis le lancement de l'application : sert à l'affichage temporaire de l'intro (splashscreen). */
-	float tempsEcoule;
-	/** Tableau de tous les éléments Menu affichables et statiques. */
-	ElementMenu *elements;
-	/** Joueur courant (index dans le tableau maintenu par le module Ressource) */
-	int joueurCourant;
-	/** Lors de la création d'un nouveau joueur, sert à stocker le nom. */
-	char nomNouveauJoueur[JOUEUR_NOM_MAXCHAR+1];
-	/** tableau des noms des meilleurs joueurs */
-	char **nomsMeilleursJoueurs;
-	/** tableau des meilleurs scores (sous forme de chaines de caracteres) */
-	char **meilleursScores;
-	/** Niveau sélectionné par le joueur. */
-	int niveauChoisi;
-	/** Réference au module Ressource. (Permet de sauver l'etat des joueurs, d'obtenir les meilleurs joueurs classés). */
-	Ressource *ressource;
+typedef struct {
+    /** Etat courant du Menu : intro, choix du joueur, menu principal, chargement d'un niveau, etc.... */
+    int etat;
+    /** Temps écoulé depuis le lancement de l'application : sert à l'affichage temporaire de l'intro (splashscreen). */
+    float tempsEcoule;
+    /** Tableau de tous les éléments Menu affichables et statiques. */
+    ElementMenu *elements;
+    /** Joueur courant (index dans le tableau maintenu par le module Ressource) */
+    int joueurCourant;
+    /** Lors de la création d'un nouveau joueur, sert à stocker le nom. */
+    char nomNouveauJoueur[JOUEUR_NOM_MAXCHAR + 1];
+    /** tableau des noms des meilleurs joueurs */
+    char **nomsMeilleursJoueurs;
+    /** tableau des meilleurs scores (sous forme de chaines de caracteres) */
+    char **meilleursScores;
+    /** Niveau sélectionné par le joueur. */
+    int niveauChoisi;
+    /** Réference au module Ressource. (Permet de sauver l'etat des joueurs, d'obtenir les meilleurs joueurs classés). */
+    Ressource *ressource;
 
 } Menu;
-
 
 
 /**
@@ -247,7 +244,7 @@ void menuSetCaractere(Menu *menu, char alphaNum);
 * @brief Callback (vide - inutilisée, JeuSDL appelle directement le chargement d'un niveau).
 * @param [in] m
 */
-void menuCommencerNiveau(void* m);
+void menuCommencerNiveau(void *m);
 
 
 /**
@@ -269,7 +266,7 @@ void menuSetFinLectureClavier(Menu *menu);
 * @brief Renvoie le pointeur sur le joueur actif (ou NULL si aucun joueur n'a été selectionné dans le menu).
 * @param [in] menu
 */
-Joueur* menuGetJoueurChoisi(const Menu *menu);
+Joueur *menuGetJoueurChoisi(const Menu *menu);
 
 /**
 * @fn void menuSelectionneNiveau(Menu *menu, int indexElement)

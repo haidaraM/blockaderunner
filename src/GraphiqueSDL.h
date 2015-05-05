@@ -19,14 +19,14 @@
 #include "Ressource.h"
 #include "Animation.h"
 
-#define GFX_MODE_FULLSCREEN 				0
-#define GFX_MODE_FENETRE	 				1
-#define GFX_FENETRE_TITRE_DEFAUT			"Blockade Runner"
+#define GFX_MODE_FULLSCREEN                0
+#define GFX_MODE_FENETRE                    1
+#define GFX_FENETRE_TITRE_DEFAUT            "Blockade Runner"
 
-#define GFX_NUM_ELEMENTS_HUD				8
-#define GFX_HUD_ELEMENT_LARGEUR				8
-#define GFX_HUD_ELEMENT_HAUTEUR				6
-#define GFX_HUD_ELEMENT_OFFSET				2
+#define GFX_NUM_ELEMENTS_HUD                8
+#define GFX_HUD_ELEMENT_LARGEUR                8
+#define GFX_HUD_ELEMENT_HAUTEUR                6
+#define GFX_HUD_ELEMENT_OFFSET                2
 
 #define GFX_EPAISSEUR_BARRE_VIE             2
 
@@ -36,8 +36,7 @@
 *
 *
 */
-typedef struct
-{
+typedef struct {
     /** Dimension (largeur) de l'affichage en pixels. */
     int largeur;
     /** Dimension (hauteur) de l'affichage en pixels. */
@@ -63,7 +62,7 @@ typedef struct
     /** police pour la liste des joueurs */
     TTF_Font *policeListeJoueurs;
     /** tableau des differentes animations */
-    Animation ** lesExplosions;
+    Animation **lesExplosions;
 
     /* Utilisé en interne par SDL lors de la création de Surfaces. */
     Uint32 rmask, gmask, bmask, amask;
@@ -82,7 +81,8 @@ typedef struct
 * @param [in] titre
 * @param [in] mode
 */
-void graphiqueInit(GraphiqueSDL *graphique, const Ressource *ressource, Menu *menu, int largeur, int hauteur, char *titre, int mode);
+void graphiqueInit(GraphiqueSDL *graphique, const Ressource *ressource, Menu *menu, int largeur, int hauteur,
+                   char *titre, int mode);
 
 /**
 * @fn void graphiqueLibere(GraphiqueSDL *graphique)
@@ -153,7 +153,7 @@ void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles);
 * @param [in,out] graphique
 * @param [in] menu
 */
-void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu );
+void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu);
 
 /**
 * @fn void graphiqueAfficheScene(GraphiqueSDL *graphique, Scene *scene )
@@ -161,29 +161,28 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique,const Menu *menu );
 * @param [in,out] graphique : initialisé
 * @param [in] scene: initialisé
 */
-void graphiqueAfficheScene(GraphiqueSDL *graphique,const Scene *scene );
+void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene);
 
 /**
 * @fn void graphiqueAfficheMort(GraphiqueSDL * graphique)
 * @brief affiche un texte quand le joueur meurt
 * @param [in,out] graphiqe : initialisé
 */
-void graphiqueAfficheMort(GraphiqueSDL * graphique);
+void graphiqueAfficheMort(GraphiqueSDL *graphique);
 
 /**
 * @fn void graphiqueAfficheFinNiveau(const GraphiqueSDL * graphique)
 * @brief affiche un texte quand le joueur a complété un niveau
 * @param [in,out] graphique : initialisé
 */
-void graphiqueAfficheFinNiveau(GraphiqueSDL * graphique);
+void graphiqueAfficheFinNiveau(GraphiqueSDL *graphique);
 
 /**
 * @fn void graphiqueAfficheVictoire(const GraphiqueSDL * graphique)
 * @brief Affichage de fin de jeu : victoire du joueur!
 * @param [in,out] graphique : initialisé
 */
-void graphiqueAfficheVictoire(GraphiqueSDL * graphique);
-
+void graphiqueAfficheVictoire(GraphiqueSDL *graphique);
 
 
 #endif

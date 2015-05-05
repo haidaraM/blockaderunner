@@ -39,12 +39,11 @@
 * @struct Frame
 * @brief Element de base d'une animation : "capture" de l'animation à un instant t
 */
-typedef struct
-{
+typedef struct {
     /** Partie de l'image qui correspondra à une frame donnée */
     SDL_Rect decoupage;
     /** L'image à un instant t de l'animation */
-    SDL_Surface * image;
+    SDL_Surface *image;
     /** Temps durant lequel la frame sera affichée*/
     float delai;
 } Frame;
@@ -53,24 +52,29 @@ typedef struct
 * @struct Animation
 * @brief Regroupement de Frame pour former une animation
 */
-typedef struct
-{
+typedef struct {
     /** Nombre de frames comportant l'animation */
     int nbFrames;
     /** Tableau de frames */
-    Frame * frames;
+    Frame *frames;
 } Animation;
+
+/**
+ * @enum EtatAnimation
+ */
+typedef enum {
+    STOP, PLAY
+} EtatAnimation;
 
 /**
 * @struct Animateur
 * @brief Structure utilisée pour jouer une animation, sauvegarder l'etat de l'animation, la frame courante etc
 */
-typedef struct
-{
+typedef struct {
     /** Reference vers l'animation qui sera jouée*/
-    Animation * anim;
+    Animation *anim;
     /** Etat de l'animation */
-    enum {STOP, PLAY} statut;
+    EtatAnimation statut;
     /** Indice de la frame courante de l'animation */
     int frameCourante;
     /** Temps ecoulé depuis l'apparition de la frame courante */
@@ -84,14 +88,14 @@ typedef struct
 * @param [in,out] anim
 * @param [in] nb : nombre de frames de l'animation
 */
-void animationInitAnimation(Animation * anim, int nb);
+void animationInitAnimation(Animation *anim, int nb);
 
 /**
 * @fn void animationLibereAnimation(Animation * anim);
 * @brief Libere une animation
 * @param  [in] anim : initialisé
 */
-void animationLibereAnimation(Animation * anim);
+void animationLibereAnimation(Animation *anim);
 
 /**
 * @fn void animationSetFrame(Animation * anim, int pos, SDL_Surface *surface, float delai);
@@ -101,7 +105,7 @@ void animationLibereAnimation(Animation * anim);
 * @param [in, out] surface
 * @param [in] delai
 */
-void animationSetFrame(Animation * anim, int pos, SDL_Surface *surface, float delai);
+void animationSetFrame(Animation *anim, int pos, SDL_Surface *surface, float delai);
 
 /* ********************************************************************************************************* */
 /**
@@ -109,21 +113,21 @@ void animationSetFrame(Animation * anim, int pos, SDL_Surface *surface, float de
 * @brief Initialise l'animateur
 * @param [in,out] ateur
 */
-void animationInitAnimateur(Animateur * ateur, Animation *anim);
+void animationInitAnimateur(Animateur *ateur, Animation *anim);
 
 /**
 * @fn void animationJoueAnimation(Animateur * ateur)
 * @brief Joue l'animation : met le statut de l'animateur a PLAY
 * @param [in,out] ateur : initialisé
 */
-void animationJoueAnimation(Animateur * ateur);
+void animationJoueAnimation(Animateur *ateur);
 
 /**
 * @fn void animationStopAnimation(Animateur * ateur)
 * @brief Stop l'animation : met le statut de l'animateur à STOP
 * @param [in,out] ateur
 */
-void animationStopAnimation(Animateur * ateur);
+void animationStopAnimation(Animateur *ateur);
 
 
 /**
@@ -131,7 +135,7 @@ void animationStopAnimation(Animateur * ateur);
 * @brief Met à jour le compteur interne de l'Animateur et met à jour la frame à afficher si nécessaire
 * @param [in,out] ateur : initialisé
 */
-void animationMAJAnimateur(Animateur * ateur);
+void animationMAJAnimateur(Animateur *ateur);
 
 /**
 * @fn void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos)
@@ -140,8 +144,7 @@ void animationMAJAnimateur(Animateur * ateur);
 * @param [in,out] dest : surface principale
 * @param [in,out] position
 */
-void animationBlitFrame (Animateur * ateur, SDL_Surface *dest, SDL_Rect *pos);
-
+void animationBlitFrame(Animateur *ateur, SDL_Surface *dest, SDL_Rect *pos);
 
 
 #endif
