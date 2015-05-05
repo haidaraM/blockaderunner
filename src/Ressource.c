@@ -263,7 +263,7 @@ static void chargeJoueurs(Ressource *res)
 
 static void creeNiveaux(Ressource *res)
 {
-    int i;
+    unsigned int i;
     assert(res != NULL);
 
     res->niveaux = (Niveau*)malloc(RESS_NUM_NIVEAUX * sizeof(Niveau));
