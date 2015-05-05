@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "JeuSDL.h"
 
 /** @file main.c
@@ -28,7 +27,6 @@ int main ()
 	jeuInit( &jeu );
 	jeuBoucle( &jeu );
     jeuLibere( &jeu );
-
 
 	#ifdef JEU_VERBOSE
 	printf("Blockade - status de fin d'execution : OK.\n");

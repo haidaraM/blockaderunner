@@ -7,7 +7,7 @@ add_definitions(-DNO_REPETE_EXPLOSION)
 add_definitions(-DMODE_NORMAL)
 
 #repetoire des includes
-include_directories( ./lib/inc)
+include_directories( ./libs/fmod/inc)
 
 #Repertoires exectuble et obj
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")

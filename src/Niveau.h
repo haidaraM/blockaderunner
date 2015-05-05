@@ -27,6 +27,7 @@
 #define NIVEAU_GROUPE_CHASSEURS									2
 #define NIVEAU_GROUPE_CROISEURS									3
 
+/*TODO : afficher une description des niveaux*/
 
 /**
 * @struct GroupeNiveau
@@ -51,7 +52,7 @@ typedef struct
 typedef struct
 {
 	/** entier : 0, 1, 2, 3... */
-	char numero;
+	unsigned int numero;
 	/** chaîne de caractères : description courte du niveau. */
 	char description[255];
 	/** index dans Ressource de l'image de fond (background) du niveau. */
@@ -68,7 +69,7 @@ typedef struct
 * @param [in, out] niveau : doit être non NULL.
 * @param [in] numero
 */
-void niveauInit(Niveau *niveau, int numero);
+void niveauInit(Niveau *niveau, unsigned int numero);
 
 /**
 * @fn void niveauLibere(Niveau *niveau)
