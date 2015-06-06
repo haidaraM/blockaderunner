@@ -15,6 +15,8 @@
 
 #include "GraphiqueSDL.h"
 #include "ElementScene.h"
+#include "Scene.h"
+#include "Outils.h"
 
 
 /* -----------Fonctions internes ----------------- */
@@ -210,13 +212,21 @@ static void graphiqueAlloueAnimateur(GraphiqueSDL *graphique, const Scene *scene
         /* s'il n'a pas eté encore cree on le cree */
         if (e->ateur == NULL) {
             e->ateur = (Animateur *) malloc(sizeof(Animateur));
-            if (e->type == ELEMENT_TYPE_ECLAIREUR)
+            if (e->type == ELEMENT_TYPE_ECLAIREUR){
                 animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_0]);
-            else if (e->type == ELEMENT_TYPE_CROISEUR)
+            }
+            else if (e->type == ELEMENT_TYPE_CROISEUR){
                 animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_2]);
-            else if (e->type == ELEMENT_TYPE_CHASSEUR)
+            }
+            else if (e->type == ELEMENT_TYPE_CHASSEUR){
                 animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_1]);
+            }
+
+            animationJoueAnimation(e->ateur);
+
         }
+
+
     }
 }
 
@@ -894,6 +904,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
     graphiqueAlloueAnimateur(graphique, scene);
 
     /* affichage des explosions */
+    printf("Nb explosions : %d\n", sceneGetNbExplosions(scene));
     for (i = 0; i < sceneGetNbExplosions(scene); i++) {
         dstBox.x = explosions[i]->x - 40;
         dstBox.y = explosions[i]->y - 40;
@@ -901,6 +912,14 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
         animationBlitFrame(explosions[i]->ateur, graphique->surface, &dstBox);
         /* Passage à la frame suivante */
         animationMAJAnimateur(explosions[i]->ateur);
+
+        /* explosion terminée */
+        if(animationCheckFin(explosions[i]->ateur)){
+            explosions[i]->ateur = NULL;
+        }
+
+        //graphiqueVibreEcran(graphique,scene->rectangleImageFond,scene->indexImageFond);
+
     }
 
     /* affiche du vaisseau joueur */
@@ -1040,3 +1059,17 @@ void graphiqueAfficheVictoire(GraphiqueSDL *graphique)
     /* On met le jeu en pause pendant 10s */
     SDL_Delay(10000);
 }
+
+
+void graphiqueVibreEcran(GraphiqueSDL *graphique, Rectangle rectangle, int indexImage){
+    SDL_Rect srcBox;
+    int i;
+    Rectangle oldRectangle = rectangle;
+    srcBox.x =  rectangle.x +randomInt(-5,5);
+    srcBox.y =  rectangle.y +randomInt(-5,5);
+    srcBox.h = rectangle.hauteur;
+    srcBox.w = rectangle.largeur;
+    SDL_BlitSurface(graphique->images[indexImage], &srcBox, graphique->surface, NULL);
+}
+
+

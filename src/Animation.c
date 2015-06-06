@@ -41,7 +41,7 @@ static void animationNextFrame(Animateur *ateur)
     if (ateur->frameCourante == ateur->anim->nbFrames) {
         ateur->frameCourante = 0;
 #ifdef NO_REPETE_EXPLOSION
-        ateur->statut = STOP;
+        animationStopAnimation(ateur);
 #endif /* REPETE_EXPLOSION */
     }
     ateur->compteur = 0;
@@ -75,7 +75,7 @@ void animationInitAnimateur(Animateur *ateur, Animation *anim)
     ateur->anim = anim;
     ateur->frameCourante = 0;
     ateur->compteur = 0;
-    animationJoueAnimation(ateur);
+    ateur->statut = STOP;
 }
 
 void animationJoueAnimation(Animateur *ateur)
@@ -113,3 +113,7 @@ void animationBlitFrame(Animateur *ateur, SDL_Surface *dest, SDL_Rect *pos)
         animationAfficheFrame(&ateur->anim->frames[ateur->frameCourante], dest, pos);
 }
 
+int animationCheckFin(const Animateur *animateur)
+{
+    return animateur->statut == STOP;
+}

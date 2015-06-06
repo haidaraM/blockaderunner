@@ -1,6 +1,6 @@
 /**
 * @file Animation.h
-* @brief Module utilisé pour réaliser des animations : explosions, rotations etc...
+* @brief Module utilisé pour réaliser des animations : explosions (pour le moment)
 * @author Mohamed El Mouctar HAIDARA
 *
 * Copyright 2014, Yann Cortial, Mohamed Haidara.
@@ -34,6 +34,7 @@
 #define ANIMATION_DELAI_FRAME_EXPLOSION_2           (ANIMATION_DUREE_EXPLOSION_2 / ANIMATION_NB_FRAMES_EXPLOSION_2)
 #define ANIMATION_HAUTEUR_FRAME_EXPLOSION_2         RESS_IMG_HAUTEUR_EXPLOSION_2
 
+/* TODO : revoir la durée des explositions */
 
 /**
 * @struct Frame
@@ -146,5 +147,9 @@ void animationMAJAnimateur(Animateur *ateur);
 */
 void animationBlitFrame(Animateur *ateur, SDL_Surface *dest, SDL_Rect *pos);
 
+/**
+ * @brief Test la fin d'une animation
+ */
+int animationCheckFin( const Animateur *animateur);
 
 #endif

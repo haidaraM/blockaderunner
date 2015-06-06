@@ -72,7 +72,7 @@ typedef struct {
 /**
 * @struct PositionExplosion
 * @brief Structure utilisée pour sauvegarder les positions des ennemis detruits.
-* Utile pour afficher les explosions après la destruction des ennemis
+* Utile pour afficher les explosions après la destruction des ennemis.
 */
 typedef struct {
     /** type de l'element detruit **/
@@ -199,12 +199,12 @@ int sceneGetNbBonus(const Scene *scene);
 int sceneGetNbDecors(const Scene *scene);
 
 /**
-* @fn void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element)
+* @fn void sceneSetPositionExplosion(PositionExplosion * pos, const ElementScene * element)
 * @brief recupere les elements de l'elementScene pour PositionExplosion
 * @param [in,out] pos
 * @param [in] element : initialisé
 */
-void sceneGetDataElement(PositionExplosion *pos, const ElementScene *element);
+void sceneSetPositionExplosion(PositionExplosion *pos, const ElementScene *element);
 
 /**
 * @fn int sceneGetNbExplosions(const Scene * scene)
@@ -213,6 +213,10 @@ void sceneGetDataElement(PositionExplosion *pos, const ElementScene *element);
 */
 int sceneGetNbExplosions(const Scene *scene);
 
+/**
+ * @brief Supprime les explosions terminées
+ */
+void sceneSupprimeExplosion(Scene *scene);
 
 /**
 * @fn void sceneAnime(Scene *scene, float tempsSecondes)
@@ -306,6 +310,7 @@ int sceneTestVaisseauMort(Scene *scene);
 */
 double sceneGetAngleRotation(const Scene *scene);
 
+/* TODO : améliorer les rotations */
 /**
 * @fn void sceneMAJAngleRotation (Scene * scene)
 * @brief Met à jour l'angle de rotation

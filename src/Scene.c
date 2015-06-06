@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
-#include <math.h>
 
 #include "Scene.h"
 
@@ -670,7 +669,7 @@ void sceneTestDeCollision(Scene *scene)
                             if (vaisseauGetPointStructure((Vaisseau *) e->data) == 0) {
                                 /* sauvegarde de la position de la destruction et creation explosion*/
                                 posEx = (PositionExplosion *) malloc(sizeof(PositionExplosion));
-                                sceneGetDataElement(posEx, e);
+                                sceneSetPositionExplosion(posEx, e);
                                 tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
 
                                 sceneCreeBonusEventuel(scene, e);
@@ -740,7 +739,7 @@ void sceneTestDeCollision(Scene *scene)
                             if (vaisseauGetPointStructure((Vaisseau *) e->data) == 0) {
                                 /* sauvegarde de la position de la destruction et creation explosion*/
                                 posEx = (PositionExplosion *) malloc(sizeof(PositionExplosion));
-                                sceneGetDataElement(posEx, e);
+                                sceneSetPositionExplosion(posEx, e);
                                 tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
 
                                 sceneCreeBonusEventuel(scene, e);
@@ -802,7 +801,7 @@ void sceneTestDeCollision(Scene *scene)
             if (elementGetType(e) != ELEMENT_TYPE_ASTEROIDE && elementGetType(e) != ELEMENT_TYPE_DEBRIS_ASTEROIDE) {
                 /* creation explosion */
                 posEx = (PositionExplosion *) malloc(sizeof(PositionExplosion));
-                sceneGetDataElement(posEx, e);
+                sceneSetPositionExplosion(posEx, e);
                 tabDynAjoute(&scene->positionsExplosions, (void *) posEx);
             }
             /* Suppression de l'acteur */
@@ -1000,13 +999,12 @@ int sceneTestVaisseauMort(Scene *scene)
         /* on met le flag associé dans les évènements à 1 */
         scene->evenements.joueur_explosion = 1;
         return 1;
-
     }
     else
         return 0;
 }
 
-void sceneGetDataElement(PositionExplosion *pos, const ElementScene *element)
+void sceneSetPositionExplosion(PositionExplosion *pos, const ElementScene *element)
 {
     assert(element != NULL);
     pos->x = elementGetX(element);
@@ -1025,6 +1023,15 @@ void sceneMAJAngleRotation(Scene *scene)
     scene->angleRotation += SCENE_VITESSE_ROTATION;
     if (scene->angleRotation >= 360)
         scene->angleRotation = 0;
+}
+
+void sceneSupprimeExplosion(Scene *scene){
+    int i;
+    for(i=0;i<sceneGetNbExplosions(scene);i++){
+        PositionExplosion* positionExplosion = (PositionExplosion*) tabDynGetElement(&scene->positionsExplosions,i);
+        if(positionExplosion->ateur==NULL)
+            tabDynSupprimeElement(&scene->positionsExplosions,i);
+    }
 }
 
 void sceneTestDeRegression()

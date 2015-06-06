@@ -185,5 +185,11 @@ void graphiqueAfficheFinNiveau(GraphiqueSDL *graphique);
 void graphiqueAfficheVictoire(GraphiqueSDL *graphique);
 
 
+/*
+ * @fn void graphiqueVibreEcran()
+ * @brief Fais vibrer l'écran lors d'une explosion
+ */
+void graphiqueVibreEcran(GraphiqueSDL *graphiqueSDL, Rectangle rectangle, int indexImage);
+
 #endif
 
