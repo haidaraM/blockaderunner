@@ -12,8 +12,6 @@
 #include "Outils.h"
 
 
-#define NIVEAU_7_DESCRIPTION                                    "Entrée atmosphérique sur Shantori!"
-
 #define NIVEAU_GROUPE_ASTEROIDES                                0
 #define NIVEAU_GROUPE_ECLAIREURS                                1
 #define NIVEAU_GROUPE_CHASSEURS                                    2

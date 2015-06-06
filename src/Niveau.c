@@ -89,8 +89,9 @@ static void *parseElementNiveau(Niveau *niveau, xmlDocPtr doc, xmlNodePtr cur)
 /**
  * @fn static Niveau *parseFichier(char *docname)
  * @brief : Charge, valide et parse le fichier xml
+ * @param [in] docname : nom du fichier xml
  */
-static Niveau *parseFichier(char *docname)
+static Niveau *parseFichier(const char *docname)
 {
     Niveau *lesNiveaux = NULL;
     xmlDocPtr doc;
@@ -214,7 +215,6 @@ void niveauTestDeRegression()
     printf("-----------------Test de niveauInit----------------\n");
     niveauInit(&niveau, 7);
     assert(niveau.numero == 7);
-    assert(strcmp(niveau.description, NIVEAU_7_DESCRIPTION) == 0);
     printf("=========> Resultat : OK \n");
     printf("\n");
 
