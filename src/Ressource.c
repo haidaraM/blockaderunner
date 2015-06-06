@@ -260,10 +260,8 @@ static void creeNiveaux(Ressource *res)
 {
     unsigned int i;
     assert(res != NULL);
-
-    assert(res->niveaux != NULL);
-
     res->niveaux = niveauCreate();
+    assert(res->niveaux != NULL);
     for (i = 0; i < RESS_NUM_NIVEAUX; i++) {
         niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0 + i);
     }

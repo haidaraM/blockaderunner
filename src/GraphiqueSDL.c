@@ -14,9 +14,6 @@
 #include <SDL/SDL_rotozoom.h>
 
 #include "GraphiqueSDL.h"
-#include "ElementScene.h"
-#include "Scene.h"
-#include "Outils.h"
 
 
 /* -----------Fonctions internes ----------------- */
@@ -1068,7 +1065,6 @@ void graphiqueAfficheVictoire(GraphiqueSDL *graphique)
 
 void graphiqueVibreEcran(GraphiqueSDL *graphique, Rectangle rectangle, int indexImage, int amplitude){
     SDL_Rect srcBox;
-    Rectangle oldRectangle = rectangle;
     srcBox.x =  rectangle.x +randomInt(-amplitude,amplitude);
     srcBox.y =  rectangle.y +randomInt(-amplitude,amplitude);
     srcBox.h = rectangle.hauteur;

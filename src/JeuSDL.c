@@ -12,7 +12,6 @@
 #include <time.h>
 
 #include "JeuSDL.h"
-#include "Scene.h"
 
 
 /*------------- INTERFACE DU MODULE --------------------------- */

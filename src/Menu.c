@@ -11,7 +11,6 @@
 #include <assert.h>
 
 #include "Menu.h"
-#include "Joueur.h"
 
 /* ------------	Fonctions Internes --------------------------------- */
 
@@ -438,7 +437,7 @@ void menuJouer(void *m)
 void menuPause(Menu *m)
 {
     int i;
-    Menu *menu = (Menu *) m;
+    Menu *menu = m;
 
     assert(menu != NULL);
 
