@@ -114,20 +114,20 @@ static SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position)
 
     if (angle <= 90) {
         /* cos et sin prennent des valeurs en radian, d'où la conversion angle[rad] = angle[deg]/180.*pi*/
-        position.x += (int) dimension_image / 2 * (1 - sin(angle / 180. * pi) - cos(angle / 180. * pi));
-        position.y += (int) dimension_image / 2 * (1 - sin(angle / 180. * pi) - cos(angle / 180. * pi));
+        position.x += dimension_image / 2 * (1 - sin(angle / 180. * pi) - cos(angle / 180. * pi));
+        position.y += dimension_image / 2 * (1 - sin(angle / 180. * pi) - cos(angle / 180. * pi));
     }
     else if (angle <= 180) {
-        position.x += (int) dimension_image / 2 * (1 - sin(angle / 180. * pi) + cos(angle / 180. * pi));
-        position.y += (int) dimension_image / 2 * (1 - sin(angle / 180. * pi) + cos(angle / 180. * pi));
+        position.x += dimension_image / 2 * (1 - sin(angle / 180. * pi) + cos(angle / 180. * pi));
+        position.y += dimension_image / 2 * (1 - sin(angle / 180. * pi) + cos(angle / 180. * pi));
     }
     else if (angle <= 270) {
-        position.x += (int) dimension_image / 2 * (1 + sin(angle / 180. * pi) + cos(angle / 180. * pi));
-        position.y += (int) dimension_image / 2 * (1 + sin(angle / 180. * pi) + cos(angle / 180. * pi));
+        position.x += dimension_image / 2 * (1 + sin(angle / 180. * pi) + cos(angle / 180. * pi));
+        position.y += dimension_image / 2 * (1 + sin(angle / 180. * pi) + cos(angle / 180. * pi));
     }
     else if (angle <= 360) {
-        position.x += (int) dimension_image / 2 * (1 + sin(angle / 180. * pi) - cos(angle / 180. * pi));
-        position.y += (int) dimension_image / 2 * (1 + sin(angle / 180. * pi) - cos(angle / 180. * pi));
+        position.x += dimension_image / 2 * (1 + sin(angle / 180. * pi) - cos(angle / 180. * pi));
+        position.y += dimension_image / 2 * (1 + sin(angle / 180. * pi) - cos(angle / 180. * pi));
     }
 
     return position;
@@ -832,12 +832,13 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
 
     /* Allocation des animateurs aux explosions si nécessaire */
     graphiqueAlloueAnimateur(graphique, scene);
+
+    /* tremblement de l'écran */
     if(sceneGetNbExplosions(scene)!=0){
         amplitudeTremblement = sceneGetNbExplosions(scene);
         graphiqueVibreEcran(graphique,scene->rectangleImageFond,scene->indexImageFond,amplitudeTremblement);
     }
     /* affichage des explosions */
-    printf("Nb explosions : %d\n", sceneGetNbExplosions(scene));
     for (i = 0; i < sceneGetNbExplosions(scene); i++) {
 
         dstBox.x = explosions[i]->x - 40;
