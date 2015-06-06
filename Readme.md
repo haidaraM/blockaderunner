@@ -61,7 +61,7 @@ Ouvrez le fichier Makefile_2 avec un éditeur de texte, dé-commenter éventuell
 	#EXPLOSION = REPETE_EXPLOSION 		#Permet de répéter les animations. Plus amusant.
 
 Ensuite pour lancer la compilation, tapez en étant dans le répertoire principale :   
-`$ make -f Makefile_2`  
+`$ make`  
 En cas d'erreurs avec les bibliothèques externes, reportez vous aux dépendances.
 
 ##IV. Lancement du jeu
