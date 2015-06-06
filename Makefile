@@ -8,8 +8,8 @@ EXEC 			= blockade
 MAIN_TEST		= testRegression
 
 ########## Options du jeu ##########
-MODE_JEU		= MODE_NORMAL
-#MODE_JEU 		= MODE_INVULNERABLE
+#MODE_JEU		= MODE_NORMAL
+MODE_JEU 		= MODE_INVULNERABLE
 
 VERBOSE 		= JEU_VERBOSE
 #VERBOSE 		= NO_VERBOSE
