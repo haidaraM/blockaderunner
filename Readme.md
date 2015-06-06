@@ -43,8 +43,9 @@ En cas de problèmes :
 	* [Doc ubuntu](http://doc.ubuntu-fr.org/sdl) 
 	* [OpenClassroom](http://fr.openclassrooms.com/informatique/cours/apprenez-a-programmer-en-c/installation-de-la-sdl )
 	* [Autres](http://loka.developpez.com/tutoriel/sdl/installation/)
-* **FMOD EX** : Elle se trouve dans le repository.   
+* **FMOD EX** : Elle se trouve dans le repertoire du projet.   
 En cas de problèmes : [Installation FMOD Ex](http://sindev.blogspot.fr/2009/02/how-to-installer-la-fmod-ex-sur-linux.html)
+* **Libxml2** : `sudo apt-get install libxml2 libxml2-dev libxml2-doc libxml2-dbg`
 
 ###Compilation
 Rajoutez deux dossiers vides dans le répertoire principale du projet: `$ mkdir bin` et `$ mkdir obj`.
@@ -70,10 +71,13 @@ En étant dans le répertoire principale, tapez la commande :
 ##V. Format de fichier
 Chaque niveau est décrit par un fichier dans le repertoire data ainsi que les sauvegardes.
 Les fichiers de description d'un niveau et le fichier de sauvegarde se présentent ainsi.
-###Fichier niveau
-Chaque paire de lignes définit un GroupeNiveau : 
-- le type de groupe ('Chasseurs', 'Croiseurs', 'Eclaireurs', 'Asteroides') : type des éléments qui seront générés pour le groupe. 
-- trois entiers représentant dans l'ordre : **la valeur minimale en pixels** (et en abscisse),  **la valeur maximale** en pixels (et en abscisse) de la zone où seront générés les éléments du groupe, **le nombre d'éléments à générer.**
+###Fichier niveau : Niveau.xml
+Ce fichier xml contient la description de tous les niveaux du jeu.
+Un niveau à une description, est composé de plusieurs vagues d'ennemis appélées groupeNiveau et a une image de fond.
+Chaque groupeNiveau est constitué comme suit : 
+- le type de groupe ('Chasseurs', 'Croiseurs', 'Eclaireurs', 'Asteroides') : type des éléments qui seront dans le groupe. 
+- trois entiers représentant dans l'ordre : **le nombre d'éléments à générer.**, **la valeur minimale en pixels** (et en abscisse),  **la valeur maximale** en pixels (et en abscisse) 
+de la zone où seront générés les éléments du groupe.
 
 ###Fichier joueur
 Le premier chiffre représente le nombre de joueurs puis chaque paire de lignes définit un joueur :	
@@ -92,3 +96,4 @@ Pour générer la documentation, installez doxygen si ce n'est pas le cas et tap
 * Amélioration des animations (rotation astéroïdes, explosions)
 * Améliorer l'intelligence des ennemis
 * Ajouter de nouveaux bonus
+* Collision pixel perfect

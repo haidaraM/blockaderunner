@@ -15,8 +15,7 @@
 * @struct EntreeSDL
 * @brief Cette structure permet de gerer le clavier et la souris grâce à SDL
 */
-typedef struct
-{
+typedef struct {
     /** booléen renseignant si la fermeture du programme a été demandée.*/
     unsigned char fermetureJeu;
     /** nombre de touches du clavier. */

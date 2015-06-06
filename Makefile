@@ -35,13 +35,13 @@ OBJ			            = $(addprefix $(OBJ_DIR)/, $(INTERFACES_FILES:.h=.o))			# Gén
 CC 				= @gcc
 LD 				= @gcc
 
-LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx -lm
+LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx -lm `xml2-config --libs`
 INCLUDE		 	= -I./libs/fmod/inc
 
 
 ########## Options de compilation ##########
 LDFLAGS  		= -L./libs/fmod/lib $(LIBS)
-CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2   # pour optimiser
+CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2  `xml2-config --cflags` # pour optimiser
 
 #Autres commandes et message
 ECHO			= @echo
@@ -68,5 +68,5 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # Suppression de tous les fichiers obj et executables pour forcer la recompilation complète
 clean:
 	$(ECHO) "Nettoyage..."
-	$(RM) -f $(OBJ_DIR)/*.o $(BIN_DIR)/$(EXEC) $(BIN_DIR)/$(MAIN_TEST)
+	$(RM) -f $(OBJ_DIR)/*.o $(BIN_DIR)/$(EXEC) $(BIN_DIR)/$(MAIN_TEST) $(BIN_DIR)/blockaderunner
 

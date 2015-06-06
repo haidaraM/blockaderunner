@@ -11,9 +11,9 @@
 #ifndef _JOUEUR_H
 #define _JOUEUR_H
 
-#define JOUEUR_NOM_MAXCHAR				35
-#define JOUEUR_MAX_SCORE				10000000
-#define JOUEUR_MAX_MISSILES				8
+#define JOUEUR_NOM_MAXCHAR                35
+#define JOUEUR_MAX_SCORE                10000000
+#define JOUEUR_MAX_MISSILES                8
 
 
 /**
@@ -21,16 +21,15 @@
 * @brief Represente les caractéristiques du joueur.
 */
 
-typedef struct
-{
-        /** Chaine de caractères correspondant au nom du joueur */
-       char nom[JOUEUR_NOM_MAXCHAR];
-       /** Progression du joueur */
-       unsigned int progression;
-       /** Score */
-       int score;
-       /** Pointeur vers le vaisseau du joueur */
-       Vaisseau *vaisseau;
+typedef struct {
+    /** Chaine de caractères correspondant au nom du joueur */
+    char nom[JOUEUR_NOM_MAXCHAR];
+    /** Progression du joueur */
+    unsigned int progression;
+    /** Score */
+    int score;
+    /** Pointeur vers le vaisseau du joueur */
+    Vaisseau *vaisseau;
 } Joueur;
 
 /**
@@ -48,7 +47,7 @@ void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score);
 * @brief libere un joueur
 * @param [in, out] joueur : initialisé
 */
-void joueurLibere(Joueur * joueur);
+void joueurLibere(Joueur *joueur);
 
 /**
 * @fn void joueurSetScore(Joueur * joueur, int score);
@@ -56,7 +55,7 @@ void joueurLibere(Joueur * joueur);
 * @param [in, out] joueur : initialisé
 * @param [in] score
 */
-void joueurSetScore(Joueur * joueur, int score);
+void joueurSetScore(Joueur *joueur, int score);
 
 /**
 * @fn int joueurGetScore(const Joueur *joueur)
@@ -77,7 +76,7 @@ unsigned int joueurGetProgression(const Joueur *joueur);
 * @brief met a jour la progression (niveau )du joueur dans le jeu.
 * @param [in, out] joueur : initialisé
 */
-void joueurSetProgression(Joueur * joueur);
+void joueurSetProgression(Joueur *joueur);
 
 /**
 * @fn void joueurSetArmeSelectionne(Joueur * joueur, int numArme)
@@ -85,14 +84,14 @@ void joueurSetProgression(Joueur * joueur);
 * @param [in, out] joueur : initialisé
 * @param [in] numArme : 0 <= numArme <nbArme
 */
-void joueurSetArmeSelectionne(Joueur * joueur, int numArme );
+void joueurSetArmeSelectionne(Joueur *joueur, int numArme);
 
 /**
 * @fn int joueurGetNumArmeSelectionne(const Joueur * joueur)
 * @brief Renvoie le numero de l'arme selectionné par le joueur
 * @param [in] joueur : initialisé
 */
-int joueurGetNumArmeSelectionne(const Joueur * joueur);
+int joueurGetNumArmeSelectionne(const Joueur *joueur);
 
 /**
 * @fn void joueurAjouteMissiles(Joueur * joueur, int numMissiles)
@@ -109,7 +108,7 @@ void joueurAjouteMissiles(Joueur *joueur, int numMissiles);
 * @param [in] j : initialisé
 * @return Renvoie un pointeur vers le nouveau joueur
 */
-Joueur * joueurCopieJoueur(Joueur * j);
+Joueur *joueurCopieJoueur(Joueur *j);
 
 /**
 * @fn void joueurTestDeRegression()

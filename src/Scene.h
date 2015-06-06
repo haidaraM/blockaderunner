@@ -14,28 +14,23 @@
 #include "Outils.h"
 
 
-
-
-
-#define SCENE_BONUS_SCORE					3200		/* nombre de points de score ajoutés si le joueur acquiere un Bonus de score */
-#define SCENE_BONUS_MISSILE					4			/* nombre de missiles que le joueur acquière lorsqu'il touche un Bonus missile */
-#define SCENE_PROBA_BONUS_SCORE_ECLAIREUR 	10			/* note: pourcentages */
-#define SCENE_PROBA_BONUS_SCORE_CHASSEUR	25
-#define SCENE_PROBA_BONUS_SCORE_CROISEUR	70
+#define SCENE_BONUS_SCORE                    3200        /* nombre de points de score ajoutés si le joueur acquiere un Bonus de score */
+#define SCENE_BONUS_MISSILE                    4            /* nombre de missiles que le joueur acquière lorsqu'il touche un Bonus missile */
+#define SCENE_PROBA_BONUS_SCORE_ECLAIREUR    10            /* note: pourcentages */
+#define SCENE_PROBA_BONUS_SCORE_CHASSEUR    25
+#define SCENE_PROBA_BONUS_SCORE_CROISEUR    70
 #define SCENE_PROBA_BONUS_MISSILE_CROISEUR  40
 
-#define SCENE_VITESSE_DEFILEMENT_POINTS 	420.0f
-#define SCENE_NUM_POINTS_DEFILEMENT 		64
+#define SCENE_VITESSE_DEFILEMENT_POINTS    420.0f
+#define SCENE_NUM_POINTS_DEFILEMENT        64
 
-#define SCENE_VITESSE_BONUS					96.0f
-#define SCENE_VITESSE_TIR					640.0f
-#define SCENE_VITESSE_ASTEROIDE				128.0f
-#define SCENE_VITESSE_ECLAIREUR				180.0f
-#define SCENE_VITESSE_CHASSEUR				224.0f
-#define SCENE_VITESSE_CROISEUR				64.0f
+#define SCENE_VITESSE_BONUS                    96.0f
+#define SCENE_VITESSE_TIR                    640.0f
+#define SCENE_VITESSE_ASTEROIDE                128.0f
+#define SCENE_VITESSE_ECLAIREUR                180.0f
+#define SCENE_VITESSE_CHASSEUR                224.0f
+#define SCENE_VITESSE_CROISEUR                64.0f
 #define SCENE_VITESSE_ROTATION              18.0f
-
-
 
 
 /**
@@ -43,36 +38,43 @@
 * @brief Structure utilisée en interne qui représente les évènements survenants sur la scène.
 * Utile pour jouer les sons
 */
-typedef struct
-{
+typedef struct {
     char joueur_tir_laser;
     char joueur_tir_missile;
     char joueur_tir_erreur;
     char ennemi_tir_laser;
     char ennemi_tir_missile;
 
-    char joueur_degats_collision;	/* un asteroide ou vaisseau collisionne avec le joueur */
-    char joueur_degats_laser; 		/* un laser touche le joueur */
-    char ennemi_degats_laser; 		/* un laser touche un ennemi */
-    char joueur_degats_missile;		/* un missile touche le joueur */
-    char ennemi_degats_missile;		/* un missile touche un ennemi */
+    char joueur_degats_collision;
+    /* un asteroide ou vaisseau collisionne avec le joueur */
+    char joueur_degats_laser;
+    /* un laser touche le joueur */
+    char ennemi_degats_laser;
+    /* un laser touche un ennemi */
+    char joueur_degats_missile;
+    /* un missile touche le joueur */
+    char ennemi_degats_missile;
+    /* un missile touche un ennemi */
 
-    char joueur_explosion;			/* le joueur explose */
-    char ennemi_explosion;			/* un ennemi explose */
-    char asteroide_explosion;		/* un asteroide explose */
+    char joueur_explosion;
+    /* le joueur explose */
+    char ennemi_explosion;
+    /* un ennemi explose */
+    char asteroide_explosion;
+    /* un asteroide explose */
 
-    char joueur_bonus_score;		/* le joueur vient d'acquerir un bonus de score */
-    char joueur_bonus_missile;		/* le joueur vient d'acquerir un bonus missile */
+    char joueur_bonus_score;
+    /* le joueur vient d'acquerir un bonus de score */
+    char joueur_bonus_missile;        /* le joueur vient d'acquerir un bonus missile */
 
 } EvenementScene;
 
 /**
 * @struct PositionExplosion
 * @brief Structure utilisée pour sauvegarder les positions des ennemis detruits.
-* Utile pour afficher les explosions après la destruction des ennemis
+* Utile pour afficher les explosions après la destruction des ennemis.
 */
-typedef struct
-{
+typedef struct {
     /** type de l'element detruit **/
     int type;
     /** position x de l'element detruit */
@@ -88,8 +90,7 @@ typedef struct
 * @struct Scene
 * @brief Structure principale qui représente tous les éléments de la scène : asteroides, debris, bonus, vaisseaux, tirs, decors,etc.
 */
-typedef struct
-{
+typedef struct {
     /** Garde une trace du temps écoulé (pour animations). */
     float horlogePrecedente;
     /** Portion visible de la scène. */
@@ -174,44 +175,48 @@ int sceneDefileScene(Scene *scene);
 * @brief renvoie le nombre d'acteurs sur la scene
 * @param [in] scene : initialisé
 */
-int sceneGetNbActeurs(const Scene * scene);
+int sceneGetNbActeurs(const Scene *scene);
 
 /**
 * @fn int sceneGetNbTirs(const Scene * scene)
 * @brief renvoie le nombre de tirs actifs.
 * @param [in] scene : initialisé
 */
-int sceneGetNbTirs(const Scene * scene);
+int sceneGetNbTirs(const Scene *scene);
 
 /**
 * @fn int sceneGetNbBonus(const Scene * scene)
 * @brief renvoie le nombre de bonus capturables.
 * @param [in] scene : initialisé
 */
-int sceneGetNbBonus(const Scene * scene);
+int sceneGetNbBonus(const Scene *scene);
 
 /**
 * @fn int sceneGetNbDecors(const Scene * scene)
 * @brief renvoie le nombre d'éléments de décor.
 * @param [in] scene : initialisé
 */
-int sceneGetNbDecors(const Scene * scene);
+int sceneGetNbDecors(const Scene *scene);
 
 /**
-* @fn void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element)
+* @fn void sceneSetPositionExplosion(PositionExplosion * pos, const ElementScene * element)
 * @brief recupere les elements de l'elementScene pour PositionExplosion
 * @param [in,out] pos
 * @param [in] element : initialisé
 */
-void sceneGetDataElement(PositionExplosion * pos, const ElementScene * element);
+void sceneSetPositionExplosion(PositionExplosion *pos, const ElementScene *element);
 
 /**
 * @fn int sceneGetNbExplosions(const Scene * scene)
 * @brief renvoie le nombre d'explosions à effectuer c'est à dire le nombre de vaisseaux detruits.
 * @param [in] scene : initialisé
 */
-int sceneGetNbExplosions(const Scene * scene);
+int sceneGetNbExplosions(const Scene *scene);
 
+/**
+ * @brief Supprime les explosions terminées
+ */
+void sceneSupprimeExplosion(Scene *scene);
 
 /**
 * @fn void sceneAnime(Scene *scene, float tempsSecondes)
@@ -226,7 +231,7 @@ void sceneAnime(Scene *scene, float tempsSecondes);
 * @brief Permet de mettre le jeu en pause c'est à dire pas d'animations sur la scene.
 * @param [in, out] scene
 */
-void scenePause(Scene * scene);
+void scenePause(Scene *scene);
 
 /**
 * @fn void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
@@ -265,7 +270,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes);
 * @brief Cree le tir du joueur et l'ajoute au tableaux des tirs
 * @param [in, out] scene
 */
-void sceneJoueurDeclencheTir(Scene * scene);
+void sceneJoueurDeclencheTir(Scene *scene);
 
 /**
 * @fn int sceneGetMunitionMissileJoueur(const Scene *scene)
@@ -281,7 +286,7 @@ int sceneGetMunitionMissileJoueur(const Scene *scene);
 * @param [in, out] e element-scene (ennemi)
 * @param [in] tempsCourant temps associé à la frame courante (en secondes).
 */
-void sceneEnnemiDeclencheTir(Scene * scene, ElementScene *e, float tempsCourant);
+void sceneEnnemiDeclencheTir(Scene *scene, ElementScene *e, float tempsCourant);
 
 /**
 * @fn void sceneTestDeCollision(Scene *scene)
@@ -296,21 +301,22 @@ void sceneTestDeCollision(Scene *scene);
 * @param [in,out] initialisé
 * @return Renvoie 1 si le joueur est mort, 0 sinon
 */
-int sceneTestVaisseauMort(Scene * scene);
+int sceneTestVaisseauMort(Scene *scene);
 
 /**
 * @fn double sceneGetAngleRotation(const Scene * scene )
 * @brief Recupère l'angle de rotation des debris d'asteroides
 * @param [in] scene : initialisé
 */
-double sceneGetAngleRotation(const Scene * scene );
+double sceneGetAngleRotation(const Scene *scene);
 
+/* TODO : améliorer les rotations */
 /**
 * @fn void sceneMAJAngleRotation (Scene * scene)
 * @brief Met à jour l'angle de rotation
 * @param [in,out] scene : initialisé
 */
-void sceneMAJAngleRotation (Scene * scene);
+void sceneMAJAngleRotation(Scene *scene);
 
 /**
 * @fn void sceneTestDeRegression()

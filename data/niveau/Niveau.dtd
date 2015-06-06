@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!ELEMENT niveaux (niveau+)>
+        <!ELEMENT niveau (description, composition,image)>
+        <!ATTLIST niveau
+                id ID #REQUIRED>
+        <!ELEMENT description (#PCDATA)>
+        <!ELEMENT image EMPTY>
+        <!ATTLIST image
+                src CDATA #REQUIRED>
+        <!ELEMENT composition (groupeNiveau+)>
+        <!ELEMENT groupeNiveau (nombreEnnemis,xmin,xmax)>
+        <!ATTLIST groupeNiveau
+                type (Asteroides|Eclaireurs|Chasseurs|Croiseurs) #REQUIRED>
+        <!ELEMENT nombreEnnemis (#PCDATA)>
+        <!ELEMENT xmin (#PCDATA)>
+        <!ELEMENT xmax (#PCDATA)>

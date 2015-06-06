@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!DOCTYPE niveaux SYSTEM "Niveau.dtd">
+<niveaux>
+    <niveau id="n0">
+        <description>Sortir du champ d'astéroïdes : attention aux éclaireurs</description>
+        <composition>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>18</nombreEnnemis>
+                <xmin>1000</xmin>
+                <xmax>2400</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>3600</xmin>
+                <xmax>3700</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>8</nombreEnnemis>
+                <xmin>4500</xmin>
+                <xmax>8000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>32</nombreEnnemis>
+                <xmin>7000</xmin>
+                <xmax>12000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>16</nombreEnnemis>
+                <xmin>12500</xmin>
+                <xmax>20000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>18</nombreEnnemis>
+                <xmin>16000</xmin>
+                <xmax>20000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>7</nombreEnnemis>
+                <xmin>24000</xmin>
+                <xmax>26000</xmax>
+            </groupeNiveau>
+        </composition>
+        <image src="bg0.jpg"/>
+    </niveau>
+    <niveau id="n1">
+        <description>Sortir du champ d'astéroïdes : attention aux éclaireurs!</description>
+        <composition>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>64</nombreEnnemis>
+                <xmin>1800</xmin>
+                <xmax>6000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>8</nombreEnnemis>
+                <xmin>3600</xmin>
+                <xmax>3700</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>16</nombreEnnemis>
+                <xmin>4500</xmin>
+                <xmax>8000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>32</nombreEnnemis>
+                <xmin>8000</xmin>
+                <xmax>12000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>24</nombreEnnemis>
+                <xmin>12500</xmin>
+                <xmax>22000</xmax>
+            </groupeNiveau>
+        </composition>
+
+        <image src="bg1.jpg"/>
+    </niveau>
+    <niveau id="n2">
+        <description>Vagues de chasseurs ennemis détectées</description>
+        <composition>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>24</nombreEnnemis>
+                <xmin>5700</xmin>
+                <xmax>12000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>96</nombreEnnemis>
+                <xmin>1800</xmin>
+                <xmax>10000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>6000</xmin>
+                <xmax>6100</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>32</nombreEnnemis>
+                <xmin>18000</xmin>
+                <xmax>20000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>15000</xmin>
+                <xmax>16000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>13</nombreEnnemis>
+                <xmin>18500</xmin>
+                <xmax>24000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>6</nombreEnnemis>
+                <xmin>20500</xmin>
+                <xmax>21500</xmax>
+            </groupeNiveau>
+        </composition>
+        <image src="bg2.jpg"/>
+    </niveau>
+    <niveau id="n3">
+        <description>Vagues de chasseurs ennemis détectées</description>
+        <composition>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>2000</xmin>
+                <xmax>2100</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>3</nombreEnnemis>
+                <xmin>4500</xmin>
+                <xmax>4600</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>3</nombreEnnemis>
+                <xmin>6000</xmin>
+                <xmax>6100</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>24</nombreEnnemis>
+                <xmin>5700</xmin>
+                <xmax>12000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>24</nombreEnnemis>
+                <xmin>14000</xmin>
+                <xmax>22000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>80</nombreEnnemis>
+                <xmin>10000</xmin>
+                <xmax>18000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>15000</xmin>
+                <xmax>16000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>13</nombreEnnemis>
+                <xmin>18500</xmin>
+                <xmax>24000</xmax>
+            </groupeNiveau>
+        </composition>
+        <image src="bg3.jpg"/>
+    </niveau>
+
+    <niveau id="n4">
+        <description>Attention aux croiseurs ennemis!</description>
+        <composition>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>3000</xmin>
+                <xmax>3100</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>2</nombreEnnemis>
+                <xmin>3600</xmin>
+                <xmax>3700</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Croiseurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>3000</xmin>
+                <xmax>3100</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>24</nombreEnnemis>
+                <xmin>5700</xmin>
+                <xmax>12000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>32</nombreEnnemis>
+                <xmin>14000</xmin>
+                <xmax>22000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>40</nombreEnnemis>
+                <xmin>15000</xmin>
+                <xmax>18000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>15000</xmin>
+                <xmax>16000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>13</nombreEnnemis>
+                <xmin>18500</xmin>
+                <xmax>24000</xmax>
+            </groupeNiveau>
+        </composition>
+        <image src="bg4.jpg"/>
+    </niveau>
+
+    <niveau id="n5">
+        <description>Approche de Shantori</description>
+        <composition>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>64</nombreEnnemis>
+                <xmin>1000</xmin>
+                <xmax>8100</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>3600</xmin>
+                <xmax>3700</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Croiseurs">
+                <nombreEnnemis>7</nombreEnnemis>
+                <xmin>2600</xmin>
+                <xmax>7000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>24</nombreEnnemis>
+                <xmin>9700</xmin>
+                <xmax>18000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>16</nombreEnnemis>
+                <xmin>14000</xmin>
+                <xmax>22000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Asteroides">
+                <nombreEnnemis>60</nombreEnnemis>
+                <xmin>13000</xmin>
+                <xmax>18000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>1</nombreEnnemis>
+                <xmin>15000</xmin>
+                <xmax>16000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>13</nombreEnnemis>
+                <xmin>18500</xmin>
+                <xmax>24000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Croiseurs">
+                <nombreEnnemis>16000</nombreEnnemis>
+                <xmin>20000</xmin>
+                <xmax>4</xmax>
+            </groupeNiveau>
+        </composition>
+        <image src="bg5.jpg"/>
+    </niveau>
+    <niveau id="n6">
+        <description>Orbite basse de Shantori</description>
+        <composition>
+            <groupeNiveau type="Croiseurs">
+                <nombreEnnemis>5</nombreEnnemis>
+                <xmin>1400</xmin>
+                <xmax>6000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>20</nombreEnnemis>
+                <xmin>6000</xmin>
+                <xmax>10000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>12</nombreEnnemis>
+                <xmin>16000</xmin>
+                <xmax>20000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Croiseurs">
+                <nombreEnnemis>5</nombreEnnemis>
+                <xmin>16000</xmin>
+                <xmax>20000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>32</nombreEnnemis>
+                <xmin>20000</xmin>
+                <xmax>24000</xmax>
+            </groupeNiveau>
+        </composition>
+        <image src="bg6.jpg"/>
+    </niveau>
+    <niveau id="n7">
+        <description>Entrée atmosphérique sur Shantori!</description>
+        <composition>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>32</nombreEnnemis>
+                <xmin>2000</xmin>
+                <xmax>80000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Chasseurs">
+                <nombreEnnemis>32</nombreEnnemis>
+                <xmin>6000</xmin>
+                <xmax>16000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Croiseurs">
+                <nombreEnnemis>16</nombreEnnemis>
+                <xmin>3000</xmin>
+                <xmax>9000</xmax>
+            </groupeNiveau>
+            <groupeNiveau type="Eclaireurs">
+                <nombreEnnemis>24</nombreEnnemis>
+                <xmin>16000</xmin>
+                <xmax>20000</xmax>
+            </groupeNiveau>
+        </composition>
+        <image src="bg7.jpg"/>
+    </niveau>
+
+
+</niveaux>

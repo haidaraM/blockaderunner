@@ -4,7 +4,7 @@ project(blockaderunner)
 #Macros preprocesseur : A décommenter pour désactiver l'option
 #add_definitions(-DJEU_VERBOSE)
 add_definitions(-DNO_REPETE_EXPLOSION)
-add_definitions(-DMODE_NORMAL)
+#add_definitions(-DMODE_NORMAL)
 
 #repetoire des includes
 include_directories( ./libs/fmod/inc)
@@ -44,4 +44,4 @@ set(SOURCE_FILES
 
 add_executable(blockaderunner ${SOURCE_FILES})
 
-target_link_libraries(blockaderunner -lSDL -lm -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx)
+target_link_libraries(blockaderunner -lSDL -lxml2 -lm -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx)

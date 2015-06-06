@@ -20,21 +20,20 @@
 #include "Ressource.h"
 
 
-
 enum {
     JEU_ETAT_MENU_PRINCIPAL,
     JEU_ETAT_CHARGEMENT_NIVEAU,
     JEU_ETAT_JEU,
     JEU_RETOUR_MENU_PRINCIPAL,
-    JEU_ETAT_PAUSE };
+    JEU_ETAT_PAUSE
+};
 
 /**
 * @struct JeuSDL
 * @brief Structure regroupant tous les elements necessaires à l'application.
 */
 
-typedef struct
-{
+typedef struct {
 
     /** Initialise et dispose la fenetre principale. */
     GraphiqueSDL graphique;
@@ -74,6 +73,7 @@ void jeuInit(JeuSDL *jeu);
 */
 
 void jeuBoucle(JeuSDL *jeu);
+
 /**
 * @fn void jeuLibere(JeuSDL *)
 * @brief Libère toutes les ressources mobilisées par le programme.

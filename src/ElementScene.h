@@ -13,28 +13,28 @@
 #define _ELEMENT_SCENE_H
 
 /* Definitions des differents types d'Elements */
-enum { ELEMENT_TYPE_NON_DEFINI,
-        ELEMENT_TYPE_VAISSEAU_JOUEUR,
-        ELEMENT_TYPE_ASTEROIDE,
-        ELEMENT_TYPE_DEBRIS_ASTEROIDE,
-        ELEMENT_TYPE_LASER_JOUEUR,
-        ELEMENT_TYPE_LASER_ENNEMI,
-        ELEMENT_TYPE_MISSILE_JOUEUR,
-        ELEMENT_TYPE_MISSILE_ENNEMI,
-        ELEMENT_TYPE_BONUS_SCORE,
-        ELEMENT_TYPE_BONUS_MISSILE,
-        ELEMENT_TYPE_ECLAIREUR,
-        ELEMENT_TYPE_CHASSEUR,
-        ELEMENT_TYPE_CROISEUR,
-        ELEMENT_TYPE_VAISSEAU_ENNEMI
-        };
+enum {
+    ELEMENT_TYPE_NON_DEFINI,
+    ELEMENT_TYPE_VAISSEAU_JOUEUR,
+    ELEMENT_TYPE_ASTEROIDE,
+    ELEMENT_TYPE_DEBRIS_ASTEROIDE,
+    ELEMENT_TYPE_LASER_JOUEUR,
+    ELEMENT_TYPE_LASER_ENNEMI,
+    ELEMENT_TYPE_MISSILE_JOUEUR,
+    ELEMENT_TYPE_MISSILE_ENNEMI,
+    ELEMENT_TYPE_BONUS_SCORE,
+    ELEMENT_TYPE_BONUS_MISSILE,
+    ELEMENT_TYPE_ECLAIREUR,
+    ELEMENT_TYPE_CHASSEUR,
+    ELEMENT_TYPE_CROISEUR,
+    ELEMENT_TYPE_VAISSEAU_ENNEMI
+};
 
 /**
 * @struct ElementScene
 * @brief Element de la Scene : element affichable et jouable.
 */
-typedef struct
-{
+typedef struct {
     /** type d'entité. */
     int type;
     /** booléen : l'élement est dans la portion visible de la scène (ecran) ou pas. */
@@ -58,7 +58,7 @@ typedef struct
     /** Hauteur portion visible de la scène (ecran) (sert en interne pour le calcul de visibilité). */
     int hauteurSceneVisible;
     /** pointeur generique. Utilisé notament pour lié à un element d'autres caractéristique (vaisseau par exemple) */
-    void * data;
+    void *data;
 
 } ElementScene;
 
@@ -74,7 +74,8 @@ typedef struct
 * @param [in] largeurEcran : largeur de l'ecran (portion visible de la scène).
 * @param [in] hauteurEcran : hauteur de l'ecran (portion visible de la scène).
 */
-void elementInit(ElementScene *element, int type, int indexImage, int largeur, int hauteur, int largeurEcran, int hauteurEcran);
+void elementInit(ElementScene *element, int type, int indexImage, int largeur, int hauteur, int largeurEcran,
+                 int hauteurEcran);
 
 /**
 * @fn void elementLibere(ElementScene *element)
@@ -88,7 +89,7 @@ void elementLibere(ElementScene *element);
 * @brief Renvoie le type d'element
 * @param [in] element : initialisé
 */
-int elementGetType(const ElementScene * element);
+int elementGetType(const ElementScene *element);
 
 /**
 * @fn int elementVisible(const ElementScene *element)
@@ -143,7 +144,7 @@ int elementGetImageIndex(const ElementScene *element);
 * @param [in] e2 : initialisé
 * @return renvoi 1 en cas de collision. 0 sinon
 */
-int elementTestDeCollision(const ElementScene * e1,const ElementScene *e2);
+int elementTestDeCollision(const ElementScene *e1, const ElementScene *e2);
 
 
 /**

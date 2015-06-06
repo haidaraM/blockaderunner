@@ -21,12 +21,11 @@
 * @struct AudioFMOD
 * @brief Permettra de gerer le système audio.
 */
-typedef struct
-{
+typedef struct {
     /** Objet système : variable qui nous servira à définir les paramètres de la librairie fmod **/
     FMOD_SYSTEM *system;
     /** Tableau de pointeurs sur les sons initialisés **/
-    FMOD_SOUND ** sons;
+    FMOD_SOUND **sons;
 
 } AudioFMOD;
 
@@ -36,7 +35,7 @@ typedef struct
 * @param [in, out] audio
 * @param [in] res : initialisé
 */
-void audioInit(AudioFMOD *audio,const Ressource *res);
+void audioInit(AudioFMOD *audio, const Ressource *res);
 
 /**
 * @fn void audioLibere(AudioFMOD *audio)
@@ -51,7 +50,7 @@ void audioLibere(AudioFMOD *audio);
 * @param [in] audio : initialisé
 * @param [in] index : correspond à l'indice du son (0<=son<nombre de sons chargé)
 */
-void audioJoueSon(const AudioFMOD * audio, int index);
+void audioJoueSon(const AudioFMOD *audio, int index);
 
 /**
 * @fn void audioStopSon(const Audio * audio, int index)
@@ -59,7 +58,7 @@ void audioJoueSon(const AudioFMOD * audio, int index);
 * @param [in] audio : initialisé
 * @param [in] index
 */
-void audioStopSon(const AudioFMOD * audio, int index);
+void audioStopSon(const AudioFMOD *audio, int index);
 
 /**
 * @fn void audioPauseSon(const AudioFMOD *audio, int index)

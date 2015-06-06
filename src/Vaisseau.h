@@ -19,20 +19,20 @@
 
 /* Caracteristiques éclaireurs ennemi*/
 #define VAISSEAU_ECLAIREUR_TYPE                         3
-#define ECLAIREUR_ARMES  								1
+#define ECLAIREUR_ARMES                                1
 #define ECLAIREUR_POINTECRAN                            0
 #define ECLAIREUR_POINTSTRUCTURE                        25
 
 /* Caracteristiques chasseurs ennemi*/
-#define VAISSEAU_CHASSEUR_TYPE   	                    4
-#define CHASSEUR_ARMES  								1
+#define VAISSEAU_CHASSEUR_TYPE                        4
+#define CHASSEUR_ARMES                                1
 #define CHASSEUR_POINTECRAN                            50
 #define CHASSEUR_POINTSTRUCTURE                        70
 
 /* Caracteristiques croiseurs ennemi*/
-#define VAISSEAU_CROISEUR_TYPE                         	5
-#define CROISEUR_ARMES  								2
-#define CROISEUR_POINTECRAN                            	200
+#define VAISSEAU_CROISEUR_TYPE                            5
+#define CROISEUR_ARMES                                2
+#define CROISEUR_POINTECRAN                                200
 #define CROISEUR_POINTSTRUCTURE                         300
 
 /* Armes */
@@ -46,18 +46,16 @@
 #define ARME_MISSILE_DEGAT_E                            0
 #define ARME_MISSILE_DEGAT_S                            200
 
-#define VAISSEAU_COLLISION								2
-#define VAISSEAU_COLLISION_DEGAT_E						0
-#define VAISSEAU_COLLISION_DEGAT_S						50
-
+#define VAISSEAU_COLLISION                                2
+#define VAISSEAU_COLLISION_DEGAT_E                        0
+#define VAISSEAU_COLLISION_DEGAT_S                        50
 
 
 /**
 * @struct Arme
 * @brief Represente l'arme des vaisseaux du jeu avec differentes caracteristiques.
 */
-typedef struct
-{
+typedef struct {
     /** type de l'arme : laser, missile */
     int typeArme;
     /** Degat infligé à la quantité d'ecran */
@@ -68,8 +66,8 @@ typedef struct
     int munitions;
     /** stocke le temps du dernier tir : pour ne pas tirer trop de fois par seconde. */
     float tempsDernierTir;
-	/** cadence de tir max */
-	float cadence;
+    /** cadence de tir max */
+    float cadence;
 
 } Arme;
 
@@ -77,8 +75,7 @@ typedef struct
 * @struct Vaisseau
 * @brief Represente un des differents vaisseaux présents dans le jeu
 */
-typedef struct
-{
+typedef struct {
     /** Type du vaisseau : 1 pour le joueur, le reste pour les ennemi **/
     int type;
     /** Point ecran du vaisseau : quantité d'ecran anti laser, baisse avec les tirs laser. A 0, les pointStructures diminuent**/
@@ -107,7 +104,7 @@ void vaisseauInit(Vaisseau *vaisseauJ, int type);
 * @brief Libere la memoire alloue pour le vaisseau.
 * @param [in, out] vaisseau :  doit etre non null
 */
-void vaisseauLibere(Vaisseau * vaisseau);
+void vaisseauLibere(Vaisseau *vaisseau);
 
 /**
 * @fn void armeInit(Arme * a, int type);
@@ -122,21 +119,21 @@ void vaisseauArmeInit(Arme *a, int type);
 * @brief Renvoie le nombre d'armes du vaisseau
 * @param  [in] vaisseau  : initialisé
 */
-int vaisseauGetNbArmes(const Vaisseau * vaisseau);
+int vaisseauGetNbArmes(const Vaisseau *vaisseau);
 
 /**
 * @fn int vaisseauGetPointEcran(const Vaisseau * vaisseau);
 * @brief Renvoie les points ecran du vaisseau
 * @param [in] vaisseau  : initialisé
 */
-int vaisseauGetPointEcran(const Vaisseau * vaisseau);
+int vaisseauGetPointEcran(const Vaisseau *vaisseau);
 
 /**
 * @fn int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 * @brief Renvoie les points structure du vaisseau
 * @param [in] vaisseau : initialisé
 */
-int vaisseauGetPointStructure(const Vaisseau * vaisseau);
+int vaisseauGetPointStructure(const Vaisseau *vaisseau);
 
 
 /**
@@ -145,29 +142,28 @@ int vaisseauGetPointStructure(const Vaisseau * vaisseau);
 * @param [in, out] vaisseau
 * @param [in] typeDegats type de dommages : arme utilisée (laser ou missile), ou collision.
 */
-void vaisseauSetDegats(Vaisseau * vaisseau, int typeDegats);
+void vaisseauSetDegats(Vaisseau *vaisseau, int typeDegats);
 
 /**
 * @fn int vaisseauGetMunitionsArme(Const Vaisseau * vaisseau)
 * @brief Recupere les munitions de l'arme selectionnéé
 * @param [in] vaisseau  : initialisé
 */
-int vaisseauGetMunitionsArme(const Vaisseau * vaisseau);
+int vaisseauGetMunitionsArme(const Vaisseau *vaisseau);
 
 /**
 * @fn Arme* vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
 * @brief renvoie un pointeur sur l'arme selectionnee
 * @param [in] vaisseau : initialisé
 */
-Arme* vaisseauGetArmeSelectionnee(const Vaisseau * vaisseau);
+Arme *vaisseauGetArmeSelectionnee(const Vaisseau *vaisseau);
 
 /**
 * @fn void vaisseauMajMunitions(Vaisseau * vaisseau)
 * @brief Met à jour les munitions de l'arme selectionnée quand un tir un declenché
 * @param [in, out] vaisseau : initialisé
 */
-void vaisseauMajMunitions(Vaisseau * vaisseau);
-
+void vaisseauMajMunitions(Vaisseau *vaisseau);
 
 
 /**
@@ -175,14 +171,14 @@ void vaisseauMajMunitions(Vaisseau * vaisseau);
 * @brief Renvoie le degat ecran de l'arme selectionné
 * @param [in] vaisseau  : initialisé
 */
-int vaisseauGetDegatEcranArme(const Vaisseau * vaisseau );
+int vaisseauGetDegatEcranArme(const Vaisseau *vaisseau);
 
 /**
 * @fn int vaisseauGetDegatStructureArme(const Vaisseau * vaisseau )
 * @brief Renvoie le degat structure de l'arme selectionné
 * @param [in] vaisseau  : initialisé
 */
-int vaisseauGetDegatStructureArme(const Vaisseau * vaisseau );
+int vaisseauGetDegatStructureArme(const Vaisseau *vaisseau);
 
 /**
 * @fn void vaisseauTestDeregression()

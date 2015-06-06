@@ -12,20 +12,10 @@
 #include "Outils.h"
 
 
-
-#define NIVEAU_0_DESCRIPTION									"Sortir du champ d'astéroïdes : attention aux éclaireurs!"
-#define NIVEAU_1_DESCRIPTION                                    "Sortir du champ d'astéroïdes : attention aux éclaireurs!"
-#define NIVEAU_2_DESCRIPTION                                    "Vagues de chasseurs ennemis détectées"
-#define NIVEAU_3_DESCRIPTION                                    "Vagues de chasseurs ennemis détectées"
-#define NIVEAU_4_DESCRIPTION                                    "Attention aux croiseurs ennemis!"
-#define NIVEAU_5_DESCRIPTION                                    "Approche de Shantori"
-#define NIVEAU_6_DESCRIPTION                                    "Orbite basse de Shantori"
-#define NIVEAU_7_DESCRIPTION                                    "Entrée atmosphérique sur Shantori!"
-
-#define NIVEAU_GROUPE_ASTEROIDES								0
-#define NIVEAU_GROUPE_ECLAIREURS								1
-#define NIVEAU_GROUPE_CHASSEURS									2
-#define NIVEAU_GROUPE_CROISEURS									3
+#define NIVEAU_GROUPE_ASTEROIDES                                0
+#define NIVEAU_GROUPE_ECLAIREURS                                1
+#define NIVEAU_GROUPE_CHASSEURS                                    2
+#define NIVEAU_GROUPE_CROISEURS                                    3
 
 /*TODO : afficher une description des niveaux*/
 
@@ -33,34 +23,31 @@
 * @struct GroupeNiveau
 * @brief Structure utilisée pour la composition d'un niveau : décrit un groupe d'éléments de même type.
 */
-typedef struct
-{
-	/** type d'element : champ d'asteroides, escadre de chasseurs, ... */
-	int type;
-	/** position min en x*/
-	int xmin;
-	/** position max en x*/
-	int xmax;
-	/** nombre d'éléments constituants (exemple : nombre de chasseurs dans l'escadre).*/
-	int nombre;
+typedef struct {
+    /** type d'element : champ d'asteroides, escadre de chasseurs, ... */
+    int type;
+    /** position min en x*/
+    int xmin;
+    /** position max en x*/
+    int xmax;
+    /** nombre d'éléments constituants (exemple : nombre de chasseurs dans l'escadre).*/
+    int nombre;
 } GroupeNiveau;
 
 /**
 * @struct Niveau
 * @brief Cette structure contient les differentes informations qui caracterisent un niveau de jeu
 */
-typedef struct
-{
-	/** entier : 0, 1, 2, 3... */
-	unsigned int numero;
-	/** chaîne de caractères : description courte du niveau. */
-	char description[255];
-	/** index dans Ressource de l'image de fond (background) du niveau. */
-	int imageFond;
-	/** Composition du niveau : asteroides, vaisseaux ennemi, etc. **/
-	TabDyn composition;
+typedef struct {
+    /** entier : 0, 1, 2, 3... */
+    unsigned int numero;
+    /** chaîne de caractères : description courte du niveau. */
+    char description[500];
+    /** index dans Ressource de l'image de fond (background) du niveau. */
+    int imageFond;
+    /** Composition du niveau : asteroides, vaisseaux ennemi, etc. **/
+    TabDyn composition;
 } Niveau;
-
 
 
 /**
@@ -79,6 +66,12 @@ void niveauInit(Niveau *niveau, unsigned int numero);
 void niveauLibere(Niveau *niveau);
 
 /**
+ * @fn Niveau *niveauCreate()
+ * @brief Parse le fichier xml et retourne les niveaux décrits dans celui-ci
+ */
+Niveau *niveauCreate();
+
+/**
 * @fn void niveauSetImageFond(Niveau *niveau, int indexImage)
 * @brief Donne l'index de l'image de fond au niveau
 * @param [in, out] niveau : initialisé
@@ -91,7 +84,7 @@ void niveauSetImageFond(Niveau *niveau, int indexImage);
 * @brief Renvoie le nombre de groupes qui composent le niveau (rappel : un groupe peut-etre un champ d'asteroides, une escadre de chasseurs ennemis, etc...)
 * @param [in] niveau : initialisé
 */
-int niveauGetNumGroupes(const Niveau * niveau);
+int niveauGetNumGroupes(const Niveau *niveau);
 
 /**
 * @fn void niveauTestDeRegression()
