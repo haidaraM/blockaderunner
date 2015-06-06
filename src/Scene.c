@@ -546,6 +546,8 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
                 tabDynAjoute(&scene->bonus, (void *) bonus);
             }
             break;
+        default:
+            break;
     }
 }
 
@@ -1025,12 +1027,13 @@ void sceneMAJAngleRotation(Scene *scene)
         scene->angleRotation = 0;
 }
 
-void sceneSupprimeExplosion(Scene *scene){
+void sceneSupprimeExplosion(Scene *scene)
+{
     int i;
-    for(i=0;i<sceneGetNbExplosions(scene);i++){
-        PositionExplosion* positionExplosion = (PositionExplosion*) tabDynGetElement(&scene->positionsExplosions,i);
-        if(positionExplosion->ateur==NULL)
-            tabDynSupprimeElement(&scene->positionsExplosions,i);
+    for (i = 0; i < sceneGetNbExplosions(scene); i++) {
+        PositionExplosion *positionExplosion = (PositionExplosion *) tabDynGetElement(&scene->positionsExplosions, i);
+        if (positionExplosion->ateur == NULL)
+            tabDynSupprimeElement(&scene->positionsExplosions, i);
     }
 }
 

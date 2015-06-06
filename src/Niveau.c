@@ -39,7 +39,6 @@ static void *parseElementNiveau(Niveau *niveau, xmlDocPtr doc, xmlNodePtr cur)
             xmlNodePtr gNiveau = cur->xmlChildrenNode;
             while (gNiveau != NULL) {
                 /* groupe niveau */
-                printf("groupe niveau\n");
                 if ((!xmlStrcmp(gNiveau->name, (const xmlChar *) "groupeNiveau"))) {
                     GroupeNiveau * groupe=(GroupeNiveau*) malloc(sizeof(GroupeNiveau));
                     xmlChar *typeGroupe =  xmlGetProp(gNiveau, (const xmlChar *) "type");

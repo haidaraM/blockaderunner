@@ -187,9 +187,9 @@ void graphiqueAfficheVictoire(GraphiqueSDL *graphique);
 
 /*
  * @fn void graphiqueVibreEcran()
- * @brief Fais vibrer l'écran lors d'une explosion
+ * @brief Fais vibrer l'écran lors d'une explosion. L'amplitude de la vibration depend du nombre d'explosions.
  */
-void graphiqueVibreEcran(GraphiqueSDL *graphiqueSDL, Rectangle rectangle, int indexImage);
+void graphiqueVibreEcran(GraphiqueSDL *graphiqueSDL, Rectangle rectangle, int indexImage, int amplitude);
 
 #endif
 

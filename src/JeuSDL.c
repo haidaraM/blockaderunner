@@ -338,7 +338,8 @@ void jeuBoucle(JeuSDL *jeu)
                         if (jeu->niveauCourant == joueurGetProgression(jeu->joueur)) {
                             /* ici on récupère le score réalisé par la copie du Joueur dans Scene pour le sauvegarder (plus un Bonus). */
                             joueurSetScore(jeu->joueur, joueurGetScore(jeu->scene.joueur));
-                            joueurSetProgression(jeu->joueur);/* on avance la progression du joueur (acces au niveau suivant débloqué)*/
+                            joueurSetProgression(
+                                    jeu->joueur);/* on avance la progression du joueur (acces au niveau suivant débloqué)*/
                             ressourceSauveJoueurs(&jeu->ressource);
                         }
                         /* on joue un son */

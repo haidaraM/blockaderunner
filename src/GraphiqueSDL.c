@@ -810,7 +810,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu)
 
 void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
 {
-    int i, typeElement, pointS, pointE;
+    int i, typeElement, pointS, pointE,amplitudeTremblement=0;
     SDL_Rect srcBox, dstBox, vBox;
     ElementScene **acteurs = (ElementScene **) scene->acteurs.tab;
     ElementScene **tirs = (ElementScene **) scene->tirs.tab;
@@ -829,6 +829,30 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
     srcBox.w = scene->rectangleImageFond.largeur;
     srcBox.h = scene->rectangleImageFond.hauteur;
     SDL_BlitSurface(graphique->images[scene->indexImageFond], &srcBox, graphique->surface, NULL);
+
+    /* Allocation des animateurs aux explosions si nécessaire */
+    graphiqueAlloueAnimateur(graphique, scene);
+    if(sceneGetNbExplosions(scene)!=0){
+        amplitudeTremblement = sceneGetNbExplosions(scene);
+        graphiqueVibreEcran(graphique,scene->rectangleImageFond,scene->indexImageFond,amplitudeTremblement);
+    }
+    /* affichage des explosions */
+    printf("Nb explosions : %d\n", sceneGetNbExplosions(scene));
+    for (i = 0; i < sceneGetNbExplosions(scene); i++) {
+
+        dstBox.x = explosions[i]->x - 40;
+        dstBox.y = explosions[i]->y - 40;
+        /* Affichage de la frame courante */
+        animationBlitFrame(explosions[i]->ateur, graphique->surface, &dstBox);
+        /* Passage à la frame suivante */
+        animationMAJAnimateur(explosions[i]->ateur);
+        /* explosion terminée */
+        if(animationCheckFin(explosions[i]->ateur)){
+            explosions[i]->ateur = NULL;
+        }
+    }
+
+
 
     /* affichage des decors */
     for (i = 0; i < sceneGetNbDecors(scene); i++) {
@@ -900,27 +924,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
         }
     }
 
-    /* Allocation des animateurs aux explosions si nécessaire */
-    graphiqueAlloueAnimateur(graphique, scene);
 
-    /* affichage des explosions */
-    printf("Nb explosions : %d\n", sceneGetNbExplosions(scene));
-    for (i = 0; i < sceneGetNbExplosions(scene); i++) {
-        dstBox.x = explosions[i]->x - 40;
-        dstBox.y = explosions[i]->y - 40;
-        /* Affichage de la frame courante */
-        animationBlitFrame(explosions[i]->ateur, graphique->surface, &dstBox);
-        /* Passage à la frame suivante */
-        animationMAJAnimateur(explosions[i]->ateur);
-
-        /* explosion terminée */
-        if(animationCheckFin(explosions[i]->ateur)){
-            explosions[i]->ateur = NULL;
-        }
-
-        //graphiqueVibreEcran(graphique,scene->rectangleImageFond,scene->indexImageFond);
-
-    }
 
     /* affiche du vaisseau joueur */
     vBox.x = elementGetX(scene->elementVaisseauJoueur);
@@ -1061,15 +1065,15 @@ void graphiqueAfficheVictoire(GraphiqueSDL *graphique)
 }
 
 
-void graphiqueVibreEcran(GraphiqueSDL *graphique, Rectangle rectangle, int indexImage){
+void graphiqueVibreEcran(GraphiqueSDL *graphique, Rectangle rectangle, int indexImage, int amplitude){
     SDL_Rect srcBox;
-    int i;
     Rectangle oldRectangle = rectangle;
-    srcBox.x =  rectangle.x +randomInt(-5,5);
-    srcBox.y =  rectangle.y +randomInt(-5,5);
+    srcBox.x =  rectangle.x +randomInt(-amplitude,amplitude);
+    srcBox.y =  rectangle.y +randomInt(-amplitude,amplitude);
     srcBox.h = rectangle.hauteur;
     srcBox.w = rectangle.largeur;
     SDL_BlitSurface(graphique->images[indexImage], &srcBox, graphique->surface, NULL);
+
 }
 
 
