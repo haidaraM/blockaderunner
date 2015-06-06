@@ -43,7 +43,7 @@ En cas de problèmes :
 	* [Doc ubuntu](http://doc.ubuntu-fr.org/sdl) 
 	* [OpenClassroom](http://fr.openclassrooms.com/informatique/cours/apprenez-a-programmer-en-c/installation-de-la-sdl )
 	* [Autres](http://loka.developpez.com/tutoriel/sdl/installation/)
-* **FMOD EX** : Elle se trouve dans le repository.   
+* **FMOD EX** : Elle se trouve dans le repertoire du projet.   
 En cas de problèmes : [Installation FMOD Ex](http://sindev.blogspot.fr/2009/02/how-to-installer-la-fmod-ex-sur-linux.html)
 * **Libxml2** : `sudo apt-get install libxml2 libxml2-dev libxml2-doc libxml2-dbg`
 
