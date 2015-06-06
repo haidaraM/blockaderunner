@@ -4,7 +4,7 @@ project(blockaderunner)
 #Macros preprocesseur : A décommenter pour désactiver l'option
 #add_definitions(-DJEU_VERBOSE)
 add_definitions(-DNO_REPETE_EXPLOSION)
-add_definitions(-DMODE_NORMAL)
+#add_definitions(-DMODE_NORMAL)
 
 #repetoire des includes
 include_directories( ./libs/fmod/inc)

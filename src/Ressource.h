@@ -32,11 +32,11 @@
 #define RESS_DIR_NIVEAU                                         "data/niveau/"
 
 
-/*--------------------------------- SAUVEGARDES ---------------------------------*/
+/*--------------------------------- SAUVEGARDES - NIVEAUX ---------------------------------*/
 
 #define RESS_SAU_MAX_JOUEURS                                    20
 #define RESS_SAU_FICHIER_JOUEURS                                "joueurs"
-
+#define RESS_NIVEAU_XML                                         "Niveau.xml"
 
 
 /*----------------------------------------- TEXTES ----------------------------------------------*/
@@ -130,7 +130,7 @@
 #define RESS_IMG_LARGEUR_EXPLOSION_2                            12288
 #define RESS_IMG_HAUTEUR_EXPLOSION_2                            256
 
-
+/* images du menu */
 #define RESS_IMG_SPLASH                                            32
 #define RESS_IMG_FICHIER_SPLASH                                    "splash0.jpg"
 #define RESS_IMG_LARGEUR_SPLASH                                    1366
@@ -265,7 +265,7 @@ typedef struct {
 /**
 * @fn void ressourceInit(Ressource *res)
 * @brief Initialise le module.
-* @param res[in, out] : doit être non NULL.
+* @param [in, out] res : doit être non NULL.
 */
 void ressourceInit(Ressource *res);
 

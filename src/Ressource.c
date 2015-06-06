@@ -261,14 +261,10 @@ static void creeNiveaux(Ressource *res)
     unsigned int i;
     assert(res != NULL);
 
-    res->niveaux = (Niveau *) malloc(RESS_NUM_NIVEAUX * sizeof(Niveau));
     assert(res->niveaux != NULL);
 
+    res->niveaux = niveauCreate();
     for (i = 0; i < RESS_NUM_NIVEAUX; i++) {
-#ifdef JEU_VERBOSE
-        printf("Creation niveau %d\n", i);
-#endif
-        niveauInit(&(res->niveaux[i]), i);
         niveauSetImageFond(&res->niveaux[i], RESS_IMG_FOND_NIVEAU_0 + i);
     }
 }
