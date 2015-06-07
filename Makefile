@@ -61,7 +61,7 @@ $(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(OBJ)
 
 # Creation de l'executable pour les tests de regression
 $(BIN_DIR)/$(MAIN_TEST): $(OBJ_DIR)/MainTest.o $(OBJ)
-	$(LD)  $^ $(CFLAGS) $(LIBS) -o $@
+	$(LD)  $^ $(LDFLAGS) -o $@
 
 # Creation des dependances
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c 
