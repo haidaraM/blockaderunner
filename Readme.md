@@ -17,6 +17,8 @@ Auteurs :
 - Yann Cortial
 - Mohamed El Mouctar HAIDARA <elmhaidara@gmail.com>
 
+[![Build Status](https://travis-ci.org/haidaraM/blockaderunner.svg?branch=master)](https://travis-ci.org/haidaraM/blockaderunner)
+
 ##I. Capture
 ![Démarrage](/capture/1.png)
 ![Accueil](/capture/2.png)

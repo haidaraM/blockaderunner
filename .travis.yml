@@ -9,5 +9,8 @@ before_script :
     - mkdir obj
     - mkdir bin
     - sudo mv /usr/include/libxml2/libxml ..
+    - ls /usr/include/libxml
+    - xml2-config --cflags
+    - xml2-config --libs
 script :
     - make test
