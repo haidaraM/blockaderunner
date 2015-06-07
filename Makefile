@@ -49,9 +49,10 @@ RM				= @rm
 install: $(BIN_DIR)/$(EXEC)
 
 run: install
-	$(BIN_DIR)/$(EXEC)
+	@LD_LIBRARY_PATH=./libs/fmod/lib && export LD_LIBRARY_PATH && $(BIN_DIR)/$(EXEC)
 
 test: $(BIN_DIR)/$(MAIN_TEST)
+	@LD_LIBRARY_PATH=./libs/fmod/lib && export LD_LIBRARY_PATH && \
 	valgrind --error-exitcode=1 --leak-check=full --suppressions=./valgrind.supp $(BIN_DIR)/$(MAIN_TEST)
 
 #Creation de l'executable principale
