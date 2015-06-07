@@ -4,12 +4,11 @@ before_install:
     - sudo apt-get update -q
     - sudo apt-get install valgrind
     - sudo apt-get install -y libsdl1.2-dev libsdl-image1.2-dev libsdl-ttf2.0-dev libsdl-gfx1.2-dev
-    - sudo apt-get install -y libxml2-dev
 before_script :
     - mkdir obj
     - mkdir bin
     - sudo mkdir /usr/include/libxml
-    - sudo cp /usr/include/libxml2/libxml ..
+    - sudo cp -r /usr/include/libxml2/libxml/* ../libxml
     - sudo ls /usr/include/libxml2
     - sudo ls /usr/include/libxml
     - xml2-config --cflags
