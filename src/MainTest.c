@@ -18,7 +18,7 @@ int main(int argc, char const *argv[])
     joueurTestDeRegression();
     vaisseauTestDeregression();
     elementSceneTestDeRegression();
-    sceneTestDeRegression();
+    /*sceneTestDeRegression();*/
  /*   ressourceTestDeRegression();*/
     /* niveauTestDeRegression();*/
 
