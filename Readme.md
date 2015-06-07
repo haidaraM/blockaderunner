@@ -60,13 +60,13 @@ Ouvrez le fichier Makefile_2 avec un éditeur de texte, dé-commenter éventuell
 	EXPLOSION = NO_REPETE_EXPLOSION 	#Permet de ne pas répéter les animations sur la scène
 	#EXPLOSION = REPETE_EXPLOSION 		#Permet de répéter les animations. Plus amusant.
 
-Ensuite pour lancer la compilation, tapez en étant dans le répertoire principale :   
-`$ make`  
+Ensuite pour lancer la compilation, tapez, en étant dans le répertoire principale :   
+`$ make install`
 En cas d'erreurs avec les bibliothèques externes, reportez vous aux dépendances.
 
 ##IV. Lancement du jeu
 En étant dans le répertoire principale, tapez la commande :  
-`$ bin/blockade`
+`$ make run`
 
 ##V. Format de fichier
 Chaque niveau est décrit par un fichier dans le repertoire data ainsi que les sauvegardes.

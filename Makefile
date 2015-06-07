@@ -34,22 +34,25 @@ OBJ			            = $(addprefix $(OBJ_DIR)/, $(INTERFACES_FILES:.h=.o))			# Gén
 ########## Compilateurs et editeurs de lien ##########
 CC 				= @gcc
 LD 				= @gcc
-
 LIBS 			= -lSDL -lSDL_image -lSDL_ttf -lfmodex64 -lSDL_gfx -lm `xml2-config --libs`
-INCLUDE		 	= -I./libs/fmod/inc
+INCLUDE		 	= -I./libs/fmod/inc `xml2-config --cflags`
 
 
 ########## Options de compilation ##########
 LDFLAGS  		= -L./libs/fmod/lib $(LIBS)
-CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2  `xml2-config --cflags` # pour optimiser
+CFLAGS 			= $(DEFINE) -Wall -pedantic -ansi -ggdb #-O2 # pour optimiser
 
 #Autres commandes et message
 ECHO			= @echo
 RM				= @rm
 
+install: $(BIN_DIR)/$(EXEC)
 
-all: $(BIN_DIR)/$(EXEC) $(BIN_DIR)/$(MAIN_TEST)
+run: install
+	$(BIN_DIR)/$(EXEC)
 
+test: $(BIN_DIR)/$(MAIN_TEST)
+	valgrind --error-exitcode=1 --leak-check=full --suppressions=./valgrind.supp $(BIN_DIR)/$(MAIN_TEST)
 
 #Creation de l'executable principale
 $(BIN_DIR)/$(EXEC): $(OBJ_DIR)/main.o $(OBJ)

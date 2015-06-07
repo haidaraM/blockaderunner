@@ -8,6 +8,6 @@ before_install:
 before_script :
     - mkdir obj
     - mkdir bin
+    - sudo mv /usr/include/libxml2/libxml ..
 script :
-    - make
-    - valgrind --leak-check=full --num-callers=50 --suppressions=./valgrind.supp bin/blockade
+    - make test

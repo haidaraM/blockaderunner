@@ -150,7 +150,7 @@ void joueurTestDeRegression()
     printf("------- Test de joueurGetVaisseau --------\n");
     v = joueurGetVaisseau(&j);
     assert(v != NULL);
-    assert(vaisseauGetPointEcran(v) == 5 && vaisseauGetPointStructure(v) == 100);
+    assert(vaisseauGetPointEcran(v) == JOUEUR_POINTECRAN && vaisseauGetPointStructure(v) == JOUEUR_POINTSTRUCTURE);
     printf("=========> Resultat : OK \n");
     printf("\n");
 
