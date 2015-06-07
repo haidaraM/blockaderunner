@@ -7,11 +7,6 @@ before_install:
 before_script :
     - mkdir obj
     - mkdir bin
-    - sudo mkdir /usr/include/libxml
-    - sudo cp -r /usr/include/libxml2/libxml/* ../libxml
-    - sudo ls /usr/include/libxml2
-    - sudo ls /usr/include/libxml
-    - xml2-config --cflags
-    - xml2-config --libs
+    - sudo mv /usr/include/libxml2/libxml /usr/include/
 script :
     - make test
