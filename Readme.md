@@ -91,6 +91,7 @@ Pour générer la documentation, installez doxygen si ce n'est pas le cas et tap
 `$ doxygen doc/blockade.doxy`
 
 ##VII. TODO
+* Migrer vers SDL2
 * Afficher un message après le chargement du niveau
 * Amélioration de la gestion de l'audio (ajout volume, options etc...)
 * Ajouter un temps d'invulnérabilité 
