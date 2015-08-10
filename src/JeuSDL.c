@@ -16,8 +16,7 @@
 
 /*------------- INTERFACE DU MODULE --------------------------- */
 
-void jeuInit(JeuSDL *jeu)
-{
+void jeuInit(JeuSDL *jeu) {
     srand((unsigned int) time(NULL));
 
 #ifdef JEU_VERBOSE
@@ -52,8 +51,7 @@ void jeuInit(JeuSDL *jeu)
 }
 
 
-void jeuBoucle(JeuSDL *jeu)
-{
+void jeuBoucle(JeuSDL *jeu) {
     int i;
     int choixMenu = -1;
     int toucheDetectee = -1;
@@ -455,8 +453,7 @@ void jeuBoucle(JeuSDL *jeu)
 }
 
 
-void jeuLibere(JeuSDL *jeu)
-{
+void jeuLibere(JeuSDL *jeu) {
     ressourceLibere(&jeu->ressource);
     menuLibere(&jeu->menu);
     entreeLibere(&jeu->entree);

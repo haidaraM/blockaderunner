@@ -150,6 +150,6 @@ void animationBlitFrame(Animateur *ateur, SDL_Surface *dest, SDL_Rect *pos);
 /**
  * @brief Test la fin d'une animation
  */
-int animationCheckFin( const Animateur *animateur);
+int animationCheckFin(const Animateur *animateur);
 
 #endif

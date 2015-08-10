@@ -18,8 +18,7 @@
 
 /* -----------Fonctions internes ----------------- */
 
-static SDL_Surface *chargeImage(char *nomFichier)
-{
+static SDL_Surface *chargeImage(char *nomFichier) {
     SDL_Surface *image = NULL;
     char file[64], dir[64];
 
@@ -39,8 +38,7 @@ static SDL_Surface *chargeImage(char *nomFichier)
     return image;
 }
 
-static void chargePolices(GraphiqueSDL *graphique)
-{
+static void chargePolices(GraphiqueSDL *graphique) {
     char file[64], dir[64];
     char *nomFic;
     assert(graphique != NULL);
@@ -66,8 +64,7 @@ static void chargePolices(GraphiqueSDL *graphique)
 /**
 * @brief Affecte à un pixel de la Surface une couleur.
 */
-static void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
-{
+static void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel) {
     int bpp = surface->format->BytesPerPixel;
     /* p est l'adresse du pixel ciblé: */
     Uint8 *p = (Uint8 *) surface->pixels + y * surface->pitch + x * bpp;
@@ -103,8 +100,7 @@ static void setSDLPixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 /**
 * @brief calcule la position de la nouvelle surface après rotation
 */
-static SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position)
-{
+static SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position) {
     double pi = M_PI; /* 3.1415926...*/
 
     angle %= 360; /* l'angle est ajusté entre 0 et 359° (360° correspondant à un tour complet)*/
@@ -137,8 +133,7 @@ static SDL_Rect positionPivot(int dimension_image, int angle, SDL_Rect position)
 * @param [in,out] monAnimation
 * @param [in] typeEx
 */
-static void graphiqueInitAnimation(const GraphiqueSDL *graphique, Animation *monAnimation, int typeEx)
-{
+static void graphiqueInitAnimation(const GraphiqueSDL *graphique, Animation *monAnimation, int typeEx) {
 
     int i;
     SDL_Rect decoupage;
@@ -201,21 +196,20 @@ static void graphiqueInitAnimation(const GraphiqueSDL *graphique, Animation *mon
 * @param [in,out] graphique
 * @param [in] scene
 */
-static void graphiqueAlloueAnimateur(GraphiqueSDL *graphique, const Scene *scene)
-{
+static void graphiqueAlloueAnimateur(GraphiqueSDL *graphique, const Scene *scene) {
     int i;
     for (i = 0; i < sceneGetNbExplosions(scene); i++) {
         PositionExplosion *e = (PositionExplosion *) tabDynGetElement(&scene->positionsExplosions, i);
         /* s'il n'a pas eté encore cree on le cree */
         if (e->ateur == NULL) {
             e->ateur = (Animateur *) malloc(sizeof(Animateur));
-            if (e->type == ELEMENT_TYPE_ECLAIREUR){
+            if (e->type == ELEMENT_TYPE_ECLAIREUR) {
                 animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_0]);
             }
-            else if (e->type == ELEMENT_TYPE_CROISEUR){
+            else if (e->type == ELEMENT_TYPE_CROISEUR) {
                 animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_2]);
             }
-            else if (e->type == ELEMENT_TYPE_CHASSEUR){
+            else if (e->type == ELEMENT_TYPE_CHASSEUR) {
                 animationInitAnimateur((Animateur *) e->ateur, graphique->lesExplosions[ANIMATION_EXPLOSION_1]);
             }
 
@@ -231,8 +225,7 @@ static void graphiqueAlloueAnimateur(GraphiqueSDL *graphique, const Scene *scene
 /* ---------------Interface du Module----------------------- */
 
 void graphiqueInit(GraphiqueSDL *graphique, const Ressource *ressource, Menu *menu, int largeur, int hauteur,
-                   char *titre, int mode)
-{
+                   char *titre, int mode) {
     SDL_Rect **modes;
     char **fichiersImages;
     int i;
@@ -459,8 +452,7 @@ void graphiqueInit(GraphiqueSDL *graphique, const Ressource *ressource, Menu *me
 
 }
 
-void graphiqueLibere(GraphiqueSDL *graphique)
-{
+void graphiqueLibere(GraphiqueSDL *graphique) {
     int i;
 
     /* Liberation des images */
@@ -502,31 +494,26 @@ void graphiqueLibere(GraphiqueSDL *graphique)
 
 }
 
-void graphiqueRaffraichit(GraphiqueSDL *graphique)
-{
+void graphiqueRaffraichit(GraphiqueSDL *graphique) {
     assert(SDL_Flip(graphique->surface) != -1);
 }
 
-void graphiqueSetTitre(GraphiqueSDL *graphique, char *titre)
-{
+void graphiqueSetTitre(GraphiqueSDL *graphique, char *titre) {
     if (titre != NULL) {
         SDL_WM_SetCaption(titre, NULL);
         graphique->titre = titre;
     }
 }
 
-void graphiqueEfface(GraphiqueSDL *graphique)
-{
+void graphiqueEfface(GraphiqueSDL *graphique) {
     SDL_FillRect(graphique->surface, &graphique->surface->clip_rect, graphique->couleurFond);
 }
 
-void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsigned char vert, unsigned char bleu)
-{
+void graphiqueSetCouleurFond(GraphiqueSDL *graphique, unsigned char rouge, unsigned char vert, unsigned char bleu) {
     graphique->couleurFond = SDL_MapRGB(graphique->surface->format, rouge, vert, bleu);
 }
 
-void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu)
-{
+void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu) {
     int i;
     SDL_Color couleurTexteMenu = {249, 255, 253};
     SDL_Color couleurTexteMenuSurvol = {249, 255, 53};
@@ -557,8 +544,7 @@ void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu)
     }
 }
 
-void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu)
-{
+void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
     int i, count;
     SDL_Rect offset;
     SDL_Surface *nomNouveauJoueur;
@@ -805,9 +791,8 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu)
 }
 
 
-void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
-{
-    int i, typeElement, pointS, pointE,amplitudeTremblement=0;
+void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene) {
+    int i, typeElement, pointS, pointE, amplitudeTremblement = 0;
     SDL_Rect srcBox, dstBox, vBox;
     ElementScene **acteurs = (ElementScene **) scene->acteurs.tab;
     ElementScene **tirs = (ElementScene **) scene->tirs.tab;
@@ -831,9 +816,9 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
     graphiqueAlloueAnimateur(graphique, scene);
 
     /* tremblement de l'écran */
-    if(sceneGetNbExplosions(scene)!=0){
+    if (sceneGetNbExplosions(scene) != 0) {
         amplitudeTremblement = sceneGetNbExplosions(scene);
-        graphiqueVibreEcran(graphique,scene->rectangleImageFond,scene->indexImageFond,amplitudeTremblement);
+        graphiqueVibreEcran(graphique, scene->rectangleImageFond, scene->indexImageFond, amplitudeTremblement);
     }
     /* affichage des explosions */
     for (i = 0; i < sceneGetNbExplosions(scene); i++) {
@@ -845,7 +830,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
         /* Passage à la frame suivante */
         animationMAJAnimateur(explosions[i]->ateur);
         /* explosion terminée */
-        if(animationCheckFin(explosions[i]->ateur)){
+        if (animationCheckFin(explosions[i]->ateur)) {
             explosions[i]->ateur = NULL;
         }
     }
@@ -973,8 +958,7 @@ void graphiqueAfficheScene(GraphiqueSDL *graphique, const Scene *scene)
     SDL_BlitSurface(graphique->elementsHUD[3], NULL, graphique->surface, &dstBox);
 }
 
-void graphiqueSetScore(GraphiqueSDL *graphique, int score)
-{
+void graphiqueSetScore(GraphiqueSDL *graphique, int score) {
     static SDL_Color couleurTexteScore = {249, 153, 86};
 
     /* conversion : entier -> chaîne de caractères */
@@ -1001,8 +985,7 @@ void graphiqueSetScore(GraphiqueSDL *graphique, int score)
     assert(graphique->elementsHUD[3] != NULL);
 }
 
-void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles)
-{
+void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles) {
     static SDL_Color couleurTexteMunitions = {0, 255, 253};
 
     char chaineMun[2];
@@ -1016,8 +999,7 @@ void graphiqueSetMunitions(GraphiqueSDL *graphique, int numMissiles)
     assert(graphique->elementsHUD[6] != NULL);
 }
 
-void graphiqueAfficheMort(GraphiqueSDL *graphique)
-{
+void graphiqueAfficheMort(GraphiqueSDL *graphique) {
     SDL_Rect positionText;
     positionText.x = graphique->largeur / 2 - graphique->elementsHUD[4]->w / 2;
     positionText.y = graphique->hauteur / 2 - graphique->elementsHUD[4]->h / 2;
@@ -1032,8 +1014,7 @@ void graphiqueAfficheMort(GraphiqueSDL *graphique)
 
 }
 
-void graphiqueAfficheFinNiveau(GraphiqueSDL *graphique)
-{
+void graphiqueAfficheFinNiveau(GraphiqueSDL *graphique) {
     SDL_Rect positionText;
     positionText.x = graphique->largeur / 2 - graphique->elementsHUD[5]->w / 2;
     positionText.y = graphique->hauteur / 2 - graphique->elementsHUD[5]->h / 2;
@@ -1047,8 +1028,7 @@ void graphiqueAfficheFinNiveau(GraphiqueSDL *graphique)
     SDL_Delay(3000);
 }
 
-void graphiqueAfficheVictoire(GraphiqueSDL *graphique)
-{
+void graphiqueAfficheVictoire(GraphiqueSDL *graphique) {
     SDL_Rect positionText;
     positionText.x = graphique->largeur / 2 - graphique->elementsHUD[7]->w / 2;
     positionText.y = graphique->hauteur / 2 - graphique->elementsHUD[7]->h / 2;
@@ -1063,10 +1043,10 @@ void graphiqueAfficheVictoire(GraphiqueSDL *graphique)
 }
 
 
-void graphiqueVibreEcran(GraphiqueSDL *graphique, Rectangle rectangle, int indexImage, int amplitude){
+void graphiqueVibreEcran(GraphiqueSDL *graphique, Rectangle rectangle, int indexImage, int amplitude) {
     SDL_Rect srcBox;
-    srcBox.x =  rectangle.x +randomInt(-amplitude,amplitude);
-    srcBox.y =  rectangle.y +randomInt(-amplitude,amplitude);
+    srcBox.x = rectangle.x + randomInt(-amplitude, amplitude);
+    srcBox.y = rectangle.y + randomInt(-amplitude, amplitude);
     srcBox.h = rectangle.hauteur;
     srcBox.w = rectangle.largeur;
     SDL_BlitSurface(graphique->images[indexImage], &srcBox, graphique->surface, NULL);

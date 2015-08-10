@@ -24,8 +24,7 @@
 * @brief Verifie s'il y'a eu une erreur lors de l'appel de certaines fonction et quitte le programme si necessaire
 * @param [in] resultat
 */
-static void audioVerifieErreur(const FMOD_RESULT resultat)
-{
+static void audioVerifieErreur(const FMOD_RESULT resultat) {
     if (resultat != FMOD_OK) {
         printf("Erreur FMOD (%d)! %s\n", resultat, FMOD_ErrorString(resultat));
         exit(-1);
@@ -40,8 +39,7 @@ static void audioVerifieErreur(const FMOD_RESULT resultat)
 * @param [in] nomFichier : correspond au nom du fichier, pas le chemin
 * @param [in] typeSon : 0 pour un son court et 1 pour un son long. Utile car fmod ne les charge pas de la meme manière
 */
-static FMOD_SOUND *chargeSon(const AudioFMOD *audio, char *nomFichier, int typeSon)
-{
+static FMOD_SOUND *chargeSon(const AudioFMOD *audio, char *nomFichier, int typeSon) {
     FMOD_SOUND *son = NULL;
     FMOD_RESULT resultat;
     char file[64], dir[64];
@@ -75,8 +73,7 @@ static FMOD_SOUND *chargeSon(const AudioFMOD *audio, char *nomFichier, int typeS
 * @param [in] index
 * @return Pointeur vers un canal
 */
-static FMOD_CHANNEL *audioGetCanal(const AudioFMOD *audio, int index)
-{
+static FMOD_CHANNEL *audioGetCanal(const AudioFMOD *audio, int index) {
     FMOD_CHANNEL *channel;
     FMOD_RESULT resultat;
     /* On verifie que l'index est bien correcte */
@@ -94,8 +91,7 @@ static FMOD_CHANNEL *audioGetCanal(const AudioFMOD *audio, int index)
 * @param [in] audio
 * @return Renvoie vrai si le son est en lecture, faux sinon
 */
-static FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index)
-{
+static FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index) {
     FMOD_BOOL etat;
     FMOD_CHANNEL *canal;
     /* on recupere le canal sur lequel le son est sensé etre jouer */
@@ -108,8 +104,7 @@ static FMOD_BOOL audioGetStatutSon(const AudioFMOD *audio, int index)
 
 /* ---------------- Interface du module ---------------------- */
 
-void audioInit(AudioFMOD *audio, const Ressource *res)
-{
+void audioInit(AudioFMOD *audio, const Ressource *res) {
 
     FMOD_RESULT resultat;
     int i, nbSons;
@@ -147,8 +142,7 @@ void audioInit(AudioFMOD *audio, const Ressource *res)
 	#endif
 }
 
-void audioLibere(AudioFMOD *audio)
-{
+void audioLibere(AudioFMOD *audio) {
     int i;
     FMOD_RESULT resultat;
     assert(audio != NULL);
@@ -167,8 +161,7 @@ void audioLibere(AudioFMOD *audio)
     audioVerifieErreur(resultat);
 }
 
-void audioJoueSon(const AudioFMOD *audio, int index)
-{
+void audioJoueSon(const AudioFMOD *audio, int index) {
     FMOD_RESULT resultat;
     FMOD_BOOL etat;
     assert(audio != NULL);
@@ -192,8 +185,7 @@ void audioJoueSon(const AudioFMOD *audio, int index)
     }
 }
 
-void audioStopSon(const AudioFMOD *audio, int index)
-{
+void audioStopSon(const AudioFMOD *audio, int index) {
     FMOD_CHANNEL *canal;
     /* recuperation de l'etat du son */
     FMOD_BOOL etat = audioGetStatutSon(audio, index);
@@ -205,8 +197,7 @@ void audioStopSon(const AudioFMOD *audio, int index)
 
 }
 
-void audioPauseSon(const AudioFMOD *audio, int index)
-{
+void audioPauseSon(const AudioFMOD *audio, int index) {
     FMOD_CHANNEL *canal;
 
     canal = audioGetCanal(audio, index);
@@ -214,8 +205,7 @@ void audioPauseSon(const AudioFMOD *audio, int index)
     FMOD_Channel_SetPaused(canal, 1);
 }
 
-void audioReprendSon(const AudioFMOD *audio, int index)
-{
+void audioReprendSon(const AudioFMOD *audio, int index) {
     FMOD_CHANNEL *canal;
     FMOD_BOOL etat;
     canal = audioGetCanal(audio, index);
@@ -227,8 +217,7 @@ void audioReprendSon(const AudioFMOD *audio, int index)
 }
 
 
-void audioJoueScene(const AudioFMOD *audio, const Scene *scene)
-{
+void audioJoueScene(const AudioFMOD *audio, const Scene *scene) {
     assert(audio != NULL);
     assert(scene != NULL);
 

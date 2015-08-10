@@ -11,8 +11,7 @@
 #include "EntreeSDL.h"
 
 
-void entreeInit(EntreeSDL *entree)
-{
+void entreeInit(EntreeSDL *entree) {
     int i;
     assert(entree != NULL);
 
@@ -47,15 +46,13 @@ void entreeInit(EntreeSDL *entree)
 #endif
 }
 
-void entreeLibere(EntreeSDL *entree)
-{
+void entreeLibere(EntreeSDL *entree) {
     assert(entree != NULL);
     free(entree->clavier);
 }
 
 
-void entreeSonde(EntreeSDL *entree)
-{
+void entreeSonde(EntreeSDL *entree) {
     SDL_Event event;
     assert(entree != NULL);
     entree->toucheRelachee = -1;
@@ -107,18 +104,15 @@ void entreeSonde(EntreeSDL *entree)
 }
 
 
-unsigned char entreeFermetureJeu(const EntreeSDL *entree)
-{
+unsigned char entreeFermetureJeu(const EntreeSDL *entree) {
     return entree->fermetureJeu;
 }
 
-unsigned char entreeToucheEnfoncee(const EntreeSDL *entree, SDLKey touche)
-{
+unsigned char entreeToucheEnfoncee(const EntreeSDL *entree, SDLKey touche) {
     return entree->clavier[touche];
 }
 
-char entreeGetAlphaNum(const EntreeSDL *entree)
-{
+char entreeGetAlphaNum(const EntreeSDL *entree) {
     if (entree->toucheRelachee >= SDLK_a && entree->toucheRelachee <= SDLK_z)
         return 'a' + (entree->toucheRelachee - SDLK_a);
     else if (entree->toucheRelachee >= SDLK_KP0 && entree->toucheRelachee <= SDLK_KP9)
@@ -127,23 +121,19 @@ char entreeGetAlphaNum(const EntreeSDL *entree)
         return 0;
 }
 
-unsigned char entreeBoutonSourisGauche(const EntreeSDL *entree)
-{
+unsigned char entreeBoutonSourisGauche(const EntreeSDL *entree) {
     return entree->boutonSourisGauche;
 }
 
-unsigned char entreeBoutonSourisDroit(const EntreeSDL *entree)
-{
+unsigned char entreeBoutonSourisDroit(const EntreeSDL *entree) {
     return entree->boutonSourisDroit;
 }
 
-int entreeGetSourisX(const EntreeSDL *entree)
-{
+int entreeGetSourisX(const EntreeSDL *entree) {
     return entree->sourisX;
 }
 
-int entreeGetSourisY(const EntreeSDL *entree)
-{
+int entreeGetSourisY(const EntreeSDL *entree) {
     return entree->sourisY;
 }
 

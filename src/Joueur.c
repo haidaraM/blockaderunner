@@ -19,15 +19,13 @@
 * @param [in] joueur : initialisé
 * @return Pointeur sur vaisseau
 */
-static Vaisseau *joueurGetVaisseau(const Joueur *joueur)
-{
+static Vaisseau *joueurGetVaisseau(const Joueur *joueur) {
     assert(joueur != NULL);
     return joueur->vaisseau;
 }
 
 
-void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
-{
+void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score) {
     assert(joueur != NULL && nom != NULL);
 
     strcpy(joueur->nom, nom);
@@ -39,21 +37,18 @@ void joueurInit(Joueur *joueur, char *nom, unsigned int progression, int score)
     vaisseauInit(joueur->vaisseau, VAISSEAU_JOUEUR_TYPE);
 }
 
-void joueurLibere(Joueur *joueur)
-{
+void joueurLibere(Joueur *joueur) {
     vaisseauLibere(joueur->vaisseau);
     free(joueur->vaisseau);
     joueur->vaisseau = NULL;
 }
 
-unsigned int joueurGetProgression(const Joueur *joueur)
-{
+unsigned int joueurGetProgression(const Joueur *joueur) {
     assert(joueur != NULL);
     return joueur->progression;
 }
 
-void joueurSetProgression(Joueur *joueur)
-{
+void joueurSetProgression(Joueur *joueur) {
     assert(joueur != NULL);
     if (joueur->progression < 7) {
         joueur->progression++;
@@ -61,34 +56,29 @@ void joueurSetProgression(Joueur *joueur)
     }
 }
 
-int joueurGetScore(const Joueur *joueur)
-{
+int joueurGetScore(const Joueur *joueur) {
     assert(joueur != NULL);
     return joueur->score;
 }
 
-void joueurSetScore(Joueur *joueur, int score)
-{
+void joueurSetScore(Joueur *joueur, int score) {
     assert(joueur != NULL);
     joueur->score = score;
 }
 
 
-int joueurGetNumArmeSelectionne(const Joueur *joueur)
-{
+int joueurGetNumArmeSelectionne(const Joueur *joueur) {
     return joueurGetVaisseau(joueur)->numArmeSelectionne;
 }
 
-void joueurSetArmeSelectionne(Joueur *joueur, int numArme)
-{
+void joueurSetArmeSelectionne(Joueur *joueur, int numArme) {
     Vaisseau *v;
     assert(joueur != NULL);
     v = joueurGetVaisseau(joueur);
     v->numArmeSelectionne = numArme;
 }
 
-void joueurAjouteMissiles(Joueur *joueur, int numMissiles)
-{
+void joueurAjouteMissiles(Joueur *joueur, int numMissiles) {
     Vaisseau *v;
     assert(joueur != NULL);
     v = joueurGetVaisseau(joueur);
@@ -97,8 +87,7 @@ void joueurAjouteMissiles(Joueur *joueur, int numMissiles)
         v->armes[ARME_MISSILE].munitions = JOUEUR_MAX_MISSILES;
 }
 
-Joueur *joueurCopieJoueur(Joueur *j)
-{
+Joueur *joueurCopieJoueur(Joueur *j) {
     Joueur *nouveauJoueur = NULL;
     assert(j != NULL);
     nouveauJoueur = (Joueur *) malloc(sizeof(Joueur));
@@ -108,8 +97,7 @@ Joueur *joueurCopieJoueur(Joueur *j)
 
 }
 
-void joueurTestDeRegression()
-{
+void joueurTestDeRegression() {
     Joueur j;
     Vaisseau *v = NULL;
     char nom[] = "Superman";

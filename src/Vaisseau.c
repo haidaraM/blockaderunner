@@ -13,8 +13,7 @@
 #include "Outils.h"
 
 
-void vaisseauInit(Vaisseau *vaisseau, int type)
-{
+void vaisseauInit(Vaisseau *vaisseau, int type) {
     int i;
     assert(vaisseau != NULL);
     switch (type) {
@@ -72,34 +71,29 @@ void vaisseauInit(Vaisseau *vaisseau, int type)
     }
 }
 
-void vaisseauLibere(Vaisseau *vaisseau)
-{
+void vaisseauLibere(Vaisseau *vaisseau) {
     assert(vaisseau != NULL);
     free(vaisseau->armes);
     vaisseau->armes = NULL;
 }
 
 
-int vaisseauGetNbArmes(const Vaisseau *vaisseau)
-{
+int vaisseauGetNbArmes(const Vaisseau *vaisseau) {
     assert(vaisseau != NULL);
     return vaisseau->nbArmes;
 }
 
-int vaisseauGetPointEcran(const Vaisseau *vaisseau)
-{
+int vaisseauGetPointEcran(const Vaisseau *vaisseau) {
     assert(vaisseau != NULL);
     return vaisseau->pointEcran;
 }
 
-int vaisseauGetPointStructure(const Vaisseau *vaisseau)
-{
+int vaisseauGetPointStructure(const Vaisseau *vaisseau) {
     assert(vaisseau != NULL);
     return vaisseau->pointStructure;
 }
 
-void vaisseauSetDegats(Vaisseau *vaisseau, int typeDegats)
-{
+void vaisseauSetDegats(Vaisseau *vaisseau, int typeDegats) {
     assert(vaisseau != NULL);
 
     switch (typeDegats) {
@@ -126,8 +120,7 @@ void vaisseauSetDegats(Vaisseau *vaisseau, int typeDegats)
 
 }
 
-void vaisseauArmeInit(Arme *a, int type)
-{
+void vaisseauArmeInit(Arme *a, int type) {
     assert(a != NULL);
     switch (type) {
         case ARME_LASER:
@@ -150,32 +143,27 @@ void vaisseauArmeInit(Arme *a, int type)
     }
 }
 
-Arme *vaisseauGetArmeSelectionnee(const Vaisseau *vaisseau)
-{
+Arme *vaisseauGetArmeSelectionnee(const Vaisseau *vaisseau) {
     assert(vaisseau != NULL);
     return &vaisseau->armes[vaisseau->numArmeSelectionne];
 }
 
-int vaisseauGetDegatEcranArme(const Vaisseau *vaisseau)
-{
+int vaisseauGetDegatEcranArme(const Vaisseau *vaisseau) {
     assert(vaisseau != NULL);
     return vaisseauGetArmeSelectionnee(vaisseau)->degatEcran;
 }
 
-int vaisseauGetDegatStructureArme(const Vaisseau *vaisseau)
-{
+int vaisseauGetDegatStructureArme(const Vaisseau *vaisseau) {
     assert(vaisseau != NULL);
     return vaisseauGetArmeSelectionnee(vaisseau)->degatStructure;
 }
 
-int vaisseauGetMunitionsArme(const Vaisseau *vaisseau)
-{
+int vaisseauGetMunitionsArme(const Vaisseau *vaisseau) {
     assert(vaisseau != NULL);
     return vaisseauGetArmeSelectionnee(vaisseau)->munitions;
 }
 
-void vaisseauMajMunitions(Vaisseau *vaisseau)
-{
+void vaisseauMajMunitions(Vaisseau *vaisseau) {
     int nouveau;
     assert(vaisseau != NULL);
     nouveau = vaisseauGetMunitionsArme(vaisseau);
@@ -184,8 +172,7 @@ void vaisseauMajMunitions(Vaisseau *vaisseau)
 }
 
 
-void vaisseauTestDeregression()
-{
+void vaisseauTestDeregression() {
     Vaisseau v;
     printf("Test de regression du vaisseau \n");
 

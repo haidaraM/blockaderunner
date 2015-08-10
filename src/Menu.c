@@ -14,8 +14,7 @@
 
 /* ------------	Fonctions Internes --------------------------------- */
 
-static void creeListeJoueurs(Menu *menu)
-{
+static void creeListeJoueurs(Menu *menu) {
     int i;
     int index, numJoueurs;
     Joueur **joueurs = NULL;
@@ -46,8 +45,7 @@ static void creeListeJoueurs(Menu *menu)
 
 /* -----------------	Interface du Module -------------------------- */
 
-void menuInit(Menu *menu, Ressource *res)
-{
+void menuInit(Menu *menu, Ressource *res) {
     int index, i;
     char niv[32], indexNiv[16];
 
@@ -224,8 +222,7 @@ void menuInit(Menu *menu, Ressource *res)
 	#endif
 }
 
-void menuLibere(Menu *menu)
-{
+void menuLibere(Menu *menu) {
     int i;
 
     for (i = MENU_NIVEAU; i < MENU_NUM_BASIC_ELEMENTS; i++)
@@ -241,8 +238,7 @@ void menuLibere(Menu *menu)
 
 void menuCommencerNiveau(void *m) { }
 
-void menuIntro(Menu *menu, float tempsBoucleEcoule)
-{
+void menuIntro(Menu *menu, float tempsBoucleEcoule) {
     if (menu->etat != MENU_ETAT_INTRO)
         return;
 
@@ -253,8 +249,7 @@ void menuIntro(Menu *menu, float tempsBoucleEcoule)
     }
 }
 
-void menuRetour(void *m)
-{
+void menuRetour(void *m) {
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
 
@@ -282,8 +277,7 @@ void menuRetour(void *m)
     }
 }
 
-void menuQuitter(void *m)
-{
+void menuQuitter(void *m) {
     int i;
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
@@ -294,8 +288,7 @@ void menuQuitter(void *m)
     menu->etat = MENU_ETAT_QUITTER;
 }
 
-void menuChoixJoueur(void *m)
-{
+void menuChoixJoueur(void *m) {
     int i;
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
@@ -312,8 +305,7 @@ void menuChoixJoueur(void *m)
         menu->elements[i].visible = 1;
 }
 
-void menuNouveauJoueur(void *m)
-{
+void menuNouveauJoueur(void *m) {
     int i, numJoueurs;
     Menu *menu = (Menu *) m;
 
@@ -334,8 +326,7 @@ void menuNouveauJoueur(void *m)
     menu->elements[MENU_ENTRER_NOM].visible = 1;
 }
 
-void menuPrincipal(void *m)
-{
+void menuPrincipal(void *m) {
     int i;
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
@@ -352,8 +343,7 @@ void menuPrincipal(void *m)
     menu->elements[MENU_QUITTER].visible = 1;
 }
 
-void menuCommandes(void *m)
-{
+void menuCommandes(void *m) {
     int i;
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
@@ -368,13 +358,11 @@ void menuCommandes(void *m)
     menu->elements[MENU_RETOUR].visible = 1;
 }
 
-void menuChangerJoueur(void *m)
-{
+void menuChangerJoueur(void *m) {
     menuChoixJoueur(m);
 }
 
-void menuInfo(void *m)
-{
+void menuInfo(void *m) {
     int i;
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
@@ -386,8 +374,7 @@ void menuInfo(void *m)
     menu->elements[MENU_RETOUR].visible = 1;
 }
 
-void menuScores(void *m)
-{
+void menuScores(void *m) {
     int i;
     Menu *menu = (Menu *) m;
     Joueur **joueursClasses = NULL;
@@ -414,8 +401,7 @@ void menuScores(void *m)
     menu->elements[MENU_RETOUR].visible = 1;
 }
 
-void menuJouer(void *m)
-{
+void menuJouer(void *m) {
     int i;
     int progression;
     Menu *menu = (Menu *) m;
@@ -434,8 +420,7 @@ void menuJouer(void *m)
         menu->elements[i].visible = 1;
 }
 
-void menuPause(Menu *m)
-{
+void menuPause(Menu *m) {
     int i;
     Menu *menu = m;
 
@@ -456,8 +441,7 @@ void menuPause(Menu *m)
 
 }
 
-void menuSelectionneJoueur(Menu *menu, int indexElement)
-{
+void menuSelectionneJoueur(Menu *menu, int indexElement) {
     int index;
     int numJoueurs;
     assert(menu != NULL);
@@ -474,8 +458,7 @@ void menuSelectionneJoueur(Menu *menu, int indexElement)
     }
 }
 
-void menuSetCaractere(Menu *menu, char alphaNum)
-{
+void menuSetCaractere(Menu *menu, char alphaNum) {
     char s[2];
     assert(menu != NULL);
 
@@ -488,8 +471,7 @@ void menuSetCaractere(Menu *menu, char alphaNum)
     strcat(menu->nomNouveauJoueur, s);
 }
 
-void menuEffaceCaractere(Menu *menu)
-{
+void menuEffaceCaractere(Menu *menu) {
     assert(menu != NULL);
 
     if (strlen(menu->nomNouveauJoueur) == 0)
@@ -498,8 +480,7 @@ void menuEffaceCaractere(Menu *menu)
     menu->nomNouveauJoueur[strlen(menu->nomNouveauJoueur) - 1] = '\0';
 }
 
-void menuSetFinLectureClavier(Menu *menu)
-{
+void menuSetFinLectureClavier(Menu *menu) {
     assert(menu != NULL);
 
     if (strlen(menu->nomNouveauJoueur) != 0) {
@@ -515,8 +496,7 @@ void menuSetFinLectureClavier(Menu *menu)
     menuPrincipal(menu);
 }
 
-Joueur *menuGetJoueurChoisi(const Menu *menu)
-{
+Joueur *menuGetJoueurChoisi(const Menu *menu) {
     assert(menu != NULL);
     if (menu->joueurCourant == -1)
         return NULL;
@@ -524,8 +504,7 @@ Joueur *menuGetJoueurChoisi(const Menu *menu)
     return menu->ressource->joueurs[menu->joueurCourant];
 }
 
-void menuSelectionneNiveau(Menu *menu, int indexElement)
-{
+void menuSelectionneNiveau(Menu *menu, int indexElement) {
     assert(menu != NULL);
     if (indexElement == MENU_RETOUR) {
         menu->niveauChoisi = -1;
@@ -535,28 +514,24 @@ void menuSelectionneNiveau(Menu *menu, int indexElement)
     menu->niveauChoisi = indexElement - MENU_NIVEAU;
 }
 
-int menuGetNiveauChoisi(const Menu *menu)
-{
+int menuGetNiveauChoisi(const Menu *menu) {
     assert(menu != NULL);
     return menu->niveauChoisi;
 }
 
-void menuReprendre(void *m)
-{
+void menuReprendre(void *m) {
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
     menu->etat = MENU_ETAT_REPRENDRE;
 }
 
-void menuReJouer(void *m)
-{
+void menuReJouer(void *m) {
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
     menu->etat = MENU_ETAT_REJOUER;
 }
 
-void menuRetourPrincipal(void *m)
-{
+void menuRetourPrincipal(void *m) {
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
     menu->etat = MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL;

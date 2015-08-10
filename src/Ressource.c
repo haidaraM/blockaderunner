@@ -13,8 +13,7 @@
 #include "Ressource.h"
 
 
-static void creeListeImages(Ressource *res)
-{
+static void creeListeImages(Ressource *res) {
     int i;
 
     /* initialisation des tableaux */
@@ -160,8 +159,7 @@ static void creeListeImages(Ressource *res)
 
 }
 
-static void creeListeSons(Ressource *res)
-{
+static void creeListeSons(Ressource *res) {
     int i, nbSons;
     /* Initialisation des tableaux */
     nbSons = RESS_NUM_SONS_COURTS + RESS_NUM_SONS_LONGS;
@@ -206,8 +204,7 @@ void creeListePolices(Ressource *res) { }
 * @brief Charge à partir du fichier de sauvegarde la liste des joueurs
 * @param [in,out] ressource
 */
-static void chargeJoueurs(Ressource *res)
-{
+static void chargeJoueurs(Ressource *res) {
     FILE *fic;
 
     int i;
@@ -256,8 +253,7 @@ static void chargeJoueurs(Ressource *res)
     fclose(fic);
 }
 
-static void creeNiveaux(Ressource *res)
-{
+static void creeNiveaux(Ressource *res) {
     unsigned int i;
     assert(res != NULL);
     res->niveaux = niveauCreate();
@@ -270,8 +266,7 @@ static void creeNiveaux(Ressource *res)
 
 /*-------------------------------INTERFACE DU MODULE---------------------------*/
 
-void ressourceInit(Ressource *res)
-{
+void ressourceInit(Ressource *res) {
     int i;
     assert(res != NULL);
 
@@ -316,8 +311,7 @@ void ressourceInit(Ressource *res)
 #endif
 }
 
-void ressourceLibere(Ressource *res)
-{
+void ressourceLibere(Ressource *res) {
     int i;
     /* Liberation des joueurs */
     for (i = 0; i < RESS_SAU_MAX_JOUEURS; i++)
@@ -347,26 +341,22 @@ void ressourceLibere(Ressource *res)
     res->sons = NULL;
 }
 
-int ressourceGetNumJoueurs(const Ressource *res)
-{
+int ressourceGetNumJoueurs(const Ressource *res) {
     assert(res != NULL);
     return res->numJoueurs;
 }
 
-Joueur **ressourceGetJoueurs(const Ressource *res)
-{
+Joueur **ressourceGetJoueurs(const Ressource *res) {
     assert(res != NULL);
     return res->joueurs;
 }
 
-Joueur **ressourceGetMeilleursJoueurs(const Ressource *res)
-{
+Joueur **ressourceGetMeilleursJoueurs(const Ressource *res) {
     assert(res != NULL);
     return res->meilleursJoueurs;
 }
 
-void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR + 1], int indexJoueur)
-{
+void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR + 1], int indexJoueur) {
     assert(res != NULL && indexJoueur >= 0);
 
     if (indexJoueur >= res->numJoueurs) {
@@ -381,8 +371,7 @@ void ressourceAjouteJoueur(Ressource *res, char nomJoueur[JOUEUR_NOM_MAXCHAR + 1
     }
 }
 
-void ressourceSauveJoueurs(const Ressource *res)
-{
+void ressourceSauveJoueurs(const Ressource *res) {
     FILE *fic;
 
     int i;
@@ -420,8 +409,7 @@ void ressourceSauveJoueurs(const Ressource *res)
     fclose(fic);
 }
 
-void ressourceTrieJoueurs(const Ressource *res)
-{
+void ressourceTrieJoueurs(const Ressource *res) {
     int i, j, count, fini, indmax, nbJoueurs;
     Joueur **joueurs = NULL, *joueurMax;
     assert(res != NULL && res->joueurs != NULL);
@@ -463,27 +451,23 @@ void ressourceTrieJoueurs(const Ressource *res)
     free(joueurs);
 }
 
-Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau)
-{
+Niveau ressourceGetNiveau(const Ressource *res, int numeroNiveau) {
     assert(res != NULL && numeroNiveau >= 0 && numeroNiveau < RESS_NUM_NIVEAUX);
 
     return res->niveaux[numeroNiveau];
 }
 
-int ressourceGetLargeurImage(const Ressource *res, int nomRessource)
-{
+int ressourceGetLargeurImage(const Ressource *res, int nomRessource) {
     assert(nomRessource < RESS_NUM_IMAGES);
     return res->dimensionImages[nomRessource].largeur;
 }
 
-int ressourceGetHauteurImage(const Ressource *res, int nomRessource)
-{
+int ressourceGetHauteurImage(const Ressource *res, int nomRessource) {
     assert(nomRessource < RESS_NUM_IMAGES);
     return res->dimensionImages[nomRessource].hauteur;
 }
 
-void ressourceTestDeRegression()
-{
+void ressourceTestDeRegression() {
     Ressource res, tabRes[10];
     int i;
     Joueur **joueurs = NULL;

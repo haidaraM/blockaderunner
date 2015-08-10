@@ -20,17 +20,16 @@
 * Tous droits reservés
 *
 */
-int main ()
-{
-	JeuSDL jeu;
+int main() {
+    JeuSDL jeu;
 
-	jeuInit( &jeu );
-	jeuBoucle( &jeu );
-    jeuLibere( &jeu );
+    jeuInit(&jeu);
+    jeuBoucle(&jeu);
+    jeuLibere(&jeu);
 
-	#ifdef JEU_VERBOSE
+#ifdef JEU_VERBOSE
 	printf("Blockade - status de fin d'execution : OK.\n");
 	#endif
 
-	return 0;
+    return 0;
 }

@@ -19,8 +19,7 @@
 * @param [in] type
 */
 
-static void elementSetType(ElementScene *element, int type)
-{
+static void elementSetType(ElementScene *element, int type) {
     assert(element != NULL);
     element->type = type;
     switch (type) {
@@ -45,8 +44,7 @@ static void elementSetType(ElementScene *element, int type)
 /* -------------------- Interface du module ----------------------- */
 
 void elementInit(ElementScene *element, int type, int indexImage, int largeur, int hauteur, int largeurEcran,
-                 int hauteurEcran)
-{
+                 int hauteurEcran) {
     assert(element != NULL);
 
     element->x = 0;
@@ -64,8 +62,7 @@ void elementInit(ElementScene *element, int type, int indexImage, int largeur, i
 
 }
 
-void elementLibere(ElementScene *element)
-{
+void elementLibere(ElementScene *element) {
     int type;
     assert(element != NULL);
     type = elementGetType(element);
@@ -76,32 +73,27 @@ void elementLibere(ElementScene *element)
 }
 
 
-int elementVisible(const ElementScene *element)
-{
+int elementVisible(const ElementScene *element) {
     assert(element != NULL);
     return element->visible;
 }
 
-int elementGetX(const ElementScene *element)
-{
+int elementGetX(const ElementScene *element) {
     assert(element != NULL);
     return element->x;
 }
 
-int elementGetY(const ElementScene *element)
-{
+int elementGetY(const ElementScene *element) {
     assert(element != NULL);
     return element->y;
 }
 
-int elementGetType(const ElementScene *element)
-{
+int elementGetType(const ElementScene *element) {
     assert(element != NULL);
     return element->type;
 }
 
-void elementSetPosition(ElementScene *element, int x, int y)
-{
+void elementSetPosition(ElementScene *element, int x, int y) {
     assert(element != NULL);
     element->x = x;
     element->y = y;
@@ -112,21 +104,18 @@ void elementSetPosition(ElementScene *element, int x, int y)
     else element->visible = 1;
 }
 
-void elementSetDirection(ElementScene *element, float vx, float vy)
-{
+void elementSetDirection(ElementScene *element, float vx, float vy) {
     assert(element != NULL);
     element->vecX = vx;
     element->vecY = vy;
 }
 
-int elementGetImageIndex(const ElementScene *element)
-{
+int elementGetImageIndex(const ElementScene *element) {
     assert(element != NULL);
     return element->indexImage;
 }
 
-int elementTestDeCollision(const ElementScene *e1, const ElementScene *e2)
-{
+int elementTestDeCollision(const ElementScene *e1, const ElementScene *e2) {
     int x1, x2, y1, y2;
     x1 = elementGetX(e1);
     x2 = elementGetX(e2);
@@ -144,8 +133,7 @@ int elementTestDeCollision(const ElementScene *e1, const ElementScene *e2)
         return 1;
 }
 
-void elementSceneTestDeRegression()
-{
+void elementSceneTestDeRegression() {
     ElementScene eS, eS2;
     printf("Test de regression du module elementScene \n");
 

@@ -16,15 +16,13 @@
 * @param [in,out] image
 * @param [in] delai
 */
-static void animationInitFrame(Frame *frame, SDL_Surface *image, float delai)
-{
+static void animationInitFrame(Frame *frame, SDL_Surface *image, float delai) {
     assert(frame != NULL);
     frame->image = image;
     frame->delai = delai;
 }
 
-static void animationAfficheFrame(Frame *frame, SDL_Surface *dest, SDL_Rect *pos)
-{
+static void animationAfficheFrame(Frame *frame, SDL_Surface *dest, SDL_Rect *pos) {
     assert(frame != NULL);
     SDL_BlitSurface(frame->image, &frame->decoupage, dest, pos);
 }
@@ -34,8 +32,7 @@ static void animationAfficheFrame(Frame *frame, SDL_Surface *dest, SDL_Rect *pos
 * @brief Passe à la frame suivant
 * @param [in,out] ateur : initialisé
 */
-static void animationNextFrame(Animateur *ateur)
-{
+static void animationNextFrame(Animateur *ateur) {
     ateur->frameCourante++;
     /* Retour à la frame 0 si nous sommes à la dernière */
     if (ateur->frameCourante == ateur->anim->nbFrames) {
@@ -49,28 +46,24 @@ static void animationNextFrame(Animateur *ateur)
 
 /* *************************************************************************************** */
 
-void animationInitAnimation(Animation *anim, int nb)
-{
+void animationInitAnimation(Animation *anim, int nb) {
     assert(anim != NULL);
     anim->frames = (Frame *) malloc(sizeof(Frame) * nb);
     anim->nbFrames = nb;
 }
 
-void animationSetFrame(Animation *anim, int pos, SDL_Surface *surface, float delai)
-{
+void animationSetFrame(Animation *anim, int pos, SDL_Surface *surface, float delai) {
     assert(anim != NULL);
     animationInitFrame(&anim->frames[pos], surface, delai);
 }
 
-void animationLibereAnimation(Animation *anim)
-{
+void animationLibereAnimation(Animation *anim) {
     assert(anim != NULL);
     free(anim->frames);
 }
 
 /* ********************************************************************************** */
-void animationInitAnimateur(Animateur *ateur, Animation *anim)
-{
+void animationInitAnimateur(Animateur *ateur, Animation *anim) {
     assert(ateur != NULL && anim != NULL);
     ateur->anim = anim;
     ateur->frameCourante = 0;
@@ -78,21 +71,18 @@ void animationInitAnimateur(Animateur *ateur, Animation *anim)
     ateur->statut = STOP;
 }
 
-void animationJoueAnimation(Animateur *ateur)
-{
+void animationJoueAnimation(Animateur *ateur) {
     assert(ateur != NULL);
     ateur->statut = PLAY;
 }
 
-void animationStopAnimation(Animateur *ateur)
-{
+void animationStopAnimation(Animateur *ateur) {
     assert(ateur != NULL);
     ateur->statut = STOP;
 }
 
 
-void animationMAJAnimateur(Animateur *ateur)
-{
+void animationMAJAnimateur(Animateur *ateur) {
     Frame *frame;
     /* ne mettre à jour l'animation que si elle est jouée */
     if (ateur->statut == STOP)
@@ -107,13 +97,11 @@ void animationMAJAnimateur(Animateur *ateur)
         animationNextFrame(ateur);
 }
 
-void animationBlitFrame(Animateur *ateur, SDL_Surface *dest, SDL_Rect *pos)
-{
+void animationBlitFrame(Animateur *ateur, SDL_Surface *dest, SDL_Rect *pos) {
     if (ateur->statut == PLAY)
         animationAfficheFrame(&ateur->anim->frames[ateur->frameCourante], dest, pos);
 }
 
-int animationCheckFin(const Animateur *animateur)
-{
+int animationCheckFin(const Animateur *animateur) {
     return animateur->statut == STOP;
 }

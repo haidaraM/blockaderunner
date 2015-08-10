@@ -10,30 +10,25 @@
 
 #include "Outils.h"
 
-float getTempsSecondes()
-{
+float getTempsSecondes() {
     return (float) clock() / (float) CLOCKS_PER_SEC;
 }
 
-int randomInt(int borneInf, int borneSup)
-{
+int randomInt(int borneInf, int borneSup) {
     return rand() % (borneSup - borneInf) + borneInf;
 }
 
-float randomFloat()
-{
+float randomFloat() {
     return (rand() % 1048576) / 1048576.0f;
 }
 
-unsigned char rectangleContient(const Rectangle *rect, int x, int y)
-{
+unsigned char rectangleContient(const Rectangle *rect, int x, int y) {
     if (x >= rect->x && y >= rect->y && x <= (rect->x + rect->largeur) && y <= (rect->y + rect->hauteur))
         return 1;
     return 0;
 }
 
-void tabDynInit(TabDyn *t)
-{
+void tabDynInit(TabDyn *t) {
     assert(t != NULL);
 
     t->tab = (void **) malloc(1 * sizeof(void *));
@@ -43,8 +38,7 @@ void tabDynInit(TabDyn *t)
     t->tailleUtilisee = 0;
 }
 
-void tabDynLibere(TabDyn *t)
-{
+void tabDynLibere(TabDyn *t) {
     assert(t != NULL);
     free(t->tab);
     t->tab = NULL;
@@ -52,8 +46,7 @@ void tabDynLibere(TabDyn *t)
     t->tailleUtilisee = 0;
 }
 
-void tabDynAjoute(TabDyn *t, void *element)
-{
+void tabDynAjoute(TabDyn *t, void *element) {
     int i;
     void **T;
     if (t->tailleUtilisee == t->capacite) {
@@ -70,15 +63,13 @@ void tabDynAjoute(TabDyn *t, void *element)
     t->tailleUtilisee++;
 }
 
-void *tabDynGetElement(const TabDyn *t, int index)
-{
+void *tabDynGetElement(const TabDyn *t, int index) {
     assert(t != NULL);
     assert(index < t->tailleUtilisee);
     return t->tab[index];
 }
 
-void tabDynSupprimeElement(TabDyn *t, int index)
-{
+void tabDynSupprimeElement(TabDyn *t, int index) {
     int i;
     void **temp = NULL;
     assert(index >= 0);
@@ -105,8 +96,7 @@ void tabDynSupprimeElement(TabDyn *t, int index)
     t->tailleUtilisee--;
 }
 
-void tabDynTestDeRegression()
-{
+void tabDynTestDeRegression() {
 
 }
 

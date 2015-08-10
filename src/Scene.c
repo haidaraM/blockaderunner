@@ -17,8 +17,7 @@
 * @brief Met les flags associés aux sons à zero
 * @param [in, out] scene : non null
 */
-static void sceneInitialiseFlags(Scene *scene)
-{
+static void sceneInitialiseFlags(Scene *scene) {
     /* Réinitialisation des evenements */
     scene->evenements.asteroide_explosion = 0;
     scene->evenements.joueur_tir_laser = 0;
@@ -44,8 +43,7 @@ static void sceneInitialiseFlags(Scene *scene)
 * @param [in] scene
 * @return Renvoie un pointeur vers l'element initialisé
 */
-static ElementScene *sceneCreerElementScene(const Scene *scene, int type)
-{
+static ElementScene *sceneCreerElementScene(const Scene *scene, int type) {
     ElementScene *e = NULL;
     e = (ElementScene *) malloc(sizeof(ElementScene));
     assert(scene != NULL);
@@ -135,8 +133,7 @@ static ElementScene *sceneCreerElementScene(const Scene *scene, int type)
 * @brief Detruit complement un element : le libere et le met à null. Doit etre appelé sur un element crée par la scene
 * @param [in, out] element : initialisé
 */
-static void sceneDetruitElement(ElementScene *element)
-{
+static void sceneDetruitElement(ElementScene *element) {
     assert(element != NULL);
     elementLibere(element);
     free(element);
@@ -146,8 +143,7 @@ static void sceneDetruitElement(ElementScene *element)
 /* ----------------------------- Inteface du module ---------------------- */
 
 
-void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphique, int hauteurGraphique)
-{
+void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphique, int hauteurGraphique) {
     int i;
 
     assert(scene != NULL && res != NULL && player != NULL);
@@ -200,8 +196,7 @@ void sceneInit(Scene *scene, Ressource *res, Joueur *player, int largeurGraphiqu
 
 }
 
-void sceneLibere(Scene *scene)
-{
+void sceneLibere(Scene *scene) {
     int i;
     ElementScene *e;
     PositionExplosion *pos;
@@ -262,8 +257,7 @@ void sceneLibere(Scene *scene)
 }
 
 
-void sceneChargeNiveau(Scene *scene, Niveau *niveau)
-{
+void sceneChargeNiveau(Scene *scene, Niveau *niveau) {
     int i, j, numGroupes;
     GroupeNiveau *groupe;
     assert(scene != NULL && niveau != NULL);
@@ -313,7 +307,6 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau)
                 break;
 
             case NIVEAU_GROUPE_CROISEURS:
-
                 for (j = 0; j < groupe->nombre; j++) {
                     ElementScene *croiseur = sceneCreerElementScene(scene, ELEMENT_TYPE_CROISEUR);
                     /* Positionnement aleatoire sur la scene */
@@ -328,14 +321,12 @@ void sceneChargeNiveau(Scene *scene, Niveau *niveau)
 }
 
 
-void sceneResetHorloge(Scene *scene, float horloge)
-{
+void sceneResetHorloge(Scene *scene, float horloge) {
     assert(scene != NULL);
     scene->horlogePrecedente = horloge;
 }
 
-int sceneDefileScene(Scene *scene)
-{
+int sceneDefileScene(Scene *scene) {
     if ((scene->rectangleImageFond.x + 1) < (4098 - 1366)) {
         scene->rectangleImageFond.x += 1;
         return 0;
@@ -343,8 +334,7 @@ int sceneDefileScene(Scene *scene)
     else return 1;
 }
 
-void sceneAnime(Scene *scene, float tempsSecondes)
-{
+void sceneAnime(Scene *scene, float tempsSecondes) {
     int i, dx, x, y, dy, deltaJoueurEnnemi, typeElement;
     float dt = tempsSecondes - scene->horlogePrecedente;
     ElementScene *e = NULL;
@@ -508,8 +498,7 @@ void sceneAnime(Scene *scene, float tempsSecondes)
     scene->horlogePrecedente = tempsSecondes;
 }
 
-void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
-{
+void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere) {
     int r;
     switch (elementGetType(pere)) {
         case ELEMENT_TYPE_ECLAIREUR:
@@ -551,8 +540,7 @@ void sceneCreeBonusEventuel(Scene *scene, ElementScene *pere)
     }
 }
 
-void sceneTestDeCollision(Scene *scene)
-{
+void sceneTestDeCollision(Scene *scene) {
     int i, j, d, numDebris, typeElement, collision;
     ElementScene *t = NULL, *e = NULL, *b = NULL;
     PositionExplosion *posEx;
@@ -814,42 +802,35 @@ void sceneTestDeCollision(Scene *scene)
 
 }
 
-void scenePause(Scene *scene)
-{
+void scenePause(Scene *scene) {
     /* decalage de l'intervalle de temps sans faire d'animations
     * Comme les deplacements (animations et autres) sont calculés en fonction du temps, on fait de telle sorte
     * que le temps ne bouge pas. */
     sceneResetHorloge(scene, getTempsSecondes());
 }
 
-int sceneGetNbActeurs(const Scene *scene)
-{
+int sceneGetNbActeurs(const Scene *scene) {
     return scene->acteurs.tailleUtilisee;
 }
 
-int sceneGetNbTirs(const Scene *scene)
-{
+int sceneGetNbTirs(const Scene *scene) {
     return scene->tirs.tailleUtilisee;
 }
 
-int sceneGetNbBonus(const Scene *scene)
-{
+int sceneGetNbBonus(const Scene *scene) {
     return scene->bonus.tailleUtilisee;
 }
 
-int sceneGetNbDecors(const Scene *scene)
-{
+int sceneGetNbDecors(const Scene *scene) {
     return scene->decors.tailleUtilisee;
 }
 
-int sceneGetNbExplosions(const Scene *scene)
-{
+int sceneGetNbExplosions(const Scene *scene) {
     return scene->positionsExplosions.tailleUtilisee;
 }
 
 
-void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
-{
+void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes) {
     ElementScene *vaiss = scene->elementVaisseauJoueur;
     float vitesseDeplacement = 768.0f / 0.5f;
     int dy = -(int) (tempsSecondes * vitesseDeplacement);
@@ -862,8 +843,7 @@ void sceneDeplaceVaisseauJoueurHaut(Scene *scene, float tempsSecondes)
     elementSetPosition(vaiss, elementGetX(vaiss), y + dy);
 }
 
-void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
-{
+void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes) {
     ElementScene *vaiss = scene->elementVaisseauJoueur;
     float vitesseDeplacement = 768.0f / 0.5f;
     int dy = (int) (tempsSecondes * vitesseDeplacement);
@@ -876,8 +856,7 @@ void sceneDeplaceVaisseauJoueurBas(Scene *scene, float tempsSecondes)
     elementSetPosition(scene->elementVaisseauJoueur, elementGetX(vaiss), y + dy);
 }
 
-void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
-{
+void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes) {
     ElementScene *vaiss = scene->elementVaisseauJoueur;
     float vitesseDeplacement = 768.0f / 1.5f;
     int dx = (int) (tempsSecondes * vitesseDeplacement);
@@ -889,8 +868,7 @@ void sceneDeplaceVaisseauJoueurDroite(Scene *scene, float tempsSecondes)
     elementSetPosition(vaiss, x + dx, elementGetY(vaiss));
 }
 
-void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
-{
+void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes) {
     ElementScene *vaiss = scene->elementVaisseauJoueur;
     float vitesseDeplacement = 768.0f / 1.5f;
     int dx = -(int) (tempsSecondes * vitesseDeplacement);
@@ -903,8 +881,7 @@ void sceneDeplaceVaisseauJoueurGauche(Scene *scene, float tempsSecondes)
     elementSetPosition(vaiss, x + dx, elementGetY(vaiss));
 }
 
-void sceneJoueurDeclencheTir(Scene *scene)
-{
+void sceneJoueurDeclencheTir(Scene *scene) {
     ElementScene *tir = NULL;
     /* On regarde s'il lui reste des munitions */
     if (vaisseauGetMunitionsArme(scene->joueur->vaisseau) > 0) {
@@ -931,16 +908,14 @@ void sceneJoueurDeclencheTir(Scene *scene)
     }
 }
 
-int sceneGetMunitionMissileJoueur(const Scene *scene)
-{
+int sceneGetMunitionMissileJoueur(const Scene *scene) {
     int mun = scene->joueur->vaisseau->armes[ARME_MISSILE].munitions;
     if (mun < 0)
         mun = 0;
     return mun;
 }
 
-void sceneEnnemiDeclencheTir(Scene *scene, ElementScene *e, float tempsCourant)
-{
+void sceneEnnemiDeclencheTir(Scene *scene, ElementScene *e, float tempsCourant) {
     ElementScene *tir = NULL;
     Vaisseau *vaisseau = (Vaisseau *) e->data;
     Arme *arme;
@@ -986,14 +961,13 @@ void sceneEnnemiDeclencheTir(Scene *scene, ElementScene *e, float tempsCourant)
     /* positionne le tir en fonction de la position du vaisseau */
     elementSetPosition(tir, elementGetX(e), elementGetY(e));
     if (ennemi == ELEMENT_TYPE_CROISEUR && randomInt(0, 101) < 50)
-        elementSetPosition(tir, elementGetX(e) + 32, elementGetY(e) +
-                                                     64);/* simple probabilité que le tir vienne d'une tourelle du bas (dans le cas d'un croiseur). */
+        elementSetPosition(tir, elementGetX(e) + 32, elementGetY(e) +  64);
+    /* simple probabilité que le tir vienne d'une tourelle du bas (dans le cas d'un croiseur). */
 
     tabDynAjoute(&scene->tirs, (void *) tir);
 }
 
-int sceneTestVaisseauMort(Scene *scene)
-{
+int sceneTestVaisseauMort(Scene *scene) {
     Vaisseau *v = NULL;
     assert(scene != NULL);
     v = (Vaisseau *) scene->elementVaisseauJoueur->data;
@@ -1006,8 +980,7 @@ int sceneTestVaisseauMort(Scene *scene)
         return 0;
 }
 
-void sceneSetPositionExplosion(PositionExplosion *pos, const ElementScene *element)
-{
+void sceneSetPositionExplosion(PositionExplosion *pos, const ElementScene *element) {
     assert(element != NULL);
     pos->x = elementGetX(element);
     pos->y = elementGetY(element);
@@ -1015,20 +988,17 @@ void sceneSetPositionExplosion(PositionExplosion *pos, const ElementScene *eleme
     pos->ateur = NULL;
 }
 
-double sceneGetAngleRotation(const Scene *scene)
-{
+double sceneGetAngleRotation(const Scene *scene) {
     return scene->angleRotation;
 }
 
-void sceneMAJAngleRotation(Scene *scene)
-{
+void sceneMAJAngleRotation(Scene *scene) {
     scene->angleRotation += SCENE_VITESSE_ROTATION;
     if (scene->angleRotation >= 360)
         scene->angleRotation = 0;
 }
 
-void sceneSupprimeExplosion(Scene *scene)
-{
+void sceneSupprimeExplosion(Scene *scene) {
     int i;
     for (i = 0; i < sceneGetNbExplosions(scene); i++) {
         PositionExplosion *positionExplosion = (PositionExplosion *) tabDynGetElement(&scene->positionsExplosions, i);
@@ -1037,8 +1007,7 @@ void sceneSupprimeExplosion(Scene *scene)
     }
 }
 
-void sceneTestDeRegression()
-{
+void sceneTestDeRegression() {
     Scene sc;
     Ressource res;
     Joueur j;
