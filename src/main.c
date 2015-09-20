@@ -29,7 +29,7 @@ int main() {
 
 #ifdef JEU_VERBOSE
 	printf("Blockade - status de fin d'execution : OK.\n");
-	#endif
+#endif
 
     return 0;
 }

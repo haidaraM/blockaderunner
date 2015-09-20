@@ -574,7 +574,7 @@ static void afficheMenuElements(GraphiqueSDL *graphique, const Menu *menu) {
 
 static void afficheBoutonRetour(GraphiqueSDL *graphique, const Menu *menu) {
     SDL_Rect offset;
-    // on affiche le bouton retour seulement
+    /* on affiche le bouton retour seulement*/
     offset.x = menu->elements[MENU_RETOUR].rect.x;
     offset.y = menu->elements[MENU_RETOUR].rect.y;
     SDL_BlitSurface(graphique->textesMenu[MENU_RETOUR], NULL, graphique->surface, &offset);
@@ -625,11 +625,10 @@ static void afficheMeilleurScore(GraphiqueSDL * graphique, const Menu * menu){
 }
 
 void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
-    int i, count;
+
     SDL_Rect offset;
     SDL_Surface *nomNouveauJoueur;
     SDL_Color couleurTexteMenuSurvol = {249, 255, 53};
-    SDL_Surface **nomsMeilleursJoueurs, **scoresMeilleursJoueurs;
 
     switch (menu->etat) {
         case MENU_ETAT_INTRO:
@@ -664,7 +663,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
             afficheFondMenu(graphique);
 
            afficheMeilleurScore(graphique,menu);
-            // on affiche le bouton retour seulement
+            /* on affiche le bouton retour seulement*/
             afficheBoutonRetour(graphique, menu);
             break;
 
@@ -675,7 +674,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
             offset.x = MENU_ZONE_X - 6;
             offset.y = MENU_ZONE_Y - 5;
             SDL_BlitSurface(graphique->images[RESS_IMG_MENU_CMD], NULL, graphique->surface, &offset);
-            // on affiche le bouton retour seulement
+            /* on affiche le bouton retour seulement*/
             afficheBoutonRetour(graphique, menu);
 
             break;
@@ -688,7 +687,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
             offset.y = MENU_ZONE_Y - 7;
             SDL_BlitSurface(graphique->images[RESS_IMG_MENU_INFO], NULL, graphique->surface, &offset);
 
-            // on affiche le bouton retour seulement
+            /* on affiche le bouton retour seulement*/
             afficheBoutonRetour(graphique, menu);
             break;
 
