@@ -1,5 +1,5 @@
 #Makefile du projet BlockadeRunner
-#Realise par Yoan Cortial et Mohamed El Mouctar HAIDARA. Lire le readme pour plus d'informations
+#Realisé par Yoan Cortial et Mohamed El Mouctar HAIDARA. Lire le readme pour plus d'informations
 
 ########## Executable du jeu ##########
 EXEC 			= blockade

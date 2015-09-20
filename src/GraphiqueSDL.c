@@ -255,7 +255,7 @@ void graphiqueInit(GraphiqueSDL *graphique, const Ressource *ressource, Menu *me
 
 #ifdef JEU_VERBOSE
     /*---------------------------------------------------------------------
-    	 Evaluation des modes video disponibles */
+         Evaluation des modes video disponibles */
 
     modes = SDL_ListModes(NULL, SDL_FULLSCREEN | SDL_HWSURFACE);
     /* verifie s'il ya plusieurs modes disponibles */
@@ -544,6 +544,45 @@ void graphiquePrepareRenduListeJoueurs(GraphiqueSDL *graphique, Menu *menu) {
     }
 }
 
+/**
+ * @brief Affiche l'image de fond du menu
+ */
+static void afficheFondMenu(GraphiqueSDL *graphique) {
+    SDL_Rect offset;
+    offset.x = 0;
+    offset.y = 0;
+    SDL_BlitSurface(graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
+}
+
+/**
+ * @brief Affiche tous les éléments du menu qui doivent être affichés.
+ */
+static void afficheMenuElements(GraphiqueSDL *graphique, const Menu *menu) {
+    SDL_Rect offset;
+    int i;
+    for (i = 0; i < MENU_NUM_ELEMENTS; i++) {
+        if (menu->elements[i].visible == 1) {
+            offset.x = menu->elements[i].rect.x;
+            offset.y = menu->elements[i].rect.y;
+            if (menu->elements[i].surligne == 0)
+                SDL_BlitSurface(graphique->textesMenu[2 * i], NULL, graphique->surface, &offset);
+            else
+                SDL_BlitSurface(graphique->textesMenu[2 * i + 1], NULL, graphique->surface, &offset);
+        }
+    }
+}
+
+static void afficheBoutonRetour(GraphiqueSDL *graphique, const Menu *menu) {
+    SDL_Rect offset;
+    // on affiche le bouton retour seulement
+    offset.x = menu->elements[MENU_RETOUR].rect.x;
+    offset.y = menu->elements[MENU_RETOUR].rect.y;
+    SDL_BlitSurface(graphique->textesMenu[MENU_RETOUR], NULL, graphique->surface, &offset);
+    if (menu->elements[MENU_RETOUR].surligne == 1)
+        SDL_BlitSurface(graphique->textesMenu[MENU_RETOUR + 1], NULL, graphique->surface, &offset);
+
+}
+
 void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
     int i, count;
     SDL_Rect offset;
@@ -553,7 +592,6 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
 
     switch (menu->etat) {
         case MENU_ETAT_INTRO:
-
             offset.x = 0;
             offset.y = 0;
             SDL_BlitSurface(graphique->images[RESS_IMG_SPLASH], NULL, graphique->surface, &offset);
@@ -561,36 +599,15 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
 
         case MENU_ETAT_CHOIX_JOUEUR:
 
-            offset.x = 0;
-            offset.y = 0;
-            SDL_BlitSurface(graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
-            for (i = 0; i < MENU_NUM_ELEMENTS; i++) {
-                if (menu->elements[i].visible == 1) {
-                    offset.x = menu->elements[i].rect.x;
-                    offset.y = menu->elements[i].rect.y;
-                    if (menu->elements[i].surligne == 0)
-                        SDL_BlitSurface(graphique->textesMenu[2 * i], NULL, graphique->surface, &offset);
-                    else
-                        SDL_BlitSurface(graphique->textesMenu[2 * i + 1], NULL, graphique->surface, &offset);
-                }
-            }
+            afficheFondMenu(graphique);
+            afficheMenuElements(graphique, menu);
             break;
 
         case MENU_ETAT_ENTREE_JOUEUR:
 
-            offset.x = 0;
-            offset.y = 0;
-            SDL_BlitSurface(graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
-            for (i = 0; i < MENU_NUM_ELEMENTS; i++) {
-                if (menu->elements[i].visible == 1) {
-                    offset.x = menu->elements[i].rect.x;
-                    offset.y = menu->elements[i].rect.y;
-                    if (menu->elements[i].surligne == 0)
-                        SDL_BlitSurface(graphique->textesMenu[2 * i], NULL, graphique->surface, &offset);
-                    else
-                        SDL_BlitSurface(graphique->textesMenu[2 * i + 1], NULL, graphique->surface, &offset);
-                }
-            }
+            afficheFondMenu(graphique);
+            afficheMenuElements(graphique, menu);
+
             nomNouveauJoueur = TTF_RenderText_Blended(graphique->policeMenu, menu->nomNouveauJoueur,
                                                       couleurTexteMenuSurvol);
             offset.x = MENU_ZONE_X + MENU_PADDING_HORZ;
@@ -603,7 +620,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
 
             offset.x = 0;
             offset.y = 0;
-            SDL_BlitSurface(graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
+            afficheFondMenu(graphique);
 
             count = 0;
             nomsMeilleursJoueurs = (SDL_Surface **) malloc(RESS_NUM_MEILLEURS_JOUEURS * sizeof(SDL_Surface *));
@@ -639,85 +656,46 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
             free(nomsMeilleursJoueurs);
             free(scoresMeilleursJoueurs);
 
-            for (i = 0; i < MENU_NUM_ELEMENTS; i++) {
-                if (menu->elements[i].visible == 1) {
-                    offset.x = menu->elements[i].rect.x;
-                    offset.y = menu->elements[i].rect.y;
-                    if (menu->elements[i].surligne == 0)
-                        SDL_BlitSurface(graphique->textesMenu[2 * i], NULL, graphique->surface, &offset);
-                    else
-                        SDL_BlitSurface(graphique->textesMenu[2 * i + 1], NULL, graphique->surface, &offset);
-                }
-            }
+            // on affiche le bouton retour seulement
+            afficheBoutonRetour(graphique, menu);
             break;
 
         case MENU_ETAT_CMD:
             offset.x = 0;
             offset.y = 0;
-            SDL_BlitSurface(graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
+            afficheFondMenu(graphique);
             offset.x = MENU_ZONE_X - 6;
             offset.y = MENU_ZONE_Y - 5;
             SDL_BlitSurface(graphique->images[RESS_IMG_MENU_CMD], NULL, graphique->surface, &offset);
-            for (i = 0; i < MENU_NUM_ELEMENTS; i++) {
-                if (menu->elements[i].visible == 1) {
-                    offset.x = menu->elements[i].rect.x;
-                    offset.y = menu->elements[i].rect.y;
-                    if (menu->elements[i].surligne == 0)
-                        SDL_BlitSurface(graphique->textesMenu[2 * i], NULL, graphique->surface, &offset);
-                    else
-                        SDL_BlitSurface(graphique->textesMenu[2 * i + 1], NULL, graphique->surface, &offset);
-                }
-            }
+            // on affiche le bouton retour seulement
+            afficheBoutonRetour(graphique, menu);
+
             break;
 
         case MENU_ETAT_INFO:
             offset.x = 0;
             offset.y = 0;
-            SDL_BlitSurface(graphique->images[RESS_IMG_FOND_MENU], NULL, graphique->surface, &offset);
+            afficheFondMenu(graphique);
             offset.x = MENU_ZONE_X - 7;
             offset.y = MENU_ZONE_Y - 7;
             SDL_BlitSurface(graphique->images[RESS_IMG_MENU_INFO], NULL, graphique->surface, &offset);
-            for (i = 0; i < MENU_NUM_ELEMENTS; i++) {
-                if (menu->elements[i].visible == 1) {
-                    offset.x = menu->elements[i].rect.x;
-                    offset.y = menu->elements[i].rect.y;
-                    if (menu->elements[i].surligne == 0)
-                        SDL_BlitSurface(graphique->textesMenu[2 * i], NULL, graphique->surface, &offset);
-                    else
-                        SDL_BlitSurface(graphique->textesMenu[2 * i + 1], NULL, graphique->surface, &offset);
-                }
-            }
+
+            // on affiche le bouton retour seulement
+            afficheBoutonRetour(graphique, menu);
             break;
+
         case MENU_ETAT_PAUSE:
             offset.x = MENU_ZONE_X;
             offset.y = MENU_ZONE_Y;
             SDL_BlitSurface(graphique->images[RESS_IMG_MENU_PAUSE], NULL, graphique->surface, &offset);
 
-            for (i = 0; i < MENU_NUM_ELEMENTS; i++) {
-                if (menu->elements[i].visible == 1) {
-                    offset.x = menu->elements[i].rect.x;
-                    offset.y = menu->elements[i].rect.y;
-                    if (menu->elements[i].surligne == 0)
-                        SDL_BlitSurface(graphique->textesMenu[2 * i], NULL, graphique->surface, &offset);
-                    else
-                        SDL_BlitSurface(graphique->textesMenu[2 * i + 1], NULL, graphique->surface, &offset);
-                }
-            }
+            afficheMenuElements(graphique, menu);
             break;
         case MENU_ETAT_PAUSE_CMD:
             offset.x = MENU_ZONE_X;
             offset.y = MENU_ZONE_Y + 2;
             SDL_BlitSurface(graphique->images[RESS_IMG_MENU_CMD], NULL, graphique->surface, &offset);
-            for (i = 0; i < MENU_NUM_ELEMENTS; i++) {
-                if (menu->elements[i].visible == 1) {
-                    offset.x = menu->elements[i].rect.x;
-                    offset.y = menu->elements[i].rect.y;
-                    if (menu->elements[i].surligne == 0)
-                        SDL_BlitSurface(graphique->textesMenu[2 * i], NULL, graphique->surface, &offset);
-                    else
-                        SDL_BlitSurface(graphique->textesMenu[2 * i + 1], NULL, graphique->surface, &offset);
-                }
-            }
+            afficheMenuElements(graphique, menu);
             break;
 
         case MENU_ETAT_PAUSE_SCORE:
@@ -759,16 +737,7 @@ void graphiqueAfficheMenu(GraphiqueSDL *graphique, const Menu *menu) {
             free(nomsMeilleursJoueurs);
             free(scoresMeilleursJoueurs);
 
-            for (i = 0; i < MENU_NUM_ELEMENTS; i++) {
-                if (menu->elements[i].visible == 1) {
-                    offset.x = menu->elements[i].rect.x;
-                    offset.y = menu->elements[i].rect.y;
-                    if (menu->elements[i].surligne == 0)
-                        SDL_BlitSurface(graphique->textesMenu[2 * i], NULL, graphique->surface, &offset);
-                    else
-                        SDL_BlitSurface(graphique->textesMenu[2 * i + 1], NULL, graphique->surface, &offset);
-                }
-            }
+            afficheMenuElements(graphique, menu);
             break;
 
         default:
@@ -1050,7 +1019,6 @@ void graphiqueVibreEcran(GraphiqueSDL *graphique, Rectangle rectangle, int index
     srcBox.h = rectangle.hauteur;
     srcBox.w = rectangle.largeur;
     SDL_BlitSurface(graphique->images[indexImage], &srcBox, graphique->surface, NULL);
-
 }
 
 
