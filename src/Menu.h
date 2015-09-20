@@ -23,7 +23,7 @@ enum {
     MENU_ETAT_ENTREE_JOUEUR,
     MENU_ETAT_PRINCIPAL,
     MENU_ETAT_CMD,
-    MENU_ETAT_OPTION,
+    MENU_ETAT_OPTIONS,
     MENU_ETAT_INFO,
     MENU_ETAT_CHOIX_NIVEAU,
     MENU_ETAT_SCORE,
@@ -45,7 +45,7 @@ enum {
 #define MENU_ZONE_HAUTEUR                    678
 
 
-#define MENU_NUM_BASIC_ELEMENTS                (13 + RESS_NUM_NIVEAUX)
+#define MENU_NUM_BASIC_ELEMENTS                (14 + RESS_NUM_NIVEAUX)
 #define MENU_NUM_ELEMENTS                    (MENU_NUM_BASIC_ELEMENTS + RESS_SAU_MAX_JOUEURS)
 
 #define MENU_RETOUR                            0
@@ -61,8 +61,8 @@ enum {
 #define MENU_REPRENDRE                      10
 #define MENU_REJOUER                        11
 #define MENU_RETOUR_MENU_PRINCIPAL          12
-#define MENU_NIVEAU                            13
-
+#define MENU_OPTIONS                        13
+#define MENU_NIVEAU                            14
 
 #define MENU_TXT_JOUEUR_VIDE                "___"
 #define MENU_TXT_JOUEURS                    "Joueurs"
@@ -79,7 +79,7 @@ enum {
 #define MENU_TXT_REPRENDRE                  "Reprendre"
 #define MENU_TXT_REJOUER                    "Rejouer"
 #define MENU_TXT_RETOUR_MENU_PRINCIPAL      "Retour au menu principal"
-
+#define MENU_TXT_OPTIONS                    "Options"
 
 /**
 * @struct ElementMenu
@@ -222,6 +222,12 @@ void menuScores(void *m);
 * @param [in] m
 */
 void menuJouer(void *m);
+
+/**
+ * @fn void menuOptions(void * m);
+ * @brief Callback appelé quand l'utilisateur souhaite accéder aux options
+ */
+void menuOptions(void * m);
 
 /**
 * @fn void menuSelectionneJoueur(Menu *menu, int indexElement)

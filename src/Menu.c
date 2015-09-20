@@ -193,6 +193,16 @@ void menuInit(Menu *menu, Ressource *res) {
     menu->elements[index].rect.y = MENU_ZONE_Y + MENU_ZONE_HAUTEUR - 4 * MENU_PADDING_VERT;
     menu->elements[index].action = menuRetourPrincipal;
 
+    index = MENU_OPTIONS;
+    menu->elements[index].texte = MENU_TXT_OPTIONS;
+    menu->elements[index].visible = 0;
+    menu->elements[index].actionable = 1;
+    menu->elements[index].surligne = 0;
+    menu->elements[index].rect.x = MENU_ZONE_X + MENU_PADDING_HORZ;
+    menu->elements[index].rect.y = MENU_ZONE_Y + 13 * MENU_PADDING_VERT;
+    menu->elements[index].action = menuOptions;
+
+
 
 
     /* les 8 niveaux */
@@ -340,7 +350,9 @@ void menuPrincipal(void *m) {
     menu->elements[MENU_CMD].visible = 1;
     menu->elements[MENU_CHANGER_JOUEUR].visible = 1;
     menu->elements[MENU_INFO].visible = 1;
+    menu->elements[MENU_OPTIONS].visible = 1;
     menu->elements[MENU_QUITTER].visible = 1;
+
 }
 
 void menuCommandes(void *m) {
@@ -535,4 +547,11 @@ void menuRetourPrincipal(void *m) {
     Menu *menu = (Menu *) m;
     assert(menu != NULL);
     menu->etat = MENU_ETAT_PAUSE_RETOUR_MENU_PRINCIPAL;
+}
+
+
+void menuOptions(void * m){
+    Menu * menu = (Menu *)m;
+    assert(menu != NULL);
+    menu->etat = MENU_ETAT_OPTIONS;
 }
