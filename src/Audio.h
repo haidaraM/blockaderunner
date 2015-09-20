@@ -26,6 +26,8 @@ typedef struct {
     FMOD_SYSTEM *system;
     /** Tableau de pointeurs sur les sons initialisés **/
     FMOD_SOUND **sons;
+    /** booleen indicant si le son est activé ou pas */
+    int isEnabled;
 
 } AudioFMOD;
 
@@ -84,4 +86,15 @@ void audioReprendSon(const AudioFMOD *audio, int index);
 */
 void audioJoueScene(const AudioFMOD *audio, const Scene *scene);
 
+/**
+ * @fn void audioDisableSon(AudioFMOD * audioFMOD)
+ * @brief Désactive le système audio
+ */
+void audioDesactiveSon(AudioFMOD * audioFMOD);
+
+/**
+ * @fn void audioDisableSon(AudioFMOD * audioFMOD)
+ * @brief Active le système audio
+ */
+void audioActiveSon(AudioFMOD * audioFMOD);
 #endif

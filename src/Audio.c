@@ -123,6 +123,9 @@ void audioInit(AudioFMOD *audio, const Ressource *res) {
     resultat = FMOD_System_Init(audio->system, nbSons, FMOD_INIT_NORMAL, NULL);
     audioVerifieErreur(resultat);
 
+    /* le son est activé au début */
+    audio->isEnabled = 1;
+
 #ifdef JEU_VERBOSE
     printf("	chargement des sons.\n");
 	#endif
@@ -162,6 +165,10 @@ void audioLibere(AudioFMOD *audio) {
 }
 
 void audioJoueSon(const AudioFMOD *audio, int index) {
+
+    if(audio->isEnabled != 1 )
+        return;
+
     FMOD_RESULT resultat;
     FMOD_BOOL etat;
     assert(audio != NULL);
@@ -193,7 +200,7 @@ void audioStopSon(const AudioFMOD *audio, int index) {
     canal = audioGetCanal(audio, index);
 
     if (etat)
-        audioVerifieErreur(FMOD_Channel_Stop(canal)); /* on arrete le son alors */
+        audioVerifieErreur(FMOD_Channel_Stop(canal)); /* on arrete le son (channel) alors */
 
 }
 
@@ -257,5 +264,11 @@ void audioJoueScene(const AudioFMOD *audio, const Scene *scene) {
 
 }
 
+void audioDesactiveSon(AudioFMOD * audioFMOD) {
+    audioFMOD->isEnabled = 0;
+}
 
+void audioActiveSon(AudioFMOD * audioFMOD){
+    audioFMOD->isEnabled = 1;
+}
 
